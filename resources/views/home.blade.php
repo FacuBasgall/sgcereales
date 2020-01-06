@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-Pagina de inicio<br>
-Probando... 
-</html>
+@extends('layout.master')
+@section ('content')
+@parent
+	<p> Esta es nuestra pantalla de inicio jeje </p>
+@endsection

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Producto;
+use DB;
 
 class ProductoController extends Controller
 {
@@ -13,7 +15,8 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        //
+        $arrayProductos = DB::table('producto')->get();
+        return view('producto.index', array('arrayProductos'=>$arrayProductos));
     }
 
     /**
@@ -21,10 +24,10 @@ class ProductoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    /* public function create()
     {
-        //
-    }
+        return view('producto.create');
+    } */
 
     /**
      * Store a newly created resource in storage.
@@ -32,10 +35,13 @@ class ProductoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    /* public function store(Request $request)
     {
-        //
-    }
+        $nuevo = new Producto;
+        $nuevo = $request->all();
+        $nuevo->save();
+        return redirect('/producto');
+    } */
 
     /**
      * Display the specified resource.
@@ -43,10 +49,11 @@ class ProductoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    /* public function show($idProducto)
     {
-        //
-    }
+        $producto = Producto::findOrFail($idProducto);
+        return view('producto.show', array('producto'=>$producto));
+    } */
 
     /**
      * Show the form for editing the specified resource.
@@ -54,9 +61,10 @@ class ProductoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($idProducto)
     {
-        //
+        $producto = Producto::findOrFail($idProducto);
+        return view('producto.edit', array('producto'=>$producto));
     }
 
     /**
@@ -66,9 +74,12 @@ class ProductoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $idProducto)
     {
-        //
+        $nuevo = Producto::findOrFail($idProducto);
+        $nuevo = $request->input('merma');
+        $nuevo->save();
+        return view('producto.edit', array('idProducto'=>$idProducto));
     }
 
     /**
@@ -77,8 +88,8 @@ class ProductoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+   /*  public function destroy($id)
     {
         //
-    }
+    } */
 }

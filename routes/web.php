@@ -14,8 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
+//DESCOMENTAR ABAJO
+/* Auth::routes(); */
 Route::get('/home', 'HomeController@index')->name('home');
+
 
 Route::get('/cargador', 'CargadorController@index');
 Route::get('/cargador/create', 'CargadorController@create');
@@ -58,12 +60,12 @@ Route::put('/descarga/update/{id}', 'DescargaController@update');
 Route::put('/descarga/destroy/{id}', 'DescargaController@destroy');
 
 Route::get('/producto', 'ProductoController@index');
-Route::get('/producto/create', 'ProductoController@create');
-Route::post('/producto/store', 'ProductoController@store');
-Route::get('/producto/show/{id}', 'ProductoController@show');
+//Route::get('/producto/create', 'ProductoController@create');
+//Route::post('/producto/store', 'ProductoController@store');
+//Route::get('/producto/show/{id}', 'ProductoController@show');
 Route::get('/producto/edit/{id}', 'ProductoController@edit');
 Route::put('/producto/update/{id}', 'ProductoController@update');
-Route::put('/producto/destroy/{id}', 'ProductoController@destroy');
+//Route::put('/producto/destroy/{id}', 'ProductoController@destroy');
 
 Route::get('/aviso', 'AvisoController@index');
 Route::get('/aviso/create', 'AvisoController@create');
