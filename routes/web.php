@@ -60,8 +60,8 @@ Route::put('/descarga/update/{id}', 'DescargaController@update');
 Route::put('/descarga/destroy/{id}', 'DescargaController@destroy');
 
 Route::get('/producto', 'ProductoController@index');
-//Route::get('/producto/create', 'ProductoController@create');
-//Route::post('/producto/store', 'ProductoController@store');
+Route::get('/producto/create', 'ProductoController@create');
+Route::post('/producto/store', 'ProductoController@store');
 //Route::get('/producto/show/{id}', 'ProductoController@show');
 Route::get('/producto/edit/{id}', 'ProductoController@edit');
 Route::put('/producto/update/{id}', 'ProductoController@update');

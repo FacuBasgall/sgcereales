@@ -8,7 +8,7 @@
 					Modificar Merma
 			 </div>
 			 <div class="card-body" style="padding:30px">
-					<form action="{{action('ProductoController@update', $pelicula->idProducto)}}" method="POST">
+					<form action="{{action('ProductoController@update', $producto->idProducto)}}" method="POST">
 						{{ method_field('PUT') }}
 						{{ csrf_field() }}
 					<div class="form-group">
@@ -16,9 +16,10 @@
 						 <input type="text" name="merma" id="merma" class="form-control" value="{{$producto->merma}}">
 					</div>
 					<div class="form-group text-center">
-						<a href="#"><button>Guardar</button></a>
+						<button type="submit">Guardar</button>
 					</div>
 				</form>
+				<a href="{{action('ProductoController@index')}}"><button>Volver</button></a>
 			 </div>
 		</div>
  </div>

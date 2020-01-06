@@ -24,10 +24,10 @@ class ProductoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    /* public function create()
+    public function create()
     {
         return view('producto.create');
-    } */
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -35,13 +35,13 @@ class ProductoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    /* public function store(Request $request)
+    public function store(Request $request)
     {
         $nuevo = new Producto;
         $nuevo = $request->all();
         $nuevo->save();
         return redirect('/producto');
-    } */
+    }
 
     /**
      * Display the specified resource.
@@ -53,7 +53,7 @@ class ProductoController extends Controller
     {
         $producto = Producto::findOrFail($idProducto);
         return view('producto.show', array('producto'=>$producto));
-    } */
+    }  */
 
     /**
      * Show the form for editing the specified resource.
@@ -88,8 +88,8 @@ class ProductoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-   /*  public function destroy($id)
+    /* public function destroy($id)
     {
         //
-    } */
+    }  */
 }

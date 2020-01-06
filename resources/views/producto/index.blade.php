@@ -2,12 +2,15 @@
 @section('content')
 	@parent
 		@foreach( $arrayProductos as $key)
-		    <div class="col-xs-6 col-sm-4 col-md-3 text-center">
-                    <h2 style="min-height:45px;margin:5px 0 10px 0">{{$key->nombre}}</h2>
-                    @if ($key->merma == 0)
-                        <h4 style="min-height:45px;margin:5px 0 10px 0">{{$key->merma}}</h4>
-                        <a href="{{ action('ProductoController@edit', $arrayProductos->idProducto)}}"><button>Editar</button></a>
+		    <div>
+                    <h2>{{$key->nombre}}</h2>
+                    @if ($key->merma != 0)
+                        <h4>{{$key->merma}}% de merma</h4>
+                    @else
+                        <h4>Este producto no posee merma</h4>
                     @endif
+                    <a href="{{ action('ProductoController@edit', $key->idProducto)}}"><button>Editar</button></a>
+                    <br><br>
                 </a>
 		    </div>
 		@endforeach
