@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Cargador;
+use DB;
 
 class CargadorController extends Controller
 {
@@ -13,7 +15,8 @@ class CargadorController extends Controller
      */
     public function index()
     {
-        //
+        $arrayCargador = DB::table('cargador')->get();
+        return view('cargador.index', array('arrayCargador'=>$arrayCargador));
     }
 
     /**
@@ -34,7 +37,10 @@ class CargadorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $nuevo = new Cargador;
+        $nuevo = $request->all();
+        $nuevo->save();
+        return redirect('/cargador');
     }
 
     /**
@@ -43,9 +49,10 @@ class CargadorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($cuit)
     {
-        //
+        $cargador = Cargador::findOrFail($cuit);
+        return view('cargador.show', array('cargador'=>$cargador));
     }
 
     /**
@@ -54,9 +61,10 @@ class CargadorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($cuit)
     {
-        //
+        $cargador = Cargador::findOrFail($cuit);
+        return view('cargador.edit', array('cargador'=>$cargador));
     }
 
     /**
@@ -66,9 +74,12 @@ class CargadorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $cuit)
     {
-        //
+        $nuevo = Cargador::findOrFail($cuit);
+        $nuevo = $request->all();
+        $nuevo->save();
+        return view('cargador.edit', array('cuit'=>$cuit));
     }
 
     /**
@@ -77,8 +88,9 @@ class CargadorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($cuit)
     {
-        //
+        $cargador = Cargador::findOrFail($cuit);
+        $cargador->delete();
     }
 }

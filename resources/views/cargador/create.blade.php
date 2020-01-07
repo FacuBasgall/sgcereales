@@ -1,4 +1,4 @@
-//faltan imports de la plantilla base
+@extends('layout.master')
 @section('content')
 	@parent
 		<div class="row" style="margin-top:40px">
@@ -8,7 +8,7 @@
             Añadir cargadores
          </div>
          <div class="card-body" style="padding:30px">
-						<form action="{{action('CargadorController@save')}}" method="POST">
+						<form action="{{action('CargadorController@store')}}" method="POST">
 							{{ csrf_field() }}
             <div class="form-group">
                <label for="title">CUIT</label>
@@ -19,7 +19,7 @@
 							<label for="year">NOMBRE</label>
 							<input type="text" name="nombre" id="nombre" class="form-control">
             </div>
-            //condicion de iva
+            
             <div class="form-group">
 							<label for="director">DGR</label>
 							<input type="text" name="dgr" id="dgr" class="form-control">
@@ -29,8 +29,7 @@
 							<label for="poster">CODIGO POSTAL</label>
 							<input type="text" name="cp" id="cp" class="form-control">
             </div>
-            //lo demas del domicilio
-            //tipo de contacto
+            
             <div class="form-group text-center">
               <a href="#"><button>Añadir Cargador</button></a>
             </div>
