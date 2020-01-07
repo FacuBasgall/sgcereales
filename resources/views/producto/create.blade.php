@@ -22,9 +22,10 @@
                 </div>
 
                 <div class="form-group text-center">
-                <button type="submit">Guardar</button>
+                  <button type="submit">Guardar</button>
                 </div>
             </form>
+            <a href="{{ action('ProductoController@index') }}"><button>Salir y no guardar</button></a>
          </div>
       </div>
    </div>

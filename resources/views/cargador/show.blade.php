@@ -53,5 +53,6 @@
             -->
 
 			<a href="{{ action('CargadorController@edit', $cargador->cuit)}}"><button>Editar</button></a>
+            <a href="{{ action('CargadorController@destroy', '$cargador->cuit') }}"><button>Eliminar</button></a>
 			<a href="{{ action('CargadorController@index') }}"><button>Volver</button></a>
 @endsection

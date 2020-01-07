@@ -29,7 +29,6 @@
 					</div>
 				</form>
                 <a href="{{ action('CorredorController@show', '$corredor->cuit') }}"><button>Salir y no guardar</button></a>
-                <a href="{{ action('CorredorController@destroy', '$corredor->cuit') }}"><button>Eliminar</button></a>
 			 </div>
 		</div>
     </div>

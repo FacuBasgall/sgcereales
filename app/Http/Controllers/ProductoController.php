@@ -49,11 +49,11 @@ class ProductoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    /* public function show($idProducto)
+     public function show($idProducto)
     {
         $producto = Producto::findOrFail($idProducto);
         return view('producto.show', array('producto'=>$producto));
-    }  */
+    }  
 
     /**
      * Show the form for editing the specified resource.
@@ -88,8 +88,9 @@ class ProductoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    /* public function destroy($id)
+     public function destroy($idProducto)
     {
-        //
-    }  */
+        $producto = Producto::findOrFail($idProducto);
+        $producto->delete();
+    }  
 }

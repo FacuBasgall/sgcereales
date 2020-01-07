@@ -15,5 +15,6 @@
             -->
 
 			<a href="{{ action('CorredorController@edit', $corredor->cuit)}}"><button>Editar</button></a>
+            <a href="{{ action('CorredorController@destroy', '$corredor->cuit') }}"><button>Eliminar</button></a>
 			<a href="{{ action('CorredorController@index') }}"><button>Volver</button></a>
 @endsection
