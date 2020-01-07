@@ -2,6 +2,7 @@
 @section('content')
 	@parent
 		<div class="row">
+		<a href="{{ action('CargadorController@create') }}"><button>Crear nuevo</button></a>
 		@foreach( $arrayCargador as $key)
 		<div class="col-xs-6 col-sm-4 col-md-3 text-center">
 		<a href="{{ action('CargadorController@show', $key->cuit )}}">
