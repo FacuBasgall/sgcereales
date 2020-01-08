@@ -38,7 +38,7 @@
             @if (isset($cargador->pais))
                 <p><strong>País: </strong>{{$cargador->pais}}</p>
 			@else
-                <p><strong>País: </strong>País no definida</p>
+                <p><strong>País: </strong>País no definido</p>
 			@endif
 
 

@@ -20,6 +20,8 @@
 							<input type="text" name="nombre" id="nombre" class="form-control">
             </div>
             
+             <!-- CONDICION IVA -->
+             
             <div class="form-group">
 							<label for="director">DGR</label>
 							<input type="text" name="dgr" id="dgr" class="form-control">
@@ -30,6 +32,25 @@
 							<input type="text" name="cp" id="cp" class="form-control">
             </div>
             
+            <div class="form-group">
+							<label for="poster">DOMICILIO</label>
+							<input type="text" name="domicilio" id="domicilio" class="form-control">
+            </div>
+
+            <div class="form-group">
+							<label for="poster">LOCALIDAD</label>
+							<input type="text" name="localidad" id="localidad" class="form-control">
+            </div>
+
+            <div class="form-group">
+							<label for="poster">PROVINCIA</label>
+							<input type="text" name="provincia" id="provincia" class="form-control">
+            </div>
+
+            <div class="form-group">
+							<label for="poster">PAIS</label>
+							<input type="text" name="pais" id="pais" class="form-control">
+            </div>
           <!-- INFORMACION DE CONTACTO -->
             
           <div class="form-group text-center">
