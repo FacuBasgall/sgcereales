@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\corredor;
+use App\Corredor;
 use DB;
 
 class CorredorController extends Controller

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Destino;
+use DB;
 
 class DestinoController extends Controller
 {
