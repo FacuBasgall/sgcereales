@@ -72,6 +72,7 @@ Route::put('/producto/destroy/{id}', 'ProductoController@destroy');
 Route::get('/aviso', 'AvisoController@index');
 Route::get('/aviso/create', 'AvisoController@create');
 Route::post('/aviso/store', 'AvisoController@store');
+Route::post('/aviso/store2', 'AvisoController@storeCarga');
 Route::get('/aviso/show/{id}', 'AvisoController@show');
 Route::get('/aviso/edit/{id}', 'AvisoController@edit');
 Route::put('/aviso/update/{id}', 'AvisoController@update');
