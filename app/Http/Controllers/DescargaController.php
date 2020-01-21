@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Descarga;
+use App\Carga;
+use App\Destino;
+use DB;
 
 class DescargaController extends Controller
 {

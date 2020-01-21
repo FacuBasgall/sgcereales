@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Aviso;
+use App\Carga;
+use App\Corredor;
+use App\Producto;
+use App\Descarga;
 use DB;
 
 class AvisoController extends Controller
@@ -16,7 +20,13 @@ class AvisoController extends Controller
     public function index()
     {
         $arrayAviso = DB::table('aviso')->get();
-        return view('aviso.index', array('arrayAviso'=>$arrayAviso));
+        $arrayProducto = DB::table('producto')->get();
+        $arrayCorredor = DB::table('corredor')->get();
+        $arrayCarga = DB::table('carga')->get();
+        
+
+        return view('aviso.index', array('arrayAviso'=>$arrayAviso), array('arrayProducto'=>$arrayProducto),
+        array('arrayCorredor'=>$arrayCorredor), array('arrayCarga'=>$arrayCarga),);
     }
 
     /**
@@ -39,17 +49,6 @@ class AvisoController extends Controller
     {
                 //FALTAN GUARDAR LOS DATOS
         return redirect('/aviso');
-    }
-
-    public function storeCarga(Request $request, $continue)
-    {
-        //$continue = false = guardar y salir / =true = continuar con datos de descarga
-        //FALTAN GUARDAR LOS DATOS
-        if ($continue == true){
-            return view('aviso.createDescarga');
-        }else{
-            return redirect('/aviso');
-        }
     }
 
     /**
