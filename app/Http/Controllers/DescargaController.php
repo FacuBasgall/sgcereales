@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Descarga;
-use App\Carga;
-use App\Destino;
 use DB;
 
 class DescargaController extends Controller
@@ -27,7 +25,7 @@ class DescargaController extends Controller
      */
     public function create()
     {
-        //
+        return view('descarga.create');
     }
 
     /**
@@ -38,7 +36,8 @@ class DescargaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+                        //FALTAN GUARDAR LOS DATOS
+        return redirect('/descarga');
     }
 
     /**
@@ -47,9 +46,10 @@ class DescargaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($idDescarga)
     {
-        //
+        $descarga = Descarga::findOrFail($idDescarga);
+        return view('descarga.show', array('descarga'=>$descarga));
     }
 
     /**
@@ -58,9 +58,10 @@ class DescargaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($idDescarga)
     {
-        //
+        $descarga = Descarga::findOrFail($idDescarga);
+        return view('descarga.edit', array('descarga'=>$descarga));
     }
 
     /**
@@ -70,9 +71,12 @@ class DescargaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $idDescarga)
     {
-        //
+        $nuevo = Descarga::findOrFail($idDescarga);
+        $nuevo = $request->all();
+        $nuevo->save();
+        return view('descarga.edit', array('idDescarga'=>$idDescarga));
     }
 
     /**
@@ -81,8 +85,9 @@ class DescargaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($idDescarga)
     {
-        //
+        $descarga = Descarga::findOrFail($idDescarga);
+        $descarga->delete();
     }
 }

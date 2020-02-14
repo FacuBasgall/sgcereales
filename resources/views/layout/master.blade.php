@@ -17,8 +17,6 @@
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <link href="{{ asset('ccs/bootstrap-home.min.css') }}" rel="stylesheet">
     <script src="{{ asset('js/bootstrap-home.min.js') }}"></script>
- 
-
 </head>
 
 <body>

@@ -4,10 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Aviso;
-use App\Carga;
-use App\Corredor;
-use App\Producto;
-use App\Descarga;
 use DB;
 
 class AvisoController extends Controller
@@ -19,14 +15,9 @@ class AvisoController extends Controller
      */
     public function index()
     {
-        $arrayAviso = DB::table('aviso')->get();
-        $arrayProducto = DB::table('producto')->get();
-        $arrayCorredor = DB::table('corredor')->get();
-        $arrayCarga = DB::table('carga')->get();
-        
 
-        return view('aviso.index', array('arrayAviso'=>$arrayAviso), array('arrayProducto'=>$arrayProducto),
-        array('arrayCorredor'=>$arrayCorredor), array('arrayCarga'=>$arrayCarga),);
+        //VER JOIN!!!!
+        
     }
 
     /**
@@ -87,7 +78,7 @@ class AvisoController extends Controller
         $nuevo = Aviso::findOrFail($idAviso);
         $nuevo = $request->all();
         $nuevo->save();
-        return view('aviso.edit', array('idAvisoAviso'=>$idAviso));
+        return view('aviso.edit', array('idAviso'=>$idAviso));
     }
 
     /**
