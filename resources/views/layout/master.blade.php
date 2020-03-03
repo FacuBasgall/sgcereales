@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-    <link href="{{ asset('ccs/bootstrap-home.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap-home.min.css') }}" rel="stylesheet">
     <script src="{{ asset('js/bootstrap-home.min.js') }}"></script>
  
 
