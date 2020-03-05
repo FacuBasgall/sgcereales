@@ -23,8 +23,9 @@
                             @else
                                 <p>Este producto no posee merma</p>
                             @endif
-                            <a href="{{ action('ProductoController@edit', $key->idProducto)}}"><button class="edit-button" title="Editar"><i class="fa fa-pencil"></i></button></a>
+                            
                             <a href="{{ action('ProductoController@destroy', '$key->idProducto') }}"><button class="delete-button" title="Borrar"><i class="fa fa-close"></i></button></a>
+                            <a href="{{ action('ProductoController@edit', $key->idProducto)}}"><button class="edit-button" title="Editar"><i class="fa fa-pencil"></i></button></a>
                             <br><br>
                         </a>
                 </div>
