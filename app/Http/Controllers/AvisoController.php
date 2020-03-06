@@ -24,7 +24,7 @@ class AvisoController extends Controller
      */
     public function index()
     {
-        $var; $avisoProducto; $i = 0;
+        $var; $i = 0;
         $avisos = DB::table('aviso')->get();
         foreach($avisos as $aviso){
             $var['nroAviso'][$i] = $aviso->idAviso;
@@ -33,9 +33,9 @@ class AvisoController extends Controller
                 ->select('producto.nombre')
                 ->where('aviso.idAviso', $aviso->idAviso)
                 ->get();
-            $avisoProducto[][$i] = DB::table('aviso')
+            $var['fecha'][$i] = DB::table('aviso')
                 ->join('aviso_producto', 'aviso_producto.idAviso', '=', 'aviso.idAviso')
-                ->select('aviso_producto.*')
+                ->select('aviso_producto.fecha')
                 ->whereColumn([
                     ['aviso_producto.idProducto', '=', $aviso->idProducto],
                     ['aviso_producto.idAviso', '=', $aviso->idAviso]
@@ -45,8 +45,8 @@ class AvisoController extends Controller
                 ->select('corredor.nombre')
                 ->where('aviso.idAviso', $aviso->idAviso)
                 ->get();
-            //$var['entregador'][$i]
-            //Copiar de $avisoProducto a $var
+            $var['estado'][$i] = $aviso->estado;
+            //join con entregador $var
             $i ++;
         }
 
