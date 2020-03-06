@@ -21,4 +21,7 @@ class Tipo_Contacto extends Model
     public function destino(){
         return $this->belongsToMany('App\Destino', 'Destino_Contacto', 'idTipoContacto', 'cuit');
     }
+    public function entregador(){
+        return $this->belongsToMany('App\Usuario', 'Entregador_Contacto', 'idTipoContacto', 'idUser');
+    }
 }
