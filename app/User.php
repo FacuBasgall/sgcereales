@@ -38,4 +38,7 @@ class User extends Authenticatable
     public function entregador_domicilio(){
         return $this->hasMany('App\Entregador_Domicilio', 'idUser', 'idUser');
     }
+    public function aviso_entregador(){
+        return $this->hasMany('App\Aviso_Entregador', 'idEntregador', 'idUser');
+    }
 }
