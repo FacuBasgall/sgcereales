@@ -1,0 +1,47 @@
+body {
+    font-family:sans-serif;
+    background:url("/image/campo-trigo.jpg");
+    background-size: cover;
+}
+
+.container {
+    justify-content:center;
+    left: 5%;
+    position: relative;
+  }
+
+  .card {
+    text-align:center;
+    width:400px;
+    margin: 150px;
+    min-height:250px;
+    background:#fff;
+    border-radius:10px;
+    transition:0.5s;
+}
+
+.card .box {
+    position:absolute;
+    top:50%;
+    left:0;
+    transform:translateY(-50%);
+    text-align:center;
+    padding:20px;
+    box-sizing:border-box;
+    width:100%;
+}
+
+.card h2 {
+    font-size:20px;
+    color:#262626;
+    margin:20px 0;
+}
+
+.input{
+    width: 50%;
+    padding: 10px 15px;
+    margin: 40px 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
