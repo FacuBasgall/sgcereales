@@ -77,9 +77,9 @@ class ProductoController extends Controller
     public function update(Request $request, $idProducto)
     {
         $nuevo = Producto::findOrFail($idProducto);
-        $nuevo = $request->input('merma');
+        $nuevo->merma = $request->input('merma');
         $nuevo->save();
-        return view('producto.edit', array('idProducto'=>$idProducto));
+        return redirect('/producto') ;
     }
 
     /**

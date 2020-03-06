@@ -1,33 +1,32 @@
 @extends('layout.master')
 @section('content')
 	@parent
+   @parent
+	<head>
+		<link rel="stylesheet" type="text/css" href="{{ asset('css/common-buttons.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ asset('css/forms.css') }}">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	</head>
+	<body>
 		<div class="row" style="margin-top:40px">
-   <div class="offset-md-3 col-md-6">
-      <div class="card">
-         <div class="card-header text-center">
-            Añadir Producto
-         </div>
-         <div class="card-body" style="padding:30px">
-			<form action="{{action('ProductoController@store')}}" method="POST">
-				{{ csrf_field() }}
-                <div class="form-group">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" name="nombre" id="nombre" class="form-control">
-                </div>
-
-                <div class="form-group">
-                    <label for="merma">Merma</label>
-                    <input type="text" name="merma" id="merma" class="form-control">
-                    <p>En caso de que no poseer merma, ingresar 0</p>
-                </div>
-
-                <div class="form-group text-center">
-                  <button type="submit">Guardar</button>
-                </div>
-            </form>
-            <a href="{{ action('ProductoController@index') }}"><button>Salir y no guardar</button></a>
+			<div class="container">
+				<div class="card" style="min-height:350px; ">
+               <h2>Agregar producto</h2>
+               <div class="box">
+			         <form action="{{action('ProductoController@store')}}" method="POST">
+                     {{ csrf_field() }}
+                     <label for="nombre">Nombre: </label>
+                     <input type="text" name="nombre" id="nombre" class="input" style="margin: 10px 20px;">
+                     <br>
+                     <label for="merma">Merma: </label>
+                     <input type="text" name="merma" id="merma" class="input" style="margin: 10px 20px;">
+                     <p>En caso de que no poseer merma, ingresar 0</p>
+                     <button type="submit" class="save-button" style="position:absolute; top:95%; left:60%;"><i class="fa fa-check"></i></button>
+                  </form>
+                  <a href="{{ action('ProductoController@index') }}"><button class="delete-button" title="Cancelar" style="position: absolute; top: 95%; left: 25%;"><i class="fa fa-close"></i></button></a>
+               </div>
+            </div>
          </div>
       </div>
-   </div>
-</div>
+   </body>
 @endsection

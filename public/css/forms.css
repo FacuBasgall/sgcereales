@@ -45,3 +45,7 @@ body {
     border-radius: 6px;
     box-sizing: border-box;
 }
+
+.card p{
+    color:#a39f9f;
+}
