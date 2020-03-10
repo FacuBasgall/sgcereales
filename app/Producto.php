@@ -9,4 +9,14 @@ class Producto extends Model
     protected $table = 'producto';
     protected $primaryKey = 'idProducto';
     public $timestamps = false;
+
+    protected $fillable = ['nombre', 'merma'];
+
+    public function aviso(){
+        return $this->hasMany('App\Aviso', 'idAviso', 'idProducto');
+    }
+    public function aviso_producto(){
+        return $this->hasMany('App\Aviso_Producto', 'idProducto', 'idProducto');
+    }
+
 }

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Corredor;
+use App\Corredor_Contacto;
+use App\Condicion_IVA;
+use App\Tipo_Contacto;
 use DB;
 
 class CorredorController extends Controller

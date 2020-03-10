@@ -81,6 +81,7 @@ class ProductoController extends Controller
         $nuevo->merma = $request->input('merma');
         $nuevo->save();
         return redirect('/producto') ;
+
     }
 
     /**

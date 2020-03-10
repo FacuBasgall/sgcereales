@@ -17,8 +17,6 @@
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <link href="{{ asset('css/bootstrap-home.min.css') }}" rel="stylesheet">
     <script src="{{ asset('js/bootstrap-home.min.js') }}"></script>
- 
-
 </head>
 
 <body>
@@ -36,19 +34,6 @@
         </div>
       </div>
       <!-- sidebar-header  -->
-      <div class="sidebar-search">
-        <div>
-          <div class="input-group">
-            <input type="text" class="form-control search-menu" placeholder="Search...">
-            <div class="input-group-append">
-              <span class="input-group-text">
-                <i class="fa fa-search" aria-hidden="true"></i>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- sidebar-search  -->
       <div class="sidebar-menu">
         <ul>
           <li class="header-menu">
@@ -155,19 +140,7 @@
           <li>
             <a href="#">
               <i class="fa fa-book"></i>
-              <span>Documentation</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="fa fa-calendar"></i>
-              <span>Calendar</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="fa fa-folder"></i>
-              <span>Examples</span>
+              <span>Manual</span>
             </a>
           </li>
         </ul>

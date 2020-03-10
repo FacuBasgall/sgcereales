@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Carga;
 use App\Aviso;
 use App\Descarga;
+use App\Corredor;
+use App\Producto;
+use App\Destino;
 use App\Cargador;
+use App\Aviso_Producto;
+
+
 use DB;
 
 class CargaController extends Controller
@@ -28,7 +35,8 @@ class CargaController extends Controller
      */
     public function create()
     {
-        //
+        return view('carga.create');
+
     }
 
     /**
@@ -39,7 +47,8 @@ class CargaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+                    //FALTAN GUARDAR LOS DATOS
+        return redirect('/carga');
     }
 
     /**
@@ -48,9 +57,10 @@ class CargaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($idCarga)
     {
-        //
+        $carga = Carga::findOrFail($idCarga);
+        return view('carga.show', array('carga'=>$carga));
     }
 
     /**
@@ -59,9 +69,10 @@ class CargaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($idCarga)
     {
-        //
+        $carga = Carga::findOrFail($idCarga);
+        return view('carga.edit', array('carga'=>$carga));
     }
 
     /**
@@ -71,9 +82,12 @@ class CargaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $idCarga)
     {
-        //
+        $nuevo = Carga::findOrFail($idCarga);
+        $nuevo = $request->all();
+        $nuevo->save();
+        return view('carga.edit', array('idCarga'=>$idCarga));
     }
 
     /**
@@ -82,8 +96,9 @@ class CargaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($idCarga)
     {
-        //
+        $carga = Carga::findOrFail($idCarga);
+        $carga->delete();
     }
 }

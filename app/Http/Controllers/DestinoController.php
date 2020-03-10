@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Destino;
+use App\Destino_Contacto;
+use App\Condicion_IVA;
+use App\Tipo_Contacto;
 use DB;
 
 class DestinoController extends Controller

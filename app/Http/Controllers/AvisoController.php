@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Aviso;
+use App\Descarga;
 use App\Carga;
 use App\Corredor;
 use App\Producto;
-use App\Descarga;
+use App\Destino;
+use App\Cargador;
+use App\Aviso_Producto;
+
 use DB;
 
 class AvisoController extends Controller
@@ -19,14 +24,33 @@ class AvisoController extends Controller
      */
     public function index()
     {
-        $arrayAviso = DB::table('aviso')->get();
-        $arrayProducto = DB::table('producto')->get();
-        $arrayCorredor = DB::table('corredor')->get();
-        $arrayCarga = DB::table('carga')->get();
-        
+        $var; $i = 0;
+        $avisos = DB::table('aviso')->get();
+        foreach($avisos as $aviso){
+            $var['nroAviso'][$i] = $aviso->idAviso;
+            $var['producto'][$i] = DB::table('aviso')
+                ->join('producto', 'producto.id', '=', 'aviso.idProducto')
+                ->select('producto.nombre')
+                ->where('aviso.idAviso', $aviso->idAviso)
+                ->get();
+            $var['fecha'][$i] = DB::table('aviso')
+                ->join('aviso_producto', 'aviso_producto.idAviso', '=', 'aviso.idAviso')
+                ->select('aviso_producto.fecha')
+                ->whereColumn([
+                    ['aviso_producto.idProducto', '=', $aviso->idProducto],
+                    ['aviso_producto.idAviso', '=', $aviso->idAviso]
+                ])->get();
+            $var['corredor'][$i] = DB::table('aviso')
+                ->join('corredor', 'corredor.cuit', '=', 'aviso.idCorredor')
+                ->select('corredor.nombre')
+                ->where('aviso.idAviso', $aviso->idAviso)
+                ->get();
+            $var['estado'][$i] = $aviso->estado;
+            //join con entregador $var
+            $i ++;
+        }
 
-        return view('aviso.index', array('arrayAviso'=>$arrayAviso), array('arrayProducto'=>$arrayProducto),
-        array('arrayCorredor'=>$arrayCorredor), array('arrayCarga'=>$arrayCarga),);
+        
     }
 
     /**
@@ -87,7 +111,7 @@ class AvisoController extends Controller
         $nuevo = Aviso::findOrFail($idAviso);
         $nuevo = $request->all();
         $nuevo->save();
-        return view('aviso.edit', array('idAvisoAviso'=>$idAviso));
+        return view('aviso.edit', array('idAviso'=>$idAviso));
     }
 
     /**
