@@ -38,10 +38,14 @@ body {
 }
 
 .input{
-    width: 50%;
+    width: 65%;
     padding: 10px 15px;
     margin: 40px 20px;
     border: 1px solid #ccc;
     border-radius: 6px;
     box-sizing: border-box;
+}
+
+.card p{
+    color:#a39f9f;
 }

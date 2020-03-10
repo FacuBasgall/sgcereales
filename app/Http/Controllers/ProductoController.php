@@ -38,7 +38,8 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
         $nuevo = new Producto;
-        $nuevo = $request->all();
+        $nuevo->nombre = $request->input('nombre');
+        $nuevo->merma = $request->input('merma');
         $nuevo->save();
         return redirect('/producto');
     }
@@ -79,7 +80,8 @@ class ProductoController extends Controller
         $nuevo = Producto::findOrFail($idProducto);
         $nuevo->merma = $request->input('merma');
         $nuevo->save();
-        return redirect('/producto');
+        return redirect('/producto') ;
+
     }
 
     /**
@@ -91,6 +93,6 @@ class ProductoController extends Controller
      public function destroy($idProducto)
     {
         $producto = Producto::findOrFail($idProducto);
-        $producto->delete();
+        $producto->destroy();
     }  
 }

@@ -18,9 +18,9 @@
 						<label>Merma: </label>
 						<input type="text" name="merma" id="merma" class="input" value="{{$producto->merma}}">
 						<br>
-						<button type="submit" class="save-button" title="Guardar"><i class="fa fa-check"></i></button>
+						<button type="submit" class="save-button" title="Guardar" style=" position: absolute; top: 80%; left: 60%;"><i class="fa fa-check"></i></button>
+						<a href="{{action('ProductoController@index')}}"><button type="button" class="delete-button" title="Cancelar" style="position: absolute; top: 80%; right: 60%;"><i class="fa fa-close"></i></button></a>
 					</form>
-					<a href="{{action('ProductoController@index')}}"><button class="delete-button" title="Cancelar"><i class="fa fa-close"></i></button></a>
 				
 			</div>
 		</div>
