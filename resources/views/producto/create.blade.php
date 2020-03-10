@@ -22,8 +22,8 @@
                      <input type="text" name="merma" id="merma" class="input" style="margin: 10px 20px;">
                      <p>En caso de que no poseer merma, ingresar 0</p>
                      <button type="submit" class="save-button" style="position:absolute; top:95%; left:60%;"><i class="fa fa-check"></i></button>
+                     <a href="{{ action('ProductoController@index') }}"><button type="button" class="delete-button" title="Cancelar" style="position: absolute; top: 95%; left: 25%;"><i class="fa fa-close"></i></button></a>
                   </form>
-                  <a href="{{ action('ProductoController@index') }}"><button class="delete-button" title="Cancelar" style="position: absolute; top: 95%; left: 25%;"><i class="fa fa-close"></i></button></a>
                </div>
             </div>
          </div>
