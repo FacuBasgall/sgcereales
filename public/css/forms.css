@@ -13,7 +13,8 @@ body {
   .card {
     text-align:center;
     width:400px;
-    margin: 150px;
+    margin-top: 50px;
+    margin-left: 150px;
     min-height:250px;
     background:#fff;
     border-radius:10px;
