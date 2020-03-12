@@ -41,7 +41,14 @@ class DestinoController extends Controller
     public function store(Request $request)
     {
         $nuevo = new Destino;
-        $nuevo = $request->all();
+        $nuevo->cuit = $request->input('cuit');
+        $nuevo->nombre = $request->input('nombre');
+        $nuevo->dgr = $request->input('dgr');
+        $nuevo->cp = $request->input('cp');
+        $nuevo->domicilio = $request->input('domicilio');
+        $nuevo->localidad = $request->input('localidad');
+        $nuevo->provincia = $request->input('provincia');
+        $nuevo->pais = $request->input('pais');
         $nuevo->save();
         return redirect('/destino');
     }
@@ -80,7 +87,15 @@ class DestinoController extends Controller
     public function update(Request $request, $cuit)
     {
         $nuevo = Destino::findOrFail($cuit);
-        $nuevo = $request->all();
+        $nuevo->cuit = $request->input('cuit');
+        $nuevo->nombre = $request->input('nombre');
+        $nuevo->condIva = 1;
+        $nuevo->dgr = $request->input('dgr');
+        $nuevo->cp = $request->input('cp');
+        $nuevo->domicilio = $request->input('domicilio');
+        $nuevo->localidad = $request->input('localidad');
+        $nuevo->provincia = $request->input('provincia');
+        $nuevo->pais = $request->input('pais');
         $nuevo->save();
         return view('destino.edit', array('cuit'=>$cuit));
     }
