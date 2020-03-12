@@ -3,7 +3,7 @@
 	@parent
 		<div class="row">
 		<a href="{{ action('DestinoController@create') }}"><button>Crear nuevo</button></a>
-		@foreach( $arrayCargador as $key)
+		@foreach( $arrayDestino as $key)
 		<div class="col-xs-6 col-sm-4 col-md-3 text-center">
 		<a href="{{ action('DestinoController@show', $key->cuit )}}">
 		<!-- <img src="" style="height:200px"/> PONER IMAGEN GENERICA -->

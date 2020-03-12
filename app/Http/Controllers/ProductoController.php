@@ -38,7 +38,8 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
         $nuevo = new Producto;
-        $nuevo = $request->all();
+        $nuevo->nombre = $request->input('nombre');
+        $nuevo->merma = $request->input('merma');
         $nuevo->save();
         return redirect('/producto');
     }
@@ -51,8 +52,7 @@ class ProductoController extends Controller
      */
      public function show($idProducto)
     {
-        $producto = Producto::findOrFail($idProducto);
-        return view('producto.show', array('producto'=>$producto));
+        //
     }  
 
     /**
@@ -92,5 +92,6 @@ class ProductoController extends Controller
     {
         $producto = Producto::findOrFail($idProducto);
         $producto->delete();
+        return redirect('/producto');
     }  
 }

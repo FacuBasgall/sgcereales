@@ -45,9 +45,10 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($idUser)
     {
-        //
+        $usuario = User::findOrFail($idUser);
+        return view('usuario.show', array('usuario'=>$usuario));
     }
 
     /**
@@ -56,9 +57,10 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($idUser)
     {
-        //
+        $usuario = User::findOrFail($idUser);
+        return view('usuario.edit', array('usuario'=>$usuario));
     }
 
     /**
@@ -68,9 +70,12 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $idUser)
     {
-        //
+        $nuevo = User::findOrFail($idUser);
+        $nuevo = $request->all();
+        $nuevo->save();
+        return view('usuario.show', array('usuario'=>$usuario));
     }
 
     /**

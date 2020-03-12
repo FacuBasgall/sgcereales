@@ -13,9 +13,9 @@ class Descarga extends Model
     protected $fillable = ['idCarga', 'idDestinatario', 'fecha', 'bruto', 'tara', 'humedad', 'merma', 'ph', 'proteina', 'calidad'];
     
     public function destino(){
-        return $this->belongsTo('App\Destino', 'idDestinatario', 'idDestinatario');
+        return $this->belongsTo('App\Destino', 'idDestinatario', 'idDescarga');
     }
-    public function Carga(){
-        return $this->belongsTo('App\Carga', 'idCarga', 'idCarga');
-    }
+    public function carga(){
+        return $this->belongsTo('App\Carga', 'idDestinatario', 'idDescarga');
+    } 
 }

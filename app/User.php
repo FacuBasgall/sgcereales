@@ -32,9 +32,9 @@ class User extends Authenticatable
         'password',
     ];
 
-    public function tipo_contacto(){
-        return $this->belongsToMany('App\Tipo_Contacto', 'Entregador_Contacto', 'idUser', 'idTipoContacto');
-    }
+    public function entregador_contacto(){
+        return $this->hasMany('App\entregador_Contacto', 'idUser', 'idUser');
+    } 
     public function entregador_domicilio(){
         return $this->hasMany('App\Entregador_Domicilio', 'idUser', 'idUser');
     }

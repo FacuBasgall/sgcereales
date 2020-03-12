@@ -11,9 +11,9 @@ class Entregador_Contacto extends Model
     protected $fillable = ['idUser', 'contacto', 'tipo'];
 
     public function usuario(){
-        return $this->belongsTo('App\Usuario', 'idUser');
+        return $this->belongsTo('App\Usuario', 'idUser', 'idUser');
     }
     public function tipo_contacto(){
-        return $this->belongsTo('App\Tipo_Contacto', 'tipo');
+        return $this->belongsTo('App\Tipo_Contacto', 'idTipoContacto', 'tipo');
     }
 }

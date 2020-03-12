@@ -14,12 +14,15 @@
 //FALTAN LOS USUARIOS -> ADMIN Y ENTREGADOR
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 //DESCOMENTAR ABAJO
 /* Auth::routes(); */
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/usuario/show/{id}', 'UsuarioController@show');
+Route::get('/usuario/edit/{id}', 'UsuarioController@edit');
+Route::put('/usuario/update/{id}', 'UsuarioController@update');
 
 Route::get('/cargador', 'CargadorController@index');
 Route::get('/cargador/create', 'CargadorController@create');
@@ -64,7 +67,6 @@ Route::put('/descarga/destroy/{id}', 'DescargaController@destroy');
 Route::get('/producto', 'ProductoController@index');
 Route::get('/producto/create', 'ProductoController@create');
 Route::post('/producto/store', 'ProductoController@store');
-//Route::get('/producto/show/{id}', 'ProductoController@show');
 Route::get('/producto/edit/{id}', 'ProductoController@edit');
 Route::put('/producto/update/{id}', 'ProductoController@update');
 Route::put('/producto/destroy/{id}', 'ProductoController@destroy');
