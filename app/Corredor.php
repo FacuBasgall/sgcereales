@@ -11,8 +11,12 @@ class Corredor extends Model
     protected $keyType = 'string';
     public $timestamps = false;
 
-    protected $fillable = ['nombre'];
+    protected $fillable = ['nombre', 'borrado'];
 
+    protected $attributes = [
+        'borrado' => false,
+    ];
+    
     public function aviso(){
         return $this->hasMany('App\Aviso', 'idCorredor', 'cuit');
     }
