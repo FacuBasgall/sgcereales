@@ -11,9 +11,9 @@ class Destino_Contacto extends Model
     protected $fillable = ['cuit', 'contacto', 'tipo'];
 
     public function destino(){
-        return $this->belongsTo('App\Destino', 'cuit');
+        return $this->belongsTo('App\Destino', 'cuit', 'cuit');
     }
     public function tipo_contacto(){
-        return $this->belongsTo('App\Tipo_Contacto', 'tipo');
+        return $this->belongsTo('App\Tipo_Contacto', 'idTipoContacto', 'tipo');
     }
 }

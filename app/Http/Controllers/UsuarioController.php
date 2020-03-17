@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Producto;
+use App\User;
 use DB;
 
-class ProductoController extends Controller
+class UsuarioController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,7 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $arrayProductos = DB::table('producto')->get();
-        return view('producto.index', array('arrayProductos'=>$arrayProductos));
+        //
     }
 
     /**
@@ -26,7 +25,7 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        return view('producto.create');
+        //
     }
 
     /**
@@ -37,11 +36,7 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        $nuevo = new Producto;
-        $nuevo->nombre = $request->input('nombre');
-        $nuevo->merma = $request->input('merma');
-        $nuevo->save();
-        return redirect('/producto');
+        //
     }
 
     /**
@@ -50,10 +45,11 @@ class ProductoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     public function show($idProducto)
+    public function show($idUser)
     {
-        //
-    }  
+        $usuario = User::findOrFail($idUser);
+        return view('usuario.show', array('usuario'=>$usuario));
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -61,10 +57,10 @@ class ProductoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($idProducto)
+    public function edit($idUser)
     {
-        $producto = Producto::findOrFail($idProducto);
-        return view('producto.edit', array('producto'=>$producto));
+        $usuario = User::findOrFail($idUser);
+        return view('usuario.edit', array('usuario'=>$usuario));
     }
 
     /**
@@ -74,13 +70,12 @@ class ProductoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $idProducto)
+    public function update(Request $request, $idUser)
     {
-        $nuevo = Producto::findOrFail($idProducto);
-        $nuevo->merma = $request->input('merma');
+        $nuevo = User::findOrFail($idUser);
+        $nuevo = $request->all();
         $nuevo->save();
-        return redirect('/producto') ;
-
+        return view('usuario.show', array('usuario'=>$usuario));
     }
 
     /**
@@ -89,10 +84,8 @@ class ProductoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     public function destroy($idProducto)
+    public function destroy($id)
     {
-        $producto = Producto::findOrFail($idProducto);
-        $producto->delete();
-        return redirect('/producto');
-    }  
+        //
+    }
 }
