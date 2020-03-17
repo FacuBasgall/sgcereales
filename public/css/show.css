@@ -1,0 +1,43 @@
+body {
+    font-family:sans-serif;
+    background-size: cover;
+}
+
+.container {
+    left: 5%;
+    position: relative;
+    text-align:center;
+  }
+
+  .card {
+    text-align:center;
+    width:350px;
+    margin-top: 15px;
+    margin-left: 150px;
+    min-height:550px;
+    background:#fff;
+    border-radius:10px;
+    transition:0.5s;
+}
+
+.card .box {
+    position:absolute;
+    top:45%;
+    left:0;
+    transform:translateY(-50%);
+    padding:20px;
+    box-sizing:border-box;
+    width:auto;
+}
+
+.card h2 {
+    font-size:20px;
+    color:#686464;
+    margin:20px 0;
+}
+
+.card h1 {
+    font-size:30px;
+    color:#262626;
+    margin:20px 0;
+}
