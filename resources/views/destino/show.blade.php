@@ -13,7 +13,11 @@
                 <div class="box">
     		        <h1>{{$destino->nombre}}</h1>
                     <h2>CUIT: {{$destino->cuit}}</h2><br>
-                    Condicion de IVA: </h2><br>
+                    @foreach ($iva as $condicion)
+                        @if($condicion->idCondIva == $destino->condIva)
+                        <p><h4>Condicion de IVA: {{$condicion->descripcion}}</h4></p>
+                        @endif
+                    @endforeach
                     @if (isset($destino->dgr))
                         <p><strong>DGR: </strong>{{$destino->dgr}}</p>
                     @else
@@ -59,15 +63,14 @@
         </div>
     </body>
 
-           <!--  <h4><strong>Infomación de contacto:</strong></h4><br>
-
-            
-            $arrayJoin = DB::table('destino_contacto')
-                ->join('tipo_contacto', 'destino_contacto.tipo', '=', 'tipo_contacto.idTipoContacto')
-                ->where('destino_contacto.cuit', {{$destino->cuit}})
-                ->get();
-
-            -->
+            <h4><strong>Infomación de contacto:</strong></h4><br>
+            @foreach ($tipoContacto as $tipo)
+               @foreach ($contacto as $numero)
+                   @if ($tipo->idTipoContacto == $numero->tipo)
+                        <p><strong>{{$tipo->descripcion}}: </strong>{{$numero->contacto}}</p>
+                   @endif
+               @endforeach
+            @endforeach
 
 			
 @endsection

@@ -18,7 +18,7 @@ class DestinoController extends Controller
      */
     public function index()
     {
-        $arrayDestino = DB::table('destinatario')->get();
+        $arrayDestino = DB::table('destinatario')->where('borrado', false)->get();
         return view('destino.index', array('arrayDestino'=>$arrayDestino));
     }
 
@@ -62,7 +62,10 @@ class DestinoController extends Controller
     public function show($cuit)
     {
         $destino = Destino::findOrFail($cuit);
-        return view('destino.show', array('destino'=>$destino));
+        $contacto = Destino_Contacto::where('cuit', $cuit)->get();
+        $tipoContacto = Tipo_Contacto::all();
+        $iva = Condicion_IVA::all();
+        return view('destino.show', compact(['destino', 'contacto', 'tipoContacto', 'iva']));
     }
 
     /**
@@ -74,30 +77,31 @@ class DestinoController extends Controller
     public function edit($cuit)
     {
         $destino = Destino::findOrFail($cuit);
-        return view('destino.edit', array('destino'=>$destino));
+        $contacto = Destino_Contacto::where('cuit', $cuit)->get();
+        $tipoContacto = Tipo_Contacto::all();
+        $iva = Condicion_IVA::all();
+        return view('destino.edit', compact(['destino', 'contacto', 'tipoContacto', 'iva']));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $cuit
+     * @param  string  $cuit
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $cuit)
     {
         $nuevo = Destino::findOrFail($cuit);
-        $nuevo->cuit = $request->input('cuit');
         $nuevo->nombre = $request->input('nombre');
-        $nuevo->condIva = 1;
         $nuevo->dgr = $request->input('dgr');
         $nuevo->cp = $request->input('cp');
-        $nuevo->domicilio = $request->input('domicilio');
+        $nuevo->direccion = $request->input('direccion');
         $nuevo->localidad = $request->input('localidad');
         $nuevo->provincia = $request->input('provincia');
         $nuevo->pais = $request->input('pais');
         $nuevo->save();
-        return view('destino.edit', array('cuit'=>$cuit));
+        return redirect('/destino');
     }
 
     /**
@@ -109,6 +113,8 @@ class DestinoController extends Controller
     public function destroy($cuit)
     {
         $destino = Destino::findOrFail($cuit);
-        $destino->delete();
+        $destino->borrado = true;
+        $destino->save();
+        return redirect('/destino');
     }
 }

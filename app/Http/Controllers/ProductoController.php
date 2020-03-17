@@ -15,7 +15,7 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $arrayProductos = DB::table('producto')->get();
+        $arrayProductos = DB::table('producto')->where('borrado', false)->get();
         return view('producto.index', array('arrayProductos'=>$arrayProductos));
     }
 
@@ -79,7 +79,8 @@ class ProductoController extends Controller
         $nuevo = Producto::findOrFail($idProducto);
         $nuevo->merma = $request->input('merma');
         $nuevo->save();
-        return redirect('/producto');
+        return redirect('/producto') ;
+
     }
 
     /**
@@ -91,7 +92,8 @@ class ProductoController extends Controller
      public function destroy($idProducto)
     {
         $producto = Producto::findOrFail($idProducto);
-        $producto->delete();
+        $producto->borrado = true;
+        $producto->save();
         return redirect('/producto');
     }  
 }

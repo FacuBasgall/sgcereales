@@ -18,7 +18,7 @@ class CargadorController extends Controller
      */
     public function index()
     {
-        $arrayCargador = DB::table('cargador')->get();
+        $arrayCargador = DB::table('cargador')->where('borrado', false)->get();
         return view('cargador.index', array('arrayCargador'=>$arrayCargador));
     }
 
@@ -55,7 +55,10 @@ class CargadorController extends Controller
     public function show($cuit)
     {
         $cargador = Cargador::findOrFail($cuit);
-        return view('cargador.show', array('cargador'=>$cargador));
+        $contacto = Cargador_Contacto::where('cuit', $cuit)->get();
+        $tipoContacto = Tipo_Contacto::all();
+        $iva = Condicion_IVA::all();
+        return view('cargador.show',  compact(['cargador', 'contacto', 'tipoContacto', 'iva']));
     }
 
     /**
@@ -67,7 +70,10 @@ class CargadorController extends Controller
     public function edit($cuit)
     {
         $cargador = Cargador::findOrFail($cuit);
-        return view('cargador.edit', array('cargador'=>$cargador));
+        $contacto = Cargador_Contacto::where('cuit', $cuit)->get();
+        $tipoContacto = Tipo_Contacto::all();
+        $iva = Condicion_IVA::all();
+        return view('cargador.edit', compact(['cargador', 'contacto', 'tipoContacto', 'iva']));
     }
 
     /**
@@ -82,7 +88,7 @@ class CargadorController extends Controller
         $nuevo = Cargador::findOrFail($cuit);
         $nuevo = $request->all();
         $nuevo->save();
-        return view('cargador.edit', array('cuit'=>$cuit));
+        return redirect('/cargador');
     }
 
     /**
@@ -94,6 +100,8 @@ class CargadorController extends Controller
     public function destroy($cuit)
     {
         $cargador = Cargador::findOrFail($cuit);
-        $cargador->delete();
+        $cargador->borrado = true;
+        $cargador->save();
+        return redirect('/cargador');
     }
 }
