@@ -7,14 +7,15 @@ body {
     justify-content:center;
     left: 5%;
     position: relative;
+    text-align:center;
   }
 
   .card {
-    text-align:center;
-    width:400px;
+    width:450px;
     margin-top: 50px;
     margin-left: 150px;
-    min-height:250px;
+    height: auto;
+    min-height:100%;
     background:#fff;
     border-radius:10px;
     transition:0.5s;
@@ -22,13 +23,13 @@ body {
 
 .card .box {
     position:absolute;
-    top:50%;
+    top:55%;
     left:0;
     transform:translateY(-50%);
     text-align:center;
     padding:20px;
     box-sizing:border-box;
-    width:100%;
+    width:auto;
 }
 
 .card h2 {
@@ -38,11 +39,23 @@ body {
 }
 
 .input{
-    width: 50%;
+    width: 55%;
     padding: 10px 15px;
-    margin: 40px 20px;
+    margin: 10px 15px;
     border: 1px solid #ccc;
     border-radius: 6px;
     box-sizing: border-box;
+    
+}
+
+label
+{
+    display: block;
+}
+
+label span
+{
     display: inline-block;
+    text-align: right;
+    width: 100px;
 }

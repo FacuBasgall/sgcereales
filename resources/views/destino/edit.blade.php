@@ -60,7 +60,7 @@
                         <button type="submit">Guardar</button>
 					</div>
 				</form>
-                <a href="{{ action('DestinoController@show', '$destino->cuit') }}"><button>Salir y no guardar</button></a>
+                <a href="{{ action('DestinoController@show', $destino->cuit) }}"><button>Salir y no guardar</button></a>
 			 </div>
 		</div>
     </div>
