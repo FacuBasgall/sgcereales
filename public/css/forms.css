@@ -1,6 +1,5 @@
 body {
     font-family:sans-serif;
-    background:url("/image/campo-trigo.jpg");
     background-size: cover;
 }
 
@@ -45,4 +44,5 @@ body {
     border: 1px solid #ccc;
     border-radius: 6px;
     box-sizing: border-box;
+    display: inline-block;
 }
