@@ -14,9 +14,9 @@ class Corredor extends Model
     protected $fillable = ['nombre'];
 
     public function aviso(){
-        return $this->hasMany('App\Aviso', 'idAviso', 'cuit');
+        return $this->hasMany('App\Aviso', 'idCorredor', 'cuit');
     }
-    public function tipo_contacto(){
-        return $this->belongsToMany('App\Tipo_Contacto', 'Corredor_Contacto', 'cuit', 'idTipoContacto');
-    }
+    public function corredor_contacto(){
+        return $this->hasMany('App\Corredor_Contacto', 'cuit', 'cuit');
+    } 
 }

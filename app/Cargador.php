@@ -13,16 +13,13 @@ class Cargador extends Model
 
     protected $fillable = ['nombre', 'condIva', 'dgr', 'cp', 'domicilio', 'localidad', 'provincia', 'pais'];
 
-    /* public function aviso(){
-        return $this->hasMany('App\Aviso', 'idAviso', 'cuit');
-    } */
-    public function tipo_contacto(){
-        return $this->belongsToMany('App\Tipo_Contacto', 'Cargador_Contacto', 'cuit', 'idTipoContacto');
-    }
+    public function cargador_contacto(){
+        return $this->hasMany('App\Cargador_Contacto', 'cuit', 'cuit');
+    } 
     public function condicion_iva(){
-        return $this->belongsTo('App\Condicion_IVA', 'idCondIva', 'cuit');
+        return $this->belongsTo('App\Condicion_IVA', 'condIva', 'cuit');
     }
     public function carga(){
-        return $this->hasMany('App\Carga', 'idCarga', 'cuit');
+        return $this->hasMany('App\Carga', 'idCargador', 'cuit');
     }
 }

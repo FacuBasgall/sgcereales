@@ -18,7 +18,7 @@ class Carga extends Model
     public function cargador(){
         return $this->belongsTo('App\Cargador', 'idCargador', 'idCarga');
     }
-    public function descarga(){
-        return $this->hasMany('App\Descarga', 'idDescarga', 'idCarga');
+    public function descargas(){
+        return $this->hasMany('App\Descarga', 'idCarga', 'idCarga');
     }
 }
