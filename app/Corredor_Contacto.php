@@ -12,9 +12,9 @@ class Corredor_Contacto extends Model
 
 
     public function corredor(){
-        return $this->belongsTo('App\Corredor', 'cuit');
+        return $this->belongsTo('App\Corredor', 'cuit', 'cuit');
     }
     public function tipo_contacto(){
-        return $this->belongsTo('App\Tipo_Contacto', 'tipo');
+        return $this->belongsTo('App\Tipo_Contacto', 'idTipoContacto', 'tipo');
     }
 }

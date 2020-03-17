@@ -11,12 +11,6 @@ class Aviso extends Model
     public $timestamps = false;
     protected $fillable = ['idProducto', 'idCorredor', 'idEntregador', 'estado', 'observacion'];
 
-    public function producto(){
-        return $this->belongsTo('App\Producto', 'idProducto', 'idAviso');
-    }
-    /* public function cargador(){
-        return $this->belongsTo('App\Cargador', 'cuit', 'idAviso');
-    } */
     public function corredor(){
         return $this->belongsTo('App\Corredor', 'idCorredor', 'idAviso');
     }
@@ -24,9 +18,11 @@ class Aviso extends Model
         return $this->hasOne('App\Aviso_Producto', 'idAviso', 'idAviso');
     }
     public function carga(){
-        return $this->hasOne('App\Carga', 'idCarga', 'idAviso');
+        return $this->hasOne('App\Carga', 'idAviso', 'idAviso'); // Parametros: Modelo, FK de este Modelo en el otro, PK de este modelo
     }
-    //relacion con entregador
+    public function aviso_entregador(){
+        return $this->hasOne('App\Aviso_Entregador', 'idAviso', 'idAviso');
+    }
 
     /*
        CONTROLLER

@@ -11,9 +11,9 @@ class Cargador_Contacto extends Model
     protected $fillable = ['cuit', 'contacto', 'tipo'];
 
     public function cargador(){
-        return $this->belongsTo('App\Cargador', 'cuit');
+        return $this->belongsTo('App\Cargador', 'cuit', 'cuit');
     }
     public function tipo_contacto(){
-        return $this->belongsTo('App\Tipo_Contacto', 'tipo');
+        return $this->belongsTo('App\Tipo_Contacto', 'idTipoContacto', 'tipo');
     }
 }

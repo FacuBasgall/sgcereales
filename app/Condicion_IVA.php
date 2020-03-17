@@ -18,12 +18,4 @@ class Condicion_IVA extends Model
     public function cargador(){
         return $this->hasMany('App\Cargador', 'cuit', 'idCondIva');
     }
-    /*RELACIONES Directas
-        Destinatario -> mucho
-        Cargador -> mucho
-    */
-
-    /*RELACIONES Intermedias
-        
-    */
 }
