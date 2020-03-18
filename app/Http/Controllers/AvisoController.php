@@ -11,7 +11,9 @@ use App\Corredor;
 use App\Producto;
 use App\Destino;
 use App\Cargador;
+use App\User;
 use App\Aviso_Producto;
+
 
 use DB;
 
@@ -24,33 +26,21 @@ class AvisoController extends Controller
      */
     public function index()
     {
-        $var; $i = 0;
-        $avisos = DB::table('aviso')->get();
-        foreach($avisos as $aviso){
-            $var['nroAviso'][$i] = $aviso->idAviso;
-            $var['producto'][$i] = DB::table('aviso')
-                ->join('producto', 'producto.id', '=', 'aviso.idProducto')
-                ->select('producto.nombre')
-                ->where('aviso.idAviso', $aviso->idAviso)
-                ->get();
-            $var['fecha'][$i] = DB::table('aviso')
-                ->join('aviso_producto', 'aviso_producto.idAviso', '=', 'aviso.idAviso')
-                ->select('aviso_producto.fecha')
-                ->whereColumn([
-                    ['aviso_producto.idProducto', '=', $aviso->idProducto],
-                    ['aviso_producto.idAviso', '=', $aviso->idAviso]
-                ])->get();
-            $var['corredor'][$i] = DB::table('aviso')
-                ->join('corredor', 'corredor.cuit', '=', 'aviso.idCorredor')
-                ->select('corredor.nombre')
-                ->where('aviso.idAviso', $aviso->idAviso)
-                ->get();
-            $var['estado'][$i] = $aviso->estado;
-            //join con entregador $var
-            $i ++;
-        }
+        $avisos = Aviso::where('borrado', false)->get();
+        $cargas = Carga::where('borrado', false)->get();
+        $descargas = Descarga::where('borrado', false)->get();
+        $destinos = Destino::where('borrado', false)->get();
+        $cargadores = Cargador::where('borrado', false)->get();
+        $corredores = Corredor::where('borrado', false)->get();
+        $entregadores = User::where('tipoUser', 'E')->get(); //Solo Usuarios Entregadores
+        $productos = Producto::where('borrado', false)->get();
 
-        
+        /* No se si es necesario
+        $aviso_producto = Aviso_Producto::all();
+        $aviso_entregador = Aviso_Entregador::all();
+        */
+        return view('aviso.index', compact(['avisos', 'cargas', 'descargas', 'destinos', 'cargadores', 'corredores', 'entregadores', 'productos']));
+
     }
 
     /**
@@ -60,7 +50,17 @@ class AvisoController extends Controller
      */
     public function create()
     {
-        return view('aviso.create');
+        $avisos = Aviso::where('borrado', false)->get();
+        $cargas = Carga::where('borrado', false)->get();
+        $descargas = Descarga::where('borrado', false)->get();
+        $destinos = Destino::where('borrado', false)->get();
+        $cargadores = Cargador::where('borrado', false)->get();
+        $corredores = Corredor::where('borrado', false)->get();
+        $entregadores = User::where('tipoUser', 'E')->get(); //Solo Usuarios Entregadores
+        $productos = Producto::where('borrado', false)->get();
+
+        return view('aviso.create', compact(['avisos', 'cargas', 'descargas', 'destinos', 'cargadores', 'corredores', 'entregadores', 'productos']));    
+    
     }
 
     /**
@@ -71,7 +71,9 @@ class AvisoController extends Controller
      */
     public function store(Request $request)
     {
-                //FALTAN GUARDAR LOS DATOS
+        $request->validate([
+
+        ]);
         return redirect('/aviso');
     }
 
