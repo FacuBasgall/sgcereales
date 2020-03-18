@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Corredor;
 use App\Corredor_Contacto;
-use App\Condicion_IVA;
 use App\Tipo_Contacto;
 use DB;
 
@@ -18,7 +17,7 @@ class CorredorController extends Controller
      */
     public function index()
     {
-        $arrayCorredor = DB::table('corredor')->get();
+        $arrayCorredor = DB::table('corredor')->where('borrado', false)->get();
         return view('corredor.index', array('arrayCorredor'=>$arrayCorredor));
     }
 
@@ -55,7 +54,9 @@ class CorredorController extends Controller
     public function show($cuit)
     {
         $corredor = Corredor::findOrFail($cuit);
-        return view('corredor.show', array('corredor'=>$corredor));
+        $contacto = Corredor_Contacto::where('cuit', $cuit)->get();
+        $tipoContacto = Tipo_Contacto::all();
+        return view('corredor.show', compact(['corredor', 'contacto', 'tipoContacto']));
     }
 
     /**
@@ -80,9 +81,9 @@ class CorredorController extends Controller
     public function update(Request $request, $cuit)
     {
         $nuevo = Corredor::findOrFail($cuit);
-        $nuevo = $request->all();
+        $nuevo->nombre = $request->input('nombre');
         $nuevo->save();
-        return view('corredor.edit', array('cuit'=>$cuit));
+        return redirect('/corredor');
     }
 
     /**
@@ -94,6 +95,8 @@ class CorredorController extends Controller
     public function destroy($cuit)
     {
         $corredor = Corredor::findOrFail($cuit);
-        $corredor->delete();
+        $corredor->borrado = true;
+        $corredor->save();
+        return redirect('/corredor');
     }
 }

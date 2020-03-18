@@ -10,7 +10,11 @@ class Carga extends Model
     protected $primaryKey = 'idCarga';
     public $timestamps = false;
 
-    protected $fillable = ['idAviso', 'idCargador', 'matriculaCamion', 'nroCartaPorte', 'fecha', 'kilos'];
+    protected $fillable = ['idAviso', 'idCargador', 'matriculaCamion', 'nroCartaPorte', 'fecha', 'kilos', 'borrado'];
+
+    protected $attributes = [
+        'borrado' => false,
+    ];
 
     public function aviso(){
         return $this->belongsTo('App\Aviso', 'idAviso', 'idCarga');

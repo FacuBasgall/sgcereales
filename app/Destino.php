@@ -11,8 +11,12 @@ class Destino extends Model
     protected $keyType = 'string';
     public $timestamps = false;
 
-    protected $fillable = ['nombre', 'condIva', 'dgr', 'cp', 'domicilio', 'localidad', 'provincia', 'pais'];
+    protected $fillable = ['nombre', 'condIva', 'dgr', 'cp', 'domicilio', 'localidad', 'provincia', 'pais', 'borrado'];
 
+    protected $attributes = [
+        'borrado' => false,
+    ];
+    
     public function destino_contacto(){
         return $this->hasMany('App\Destino_Contacto', 'cuit', 'cuit');
     } 
