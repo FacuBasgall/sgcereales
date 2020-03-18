@@ -9,17 +9,18 @@
 	<body style="background-image: url(/image/campo-trigo.jpg)">
 	<div class="row" style="margin-top:40px">
  	<div class="container">
-		<div class="card">
+		<div class="card" style="min-height:250px; width:400px; ">
 		<h2>Editar producto: {{$producto->nombre}}</h2>
-			<div class="box">
+			<div class="box" style="left:15px; top:50%;">
 					<form action="{{action('ProductoController@update', $producto->idProducto)}}" method="POST">
 						{{ method_field('PUT') }}
 						{{ csrf_field() }}
-						<label>Merma: </label>
-						<input type="text" name="merma" id="merma" class="input" value="{{$producto->merma}}">
-						<br>
-						<button type="submit" class="save-button" title="Guardar" style=" position: absolute; top: 80%; left: 60%;"><i class="fa fa-check"></i></button>
-						<a href="{{action('ProductoController@index')}}"><button type="button" class="delete-button" title="Cancelar" style="position: absolute; top: 80%; right: 60%;"><i class="fa fa-close"></i></button></a>
+						<label>
+							<span>Merma: </span>
+							<input type="text" name="merma" id="merma" class="input" value="{{$producto->merma}}">
+						</label>
+						<button type="submit" class="save-button" title="Guardar" style=" position: absolute; top: 85%; left: 70%;"><i class="fa fa-check"></i></button>
+						<a href="{{action('ProductoController@index')}}"><button type="button" class="delete-button" title="Cancelar" style="position: absolute; top: 85%; right: 70%;"><i class="fa fa-close"></i></button></a>
 					</form>
 				
 			</div>

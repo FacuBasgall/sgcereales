@@ -14,17 +14,16 @@ body {
     width:450px;
     margin-top: 50px;
     margin-left: 150px;
-    height: auto;
     min-height:800px;
     background:#fff;
     border-radius:10px;
     transition:0.5s;
+    text-align:center;
 }
 
 .card .box {
     position:absolute;
     top:55%;
-    left:0;
     transform:translateY(-50%);
     text-align:center;
     padding:20px;
@@ -46,6 +45,10 @@ body {
     border-radius: 6px;
     box-sizing: border-box;
     
+}
+
+.box p {
+    color: grey;
 }
 
 label
