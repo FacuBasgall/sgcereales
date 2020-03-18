@@ -15,7 +15,7 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $arrayProductos = DB::table('producto')->where('borrado', false)->get();
+        $arrayProductos = DB::table('producto')->where('borrado', false)->orderBy('nombre')->get();
         return view('producto.index', array('arrayProductos'=>$arrayProductos));
     }
 
@@ -37,10 +37,25 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        $nuevo = new Producto;
-        $nuevo->nombre = $request->input('nombre');
-        $nuevo->merma = $request->input('merma');
-        $nuevo->save();
+        $request->validate([
+            'nombre' => 'required | max:200',
+            'merma' => 'required | numeric',
+        ]);
+        
+        $existe = Producto::where('nombre', $request->nombre)->exists();
+        if($existe){
+            $actualizar = Producto::where('nombre', $request->nombre)->first();
+            $actualizar->merma = $request->merma;
+            $actualizar->borrado = false;
+            $actualizar->save();
+        }
+        else{
+            $nuevo = new Producto;
+            $nuevo->nombre = $request->nombre;
+            $nuevo->merma = $request->merma;
+            $nuevo->borrado = false;
+            $nuevo->save();
+        }
         return redirect('/producto');
     }
 
@@ -76,8 +91,12 @@ class ProductoController extends Controller
      */
     public function update(Request $request, $idProducto)
     {
+        $request->validate([
+            'merma' => 'required | numeric',
+        ]);
+
         $nuevo = Producto::findOrFail($idProducto);
-        $nuevo->merma = $request->input('merma');
+        $nuevo->merma = $request->merma;
         $nuevo->save();
         return redirect('/producto') ;
 
