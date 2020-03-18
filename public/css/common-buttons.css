@@ -6,15 +6,28 @@
     padding: 20px;
     text-align: center;
     text-decoration: none;
-    display: scroll;
+    display: flex;
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 50%;
     position: fixed;
-    top: 90%;
-    left: 90%;
   }
+
+  @media (min-width: 250px) {
+    .plus-button {
+      top: 85%;
+      left: 93%;
+    }
+    }
+
+  @media only screen and (max-width: 700px) {
+    .plus-button {
+      top: 85%;
+      left: 80%;
+    }
+  }
+
 
   .edit-button {
     background-color: DodgerBlue;

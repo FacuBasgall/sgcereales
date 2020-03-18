@@ -6,11 +6,15 @@ body {
 .container {
     display: flex; /* or inline-flex */
     flex-wrap: wrap;
+    justify-content:center;
+    align-items: center;
+    text-align:center;
   }
 
 .card {
     width:300px;
     margin: 20px;
+    margin-top: 30px;
     min-height:360px;
     background:#fff;
     border-radius:10px;
@@ -47,6 +51,6 @@ body {
 }
 
 .card .box p {
-    color:#262626;
+    color:#646161;
     font-size: 15px;
 }

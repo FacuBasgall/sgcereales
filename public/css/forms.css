@@ -5,15 +5,14 @@ body {
 
 .container {
     justify-content:center;
-    left: 5%;
-    position: relative;
+    align-items: center;
+    display: flex;
     text-align:center;
+    margin-top: 20px;
   }
 
   .card {
     width:450px;
-    margin-top: 50px;
-    margin-left: 125px;
     min-height:800px;
     background:#fff;
     border-radius:10px;

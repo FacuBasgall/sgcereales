@@ -7,7 +7,6 @@
       		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</head>
 	<body style="background:url(/image/silo.jpg) no-repeat center center fixed">
-		<div class="row" style="margin-top:-20px">
 			<div class="container">
 				<div class="card">
                <h2>Añadir destinatario</h2>
@@ -61,6 +60,5 @@
                </div>
             </div>
          </div>
-      </div>
    </body>
 @endsection
