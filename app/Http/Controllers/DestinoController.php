@@ -29,7 +29,9 @@ class DestinoController extends Controller
      */
     public function create()
     {
-        return view('destino.create');
+        $iva = Condicion_IVA::all();
+        return view('destino.create', array('iva'=>$iva));
+        
     }
 
     /**

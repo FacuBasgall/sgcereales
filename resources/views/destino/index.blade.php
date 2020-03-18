@@ -21,8 +21,8 @@
 					<p>CUIT: {{$key->cuit}}</p>
 
 					<hr></hr>
-					<a href="{{ action('DestinoController@destroy', $key->cuit) }}"><button class="delete-button" title="Borrar"><i class="fa fa-close"></i></button></a>
-					<a href="{{ action('DestinoController@edit', $key->cuit) }}"><button class="edit-button" title="Editar"><i class="fa fa-pencil"></i></button></a>
+					<a href="{{ action('DestinoController@destroy', $key->cuit) }}"><button class="delete-button" style="position: relative; bottom: 50%; right: 20%;" title="Borrar"><i class="fa fa-close"></i></button></a>
+					<a href="{{ action('DestinoController@edit', $key->cuit) }}"><button class="edit-button" style="position: relative; top: 15%; left: 20%;" title="Editar"><i class="fa fa-pencil"></i></button></a>
 					<br><br>
 					</a>
                 </div>
