@@ -16,7 +16,7 @@
 						{{ csrf_field() }}
 						<label>
 							<span>Merma: </span>
-							<input type="text" name="merma" id="merma" class="input" value="{{$producto->merma}}">
+							<input type="number" name="merma" id="merma" class="input" step="0.01" value="{{$producto->merma}}">
 						</label>
 						<button type="submit" class="save-button" title="Guardar" style=" position: absolute; top: 85%; left: 70%;"><i class="fa fa-check"></i></button>
 						<a href="{{action('ProductoController@index')}}"><button type="button" class="back-button" title="Volver" style="position: absolute; top: 85%; right: 70%;"><i class="fa fa-arrow-left"></i></button></a>

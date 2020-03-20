@@ -13,12 +13,12 @@
 			         <form action="{{action('ProductoController@store')}}" method="POST">
                      {{ csrf_field() }}
                      <label for="nombre">
-                        <span>Nombre: </span>
-                        <input type="text" name="nombre" id="nombre" class="input" style="margin: 10px 20px;">
+                        <span>Nombre: *</span>
+                        <input type="text" name="nombre" id="nombre" class="input" style="margin: 10px 20px;" required>
                      </label>
                      <label for="merma">
-                        <span>Merma: </span>
-                        <input type="text" name="merma" id="merma" class="input" style="margin: 10px 20px;">
+                        <span>Merma: *</span>
+                        <input type="number" name="merma" id="merma" class="input" style="margin: 10px 20px;" step="0.01" required>
                      </label>
                      <p>En caso de que no poseer merma, ingresar 0</p>
                      <button type="submit" class="save-button" style="position:absolute; top:90%; left:70%;"><i class="fa fa-check"></i></button>
