@@ -11,7 +11,6 @@
 	<body>
     <div class="container">
 		@foreach( $arrayDestino as $key)
-		<a style="text-decoration:none" title="Mostrar más info" href="{{ action('DestinoController@show', $key->cuit )}}">
 		<div class="card">
                 <div class="box">
 					<div class="img">
@@ -21,15 +20,13 @@
 					<p>CUIT: {{$key->cuit}}</p>
 
 					<hr></hr>
-					<a href="{{ action('DestinoController@destroy', $key->cuit) }}"><button class="delete-button" style="position: relative; bottom: 50%; right: 20%;" title="Borrar"><i class="fa fa-close"></i></button></a>
-					<a href="{{ action('DestinoController@edit', $key->cuit) }}"><button class="edit-button" style="position: relative; top: 15%; left: 20%;" title="Editar"><i class="fa fa-pencil"></i></button></a>
+					<a href="{{ action('DestinoController@show', $key->cuit) }}"><button class="show-button" style="position: relative; top: 15%;" title="Ver más"><i class="fa fa-eye"></i></button></a>
 					<br><br>
 					</a>
                 </div>
 		    </div>
 
 		@endforeach
-		</a>
         </div>
         <a href="{{ action('DestinoController@create') }}"><button class="plus-button" title="Agregar destino"><i class="fa fa-plus"></i></button></a>
 	</body>	

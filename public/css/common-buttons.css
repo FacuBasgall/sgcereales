@@ -42,6 +42,19 @@
     border-radius: 50%;
   }
 
+  .show-button {
+    background-color: rgb(66, 207, 153);
+    border: none;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 50%;
+  }
+
   
   .delete-button {
     background-color: rgb(206, 51, 51);
