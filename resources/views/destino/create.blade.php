@@ -14,21 +14,21 @@
 			         <form action="{{action('DestinoController@store')}}" method="POST">
                      {{ csrf_field() }}
                      <label for="nombre">
-                        <span>Nombre y apellido: </span>
-                        <input type="text" name="nombre" id="nombre" class="input" style="margin: 10px 20px;">
+                        <span>Nombre y apellido: *</span>
+                        <input type="text" name="nombre" id="nombre" class="input" style="margin: 10px 20px;" required>
                      </label>
                      <label for="cuit">
-                        <span>CUIT: </span>
-                        <input type="text" name="cuit" id="cuit" class="input" style="margin: 10px 20px;">
+                        <span>CUIT: *</span>
+                        <input type="number" name="cuit" id="cuit" class="input" style="margin: 10px 20px;" min="0" max="999999999999999" required>
                      </label>	
                      <label for="dgr">
                         <span>DGR: </span>
                         <input type="text" name="dgr" id="dgr" class="input" style="margin: 10px 20px;">
                      </label>
                      <label for="iva">
-                        <span>IVA: </span>
-                        <select name="iva"  class="input">
-                        <option value="none" selected disabled hidden></option>
+                        <span>IVA: *</span>
+                        <select name="iva"  class="input" required>
+                        <option value="" selected disabled hidden></option>
                            @foreach ($iva as $condicion)
                            <option value="{{ $condicion->idCondIva }}">{{ $condicion->descripcion }}</option>
                            @endforeach

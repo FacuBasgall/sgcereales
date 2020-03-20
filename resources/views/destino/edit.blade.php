@@ -16,11 +16,11 @@
 					{{ csrf_field() }}
                      <label for="nombre">
                         <span>Nombre y apellido: </span>
-                        <input type="text" name="nombre" id="nombre" class="input" value="{{$destino->nombre}}" style="margin: 10px 20px;">
+                        <input type="text" name="nombre" id="nombre" class="input" value="{{$destino->nombre}}" style="margin: 10px 20px;"  required>
                      </label>
                      <label for="cuit">
                         <span>CUIT: </span>
-                        <input type="text" name="cuit" id="cuit" class="input" value="{{$destino->cuit}}" style="margin: 10px 20px;" readonly>
+                        <input type="number" name="cuit" id="cuit" class="input" value="{{$destino->cuit}}" style="margin: 10px 20px;" readonly>
                      </label>	
                      <label for="dgr">
                         <span>DGR: </span>
