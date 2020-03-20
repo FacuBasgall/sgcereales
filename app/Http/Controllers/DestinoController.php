@@ -30,8 +30,8 @@ class DestinoController extends Controller
     public function create()
     {
         $iva = Condicion_IVA::all();
-        return view('destino.create', array('iva'=>$iva));
-        
+        $tipoContacto = Tipo_Contacto::all();
+        return view('destino.create', compact(['iva', 'tipoContacto']));
     }
 
     /**
@@ -42,17 +42,32 @@ class DestinoController extends Controller
      */
     public function store(Request $request)
     {
-        $nuevo = new Destino;
-        $nuevo->cuit = $request->input('cuit');
-        $nuevo->nombre = $request->input('nombre');
-        $nuevo->dgr = $request->input('dgr');
-        $nuevo->cp = $request->input('cp');
-        $nuevo->condIva = $request->input('iva');
-        $nuevo->domicilio = $request->input('domicilio');
-        $nuevo->localidad = $request->input('localidad');
-        $nuevo->provincia = $request->input('provincia');
-        $nuevo->pais = $request->input('pais');
+        /* $request->validate([
+            'cuit' => 'required | max:20',
+            'nombre' => 'required | max:200',
+            'cp' => 'numeric | max:10',
+            'iva' => 'required',
+        ]);
+         */
+        $existe = Destino::where('cuit', $request->cuit)->exists();
+        if($existe){
+            $nuevo = Destino::where('cuit', $request->cuit)->first();
+        }
+        else{
+            $nuevo = new Destino;
+            $nuevo->cuit = $request->cuit;
+        }
+        $nuevo->nombre = $request->nombre;
+        $nuevo->dgr = $request->dgr;
+        $nuevo->cp = $request->cp;
+        $nuevo->condIva = $request->iva;
+        $nuevo->domicilio = $request->domicilio;
+        $nuevo->localidad = $request->localidad;
+        $nuevo->provincia = $request->provincia;
+        $nuevo->pais = $request->pais;
+        $nuevo->borrado = false;
         $nuevo->save();
+        
         return redirect('/destino');
     }
 
