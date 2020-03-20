@@ -44,18 +44,16 @@ class ProductoController extends Controller
         
         $existe = Producto::where('nombre', $request->nombre)->exists();
         if($existe){
-            $actualizar = Producto::where('nombre', $request->nombre)->first();
-            $actualizar->merma = $request->merma;
-            $actualizar->borrado = false;
-            $actualizar->save();
+            $nuevo = Producto::where('nombre', $request->nombre)->first();
         }
         else{
             $nuevo = new Producto;
             $nuevo->nombre = $request->nombre;
-            $nuevo->merma = $request->merma;
-            $nuevo->borrado = false;
-            $nuevo->save();
         }
+        $nuevo->merma = $request->merma;
+        $nuevo->borrado = false;
+        $nuevo->save();
+        
         return redirect('/producto');
     }
 
