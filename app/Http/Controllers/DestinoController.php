@@ -68,6 +68,11 @@ class DestinoController extends Controller
         $nuevo->borrado = false;
         $nuevo->save();
         
+        /* $destino_contacto = new Destino_Contacto;
+        $destino_contacto->cuit = $request->cuit;
+        $destino_contacto->contacto = $request
+        $destino_contacto->tipo = $request */
+
         return redirect('/destino');
     }
 
@@ -120,6 +125,8 @@ class DestinoController extends Controller
         $nuevo->provincia = $request->input('provincia');
         $nuevo->pais = $request->input('pais');
         $nuevo->save();
+
+        //CONTACTOS
         return redirect('/destino');
     }
 
