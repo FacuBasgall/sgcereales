@@ -6,7 +6,7 @@
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/forms.css') }}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</head>
-	<body style="background-image: url(/image/campo-trigo.jpg)">
+	<body style="background-image:url(/image/campo-trigo.jpg); no-repeat center center fixed">
  	<div class="container" style="margin-top:40px">
 		<div class="card" style="min-height:250px; width:400px; ">
 		<h2>Editar producto: {{$producto->nombre}}</h2>

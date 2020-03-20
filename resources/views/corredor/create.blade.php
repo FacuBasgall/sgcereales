@@ -1,34 +1,30 @@
 @extends('layout.master')
 @section('content')
 	@parent
-		<div class="row" style="margin-top:40px">
-   <div class="offset-md-3 col-md-6">
-      <div class="card">
-         <div class="card-header text-center">
-            Añadir Corredor
+	<head>
+		<link rel="stylesheet" type="text/css" href="{{ asset('css/common-buttons.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ asset('css/forms.css') }}">
+	</head>
+	<body style="background-image:url(/image/corredor.jpg); no-repeat center center fixed">
+			<div class="container">
+				<div class="card" style="min-height:350px;">
+               <h2>Agregar Corredor</h2>
+               <div class="box" style=" left:25px; top:50%">
+			         <form action="{{action('ProductoController@store')}}" method="POST">
+                     {{ csrf_field() }}
+                     <label for="nombre">
+                        <span>Nombre y Apellido: *</span>
+                        <input type="text" name="nombre" id="nombre" class="input" style="margin: 10px 20px;" required>
+                     </label>
+                     <label for="merma">
+                        <span>CUIT: *</span>
+                        <input type="number" name="merma" id="merma" class="input" style="margin: 10px 20px;" step="0.01" required>
+                     </label>
+                     <button type="submit" class="save-button" style="position:absolute; top:90%; left:70%;"><i class="fa fa-check"></i></button>
+                     <a href="{{ action('CorredorController@index') }}"><button type="button" class="back-button" title="Volver" style="position: absolute; top: 90%; left: 25%;"><i class="fa fa-arrow-left"></i></button></a>
+                  </form>
+               </div>
          </div>
-         <div class="card-body" style="padding:30px">
-						<form action="{{action('CorredorController@store')}}" method="POST">
-							{{ csrf_field() }}
-            <div class="form-group">
-               <label for="title">CUIT</label>
-               <input type="text" name="cuit" id="cuit" class="form-control">
-            </div>
-
-            <div class="form-group">
-							<label for="year">NOMBRE</label>
-							<input type="text" name="nombre" id="nombre" class="form-control">
-            </div>
-            
-             <!-- INFORMACION DE CONTACTO -->
-            
-            <div class="form-group text-center">
-                <button type="submit">Guardar</button>
-            </div>
-		</form>
-        <a href="{{ action('CorredorController@index') }}"><button>Salir y no guardar</button></a>
-        </div>
       </div>
-   </div>
-</div>
+   </body>
 @endsection

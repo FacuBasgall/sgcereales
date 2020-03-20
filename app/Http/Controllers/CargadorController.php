@@ -29,7 +29,8 @@ class CargadorController extends Controller
      */
     public function create()
     {
-        return view('cargador.create');
+        $iva = Condicion_IVA::all();
+        return view('cargador.create', array('iva'=>$iva));
     }
 
     /**
@@ -41,7 +42,15 @@ class CargadorController extends Controller
     public function store(Request $request)
     {
         $nuevo = new Cargador;
-        $nuevo = $request->all();
+        $nuevo->cuit = $request->input('cuit');
+        $nuevo->nombre = $request->input('nombre');
+        $nuevo->dgr = $request->input('dgr');
+        $nuevo->cp = $request->input('cp');
+        $nuevo->condIva = $request->input('iva');
+        $nuevo->domicilio = $request->input('domicilio');
+        $nuevo->localidad = $request->input('localidad');
+        $nuevo->provincia = $request->input('provincia');
+        $nuevo->pais = $request->input('pais');
         $nuevo->save();
         return redirect('/cargador');
     }

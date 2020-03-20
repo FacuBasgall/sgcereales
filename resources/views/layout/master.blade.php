@@ -43,7 +43,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ action('CargadorController@index') }}">
+          <a class="nav-link" href="{{ action('CorredorController@index') }}">
             <i class="fa fa-handshake-o"></i>
             Corredores
           </a>
