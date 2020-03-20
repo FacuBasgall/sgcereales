@@ -50,6 +50,20 @@
     padding: 15px;
     text-align: center;
     cursor: pointer;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 50%;
+  }
+
+  .back-button {
+    background-color: rgb(226, 144, 37);
+    border: none;
+    color: white;
+    padding: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    cursor: pointer;
     border-radius: 50%;
   }
 
@@ -59,6 +73,8 @@
     color: white;
     padding: 15px;
     text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
     cursor: pointer;
     border-radius: 50%;
   }

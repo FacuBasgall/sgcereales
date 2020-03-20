@@ -39,7 +39,7 @@
         <li class="nav-item">
           <a class="nav-link" href="{{ action('DestinoController@index') }}">
             <i class="fa fa-truck"></i>
-            Destinos
+            Destinatarios
           </a>
         </li>
         <li class="nav-item">
@@ -55,12 +55,14 @@
           <a class="nav-link" href="#" title="Manual de usuario">
             <i class="fa fa-book">
             </i>
+            Manual de Usuario
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#" title="Cerrar sesión">
             <i class="fa fa-power-off">
             </i>
+            Cerrar sesión
           </a>
         </li>
       </ul>

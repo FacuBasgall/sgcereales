@@ -4,40 +4,52 @@ body {
 }
 
 .container {
-    left: 5%;
-    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:center;
+    align-items: center;
     text-align:center;
   }
 
   .card {
     text-align:center;
-    width:350px;
-    margin-top: 15px;
-    margin-left: 150px;
-    min-height:550px;
+    margin-top: 35px;
+    margin-bottom: 30px;
+    width:400px;
+    min-height:auto;
     background:#fff;
     border-radius:10px;
     transition:0.5s;
 }
 
 .card .box {
-    position:absolute;
-    top:45%;
-    left:0;
-    transform:translateY(-50%);
-    padding:20px;
+    justify-content: center;
+    margin-top: 20px;
+    text-align: center;
     box-sizing:border-box;
     width:auto;
+}
+
+.card hr { 
+    width: 300px;
+}
+
+.card p{
+    color: black;
+    font-size:15px;
+}
+
+.card strong {
+    color: grey;
+    font-size:15px;
 }
 
 .card h2 {
     font-size:20px;
     color:#686464;
-    margin:20px 0;
 }
 
 .card h1 {
     font-size:30px;
     color:#262626;
-    margin:20px 0;
 }

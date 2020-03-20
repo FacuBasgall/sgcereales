@@ -20,6 +20,7 @@ body {
     text-align:center;
 }
 
+
 .card .box {
     position:absolute;
     top:55%;
@@ -45,6 +46,10 @@ body {
     box-sizing: border-box;
     
 }
+
+input:read-only {
+    color: grey;
+  }
 
 .box p {
     color: grey;

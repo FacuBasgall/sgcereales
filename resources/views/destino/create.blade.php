@@ -28,7 +28,7 @@
                      <label for="iva">
                         <span>IVA: </span>
                         <select name="iva"  class="input">
-                        <option value=""></option>
+                        <option value="none" selected disabled hidden></option>
                            @foreach ($iva as $condicion)
                            <option value="{{ $condicion->idCondIva }}">{{ $condicion->descripcion }}</option>
                            @endforeach
@@ -55,7 +55,7 @@
                         <input type="text" name="domicilio" id="domicilio" class="input" style="margin: 10px 20px;">
                      </label>
                      <button type="submit" class="save-button" style="position:relative; top:65%; left:30%;"><i class="fa fa-check"></i></button>
-                     <a href="{{ action('DestinoController@index') }}"><button type="button" class="delete-button" title="Cancelar" style="position: relative; top: 50%; right: 30%;"><i class="fa fa-close"></i></button></a>
+                     <a href="{{ action('DestinoController@index') }}"><button type="button" class="back-button" title="Volver" style="position: relative; top: 50%; right: 30%;"><i class="fa fa-arrow-left"></i></button></a>
                   </form>
                </div>
             </div>

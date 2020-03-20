@@ -47,6 +47,7 @@ class DestinoController extends Controller
         $nuevo->nombre = $request->input('nombre');
         $nuevo->dgr = $request->input('dgr');
         $nuevo->cp = $request->input('cp');
+        $nuevo->condIva = $request->input('iva');
         $nuevo->domicilio = $request->input('domicilio');
         $nuevo->localidad = $request->input('localidad');
         $nuevo->provincia = $request->input('provincia');
@@ -98,7 +99,8 @@ class DestinoController extends Controller
         $nuevo->nombre = $request->input('nombre');
         $nuevo->dgr = $request->input('dgr');
         $nuevo->cp = $request->input('cp');
-        $nuevo->direccion = $request->input('direccion');
+        $nuevo->condIva = $request->input('iva');
+        $nuevo->domicilio = $request->input('domicilio');
         $nuevo->localidad = $request->input('localidad');
         $nuevo->provincia = $request->input('provincia');
         $nuevo->pais = $request->input('pais');

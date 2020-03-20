@@ -7,24 +7,25 @@
       	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</head>
     <body style="background:url(/image/cereals-show.jpg); background-size: cover;">
-		<div class="row" style="margin-top:-20px">
-			<div class="container">
-				<div class="card">
+		<div class="container">
+			<div class="card">
                 <div class="box">
+                    <div class="header">
     		        <h1>{{$destino->nombre}}</h1>
-                    <h2>CUIT: {{$destino->cuit}}</h2><br>
+                    <h2>CUIT: {{$destino->cuit}}</h2>
+                    <hr></hr>
                     @foreach ($iva as $condicion)
                         @if($condicion->idCondIva == $destino->condIva)
-                        <p><h4>Condicion de IVA: {{$condicion->descripcion}}</h4></p>
+                        <p><strong>Condicion de IVA: </strong>{{$condicion->descripcion}}</p>
                         @endif
                     @endforeach
                     @if (isset($destino->dgr))
                         <p><strong>DGR: </strong>{{$destino->dgr}}</p>
                     @else
-                        <p><strong>DGR: </strong>Valor no definido o 0</p>
+                        <p><strong>DGR: </strong>No ingresado </p>
                     @endif
-
-                    <br><br><h4><strong>Domicilio del destinatario:</strong></h4><br>
+                    <hr>
+                    <h4><strong>Domicilio del destinatario:</strong></h4>
                     @if (isset($destino->cp))
                         <p><strong>CP: </strong>{{$destino->cp}}</p>
                     @else
@@ -54,16 +55,8 @@
                     @else
                         <p><strong>País: </strong>País no definido</p>
                     @endif
-                    <a href="{{ action('DestinoController@edit', $destino->cuit)}}"><button>Editar</button></a>
-                    <a href="{{ action('DestinoController@destroy', '$destino->cuit') }}"><button>Eliminar</button></a>
-                    <a href="{{ action('DestinoController@index') }}"><button>Volver</button></a>
-                </div>
-                </div>
-            </div>
-        </div>
-    </body>
-
-            <h4><strong>Infomación de contacto:</strong></h4><br>
+            <hr>
+            <h4><strong>Infomación de contacto:</strong></h4>
             @foreach ($tipoContacto as $tipo)
                @foreach ($contacto as $numero)
                    @if ($tipo->idTipoContacto == $numero->tipo)
@@ -71,6 +64,14 @@
                    @endif
                @endforeach
             @endforeach
+            <hr>
+            <a href="{{ action('DestinoController@index') }}"><button class="back-button" title="Volver" style="position: relative; top: 10%; right: 20%;"><i class="fa fa-arrow-left"></i></button></a>
+            <a href="{{ action('DestinoController@destroy', $destino->cuit) }}"><button class="delete-button" title="Eliminar" style="position: relative; top: 10%; left: 20%;"><i class="fa fa-close"></i></button></a>
+            <a href="{{ action('DestinoController@edit', $destino->cuit)}}"><button class="edit-button" title="Editar" style="position: relative; top: 10%; left: 20%;"><i class="fa fa-pencil"></i></button></a>        
+            </div>
+            </div>
+        </div>
+    </body>
 
 			
 @endsection

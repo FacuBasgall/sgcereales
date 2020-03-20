@@ -25,7 +25,7 @@ body {
 }
 .card .box {
     position:absolute;
-    top:50%;
+    top:55%;
     left:0;
     transform:translateY(-50%);
     text-align:center;
@@ -36,7 +36,7 @@ body {
 .card .box .img {
     width:120px;
     height:120px;
-    margin:0 auto;
+    margin:15px auto;
     border-radius:50%;
     overflow:hidden;
 }
