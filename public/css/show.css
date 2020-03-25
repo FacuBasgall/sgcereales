@@ -1,0 +1,55 @@
+body {
+    font-family:sans-serif;
+    background-size: cover;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:center;
+    align-items: center;
+    text-align:center;
+  }
+
+  .card {
+    text-align:center;
+    margin-top: 35px;
+    margin-bottom: 30px;
+    width:400px;
+    min-height:auto;
+    background:#fff;
+    border-radius:10px;
+    transition:0.5s;
+}
+
+.card .box {
+    justify-content: center;
+    margin-top: 20px;
+    text-align: center;
+    box-sizing:border-box;
+    width:auto;
+}
+
+.card hr { 
+    width: 300px;
+}
+
+.card p{
+    color: black;
+    font-size:15px;
+}
+
+.card strong {
+    color: grey;
+    font-size:15px;
+}
+
+.card h2 {
+    font-size:20px;
+    color:#686464;
+}
+
+.card h1 {
+    font-size:30px;
+    color:#262626;
+}

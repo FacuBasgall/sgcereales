@@ -10,7 +10,11 @@ class Descarga extends Model
     protected $primaryKey = 'idDescarga';
     public $timestamps = false;
 
-    protected $fillable = ['idCarga', 'idDestinatario', 'fecha', 'bruto', 'tara', 'humedad', 'merma', 'ph', 'proteina', 'calidad'];
+    protected $fillable = ['idCarga', 'idDestinatario', 'fecha', 'bruto', 'tara', 'humedad', 'merma', 'ph', 'proteina', 'calidad', 'borrado'];
+
+    protected $attributes = [
+        'borrado' => false,
+    ];
     
     public function destino(){
         return $this->belongsTo('App\Destino', 'idDestinatario', 'idDescarga');

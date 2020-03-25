@@ -9,8 +9,12 @@ class Aviso extends Model
     protected $table = 'aviso';
     protected $primaryKey = 'idAviso';
     public $timestamps = false;
-    protected $fillable = ['idProducto', 'idCorredor', 'idEntregador', 'estado', 'observacion'];
+    protected $fillable = ['idProducto', 'idCorredor', 'idEntregador', 'estado', 'observacion', 'borrado'];
 
+    protected $attributes = [
+        'borrado' => false,
+    ];
+    
     public function corredor(){
         return $this->belongsTo('App\Corredor', 'idCorredor', 'idAviso');
     }

@@ -18,7 +18,7 @@ class DestinoController extends Controller
      */
     public function index()
     {
-        $arrayDestino = DB::table('destinatario')->get();
+        $arrayDestino = DB::table('destinatario')->where('borrado', false)->get();
         return view('destino.index', array('arrayDestino'=>$arrayDestino));
     }
 
@@ -29,7 +29,9 @@ class DestinoController extends Controller
      */
     public function create()
     {
-        return view('destino.create');
+        $iva = Condicion_IVA::all();
+        $tipoContacto = Tipo_Contacto::all();
+        return view('destino.create', compact(['iva', 'tipoContacto']));
     }
 
     /**
@@ -40,9 +42,37 @@ class DestinoController extends Controller
      */
     public function store(Request $request)
     {
-        $nuevo = new Destino;
-        $nuevo = $request->all();
+        /* $request->validate([
+            'cuit' => 'required | max:20',
+            'nombre' => 'required | max:200',
+            'cp' => 'numeric | max:10',
+            'iva' => 'required',
+        ]);
+         */
+        $existe = Destino::where('cuit', $request->cuit)->exists();
+        if($existe){
+            $nuevo = Destino::where('cuit', $request->cuit)->first();
+        }
+        else{
+            $nuevo = new Destino;
+            $nuevo->cuit = $request->cuit;
+        }
+        $nuevo->nombre = $request->nombre;
+        $nuevo->dgr = $request->dgr;
+        $nuevo->cp = $request->cp;
+        $nuevo->condIva = $request->iva;
+        $nuevo->domicilio = $request->domicilio;
+        $nuevo->localidad = $request->localidad;
+        $nuevo->provincia = $request->provincia;
+        $nuevo->pais = $request->pais;
+        $nuevo->borrado = false;
         $nuevo->save();
+        
+        /* $destino_contacto = new Destino_Contacto;
+        $destino_contacto->cuit = $request->cuit;
+        $destino_contacto->contacto = $request
+        $destino_contacto->tipo = $request */
+
         return redirect('/destino');
     }
 
@@ -55,7 +85,10 @@ class DestinoController extends Controller
     public function show($cuit)
     {
         $destino = Destino::findOrFail($cuit);
-        return view('destino.show', array('destino'=>$destino));
+        $contacto = Destino_Contacto::where('cuit', $cuit)->get();
+        $tipoContacto = Tipo_Contacto::all();
+        $iva = Condicion_IVA::all();
+        return view('destino.show', compact(['destino', 'contacto', 'tipoContacto', 'iva']));
     }
 
     /**
@@ -67,22 +100,34 @@ class DestinoController extends Controller
     public function edit($cuit)
     {
         $destino = Destino::findOrFail($cuit);
-        return view('destino.edit', array('destino'=>$destino));
+        $contacto = Destino_Contacto::where('cuit', $cuit)->get();
+        $tipoContacto = Tipo_Contacto::all();
+        $iva = Condicion_IVA::all();
+        return view('destino.edit', compact(['destino', 'contacto', 'tipoContacto', 'iva']));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $cuit
+     * @param  string  $cuit
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $cuit)
     {
         $nuevo = Destino::findOrFail($cuit);
-        $nuevo = $request->all();
+        $nuevo->nombre = $request->input('nombre');
+        $nuevo->dgr = $request->input('dgr');
+        $nuevo->cp = $request->input('cp');
+        $nuevo->condIva = $request->input('iva');
+        $nuevo->domicilio = $request->input('domicilio');
+        $nuevo->localidad = $request->input('localidad');
+        $nuevo->provincia = $request->input('provincia');
+        $nuevo->pais = $request->input('pais');
         $nuevo->save();
-        return view('destino.edit', array('cuit'=>$cuit));
+
+        //CONTACTOS
+        return redirect('/destino');
     }
 
     /**
@@ -94,6 +139,8 @@ class DestinoController extends Controller
     public function destroy($cuit)
     {
         $destino = Destino::findOrFail($cuit);
-        $destino->delete();
+        $destino->borrado = true;
+        $destino->save();
+        return redirect('/destino');
     }
 }

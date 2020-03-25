@@ -6,15 +6,28 @@
     padding: 20px;
     text-align: center;
     text-decoration: none;
-    display: scroll;
+    display: flex;
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 50%;
     position: fixed;
-    top: 90%;
-    left: 90%;
   }
+
+  @media (min-width: 250px) {
+    .plus-button {
+      top: 85%;
+      left: 93%;
+    }
+    }
+
+  @media only screen and (max-width: 700px) {
+    .plus-button {
+      top: 85%;
+      left: 80%;
+    }
+  }
+
 
   .edit-button {
     background-color: DodgerBlue;
@@ -27,9 +40,19 @@
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 50%;
-    position: relative;
-    top: 20%;
-    left: 20%;
+  }
+
+  .show-button {
+    background-color: rgb(66, 207, 153);
+    border: none;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 50%;
   }
 
   
@@ -38,6 +61,20 @@
     border: none;
     color: white;
     padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 50%;
+  }
+
+  .back-button {
+    background-color: rgb(226, 144, 37);
+    border: none;
+    color: white;
+    padding: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     text-align: center;
     cursor: pointer;
     border-radius: 50%;
@@ -49,6 +86,8 @@
     color: white;
     padding: 15px;
     text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
     cursor: pointer;
     border-radius: 50%;
   }

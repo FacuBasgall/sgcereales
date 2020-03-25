@@ -1,65 +1,64 @@
 @extends('layout.master')
 @section('content')
 	@parent
-		<div class="row" style="margin-top:40px">
-   <div class="offset-md-3 col-md-6">
-      <div class="card">
-         <div class="card-header text-center">
-            Añadir destinatario
+	<head>
+		<link rel="stylesheet" type="text/css" href="{{ asset('css/common-buttons.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ asset('css/forms.css') }}">
+      		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	</head>
+	<body style="background:url(/image/silo.jpg) no-repeat center center fixed">
+			<div class="container">
+				<div class="card">
+               <h2>Añadir destinatario</h2>
+               <div class="box">
+			         <form action="{{action('DestinoController@store')}}" method="POST">
+                     {{ csrf_field() }}
+                     <label for="nombre">
+                        <span>Nombre y apellido: *</span>
+                        <input type="text" name="nombre" id="nombre" class="input" style="margin: 10px 20px;" required>
+                     </label>
+                     <label for="cuit">
+                        <span>CUIT: *</span>
+                        <input type="number" name="cuit" id="cuit" class="input" style="margin: 10px 20px;" min="0" max="999999999999999" required>
+                     </label>	
+                     <label for="dgr">
+                        <span>DGR: </span>
+                        <input type="text" name="dgr" id="dgr" class="input" style="margin: 10px 20px;">
+                     </label>
+                     <label for="iva">
+                        <span>IVA: *</span>
+                        <select name="iva"  class="input" required>
+                        <option value="" selected disabled hidden></option>
+                           @foreach ($iva as $condicion)
+                           <option value="{{ $condicion->idCondIva }}">{{ $condicion->descripcion }}</option>
+                           @endforeach
+                        </select>
+                     </label>
+		               <label for="cp">
+                        <span>Codigo postal: </span>
+                        <input type="text" name="cp" id="cp" class="input" style="margin: 10px 20px;">
+                     </label>
+                     <label for="pais">
+                        <span>Pais: </span>
+                        <input type="text" name="pais" id="pais" class="input" style="margin: 10px 20px;">
+                     </label>
+                     <label for="provincia">
+                        <span>Provincia: </span>
+                        <input type="text" name="provincia" id="provincia" class="input" style="margin: 10px 20px;">
+                     </label>
+                     <label for="localidad">
+                        <span>Localidad: </span>
+                        <input type="text" name="localidad" id="localidad" class="input" style="margin: 10px 20px;">
+                     </label>
+		               <label for="domicilio">
+                        <span>Domicilio: </span>
+                        <input type="text" name="domicilio" id="domicilio" class="input" style="margin: 10px 20px;">
+                     </label>
+                     <button type="submit" class="save-button" style="position:relative; top:65%; left:30%;"><i class="fa fa-check"></i></button>
+                     <a href="{{ action('DestinoController@index') }}"><button type="button" class="back-button" title="Volver" style="position: relative; top: 50%; right: 30%;"><i class="fa fa-arrow-left"></i></button></a>
+                  </form>
+               </div>
+            </div>
          </div>
-         <div class="card-body" style="padding:30px">
-						<form action="{{action('DestinoController@store')}}" method="POST">
-							{{ csrf_field() }}
-            <div class="form-group">
-               <label for="title">CUIT</label>
-               <input type="text" name="cuit" id="cuit" class="form-control">
-            </div>
-
-            <div class="form-group">
-							<label for="year">NOMBRE</label>
-							<input type="text" name="nombre" id="nombre" class="form-control">
-            </div>
-            
-             <!-- CONDICION IVA -->
-
-            <div class="form-group">
-							<label for="director">DGR</label>
-							<input type="text" name="dgr" id="dgr" class="form-control">
-            </div>
-
-            <div class="form-group">
-							<label for="poster">CODIGO POSTAL</label>
-							<input type="text" name="cp" id="cp" class="form-control">
-            </div>
-            
-            <div class="form-group">
-							<label for="poster">DOMICILIO</label>
-							<input type="text" name="domicilio" id="domicilio" class="form-control">
-            </div>
-
-            <div class="form-group">
-							<label for="poster">LOCALIDAD</label>
-							<input type="text" name="localidad" id="localidad" class="form-control">
-            </div>
-
-            <div class="form-group">
-							<label for="poster">PROVINCIA</label>
-							<input type="text" name="provincia" id="provincia" class="form-control">
-            </div>
-
-            <div class="form-group">
-							<label for="poster">PAIS</label>
-							<input type="text" name="pais" id="pais" class="form-control">
-            </div>
-          <!-- INFORMACION DE CONTACTO -->
-            
-          <div class="form-group text-center">
-            <button type="submit">Guardar</button>
-          </div>
-		</form>
-        <a href="{{ action('DestinoController@index') }}"><button>Salir y no guardar</button></a>
-         </div>
-      </div>
-   </div>
-</div>
+   </body>
 @endsection
