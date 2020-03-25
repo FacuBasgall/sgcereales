@@ -13,7 +13,7 @@ use App\Destino;
 use App\Cargador;
 use App\User;
 use App\Aviso_Producto;
-
+use App\Aviso_Entregador;
 
 use DB;
 
@@ -34,12 +34,10 @@ class AvisoController extends Controller
         $corredores = Corredor::where('borrado', false)->get();
         $entregadores = User::where('tipoUser', 'E')->get(); //Solo Usuarios Entregadores
         $productos = Producto::where('borrado', false)->get();
+        $avisos_productos = Aviso_Producto::all();
+        $avisos_entregadores = Aviso_Entregador::all();
 
-        /* No se si es necesario
-        $aviso_producto = Aviso_Producto::all();
-        $aviso_entregador = Aviso_Entregador::all();
-        */
-        return view('aviso.index', compact(['avisos', 'cargas', 'descargas', 'destinos', 'cargadores', 'corredores', 'entregadores', 'productos']));
+        return view('aviso.index', compact(['avisos', 'cargas', 'descargas', 'destinos', 'cargadores', 'corredores', 'entregadores', 'productos', 'avisos_productos', 'avisos_entregadores']));
 
     }
 
@@ -58,8 +56,10 @@ class AvisoController extends Controller
         $corredores = Corredor::where('borrado', false)->get();
         $entregadores = User::where('tipoUser', 'E')->get(); //Solo Usuarios Entregadores
         $productos = Producto::where('borrado', false)->get();
+        $avisos_productos = Aviso_Producto::all();
+        $avisos_entregadores = Aviso_Entregador::all();
 
-        return view('aviso.create', compact(['avisos', 'cargas', 'descargas', 'destinos', 'cargadores', 'corredores', 'entregadores', 'productos']));    
+        return view('aviso.create', compact(['avisos', 'cargas', 'descargas', 'destinos', 'cargadores', 'corredores', 'entregadores', 'productos', 'avisos_productos', 'avisos_entregadores']));    
     
     }
 
@@ -71,6 +71,7 @@ class AvisoController extends Controller
      */
     public function store(Request $request)
     {
+        //FALTA
         $request->validate([
 
         ]);
@@ -86,7 +87,17 @@ class AvisoController extends Controller
     public function show($idAviso)
     {
         $aviso = Aviso::findOrFail($idAviso);
-        return view('aviso.show', array('aviso'=>$aviso));
+        $carga = Carga::where('idAviso', $idAviso)->where('idAviso', $idAviso)->get();
+        $descargas = Descarga::where('borrado', false)->get();
+        $destinos = Destino::where('borrado', false)->get();
+        $cargadores = Cargador::where('borrado', false)->get();
+        $corredor = Corredor::where('borrado', false)->where('cuit', $aviso->idCorredor)->get();
+        $entregador = User::where('tipoUser', 'E')->where('idUser', $aviso->idEntregador)->get();
+        $producto = Producto::where('borrado', false)->where('idProducto', $aviso->idProducto)->get();
+        $aviso_producto = Aviso_Producto::where('idAviso', $idAviso);
+        $aviso_entregador = Aviso_Entregador::where('idAviso', $idAviso);
+
+        return view('aviso.show', compact(['avisos', 'carga', 'descargas', 'destinos', 'cargadores', 'corredor', 'entregador', 'producto', 'aviso_producto', 'aviso_entregador']));    
     }
 
     /**
@@ -98,7 +109,17 @@ class AvisoController extends Controller
     public function edit($idAviso)
     {
         $aviso = Aviso::findOrFail($idAviso);
-        return view('aviso.edit', array('aviso'=>$aviso));
+        $carga = Carga::where('idAviso', $idAviso)->where('idAviso', $idAviso)->get();
+        $descargas = Descarga::where('borrado', false)->get();
+        $destinos = Destino::where('borrado', false)->get();
+        $cargadores = Cargador::where('borrado', false)->get();
+        $corredor = Corredor::where('borrado', false)->where('cuit', $aviso->idCorredor)->get();
+        $entregador = User::where('tipoUser', 'E')->where('idUser', $aviso->idEntregador)->get();
+        $producto = Producto::where('borrado', false)->where('idProducto', $aviso->idProducto)->get();
+        $aviso_producto = Aviso_Producto::where('idAviso', $idAviso);
+        $aviso_entregador = Aviso_Entregador::where('idAviso', $idAviso);
+        
+        return view('aviso.edit', compact(['avisos', 'carga', 'descargas', 'destinos', 'cargadores', 'corredor', 'entregador', 'producto', 'aviso_producto', 'aviso_entregador']));    
     }
 
     /**
@@ -110,6 +131,7 @@ class AvisoController extends Controller
      */
     public function update(Request $request, $idAviso)
     {
+        //FALTA
         $nuevo = Aviso::findOrFail($idAviso);
         $nuevo = $request->all();
         $nuevo->save();
@@ -124,6 +146,7 @@ class AvisoController extends Controller
      */
     public function destroy($idAviso)
     {
+        //FALTA
         $aviso = Aviso::findOrFail($idAviso);
         $aviso->delete();
     }
