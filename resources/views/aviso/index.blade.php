@@ -1,59 +1,45 @@
 @extends('layout.master')
 @section('content')
 	@parent
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
-    <div class="container">
-	<div class="row">
-		<h2>Listado de Avisos</h2>
-        <a href="{{ action('AvisoController@create') }}"><button>Nuevo</button></a>
-	</div>
-	
-	
-	<div class="row">
-	    
-	    <div class='col-sm-8 col-md-8'>
-	        
-    	    
-    	    <table class='table'>
-    	        <thead>
-    	            <tr>
-                        <th>Numero de Aviso</th>
-                        <th>Numero de Carta Porte</th>
-                        <th>Producto</th>
-                        <th>Acopiador</th>
-                        <th>Destino</th>
-                        <th>Fecha</th>
-                        <th>Estado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                @foreach( $arrayAviso as $key)
-                <tr>
-                    <td>{{$key->idAviso}}</td>
-                    <td>NRO CARTA PORTE</td>
-                    <td>PRODUCTO</td>
-                    <td>CARGADOR</td>
-                    <td>DESTINO</td>
-                    <td>FECHA</td>
-                    <td>ESTADO</td>
-                    @if ESTADO == 'T'
-                    <td><a href="{{ action('AvisoController@show', $key->idAviso) }}"><button>Ver Detalles</button></a></td>
-                    @else
-                    <td><a href="{{ action('AvisoController@edit', $key->idAviso) }}"><button>Editar</button></a></td>
+    
+    @foreach ($avisos as $aviso)
+        
+        <strong>ID de Aviso:</strong> {{$aviso->idAviso}}
+        @foreach ($productos as $producto)
+            @if ($producto->idProducto == $aviso->idProducto)
+                <strong>Producto:</strong> {{$producto->nombre}}
+            @endif
+        @endforeach
+        @foreach ($corredores as $corredor)
+            @if ($corredor->cuit == $aviso->idCorredor)
+                <strong>Corredor:</strong> {{$corredor->nombre}}
+            @endif
+        @endforeach
+        @foreach ($entregadores as $entregador)
+            @if ($entregador->idUser == $aviso->idEntregador)
+                <strong>Entregador:</strong> {{$entregador->username}}
+            @endif
+        @endforeach
+        @foreach ($avisos_entregadores as $aviso_entregador)
+            @if ($aviso_entregador->idAviso == $aviso->idAviso)
+                <strong>Fecha:</strong> {{$aviso_entregador->fecha}}
+            @endif
+        @endforeach
+        @if ($aviso->estado == true)
+            <strong>Estado:</strong> Terminada
+        @else
+            <strong>Estado:</strong> Pendiente
+        @endif
+        @foreach ($cargas as $carga)
+            @if ($carga->idAviso == $aviso->idAviso)
+                @foreach ($cargadores as $cargador)
+                    @if ($carga->idCargador == $cargador->cuit)
+                        <strong>Cargador:</strong> {{$cargador->nombre}}
                     @endif
-                </tr>
                 @endforeach
-                </tbody>
-    	    </table>
-    	    
-	    </div>
-	    
-	    
-	</div>
-	
-	
-    </div>
+            @endif
+        @endforeach
+
+    @endforeach
+
 @endsection

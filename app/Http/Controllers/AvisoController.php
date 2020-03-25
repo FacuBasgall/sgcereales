@@ -11,7 +11,9 @@ use App\Corredor;
 use App\Producto;
 use App\Destino;
 use App\Cargador;
+use App\User;
 use App\Aviso_Producto;
+use App\Aviso_Entregador;
 
 use DB;
 
@@ -24,33 +26,19 @@ class AvisoController extends Controller
      */
     public function index()
     {
-        $var; $i = 0;
-        $avisos = DB::table('aviso')->get();
-        foreach($avisos as $aviso){
-            $var['nroAviso'][$i] = $aviso->idAviso;
-            $var['producto'][$i] = DB::table('aviso')
-                ->join('producto', 'producto.id', '=', 'aviso.idProducto')
-                ->select('producto.nombre')
-                ->where('aviso.idAviso', $aviso->idAviso)
-                ->get();
-            $var['fecha'][$i] = DB::table('aviso')
-                ->join('aviso_producto', 'aviso_producto.idAviso', '=', 'aviso.idAviso')
-                ->select('aviso_producto.fecha')
-                ->whereColumn([
-                    ['aviso_producto.idProducto', '=', $aviso->idProducto],
-                    ['aviso_producto.idAviso', '=', $aviso->idAviso]
-                ])->get();
-            $var['corredor'][$i] = DB::table('aviso')
-                ->join('corredor', 'corredor.cuit', '=', 'aviso.idCorredor')
-                ->select('corredor.nombre')
-                ->where('aviso.idAviso', $aviso->idAviso)
-                ->get();
-            $var['estado'][$i] = $aviso->estado;
-            //join con entregador $var
-            $i ++;
-        }
+        $avisos = Aviso::where('borrado', false)->get();
+        $cargas = Carga::where('borrado', false)->get();
+        $descargas = Descarga::where('borrado', false)->get();
+        $destinos = Destino::where('borrado', false)->get();
+        $cargadores = Cargador::where('borrado', false)->get();
+        $corredores = Corredor::where('borrado', false)->get();
+        $entregadores = User::where('tipoUser', 'E')->get(); //Solo Usuarios Entregadores
+        $productos = Producto::where('borrado', false)->get();
+        $avisos_productos = Aviso_Producto::all();
+        $avisos_entregadores = Aviso_Entregador::all();
 
-        
+        return view('aviso.index', compact(['avisos', 'cargas', 'descargas', 'destinos', 'cargadores', 'corredores', 'entregadores', 'productos', 'avisos_productos', 'avisos_entregadores']));
+
     }
 
     /**
@@ -60,7 +48,19 @@ class AvisoController extends Controller
      */
     public function create()
     {
-        return view('aviso.create');
+        $avisos = Aviso::where('borrado', false)->get();
+        $cargas = Carga::where('borrado', false)->get();
+        $descargas = Descarga::where('borrado', false)->get();
+        $destinos = Destino::where('borrado', false)->get();
+        $cargadores = Cargador::where('borrado', false)->get();
+        $corredores = Corredor::where('borrado', false)->get();
+        $entregadores = User::where('tipoUser', 'E')->get(); //Solo Usuarios Entregadores
+        $productos = Producto::where('borrado', false)->get();
+        $avisos_productos = Aviso_Producto::all();
+        $avisos_entregadores = Aviso_Entregador::all();
+
+        return view('aviso.create', compact(['avisos', 'cargas', 'descargas', 'destinos', 'cargadores', 'corredores', 'entregadores', 'productos', 'avisos_productos', 'avisos_entregadores']));    
+    
     }
 
     /**
@@ -71,7 +71,10 @@ class AvisoController extends Controller
      */
     public function store(Request $request)
     {
-                //FALTAN GUARDAR LOS DATOS
+        //FALTA
+        $request->validate([
+
+        ]);
         return redirect('/aviso');
     }
 
@@ -84,7 +87,17 @@ class AvisoController extends Controller
     public function show($idAviso)
     {
         $aviso = Aviso::findOrFail($idAviso);
-        return view('aviso.show', array('aviso'=>$aviso));
+        $carga = Carga::where('idAviso', $idAviso)->where('idAviso', $idAviso)->get();
+        $descargas = Descarga::where('borrado', false)->get();
+        $destinos = Destino::where('borrado', false)->get();
+        $cargadores = Cargador::where('borrado', false)->get();
+        $corredor = Corredor::where('borrado', false)->where('cuit', $aviso->idCorredor)->get();
+        $entregador = User::where('tipoUser', 'E')->where('idUser', $aviso->idEntregador)->get();
+        $producto = Producto::where('borrado', false)->where('idProducto', $aviso->idProducto)->get();
+        $aviso_producto = Aviso_Producto::where('idAviso', $idAviso);
+        $aviso_entregador = Aviso_Entregador::where('idAviso', $idAviso);
+
+        return view('aviso.show', compact(['avisos', 'carga', 'descargas', 'destinos', 'cargadores', 'corredor', 'entregador', 'producto', 'aviso_producto', 'aviso_entregador']));    
     }
 
     /**
@@ -96,7 +109,17 @@ class AvisoController extends Controller
     public function edit($idAviso)
     {
         $aviso = Aviso::findOrFail($idAviso);
-        return view('aviso.edit', array('aviso'=>$aviso));
+        $carga = Carga::where('idAviso', $idAviso)->where('idAviso', $idAviso)->get();
+        $descargas = Descarga::where('borrado', false)->get();
+        $destinos = Destino::where('borrado', false)->get();
+        $cargadores = Cargador::where('borrado', false)->get();
+        $corredor = Corredor::where('borrado', false)->where('cuit', $aviso->idCorredor)->get();
+        $entregador = User::where('tipoUser', 'E')->where('idUser', $aviso->idEntregador)->get();
+        $producto = Producto::where('borrado', false)->where('idProducto', $aviso->idProducto)->get();
+        $aviso_producto = Aviso_Producto::where('idAviso', $idAviso);
+        $aviso_entregador = Aviso_Entregador::where('idAviso', $idAviso);
+        
+        return view('aviso.edit', compact(['avisos', 'carga', 'descargas', 'destinos', 'cargadores', 'corredor', 'entregador', 'producto', 'aviso_producto', 'aviso_entregador']));    
     }
 
     /**
@@ -108,6 +131,7 @@ class AvisoController extends Controller
      */
     public function update(Request $request, $idAviso)
     {
+        //FALTA
         $nuevo = Aviso::findOrFail($idAviso);
         $nuevo = $request->all();
         $nuevo->save();
@@ -122,6 +146,7 @@ class AvisoController extends Controller
      */
     public function destroy($idAviso)
     {
+        //FALTA
         $aviso = Aviso::findOrFail($idAviso);
         $aviso->delete();
     }
