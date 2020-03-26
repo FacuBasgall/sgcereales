@@ -46,6 +46,7 @@ class ProductoController extends Controller
             $nuevo->nombre = $request->nombre;
         }
         $nuevo->merma = $request->merma;
+        $nuevo->borrado = false;
         $nuevo->save();
         return redirect('/producto');
     }
