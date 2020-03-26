@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Producto;
 use DB;
+use Exception;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 class ProductoController extends Controller
 {
@@ -41,6 +43,7 @@ class ProductoController extends Controller
         $nuevo->nombre = $request->input('nombre');
         $nuevo->merma = $request->input('merma');
         $nuevo->save();
+        alert()->success("El producto $nuevo->nombre fue creado con exito", 'Creado con exito');
         return redirect('/producto');
     }
 
@@ -63,7 +66,13 @@ class ProductoController extends Controller
      */
     public function edit($idProducto)
     {
-        $producto = Producto::findOrFail($idProducto);
+        
+        try {
+            $producto = Producto::findOrFail($idProducto);
+        }catch(MethodNotAllowedHttpException $e){
+            alert()->error('Ese producto no fue encontrado','Producto no encontrado')->persistent('Close');
+            return redirect('/producto') ;
+        }
         return view('producto.edit', array('producto'=>$producto));
     }
 
@@ -76,9 +85,15 @@ class ProductoController extends Controller
      */
     public function update(Request $request, $idProducto)
     {
-        $nuevo = Producto::findOrFail($idProducto);
+        try { //no funciona el catch
+            $nuevo = Producto::findOrFail($idProducto);
+        }catch(Exception  $e){
+            alert()->error('Error Message', 'Optional Title')->persistent('Close');
+            return redirect('/producto') ;
+        }
         $nuevo->merma = $request->input('merma');
         $nuevo->save();
+        alert()->success("El producto $nuevo->nombre fue editado con exito", 'Editado con exito');
         return redirect('/producto') ;
 
     }
@@ -94,6 +109,7 @@ class ProductoController extends Controller
         $producto = Producto::findOrFail($idProducto);
         $producto->borrado = true;
         $producto->save();
+        alert()->success("El producto fue eliminado con exito", 'Eliminado con exito');
         return redirect('/producto');
     }  
 }
