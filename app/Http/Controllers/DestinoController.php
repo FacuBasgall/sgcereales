@@ -67,7 +67,7 @@ class DestinoController extends Controller
         $nuevo->pais = $request->pais;
         $nuevo->borrado = false;
         $nuevo->save();
-        
+        alert()->success("El destinatario $nuevo->nombre fue creado con exito", 'Creado con exito');
         /* $destino_contacto = new Destino_Contacto;
         $destino_contacto->cuit = $request->cuit;
         $destino_contacto->contacto = $request
@@ -125,7 +125,7 @@ class DestinoController extends Controller
         $nuevo->provincia = $request->input('provincia');
         $nuevo->pais = $request->input('pais');
         $nuevo->save();
-
+        alert()->success("El destinatario $nuevo->nombre fue editado con exito", 'Editado con exito');
         //CONTACTOS
         return redirect('/destino');
     }
@@ -141,6 +141,7 @@ class DestinoController extends Controller
         $destino = Destino::findOrFail($cuit);
         $destino->borrado = true;
         $destino->save();
+        alert()->success("El destinatario fue eliminado con exito", 'Eliminado con exito');
         return redirect('/destino');
     }
 }

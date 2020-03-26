@@ -3,7 +3,8 @@
 	@parent
 	<head>
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/common-buttons.css') }}">
-		<link rel="stylesheet" type="text/css" href="{{ asset('css/show.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/show.css') }}">
+        <script type="text/javascript" src="{{ asset('js/sweetAlert.js') }}"></script>
       	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</head>
     <body style="background:url(/image/silo.jpg) no-repeat center center fixed">
@@ -66,7 +67,7 @@
             @endforeach
             <hr>
             <a href="{{ action('DestinoController@index') }}"><button class="back-button" title="Volver" style="position: relative; top: 10%; right: 20%;"><i class="fa fa-arrow-left"></i></button></a>
-            <a href="{{ action('DestinoController@destroy', $destino->cuit) }}"><button class="delete-button" title="Eliminar" style="position: relative; top: 10%; left: 20%;"><i class="fa fa-close"></i></button></a>
+            <a onclick="warning( '{{$destino->cuit}}' , 'destino');"><button class="delete-button" title="Eliminar" style="position: relative; top: 10%; left: 20%;"><i class="fa fa-close"></i></button></a>
             <a href="{{ action('DestinoController@edit', $destino->cuit)}}"><button class="edit-button" title="Editar" style="position: relative; top: 10%; left: 20%;"><i class="fa fa-pencil"></i></button></a>        
             </div>
             </div>
