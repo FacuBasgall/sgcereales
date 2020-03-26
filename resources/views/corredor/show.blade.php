@@ -8,7 +8,7 @@
 	</head>
     <body style="background:url(/image/corredor.jpg) no-repeat center center fixed">
 		<div class="container">
-			<div class="card">
+			<div class="card"> 
                 <div class="box">
                     <div class="header">
     		        <h1>{{$corredor->nombre}}</h1>
@@ -24,7 +24,7 @@
             @endforeach
             <hr>
             <a href="{{ action('CorredorController@index') }}"><button class="back-button" title="Volver" style="position: relative; top: 10%; right: 20%;"><i class="fa fa-arrow-left"></i></button></a>
-            <a href="{{ action('CorredorController@destroy', $corredor->cuit) }}"><button class="delete-button" title="Eliminar" style="position: relative; top: 10%; left: 20%;"><i class="fa fa-close"></i></button></a>
+            <a onclick="warning( '{{$corredor->cuit}}' , 'corredor');"><button class="delete-button" title="Eliminar" style="position: relative; top: 10%; left: 20%;"><i class="fa fa-close"></i></button></a>
             <a href="{{ action('CorredorController@edit', $corredor->cuit)}}"><button class="edit-button" title="Editar" style="position: relative; top: 10%; left: 20%;"><i class="fa fa-pencil"></i></button></a>        
             </div>
             </div>

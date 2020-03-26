@@ -4,7 +4,6 @@
 	<head>
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/common-buttons.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/show.css') }}">
-        <script type="text/javascript" src="{{ asset('js/sweetAlert.js') }}"></script>
       	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</head>
     <body style="background:url(/image/silo.jpg) no-repeat center center fixed">
