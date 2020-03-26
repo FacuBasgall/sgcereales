@@ -18,7 +18,7 @@ class DestinoController extends Controller
      */
     public function index()
     {
-        $arrayDestino = DB::table('destinatario')->where('borrado', false)->get();
+        $arrayDestino = DB::table('destinatario')->where('borrado', false)->orderBy('nombre')->get();
         return view('destino.index', array('arrayDestino'=>$arrayDestino));
     }
 

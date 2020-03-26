@@ -18,7 +18,7 @@ class CargadorController extends Controller
      */
     public function index()
     {
-        $arrayCargador = DB::table('cargador')->where('borrado', false)->get();
+        $arrayCargador = DB::table('cargador')->where('borrado', false)->orderBy('nombre')->get();
         return view('cargador.index', array('arrayCargador'=>$arrayCargador));
     }
 
@@ -41,16 +41,23 @@ class CargadorController extends Controller
      */
     public function store(Request $request)
     {
-        $nuevo = new Cargador;
-        $nuevo->cuit = $request->input('cuit');
-        $nuevo->nombre = $request->input('nombre');
-        $nuevo->dgr = $request->input('dgr');
-        $nuevo->cp = $request->input('cp');
-        $nuevo->condIva = $request->input('iva');
-        $nuevo->domicilio = $request->input('domicilio');
-        $nuevo->localidad = $request->input('localidad');
-        $nuevo->provincia = $request->input('provincia');
-        $nuevo->pais = $request->input('pais');
+        $existe = Cargador::where('cuit', $request->cuit)->exists();
+        if($existe){
+            $nuevo = Cargador::where('cuit', $request->cuit)->first();
+        }
+        else{
+            $nuevo = new Cargador;
+            $nuevo->cuit = $request->cuit;
+        }
+        $nuevo->nombre = $request->nombre;
+        $nuevo->dgr = $request->dgr;
+        $nuevo->cp = $request->cp;
+        $nuevo->condIva = $request->iva;
+        $nuevo->domicilio = $request->domicilio;
+        $nuevo->localidad = $request->localidad;
+        $nuevo->provincia = $request->provincia;
+        $nuevo->pais = $request->pais;
+        $nuevo->borrado = false;
         $nuevo->save();
         return redirect('/cargador');
     }

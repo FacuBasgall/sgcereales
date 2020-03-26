@@ -17,7 +17,7 @@ class CorredorController extends Controller
      */
     public function index()
     {
-        $arrayCorredor = DB::table('corredor')->where('borrado', false)->get();
+        $arrayCorredor = DB::table('corredor')->where('borrado', false)->orderBy('nombre')->get();
         return view('corredor.index', array('arrayCorredor'=>$arrayCorredor));
     }
 
@@ -39,8 +39,16 @@ class CorredorController extends Controller
      */
     public function store(Request $request)
     {
-        $nuevo = new Corredor;
-        $nuevo = $request->all();
+        $existe = Corredor::where('cuit', $request->cuit)->exists();
+        if($existe){
+            $nuevo = Corredor::where('cuit', $request->cuit)->first();
+        }
+        else{
+            $nuevo = new Corredor;
+            $nuevo->cuit = $request->cuit;
+        }
+        $nuevo->nombre = $request->nombre;
+        $nuevo->borrado = false;
         $nuevo->save();
         return redirect('/corredor');
     }
