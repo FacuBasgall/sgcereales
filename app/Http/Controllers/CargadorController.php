@@ -18,7 +18,7 @@ class CargadorController extends Controller
      */
     public function index()
     {
-        $arrayCargador = DB::table('cargador')->where('borrado', false)->get();
+        $arrayCargador = DB::table('cargador')->where('borrado', false)->orderBy('nombre')->get();
         return view('cargador.index', array('arrayCargador'=>$arrayCargador));
     }
 

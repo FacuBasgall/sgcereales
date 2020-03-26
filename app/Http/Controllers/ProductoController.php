@@ -15,7 +15,7 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $arrayProductos = DB::table('producto')->where('borrado', false)->get();
+        $arrayProductos = DB::table('producto')->where('borrado', false)->orderBy('nombre')->get();
         return view('producto.index', array('arrayProductos'=>$arrayProductos));
     }
 

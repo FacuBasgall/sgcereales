@@ -17,7 +17,7 @@ class CorredorController extends Controller
      */
     public function index()
     {
-        $arrayCorredor = DB::table('corredor')->where('borrado', false)->get();
+        $arrayCorredor = DB::table('corredor')->where('borrado', false)->orderBy('nombre')->get();
         return view('corredor.index', array('arrayCorredor'=>$arrayCorredor));
     }
 
