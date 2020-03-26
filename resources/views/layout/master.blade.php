@@ -6,6 +6,7 @@
   <script type="text/javascript" src="{{ asset('sweetalert/sweetAlert.min.js') }}"></script>
   <link href="{{ asset('css/bootstrap-home.min.css') }}" rel="stylesheet">
   <script type="text/javascript" src="{{ asset('js/sweetAlert.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('js/loading.js') }}"></script> 
   <!------ Include the above in your HEAD tag ---------->
 </head>
 <body>
@@ -70,5 +71,6 @@
       </ul>
     </div>
   </nav>
+  <div id="loader" class="center"></div> 
   @yield('content')
 </body>

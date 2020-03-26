@@ -34,7 +34,9 @@
         </div>
         <a href="{{ action('ProductoController@create') }}"><button class="plus-button" title="Agregar producto"><i class="fa fa-plus"></i></button></a>
         @include('sweet::alert')
+
     </body>	
+
 @endsection
 
 

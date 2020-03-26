@@ -5,7 +5,7 @@
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/common-buttons.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/forms.css') }}">
 	</head>
-	<body style="background-image:url(/image/campo-trigo.jpg); no-repeat center center fixed">
+   <body style="background-image:url(/image/campo-trigo.jpg); no-repeat center center fixed">
 			<div class="container">
 				<div class="card" style="min-height:350px;">
                <h2>Agregar producto</h2>
