@@ -37,9 +37,15 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        $nuevo = new Producto;
-        $nuevo->nombre = $request->input('nombre');
-        $nuevo->merma = $request->input('merma');
+        $existe = Producto::where('nombre', $request->nombre)->exists();
+        if($existe){
+            $nuevo = Producto::where('nombre', $request->nombre)->first();
+        }
+        else{
+            $nuevo = new Producto;
+            $nuevo->nombre = $request->nombre;
+        }
+        $nuevo->merma = $request->merma;
         $nuevo->save();
         return redirect('/producto');
     }

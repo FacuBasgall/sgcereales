@@ -40,8 +40,23 @@ class CargadorController extends Controller
      */
     public function store(Request $request)
     {
-        $nuevo = new Cargador;
-        $nuevo = $request->all();
+        $existe = Cargador::where('cuit', $request->cuit)->exists();
+        if($existe){
+            $nuevo = Cargador::where('cuit', $request->cuit)->first();
+        }
+        else{
+            $nuevo = new Cargador;
+            $nuevo->cuit = $request->cuit;
+        }
+        $nuevo->nombre = $request->nombre;
+        $nuevo->dgr = $request->dgr;
+        $nuevo->cp = $request->cp;
+        $nuevo->condIva = $request->iva;
+        $nuevo->domicilio = $request->domicilio;
+        $nuevo->localidad = $request->localidad;
+        $nuevo->provincia = $request->provincia;
+        $nuevo->pais = $request->pais;
+        $nuevo->borrado = false;
         $nuevo->save();
         return redirect('/cargador');
     }

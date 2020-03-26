@@ -40,8 +40,23 @@ class DestinoController extends Controller
      */
     public function store(Request $request)
     {
-        $nuevo = new Destino;
-        $nuevo = $request->all();
+        $existe = Destino::where('cuit', $request->cuit)->exists();
+        if($existe){
+            $nuevo = Destino::where('cuit', $request->cuit)->first();
+        }
+        else{
+            $nuevo = new Destino;
+            $nuevo->cuit = $request->cuit;
+        }
+        $nuevo->nombre = $request->nombre;
+        $nuevo->dgr = $request->dgr;
+        $nuevo->cp = $request->cp;
+        $nuevo->condIva = $request->iva;
+        $nuevo->domicilio = $request->domicilio;
+        $nuevo->localidad = $request->localidad;
+        $nuevo->provincia = $request->provincia;
+        $nuevo->pais = $request->pais;
+        $nuevo->borrado = false;
         $nuevo->save();
         return redirect('/destino');
     }
