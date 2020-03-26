@@ -50,6 +50,7 @@ class CorredorController extends Controller
         $nuevo->nombre = $request->nombre;
         $nuevo->borrado = false;
         $nuevo->save();
+        alert()->success("El corredor $nuevo->nombre fue creado con exito", 'Creado con exito');
         return redirect('/corredor');
     }
 
@@ -91,6 +92,7 @@ class CorredorController extends Controller
         $nuevo = Corredor::findOrFail($cuit);
         $nuevo->nombre = $request->input('nombre');
         $nuevo->save();
+        alert()->success("El corredor $nuevo->nombre fue editado con exito", 'Editado con exito');
         return redirect('/corredor');
     }
 
@@ -105,6 +107,7 @@ class CorredorController extends Controller
         $corredor = Corredor::findOrFail($cuit);
         $corredor->borrado = true;
         $corredor->save();
+        alert()->success("El corredor fue eliminado con exito", 'Eliminado con exito');
         return redirect('/corredor');
     }
 }

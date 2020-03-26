@@ -23,7 +23,7 @@
                                 <p>Este producto no posee merma</p>
                             @endif
                             <hr></hr>
-                            <a href="{{ action('ProductoController@destroy', $key->idProducto) }}"><button class="delete-button" title="Borrar" style="position: relative; bottom: 50%; right: 20%;"><i class="fa fa-close"></i></button></a>
+                            <a onclick="warning( '{{$key->idProducto}}' , 'producto');"><button type="button" class="button delete-button" title="Borrar" style="position: relative; bottom: 50%; right: 20%;"><i class="fa fa-close"></i></button></a>
                             <a href="{{ action('ProductoController@edit', $key->idProducto)}}"><button class="edit-button" title="Editar" style="position: relative; top: 20%; left: 20%;"><i class="fa fa-pencil"></i></button></a>
                             <br><br>
                         </a>
@@ -33,5 +33,9 @@
         @endforeach
         </div>
         <a href="{{ action('ProductoController@create') }}"><button class="plus-button" title="Agregar producto"><i class="fa fa-plus"></i></button></a>
-	</body>	
+        @include('sweet::alert')
+    </body>	
 @endsection
+
+
+

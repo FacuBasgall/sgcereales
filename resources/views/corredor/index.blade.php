@@ -29,6 +29,7 @@
 		@endforeach
         </div>
         <a href="{{ action('CorredorController@create') }}"><button class="plus-button" title="Agregar corredor"><i class="fa fa-plus"></i></button></a>
+		@include('sweet::alert')
 	</body>	
 @endsection
 

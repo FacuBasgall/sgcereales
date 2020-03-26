@@ -66,7 +66,7 @@
             @endforeach
             <hr>
             <a href="{{ action('CargadorController@index') }}"><button class="back-button" title="Volver" style="position: relative; top: 10%; right: 20%;"><i class="fa fa-arrow-left"></i></button></a>
-            <a href="{{ action('CargadorController@destroy', $cargador->cuit) }}"><button class="delete-button" title="Eliminar" style="position: relative; top: 10%; left: 20%;"><i class="fa fa-close"></i></button></a>
+            <a onclick="warning( '{{$cargador->cuit}}' , 'cargador');"><button class="delete-button" title="Eliminar" style="position: relative; top: 10%; left: 20%;"><i class="fa fa-close"></i></button></a>
             <a href="{{ action('CargadorController@edit', $cargador->cuit)}}"><button class="edit-button" title="Editar" style="position: relative; top: 10%; left: 20%;"><i class="fa fa-pencil"></i></button></a>        
             </div>
             </div>

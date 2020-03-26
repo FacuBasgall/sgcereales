@@ -29,6 +29,7 @@
 		@endforeach
         </div>
         <a href="{{ action('CargadorController@create') }}"><button class="plus-button" title="Agregar destino"><i class="fa fa-plus"></i></button></a>
+	@include('sweet::alert')
 	</body>	
 @endsection
 

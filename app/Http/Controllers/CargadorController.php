@@ -59,6 +59,7 @@ class CargadorController extends Controller
         $nuevo->pais = $request->pais;
         $nuevo->borrado = false;
         $nuevo->save();
+        alert()->success("El cargador $nuevo->nombre fue creado con exito", 'Creado con exito');
         return redirect('/cargador');
     }
 
@@ -102,8 +103,16 @@ class CargadorController extends Controller
     public function update(Request $request, $cuit)
     {
         $nuevo = Cargador::findOrFail($cuit);
-        $nuevo = $request->all();
+        $nuevo->nombre = $request->input('nombre');
+        $nuevo->dgr = $request->input('dgr');
+        $nuevo->cp = $request->input('cp');
+        $nuevo->condIva = $request->input('iva');
+        $nuevo->domicilio = $request->input('domicilio');
+        $nuevo->localidad = $request->input('localidad');
+        $nuevo->provincia = $request->input('provincia');
+        $nuevo->pais = $request->input('pais');
         $nuevo->save();
+        alert()->success("El cargador $nuevo->nombre fue editado con exito", 'Editado con exito');
         return redirect('/cargador');
     }
 
@@ -118,6 +127,7 @@ class CargadorController extends Controller
         $cargador = Cargador::findOrFail($cuit);
         $cargador->borrado = true;
         $cargador->save();
+        alert()->success("El corredor fue eliminado con exito", 'Eliminado con exito');
         return redirect('/cargador');
     }
 }
