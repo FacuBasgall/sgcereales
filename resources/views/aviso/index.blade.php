@@ -20,16 +20,6 @@
                 <strong>Entregador:</strong> {{$entregador->username}}
             @endif
         @endforeach
-        @foreach ($avisos_entregadores as $aviso_entregador)
-            @if ($aviso_entregador->idAviso == $aviso->idAviso)
-                <strong>Fecha:</strong> {{$aviso_entregador->fecha}}
-            @endif
-        @endforeach
-        @if ($aviso->estado == true)
-            <strong>Estado:</strong> Terminada
-        @else
-            <strong>Estado:</strong> Pendiente
-        @endif
         @foreach ($cargas as $carga)
             @if ($carga->idAviso == $aviso->idAviso)
                 @foreach ($cargadores as $cargador)
@@ -37,9 +27,15 @@
                         <strong>Cargador:</strong> {{$cargador->nombre}}
                     @endif
                 @endforeach
+                <strong>Fecha de Carga:</strong> {{$carga->fecha}}
             @endif
         @endforeach
-
+        @if ($aviso->estado == true)
+            <strong>Estado:</strong> Terminada
+        @else
+            <strong>Estado:</strong> Pendiente
+        @endif
+    <br>
     @endforeach
-
+<!-- IR A CargaController@create -->
 @endsection

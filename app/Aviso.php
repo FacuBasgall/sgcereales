@@ -27,7 +27,7 @@ class Aviso extends Model
     public function aviso_entregador(){
         return $this->hasOne('App\Aviso_Entregador', 'idAviso', 'idAviso');
     }
-
+    
     /*
        CONTROLLER
         

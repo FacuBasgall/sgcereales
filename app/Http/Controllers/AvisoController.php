@@ -48,7 +48,7 @@ class AvisoController extends Controller
      */
     public function create()
     {
-        $avisos = Aviso::where('borrado', false)->get();
+        /* $avisos = Aviso::where('borrado', false)->get();
         $cargas = Carga::where('borrado', false)->get();
         $descargas = Descarga::where('borrado', false)->get();
         $destinos = Destino::where('borrado', false)->get();
@@ -60,7 +60,8 @@ class AvisoController extends Controller
         $avisos_entregadores = Aviso_Entregador::all();
 
         return view('aviso.create', compact(['avisos', 'cargas', 'descargas', 'destinos', 'cargadores', 'corredores', 'entregadores', 'productos', 'avisos_productos', 'avisos_entregadores']));    
-    
+     */
+        
     }
 
     /**
@@ -147,7 +148,7 @@ class AvisoController extends Controller
     public function destroy($idAviso)
     {
         //FALTA
-        $aviso = Aviso::findOrFail($idAviso);
-        $aviso->delete();
+        /* $aviso = Aviso::findOrFail($idAviso);
+        $aviso->delete(); */
     }
 }
