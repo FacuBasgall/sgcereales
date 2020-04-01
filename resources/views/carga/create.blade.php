@@ -13,7 +13,6 @@
                 <div class="box">
 			         <form action="{{action('CargaController@store')}}" method="POST">
                      {{ csrf_field() }}
-                     <!-- EL NRO DE AVISO DE CARGARA DESPUES EN EL CONTROLLER -->
                      <label for="producto">
                         <span>Producto: *</span>
                         <select name="producto"  class="input" required>
@@ -65,6 +64,9 @@
                      <label for="kilos">
                         <span>Kilos Cargados: *</span>
                         <input type="number" name="kilos" id="kilos" class="input" style="margin: 10px 20px;" required>
+                     </label>
+                     <label for="check">
+                        <input type="checkbox" name= "check" id="check" value="Descarga" checked> Deseo ingresar las descargas ahora
                      </label>
                      <button type="submit" class="save-button" style="position:relative; top:65%; left:30%;"><i class="fa fa-check"></i></button>
                      <a href="{{ action('AvisoController@index') }}"><button type="button" class="back-button" title="Volver" style="position: relative; top: 50%; right: 30%;"><i class="fa fa-arrow-left"></i></button></a>

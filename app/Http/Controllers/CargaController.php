@@ -87,8 +87,11 @@ class CargaController extends Controller
         $aviso_entregador->fecha = date("Y-m-d");
         $aviso_entregador->save();
 
-        return redirect()->action('AvisoController@index');
-        //FALTA INGRESAR LOS DATOS DE LA DESCARGA, SI SE DESEA
+        if(isset($request->check)){
+            return redirect()->action('DescargaController@create', $nuevo->idCarga);
+        }else{
+            return redirect()->action('AvisoController@index');
+        }   
     }
 
     /**
@@ -138,7 +141,7 @@ class CargaController extends Controller
      */
     public function destroy($idCarga)
     {
-        $carga = Carga::findOrFail($idCarga);
-        $carga->delete();
+        /* $carga = Carga::findOrFail($idCarga);
+        $carga->delete(); */
     }
 }
