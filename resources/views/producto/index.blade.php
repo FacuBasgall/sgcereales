@@ -3,7 +3,6 @@
 	@parent
     <head>
          <link rel="stylesheet" type="text/css" href="{{ asset('css/showProduct.css') }}" >
-         <link rel="stylesheet" type="text/css" href="{{ asset('css/common-buttons.css') }}" >
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     </head>
@@ -23,7 +22,7 @@
                                 <p>Este producto no posee merma</p>
                             @endif
                             <hr></hr>
-                            <a onclick="warning( '{{$key->idProducto}}' , 'producto');"><button type="button" class="button delete-button" title="Borrar" style="position: relative; bottom: 50%; right: 20%;"><i class="fa fa-close"></i></button></a>
+                            <a onclick="warning( '{{$key->idProducto}}' , 'producto');"><button type="button" class="button delete-button" title="Borrar" style="position: relative; bottom: 50%; right: 20%;"><i class="fa fa-trash"></i></button></a>
                             <a href="{{ action('ProductoController@edit', $key->idProducto)}}"><button class="edit-button" title="Editar" style="position: relative; top: 20%; left: 20%;"><i class="fa fa-pencil"></i></button></a>
                             <br><br>
                         </a>

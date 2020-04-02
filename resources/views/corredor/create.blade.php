@@ -2,7 +2,6 @@
 @section('content')
 	@parent
 	<head>
-		<link rel="stylesheet" type="text/css" href="{{ asset('css/common-buttons.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/forms.css') }}">
 	</head>
 	<body style="background-image:url(/image/corredor.jpg); no-repeat center center fixed">

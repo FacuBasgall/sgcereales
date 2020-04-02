@@ -1,4 +1,10 @@
-  
+@-webkit-keyframes tiembla{
+  0%  { -webkit-transform:rotateZ(-5deg); }
+  50% { -webkit-transform:rotateZ( 0deg) scale(.8); }
+  100%{ -webkit-transform:rotateZ( 5deg); }
+}
+
+
 .plus-button {
     background-color: #4CAF50;
     border: none;
@@ -12,6 +18,27 @@
     cursor: pointer;
     border-radius: 50%;
     position: fixed;
+  }
+
+  .small-plus-button{
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 16px;
+    padding-left: 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    position: absolute;
+    left: 87%;
+    top: 0.2%;
+    font-family:sans-serif;
+  }
+
+  .plus-button:hover{
+    background-color: rgb(48, 121, 50);
+    -webkit-animation: tiembla 0.7s ;
   }
 
   @media (min-width: 250px) {
@@ -42,6 +69,11 @@
     border-radius: 50%;
   }
 
+  .edit-button:hover{
+    background-color: rgb(18, 93, 168);
+  }
+
+
   .show-button {
     background-color: rgb(66, 207, 153);
     border: none;
@@ -55,7 +87,10 @@
     border-radius: 50%;
   }
 
-  
+  .show-button:hover{
+    background-color: rgb(41, 139, 102);
+  }
+
   .delete-button {
     background-color: rgb(206, 51, 51);
     border: none;
@@ -66,6 +101,10 @@
     margin-top: 20px;
     margin-bottom: 20px;
     border-radius: 50%;
+  }
+
+  .delete-button:hover{
+    background-color: rgb(167, 43, 43);
   }
 
   .back-button {
@@ -80,6 +119,10 @@
     border-radius: 50%;
   }
 
+  .back-button:hover{
+    background-color: rgb(158, 99, 22); 
+  }
+
   .save-button {
     background-color:  #4CAF50;
     border: none;
@@ -90,4 +133,8 @@
     margin-bottom: 20px;
     cursor: pointer;
     border-radius: 50%;
+  }
+
+  .save-button:hover{
+    background-color:  rgb(41, 139, 102);
   }

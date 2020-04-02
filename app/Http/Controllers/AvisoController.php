@@ -14,7 +14,7 @@ use App\Cargador;
 use App\User;
 use App\Aviso_Producto;
 use App\Aviso_Entregador;
-
+use Datatables;
 use DB;
 
 class AvisoController extends Controller
@@ -26,7 +26,7 @@ class AvisoController extends Controller
      */
     public function index()
     {
-        $avisos = Aviso::where('borrado', false)->get();
+         $avisos = Aviso::where('borrado', false)->get();
         $cargas = Carga::where('borrado', false)->get();
         $descargas = Descarga::where('borrado', false)->get();
         $destinos = Destino::where('borrado', false)->get();

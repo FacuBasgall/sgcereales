@@ -7,6 +7,8 @@
   <link href="{{ asset('css/bootstrap-home.min.css') }}" rel="stylesheet">
   <script type="text/javascript" src="{{ asset('js/sweetAlert.js') }}"></script>
   <script type="text/javascript" src="{{ asset('js/loading.js') }}"></script> 
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/common-buttons.css') }}" >
+
   <!------ Include the above in your HEAD tag ---------->
 </head>
 <body>
