@@ -10,6 +10,11 @@
 			<div class="container">
 			    <div class="card">
                 <h2>Añadir datos de la descarga</h2>
+               @if($descargas->count()>0)
+                  <div>
+                  DESCARGAS ANTERIORES
+                  </div>
+               @endif
                 <div class="box">
 			         <form action="{{action('DescargaController@store')}}" method="POST">
                      {{ csrf_field() }}

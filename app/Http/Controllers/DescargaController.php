@@ -37,7 +37,8 @@ class DescargaController extends Controller
     {
         $destinos = Destino::where('borrado', false)->get();
         $carga = Carga::where('idCarga', $idCarga)->first();
-        return view('descarga.create', compact(['carga', 'destinos']));    
+        $descargas = Descarga::where('idCarga', $idCarga)->get();
+        return view('descarga.create', compact(['carga', 'destinos', 'descargas']));    
     }
 
     /**
@@ -70,7 +71,7 @@ class DescargaController extends Controller
             /**Si se descargaron todos los kilos */
             if(isset($request->check)){
                 //ERROR
-                return print("No puede estar seleccionado el checkbox porque no hay mas kilos para descargar");
+                return print_r("No puede estar seleccionado el checkbox porque no hay mas kilos para descargar");
             }else{
                 $nuevo->save();
                 $aviso = Aviso::where('idAviso', $carga->idAviso)->update('estado', true);
@@ -86,7 +87,7 @@ class DescargaController extends Controller
            }
        }else{
            //ERROR
-           return print("Los kilos descargados no pueden ser mayores a los kilos cargados");
+           return print_r("Los kilos descargados no pueden ser mayores a los kilos cargados");
        }
     }
 
@@ -98,8 +99,7 @@ class DescargaController extends Controller
      */
     public function show($idDescarga)
     {
-        $descarga = Descarga::findOrFail($idDescarga);
-        return view('descarga.show', array('descarga'=>$descarga));
+        //
     }
 
     /**
@@ -110,8 +110,7 @@ class DescargaController extends Controller
      */
     public function edit($idDescarga)
     {
-        $descarga = Descarga::findOrFail($idDescarga);
-        return view('descarga.edit', array('descarga'=>$descarga));
+        //
     }
 
     /**
@@ -123,10 +122,7 @@ class DescargaController extends Controller
      */
     public function update(Request $request, $idDescarga)
     {
-        $nuevo = Descarga::findOrFail($idDescarga);
-        $nuevo = $request->all();
-        $nuevo->save();
-        return view('descarga.edit', array('idDescarga'=>$idDescarga));
+        //
     }
 
     /**
@@ -137,7 +133,6 @@ class DescargaController extends Controller
      */
     public function destroy($idDescarga)
     {
-        $descarga = Descarga::findOrFail($idDescarga);
-        $descarga->delete();
+        //
     }
 }

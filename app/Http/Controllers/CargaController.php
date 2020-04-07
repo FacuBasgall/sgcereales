@@ -102,8 +102,7 @@ class CargaController extends Controller
      */
     public function show($idCarga)
     {
-        $carga = Carga::findOrFail($idCarga);
-        return view('carga.show', array('carga'=>$carga));
+        //
     }
 
     /**
@@ -114,8 +113,7 @@ class CargaController extends Controller
      */
     public function edit($idCarga)
     {
-        $carga = Carga::findOrFail($idCarga);
-        return view('carga.edit', array('carga'=>$carga));
+        //
     }
 
     /**
@@ -127,10 +125,7 @@ class CargaController extends Controller
      */
     public function update(Request $request, $idCarga)
     {
-        $nuevo = Carga::findOrFail($idCarga);
-        $nuevo = $request->all();
-        $nuevo->save();
-        return view('carga.edit', array('idCarga'=>$idCarga));
+        //
     }
 
     /**
@@ -141,7 +136,6 @@ class CargaController extends Controller
      */
     public function destroy($idCarga)
     {
-        /* $carga = Carga::findOrFail($idCarga);
-        $carga->delete(); */
+        //
     }
 }
