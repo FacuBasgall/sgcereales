@@ -8,16 +8,16 @@
 	</head>
 	<body style="background:url(/image/silo.jpg) no-repeat center center fixed">
 			<div class="container">
-			    <div class="card">
+			    <div class="card"  style="min-height: 900px">
                 <h2>Añadir datos de la carga</h2>
-                <div class="box">
+                <div class="box"  style="padding: 40px">
 			         <form action="{{action('CargaController@store')}}" method="POST">
                      {{ csrf_field() }}
                      <label for="producto">
-                        <span>Producto: *</span>
+                        <span>Producto:*</span>
                         <select name="producto"  class="input" required>
                         <option value="" selected disabled hidden></option>
-                           @foreach ($productos as $producto)
+                           @foreach ($productos as $producto) 
                               <option value="{{ $producto->idProducto }}"> {{$producto->nombre}}</option>
                            @endforeach
                         </select>
@@ -27,11 +27,11 @@
                         <input type="text" name="tipo" id="tipo" class="input" style="margin: 10px 20px;">
                      </label>
                      <label for="cosecha">
-                        <span>Año de Cosecha: *</span>
+                        <span>Año de Cosecha:*</span>
                         <input type="text" name="cosecha" id="cosecha" class="input" style="margin: 10px 20px;">
                      </label>
                      <label for="cargador">
-                        <span>Cargador: *</span>
+                        <span>Cargador:*</span>
                         <select name="cargador"  class="input" required>
                         <option value="" selected disabled hidden></option>
                            @foreach ($cargadores as $cargador)
@@ -40,7 +40,7 @@
                         </select>
                      </label>
                      <label for="corredor">
-                        <span>Corredor: *</span>
+                        <span>Corredor:*</span>
                         <select name="corredor"  class="input" required>
                         <option value="" selected disabled hidden></option>
                            @foreach ($corredores as $corredor)
@@ -50,19 +50,19 @@
                      </label>
                      <!-- EL ENTREGADOR ES EL USUARIO QUE ESTA AUTENTICADO EN EL MOMENTO -->
                      <label for="matricula">
-                        <span>Matricula del Camión: </span>
+                        <span>Matricula de camión: </span>
                         <input type="text" name="matricula" id="matricula" class="input" style="margin: 10px 20px;">
                      </label>	
                      <label for="cartaPorte">
-                        <span>Número de Carta Porte: </span>
+                        <span>N° Carta Porte: </span>
                         <input type="text" name="cartaPorte" id="cartaPorte" class="input" style="margin: 10px 20px;">
                      </label>
 		               <label for="fecha">
-                        <span>Fecha de Carga: *</span>
+                        <span>Fecha de Carga:*</span>
                         <input type="date" name="fecha" id="fecha" class="input" style="margin: 10px 20px;" required>
                      </label>
                      <label for="kilos">
-                        <span>Kilos Cargados: *</span>
+                        <span>Kilos Cargados:*</span>
                         <input type="number" name="kilos" id="kilos" class="input" style="margin: 10px 20px;" required>
                      </label>
                      <label for="check">

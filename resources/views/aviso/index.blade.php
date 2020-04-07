@@ -14,7 +14,7 @@
     <div class="card">
     <div class="card-header">
     <label class="col-md-8 col-form-label"><b>Listado de Avisos</b></b></label>
-    <a href="{{ action('CargadorController@create') }}" ><button class="small-plus-button" title="Agregar aviso" style="font-family:sans-serif;"> Añadir</button></a>
+    <a href="{{ action('CargaController@create') }}" ><button class="small-plus-button" title="Agregar aviso" style="font-family:sans-serif;"> Añadir</button></a>
     </div>
     <div class="card-body border">
         <table id="idDataTable" class="table table-striped" >
