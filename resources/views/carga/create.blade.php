@@ -6,16 +6,16 @@
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/forms.css') }}">
       		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</head>
-	<body style="background:url(/image/silo.jpg) no-repeat center center fixed">
+	<body style="background:url(/image/field.jpg) no-repeat center center fixed">
 			<div class="container">
 			    <div class="card"  style="min-height: 900px">
-                <h2>Añadir datos de la carga</h2>
+                <h2>Añadir Carga</h2>
                 <div class="box"  style="padding: 40px">
 			         <form action="{{action('CargaController@store')}}" method="POST">
                      {{ csrf_field() }}
                      <label for="producto">
                         <span>Producto:*</span>
-                        <select name="producto"  class="input" required>
+                        <select name="producto"  id="select2" class="input" required>
                         <option value="" selected disabled hidden></option>
                            @foreach ($productos as $producto) 
                               <option value="{{ $producto->idProducto }}"> {{$producto->nombre}}</option>
@@ -32,7 +32,7 @@
                      </label>
                      <label for="cargador">
                         <span>Cargador:*</span>
-                        <select name="cargador"  class="input" required>
+                        <select  name="cargador"  class="input" required>
                         <option value="" selected disabled hidden></option>
                            @foreach ($cargadores as $cargador)
                               <option value="{{ $cargador->cuit }}">{{$cargador->nombre}}</option>
@@ -74,5 +74,6 @@
                </div>
             </div>
          </div>
+
    </body>
 @endsection

@@ -6,20 +6,20 @@
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/forms.css') }}">
       		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</head>
-	<body style="background:url(/image/silo.jpg) no-repeat center center fixed">
+	<body style="background:url(/image/field.jpg) no-repeat center center fixed">
 			<div class="container">
-			    <div class="card">
-                <h2>Añadir datos de la descarga</h2>
+			    <div class="card" style="min-height: 850px;">
+                <h2>Añadir Descarga</h2>
                @if($descargas->count()>0)
                   <div>
                   DESCARGAS ANTERIORES
                   </div>
                @endif
-                <div class="box">
+                <div class="box" style="padding: 45px">
 			         <form action="{{action('DescargaController@store')}}" method="POST">
                      {{ csrf_field() }}
                      <label for="destino">
-                        <span>Destinatario: *</span>
+                        <span>Destinatario:*</span>
                         <select name="destino"  class="input" required>
                         <option value="" selected disabled hidden></option>
                            @foreach ($destinos as $destino)
@@ -28,23 +28,23 @@
                         </select>
                      </label>
                      <label for="fecha">
-                        <span>Fecha de la Descarga: *</span>
+                        <span>Fecha de la Descarga:*</span>
                         <input type="date" name="fecha" id="fecha" class="input" style="margin: 10px 20px;" required>
                      </label>
                      <label for="bruto">
-                        <span>Kilos Brutos: *</span>
+                        <span>Kilos Brutos:*</span>
                         <input type="number" name="bruto" id="bruto" class="input" style="margin: 10px 20px;" required>
                      </label>
                      <label for="tara">
-                        <span>Tara Kg: *</span>
+                        <span>Tara Kg:*</span>
                         <input type="number" name="tara" id="tara" class="input" style="margin: 10px 20px;" required>
                      </label>
                      <label for="humedad">
-                        <span>Humedad (%): *</span>
+                        <span>Humedad (%):*</span>
                         <input type="number" name="humedad" id="humedad" class="input" style="margin: 10px 20px;">
                      </label>
                      <label for="merma">
-                        <span>merma: </span>
+                        <span>Merma: </span>
                         <input type="number" name="merma" id="merma" class="input" style="margin: 10px 20px;">
                      </label>	
                      <label for="ph">
