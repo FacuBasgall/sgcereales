@@ -27,18 +27,4 @@ class Aviso extends Model
     public function aviso_entregador(){
         return $this->hasOne('App\Aviso_Entregador', 'idAviso', 'idAviso');
     }
-
-    /*
-       CONTROLLER
-        
-        join para mandar a vista
-        y para obtner -> 
-
-        podria llamar a una funcion de otro control si esta en publica y creo un new control 
-
-        $modelo->otromodelorelacionado->atributo SI ES DE UNO A UNO
-
-        $var = Persona::where ();
-
-    */
 }

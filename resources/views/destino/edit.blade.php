@@ -11,8 +11,8 @@
                <h2>Editar: {{$destino->nombre}}</h2>
                <div class="box">
 			         <form action="{{action('DestinoController@update', $destino->cuit)}}" method="POST">
-                    {{ method_field('PUT') }}
-					{{ csrf_field() }}
+                     {{ method_field('PUT') }}
+					      {{ csrf_field() }}
                      <label for="nombre">
                         <span>Nombre y apellido: </span>
                         <input type="text" name="nombre" id="nombre" class="input" value="{{$destino->nombre}}" style="margin: 10px 20px;"  required>
@@ -28,11 +28,11 @@
                      <label for="iva">
                         <span>IVA: </span>
                         <select name="iva"  class="input">
-						@foreach ($iva as $condicion)
-							@if($condicion->idCondIva == $destino->condIva)
-								<option value="{{$condicion->idCondIva}}" selected>{{ $condicion->descripcion }}</option>
-							@endif
-							<option value="{{ $condicion->idCondIva }}">{{ $condicion->descripcion }}</option>
+						      @foreach ($iva as $condicion)
+							      @if($condicion->idCondIva == $destino->condIva)
+								      <option value="{{$condicion->idCondIva}}" selected>{{ $condicion->descripcion }}</option>
+							      @endif
+							      <option value="{{ $condicion->idCondIva }}">{{ $condicion->descripcion }}</option>
                         @endforeach
                         </select>
                      </label>

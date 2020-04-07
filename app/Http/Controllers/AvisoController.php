@@ -48,19 +48,7 @@ class AvisoController extends Controller
      */
     public function create()
     {
-        $avisos = Aviso::where('borrado', false)->get();
-        $cargas = Carga::where('borrado', false)->get();
-        $descargas = Descarga::where('borrado', false)->get();
-        $destinos = Destino::where('borrado', false)->get();
-        $cargadores = Cargador::where('borrado', false)->get();
-        $corredores = Corredor::where('borrado', false)->get();
-        $entregadores = User::where('tipoUser', 'E')->get(); //Solo Usuarios Entregadores
-        $productos = Producto::where('borrado', false)->get();
-        $avisos_productos = Aviso_Producto::all();
-        $avisos_entregadores = Aviso_Entregador::all();
-
-        return view('aviso.create', compact(['avisos', 'cargas', 'descargas', 'destinos', 'cargadores', 'corredores', 'entregadores', 'productos', 'avisos_productos', 'avisos_entregadores']));    
-    
+        //
     }
 
     /**
@@ -71,11 +59,7 @@ class AvisoController extends Controller
      */
     public function store(Request $request)
     {
-        //FALTA
-        $request->validate([
-
-        ]);
-        return redirect('/aviso');
+        //
     }
 
     /**
@@ -87,17 +71,17 @@ class AvisoController extends Controller
     public function show($idAviso)
     {
         $aviso = Aviso::findOrFail($idAviso);
-        $carga = Carga::where('idAviso', $idAviso)->where('idAviso', $idAviso)->get();
-        $descargas = Descarga::where('borrado', false)->get();
+        $carga = Carga::where('borrado', false)->where('idAviso', $idAviso)->first();
+        $descargas = Descarga::where('borrado', false)->where('idCarga', $carga->idCarga)->get();
         $destinos = Destino::where('borrado', false)->get();
-        $cargadores = Cargador::where('borrado', false)->get();
-        $corredor = Corredor::where('borrado', false)->where('cuit', $aviso->idCorredor)->get();
-        $entregador = User::where('tipoUser', 'E')->where('idUser', $aviso->idEntregador)->get();
-        $producto = Producto::where('borrado', false)->where('idProducto', $aviso->idProducto)->get();
+        $cargador = Cargador::where('cuit', $carga->idCargador)->first();
+        $corredor = Corredor::where('cuit', $aviso->idCorredor)->first();
+        $entregador = User::where('idUser', $aviso->idEntregador)->first();
+        $producto = Producto::where('idProducto', $aviso->idProducto)->first();
         $aviso_producto = Aviso_Producto::where('idAviso', $idAviso);
         $aviso_entregador = Aviso_Entregador::where('idAviso', $idAviso);
 
-        return view('aviso.show', compact(['avisos', 'carga', 'descargas', 'destinos', 'cargadores', 'corredor', 'entregador', 'producto', 'aviso_producto', 'aviso_entregador']));    
+        return view('aviso.show', compact(['aviso', 'carga', 'descargas', 'destinos', 'cargador', 'corredor', 'entregador', 'producto', 'aviso_producto', 'aviso_entregador']));    
     }
 
     /**
@@ -109,17 +93,17 @@ class AvisoController extends Controller
     public function edit($idAviso)
     {
         $aviso = Aviso::findOrFail($idAviso);
-        $carga = Carga::where('idAviso', $idAviso)->where('idAviso', $idAviso)->get();
-        $descargas = Descarga::where('borrado', false)->get();
+        $carga = Carga::where('borrado', false)->where('idAviso', $idAviso)->first();
+        $descargas = Descarga::where('borrado', false)->where('idCarga', $carga->idCarga)->get();
         $destinos = Destino::where('borrado', false)->get();
-        $cargadores = Cargador::where('borrado', false)->get();
-        $corredor = Corredor::where('borrado', false)->where('cuit', $aviso->idCorredor)->get();
-        $entregador = User::where('tipoUser', 'E')->where('idUser', $aviso->idEntregador)->get();
-        $producto = Producto::where('borrado', false)->where('idProducto', $aviso->idProducto)->get();
+        $cargador = Cargador::where('cuit', $carga->idCargador)->first();
+        $corredor = Corredor::where('cuit', $aviso->idCorredor)->first();
+        $entregador = User::where('idUser', $aviso->idEntregador)->first();
+        $producto = Producto::where('idProducto', $aviso->idProducto)->first();
         $aviso_producto = Aviso_Producto::where('idAviso', $idAviso);
         $aviso_entregador = Aviso_Entregador::where('idAviso', $idAviso);
         
-        return view('aviso.edit', compact(['avisos', 'carga', 'descargas', 'destinos', 'cargadores', 'corredor', 'entregador', 'producto', 'aviso_producto', 'aviso_entregador']));    
+        return view('aviso.edit', compact(['avisos', 'carga', 'descargas', 'destinos', 'cargador', 'corredor', 'entregador', 'producto', 'aviso_producto', 'aviso_entregador']));    
     }
 
     /**
@@ -132,10 +116,6 @@ class AvisoController extends Controller
     public function update(Request $request, $idAviso)
     {
         //FALTA
-        $nuevo = Aviso::findOrFail($idAviso);
-        $nuevo = $request->all();
-        $nuevo->save();
-        return view('aviso.edit', array('idAviso'=>$idAviso));
     }
 
     /**
@@ -147,7 +127,5 @@ class AvisoController extends Controller
     public function destroy($idAviso)
     {
         //FALTA
-        $aviso = Aviso::findOrFail($idAviso);
-        $aviso->delete();
     }
 }

@@ -28,7 +28,8 @@ class CorredorController extends Controller
      */
     public function create()
     {
-        return view('corredor.create');
+        $tipoContacto = Tipo_Contacto::all();
+        return view('corredor.create', array('tipoContacto'=>$tipoContacto));   
     }
 
     /**

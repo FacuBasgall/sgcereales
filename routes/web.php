@@ -46,21 +46,21 @@ Route::get('/corredor/edit/{id}', 'CorredorController@edit');
 Route::put('/corredor/update/{id}', 'CorredorController@update');
 Route::get('/corredor/destroy/{id}', 'CorredorController@destroy');
 
-Route::get('/carga', 'CargaController@index');
+//Route::get('/carga', 'CargaController@index');
 Route::get('/carga/create', 'CargaController@create');
 Route::post('/carga/store', 'CargaController@store');
-Route::get('/carga/show/{id}', 'CargaController@show');
+//Route::get('/carga/show/{id}', 'CargaController@show');
 Route::get('/carga/edit/{id}', 'CargaController@edit');
 Route::put('/carga/update/{id}', 'CargaController@update');
-Route::get('/carga/destroy/{id}', 'CargaController@destroy');
+//Route::get('/carga/destroy/{id}', 'CargaController@destroy');
 
-Route::get('/descarga', 'DescargaController@index');
-Route::get('/descarga/create', 'DescargaController@create');
+//Route::get('/descarga', 'DescargaController@index');
+Route::get('/descarga/create/{id}', 'DescargaController@create');
 Route::post('/descarga/store', 'DescargaController@store');
-Route::get('/descarga/show/{id}', 'DescargaController@show');
+//Route::get('/descarga/show/{id}', 'DescargaController@show');
 Route::get('/descarga/edit/{id}', 'DescargaController@edit');
 Route::put('/descarga/update/{id}', 'DescargaController@update');
-Route::get('/descarga/destroy/{id}', 'DescargaController@destroy');
+//Route::get('/descarga/destroy/{id}', 'DescargaController@destroy');
 
 Route::get('/producto', 'ProductoController@index');
 Route::get('/producto/create', 'ProductoController@create');
@@ -70,8 +70,8 @@ Route::put('/producto/update/{id}', 'ProductoController@update');
 Route::get('/producto/destroy/{id}', 'ProductoController@destroy');
 
 Route::get('/aviso', 'AvisoController@index');
-Route::get('/aviso/create', 'AvisoController@create');
-Route::post('/aviso/store', 'AvisoController@store');
+//Route::get('/aviso/create', 'AvisoController@create');
+//Route::post('/aviso/store', 'AvisoController@store');
 Route::get('/aviso/show/{id}', 'AvisoController@show');
 Route::get('/aviso/edit/{id}', 'AvisoController@edit');
 Route::put('/aviso/update/{id}', 'AvisoController@update');

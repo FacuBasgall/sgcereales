@@ -9,7 +9,7 @@ class Aviso_Producto extends Model
     protected $table = 'aviso_producto';
     protected $primaryKey = 'idAviso';
     public $timestamps = false;
-    protected $fillable = ['idProducto', 'cosecha', 'fecha', 'tipo'];
+    protected $fillable = ['idProducto', 'cosecha', 'tipo'];
 
     public function aviso(){
         return $this->belongsTo('App\Aviso', 'idAviso', 'idAviso');
