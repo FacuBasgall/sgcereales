@@ -26,7 +26,7 @@ class AvisoController extends Controller
      */
     public function index()
     {
-         $avisos = Aviso::where('borrado', false)->get();
+        $avisos = Aviso::where('borrado', false)->orderBy('idAviso', 'desc')->get();
         $cargas = Carga::where('borrado', false)->get();
         $descargas = Descarga::where('borrado', false)->get();
         $destinos = Destino::where('borrado', false)->get();
@@ -126,6 +126,19 @@ class AvisoController extends Controller
      */
     public function destroy($idAviso)
     {
-        //FALTA
+        $aviso = Aviso::findOrFail($idAviso);
+        $carga = Carga::where('idAviso', $idAviso)->first();
+        $descargas = Descarga::where('idCarga', $carga->idCarga)->get();
+        foreach($descargas as $descarga){
+            $descarga->delete();
+        }
+        $aviso_entregador = Aviso_Entregador::where('idAviso', $idAviso)->first();
+        $aviso_producto = Aviso_Producto::where('idAviso', $idAviso)->first();
+        $aviso_entregador->delete();
+        $aviso_producto->delete();
+        $carga->delete();
+        $aviso->delete();
+        alert()->success("El aviso fue eliminado con exito", 'Eliminado con exito');
+        return redirect('/aviso');
     }
 }
