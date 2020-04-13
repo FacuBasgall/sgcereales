@@ -10,7 +10,7 @@ class Producto extends Model
     protected $primaryKey = 'idProducto';
     public $timestamps = false;
 
-    protected $fillable = ['nombre', 'merma', 'borrado'];
+    protected $fillable = ['nombre', 'borrado'];
 
     protected $attributes = [
         'borrado' => false,
@@ -18,6 +18,9 @@ class Producto extends Model
 
     public function aviso_producto(){
         return $this->hasMany('App\Aviso_Producto', 'idProducto', 'idProducto');
+    }
+    public function merma(){
+        return $this->hasMany('App\Merma', 'idProducto', 'idProducto');
     }
 
 }
