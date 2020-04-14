@@ -9,17 +9,17 @@
     </head>
 	<body>
     <div class="container">
-		@foreach( $arrayCargador as $key)
+		@foreach( $arrayTitular as $key)
 		<div class="card">
                 <div class="box">
 					<div class="img">
-						<img src="{{ URL::to('/image/cargador-icon.jpg') }}">
+						<img src="{{ URL::to('/image/titular-icon.jpg') }}">
 					</div>
 					<h2>{{$key->nombre}}</h2>
 					<p>CUIT: {{$key->cuit}}</p>
 
 					<hr></hr>
-					<a href="{{ action('CargadorController@show', $key->cuit) }}"><button class="show-button" style="position: relative; top: 15%;" title="Ver más"><i class="fa fa-eye"></i></button></a>
+					<a href="{{ action('TitularController@show', $key->cuit) }}"><button class="show-button" style="position: relative; top: 15%;" title="Ver más"><i class="fa fa-eye"></i></button></a>
 					<br><br>
 					</a>
                 </div>
@@ -27,7 +27,7 @@
 
 		@endforeach
         </div>
-        <a href="{{ action('CargadorController@create') }}"><button class="plus-button" title="Agregar destino"><i class="fa fa-plus"></i></button></a>
+        <a href="{{ action('TitularController@create') }}"><button class="plus-button" title="Agregar destino"><i class="fa fa-plus"></i></button></a>
 	@include('sweet::alert')
 	</body>	
 @endsection

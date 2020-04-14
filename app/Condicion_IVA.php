@@ -15,7 +15,7 @@ class Condicion_IVA extends Model
     public function destino(){
         return $this->hasMany('App\Destino', 'cuit', 'idCondIva');
     }
-    public function cargador(){
-        return $this->hasMany('App\Cargador', 'cuit', 'idCondIva');
+    public function titular(){
+        return $this->hasMany('App\Titular', 'cuit', 'idCondIva');
     }
 }

@@ -14,7 +14,7 @@
     <div class="card">
     <div class="card-header">
     <label class="col-md-8 col-form-label"><b>Listado de Avisos</b></b></label>
-    <a href="{{ action('CargaController@create') }}" ><button class="small-plus-button" title="Agregar aviso" style="font-family:sans-serif;"> Añadir</button></a>
+    <a href="{{ action('CargaController@create') }}" ><button class="small-plus-button" title="Agregar Aviso" style="font-family:sans-serif;"> Añadir</button></a>
     </div>
     <div class="card-body border">
         <table id="idDataTable" class="table table-striped" >
@@ -24,7 +24,7 @@
                     <th>Producto</th>
                     <th>Corredor</th>
                     <th>Entregador</th>
-                    <th>Cargador</th>
+                    <th>Titular</th>
                     <th>Fecha</th>
                     <th>Estado</th>
                     <th>Acciones</th>
@@ -52,9 +52,9 @@
                     @endforeach
                     @foreach ($cargas as $carga)
                         @if ($carga->idAviso == $aviso->idAviso)
-                            @foreach ($cargadores as $cargador)
-                                @if ($carga->idCargador == $cargador->cuit)
-                                    <td>{{$cargador->nombre}}</td>
+                            @foreach ($titulares as $titular)
+                                @if ($carga->idTitular == $titular->cuit)
+                                    <td>{{$titular->nombre}}</td>
                                 @endif
                             @endforeach
                         @endif

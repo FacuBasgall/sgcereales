@@ -14,8 +14,8 @@
     @endif
     <br><br>
     Información de la carga:<br>
-    <strong>Cargador: </strong>{{$cargador->nombre}}<br>
-    <strong>Lugar de procedencia: </strong>{{$cargador->localidad}}, {{$cargador->provincia}}<br>
+    <strong>Titular: </strong>{{$titular->nombre}}<br>
+    <strong>Lugar de procedencia: </strong>{{$titular->localidad}}, {{$titular->provincia}}<br>
     <strong>Fecha: </strong>{{$carga->fecha}}<br>
     <strong>KG: </strong>{{$carga->kilos}}<br>
     <br>

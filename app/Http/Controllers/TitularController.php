@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Cargador;
-use App\Cargador_Contacto;
+use App\Titular;
+use App\Titular_Contacto;
 use App\Condicion_IVA;
 use App\Tipo_Contacto;
 use DB;
 
-class CargadorController extends Controller
+class TitularController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +18,8 @@ class CargadorController extends Controller
      */
     public function index()
     {
-        $arrayCargador = DB::table('cargador')->where('borrado', false)->orderBy('nombre')->get();
-        return view('cargador.index', array('arrayCargador'=>$arrayCargador));
+        $arrayTitular = DB::table('titular')->where('borrado', false)->orderBy('nombre')->get();
+        return view('titular.index', array('arrayTitular'=>$arrayTitular));
     }
 
     /**
@@ -30,7 +30,7 @@ class CargadorController extends Controller
     public function create()
     {
         $iva = Condicion_IVA::all();
-        return view('cargador.create', array('iva'=>$iva));
+        return view('titular.create', array('iva'=>$iva));
     }
 
     /**
@@ -41,12 +41,12 @@ class CargadorController extends Controller
      */
     public function store(Request $request)
     {
-        $existe = Cargador::where('cuit', $request->cuit)->exists();
+        $existe = Titular::where('cuit', $request->cuit)->exists();
         if($existe){
-            $nuevo = Cargador::where('cuit', $request->cuit)->first();
+            $nuevo = Titular::where('cuit', $request->cuit)->first();
         }
         else{
-            $nuevo = new Cargador;
+            $nuevo = new Titular;
             $nuevo->cuit = $request->cuit;
         }
         $nuevo->nombre = $request->nombre;
@@ -59,8 +59,8 @@ class CargadorController extends Controller
         $nuevo->pais = $request->pais;
         $nuevo->borrado = false;
         $nuevo->save();
-        alert()->success("El cargador $nuevo->nombre fue creado con exito", 'Creado con exito');
-        return redirect('/cargador');
+        alert()->success("El titular $nuevo->nombre fue creado con exito", 'Creado con exito');
+        return redirect('/titular');
     }
 
     /**
@@ -71,11 +71,11 @@ class CargadorController extends Controller
      */
     public function show($cuit)
     {
-        $cargador = Cargador::findOrFail($cuit);
-        $contacto = Cargador_Contacto::where('cuit', $cuit)->get();
+        $titular = Titular::findOrFail($cuit);
+        $contacto = Titular_Contacto::where('cuit', $cuit)->get();
         $tipoContacto = Tipo_Contacto::all();
         $iva = Condicion_IVA::all();
-        return view('cargador.show',  compact(['cargador', 'contacto', 'tipoContacto', 'iva']));
+        return view('titular.show',  compact(['titular', 'contacto', 'tipoContacto', 'iva']));
     }
 
     /**
@@ -86,11 +86,11 @@ class CargadorController extends Controller
      */
     public function edit($cuit)
     {
-        $cargador = Cargador::findOrFail($cuit);
-        $contacto = Cargador_Contacto::where('cuit', $cuit)->get();
+        $titular = Titular::findOrFail($cuit);
+        $contacto = Titular_Contacto::where('cuit', $cuit)->get();
         $tipoContacto = Tipo_Contacto::all();
         $iva = Condicion_IVA::all();
-        return view('cargador.edit', compact(['cargador', 'contacto', 'tipoContacto', 'iva']));
+        return view('titular.edit', compact(['titular', 'contacto', 'tipoContacto', 'iva']));
     }
 
     /**
@@ -102,7 +102,7 @@ class CargadorController extends Controller
      */
     public function update(Request $request, $cuit)
     {
-        $nuevo = Cargador::findOrFail($cuit);
+        $nuevo = Titular::findOrFail($cuit);
         $nuevo->nombre = $request->input('nombre');
         $nuevo->dgr = $request->input('dgr');
         $nuevo->cp = $request->input('cp');
@@ -112,8 +112,8 @@ class CargadorController extends Controller
         $nuevo->provincia = $request->input('provincia');
         $nuevo->pais = $request->input('pais');
         $nuevo->save();
-        alert()->success("El cargador $nuevo->nombre fue editado con exito", 'Editado con exito');
-        return redirect('/cargador');
+        alert()->success("El titular $nuevo->nombre fue editado con exito", 'Editado con exito');
+        return redirect('/titular');
     }
 
     /**
@@ -124,10 +124,10 @@ class CargadorController extends Controller
      */
     public function destroy($cuit)
     {
-        $cargador = Cargador::findOrFail($cuit);
-        $cargador->borrado = true;
-        $cargador->save();
-        alert()->success("El corredor fue eliminado con exito", 'Eliminado con exito');
-        return redirect('/cargador');
+        $titular = Titular::findOrFail($cuit);
+        $titular->borrado = true;
+        $titular->save();
+        alert()->success("El titular de carta porte fue eliminado con exito", 'Eliminado con exito');
+        return redirect('/titular');
     }
 }

@@ -22,13 +22,29 @@ Route::get('/usuario/show/{id}', 'UsuarioController@show');
 Route::get('/usuario/edit/{id}', 'UsuarioController@edit');
 Route::put('/usuario/update/{id}', 'UsuarioController@update');
 
-Route::get('/cargador', 'CargadorController@index');
-Route::get('/cargador/create', 'CargadorController@create');
-Route::post('/cargador/store', 'CargadorController@store');
-Route::get('/cargador/show/{id}', 'CargadorController@show');
-Route::get('/cargador/edit/{id}', 'CargadorController@edit');
-Route::put('/cargador/update/{id}', 'CargadorController@update');
-Route::get('/cargador/destroy/{id}', 'CargadorController@destroy');
+Route::get('/titular', 'TitularController@index');
+Route::get('/titular/create', 'TitularController@create');
+Route::post('/titular/store', 'TitularController@store');
+Route::get('/titular/show/{id}', 'TitularController@show');
+Route::get('/titular/edit/{id}', 'TitularController@edit');
+Route::put('/titular/update/{id}', 'TitularController@update');
+Route::get('/titular/destroy/{id}', 'TitularController@destroy');
+
+Route::get('/intermediario', 'IntermediarioController@index');
+Route::get('/intermediario/create', 'IntermediarioController@create');
+Route::post('/intermediario/store', 'IntermediarioController@store');
+Route::get('/intermediario/show/{id}', 'IntermediarioController@show');
+Route::get('/intermediario/edit/{id}', 'IntermediarioController@edit');
+Route::put('/intermediario/update/{id}', 'IntermediarioController@update');
+Route::get('/intermediario/destroy/{id}', 'IntermediarioController@destroy');
+
+Route::get('/remitente', 'RemitenteController@index');
+Route::get('/remitente/create', 'RemitenteController@create');
+Route::post('/remitente/store', 'RemitenteController@store');
+Route::get('/remitente/show/{id}', 'RemitenteController@show');
+Route::get('/remitente/edit/{id}', 'RemitenteController@edit');
+Route::put('/remitente/update/{id}', 'RemitenteController@update');
+Route::get('/remitente/destroy/{id}', 'RemitenteController@destroy');
 
 Route::get('/destino', 'DestinoController@index');
 Route::get('/destino/create', 'DestinoController@create');
