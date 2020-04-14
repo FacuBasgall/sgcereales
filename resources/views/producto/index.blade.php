@@ -8,7 +8,7 @@
     </head>
     <body>
     <div class="container">
-		@foreach( $arrayProductos as $key)
+		@foreach( $productos as $key)
         
             <div class="card">
                 <div class="box">
@@ -16,14 +16,8 @@
                     <img src="{{ URL::to('/image/producto-cereal.jpg') }}">
                 </div>
                             <h2>{{$key->nombre}}</h2>
-                            @if ($key->merma != 0)
-                                <p>Merma: {{$key->merma}}%</p>
-                            @else
-                                <p>Este producto no posee merma</p>
-                            @endif
                             <hr></hr>
-                            <a onclick="warning( '{{$key->idProducto}}' , 'producto');"><button type="button" class="button delete-button" title="Borrar" style="position: relative; bottom: 50%; right: 20%;"><i class="fa fa-trash"></i></button></a>
-                            <a href="{{ action('ProductoController@edit', $key->idProducto)}}"><button class="edit-button" title="Editar" style="position: relative; top: 20%; left: 20%;"><i class="fa fa-pencil"></i></button></a>
+                            <a href="{{ action('ProductoController@show', $key->idProducto)}}"><button class="show-button" style="position: relative; top: 15%;" title="Ver más"><i class="fa fa-eye"></i></button></a>
                             <br><br>
                         </a>
                 </div>
@@ -31,7 +25,6 @@
 
         @endforeach
         </div>
-        <a href="{{ action('ProductoController@create') }}"><button class="plus-button" title="Agregar producto"><i class="fa fa-plus"></i></button></a>
         @include('sweet::alert')
 
     </body>	
