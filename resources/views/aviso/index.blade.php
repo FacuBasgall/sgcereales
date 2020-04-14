@@ -24,7 +24,7 @@
                     <th>Producto</th>
                     <th>Corredor</th>
                     <th>Entregador</th>
-                    <th>Cargador</th>
+                    <th>Titular</th>
                     <th>Fecha</th>
                     <th>Estado</th>
                     <th>Acciones</th>
@@ -52,9 +52,9 @@
                     @endforeach
                     @foreach ($cargas as $carga)
                         @if ($carga->idAviso == $aviso->idAviso)
-                            @foreach ($cargadores as $cargador)
-                                @if ($carga->idCargador == $cargador->cuit)
-                                    <td>{{$cargador->nombre}}</td>
+                            @foreach ($titulares as $titular)
+                                @if ($carga->idTitular == $titular->cuit)
+                                    <td>{{$titular->nombre}}</td>
                                 @endif
                             @endforeach
                         @endif

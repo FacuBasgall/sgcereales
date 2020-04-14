@@ -10,7 +10,7 @@ use App\Carga;
 use App\Corredor;
 use App\Producto;
 use App\Destino;
-use App\Cargador;
+use App\Titular;
 use App\User;
 use App\Aviso_Producto;
 use App\Aviso_Entregador;
@@ -30,14 +30,14 @@ class AvisoController extends Controller
         $cargas = Carga::where('borrado', false)->get();
         $descargas = Descarga::where('borrado', false)->get();
         $destinos = Destino::where('borrado', false)->get();
-        $cargadores = Cargador::where('borrado', false)->get();
+        $titulares = Titular::where('borrado', false)->get();
         $corredores = Corredor::where('borrado', false)->get();
         $entregadores = User::where('tipoUser', 'E')->get(); //Solo Usuarios Entregadores
         $productos = Producto::where('borrado', false)->get();
         $avisos_productos = Aviso_Producto::all();
         $avisos_entregadores = Aviso_Entregador::all();
 
-        return view('aviso.index', compact(['avisos', 'cargas', 'descargas', 'destinos', 'cargadores', 'corredores', 'entregadores', 'productos', 'avisos_productos', 'avisos_entregadores']));
+        return view('aviso.index', compact(['avisos', 'cargas', 'descargas', 'destinos', 'titulares', 'corredores', 'entregadores', 'productos', 'avisos_productos', 'avisos_entregadores']));
 
     }
 
@@ -74,14 +74,14 @@ class AvisoController extends Controller
         $carga = Carga::where('borrado', false)->where('idAviso', $idAviso)->first();
         $descargas = Descarga::where('borrado', false)->where('idCarga', $carga->idCarga)->get();
         $destinos = Destino::where('borrado', false)->get();
-        $cargador = Cargador::where('cuit', $carga->idCargador)->first();
+        $titular = Titular::where('cuit', $carga->idTitular)->first();
         $corredor = Corredor::where('cuit', $aviso->idCorredor)->first();
         $entregador = User::where('idUser', $aviso->idEntregador)->first();
         $producto = Producto::where('idProducto', $aviso->idProducto)->first();
         $aviso_producto = Aviso_Producto::where('idAviso', $idAviso);
         $aviso_entregador = Aviso_Entregador::where('idAviso', $idAviso);
 
-        return view('aviso.show', compact(['aviso', 'carga', 'descargas', 'destinos', 'cargador', 'corredor', 'entregador', 'producto', 'aviso_producto', 'aviso_entregador']));    
+        return view('aviso.show', compact(['aviso', 'carga', 'descargas', 'destinos', 'titular', 'corredor', 'entregador', 'producto', 'aviso_producto', 'aviso_entregador']));    
     }
 
     /**
@@ -96,14 +96,14 @@ class AvisoController extends Controller
         $carga = Carga::where('borrado', false)->where('idAviso', $idAviso)->first();
         $descargas = Descarga::where('borrado', false)->where('idCarga', $carga->idCarga)->get();
         $destinos = Destino::where('borrado', false)->get();
-        $cargador = Cargador::where('cuit', $carga->idCargador)->first();
+        $titular = Titular::where('cuit', $carga->idTitular)->first();
         $corredor = Corredor::where('cuit', $aviso->idCorredor)->first();
         $entregador = User::where('idUser', $aviso->idEntregador)->first();
         $producto = Producto::where('idProducto', $aviso->idProducto)->first();
         $aviso_producto = Aviso_Producto::where('idAviso', $idAviso);
         $aviso_entregador = Aviso_Entregador::where('idAviso', $idAviso);
         
-        return view('aviso.edit', compact(['avisos', 'carga', 'descargas', 'destinos', 'cargador', 'corredor', 'entregador', 'producto', 'aviso_producto', 'aviso_entregador']));    
+        return view('aviso.edit', compact(['avisos', 'carga', 'descargas', 'destinos', 'titular', 'corredor', 'entregador', 'producto', 'aviso_producto', 'aviso_entregador']));    
     }
 
     /**

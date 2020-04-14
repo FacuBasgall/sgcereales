@@ -30,12 +30,12 @@
                         <span>Año de Cosecha: *</span>
                         <input type="text" name="cosecha" id="cosecha" class="input" style="margin: 10px 20px;">
                      </label>
-                     <label for="cargador">
-                        <span>Cargador: *</span>
-                        <select name="cargador"  class="input" required>
+                     <label for="titular">
+                        <span>Titular: *</span>
+                        <select name="titular"  class="input" required>
                         <option value="" selected disabled hidden></option>
-                           @foreach ($cargadores as $cargador)
-                              <option value="{{ $cargador->cuit }}">{{$cargador->nombre}}</option>
+                           @foreach ($titulares as $titular)
+                              <option value="{{ $titular->cuit }}">{{$titular->nombre}}</option>
                            @endforeach
                         </select>
                      </label>

@@ -8,7 +8,7 @@ use App\Carga;
 use App\Aviso;
 use App\Corredor;
 use App\Producto;
-use App\Cargador;
+use App\Titular;
 use App\User;
 use App\Aviso_Entregador;
 use App\Aviso_Producto;
@@ -36,12 +36,12 @@ class CargaController extends Controller
      */
     public function create()
     {
-        $cargadores = Cargador::where('borrado', false)->get();
+        $titulares = Titular::where('borrado', false)->get();
         $corredores = Corredor::where('borrado', false)->get();
         $entregadores = User::where('tipoUser', 'E')->get(); //Solo Usuarios Entregadores
         $productos = Producto::where('borrado', false)->get();
 
-        return view('carga.create', compact(['cargadores', 'corredores', 'entregadores', 'productos']));    
+        return view('carga.create', compact(['titulares', 'corredores', 'entregadores', 'productos']));    
      
     }
 
@@ -66,7 +66,7 @@ class CargaController extends Controller
 
         $nuevo = new Carga;
         $nuevo->idAviso = $aviso->idAviso;
-        $nuevo->idCargador = $request->cargador;
+        $nuevo->idTitular = $request->titular;
         $nuevo->matriculaCamion = $request->matriculaCamion;
         $nuevo->nroCartaPorte = $request->cartaPorte;
         $nuevo->fecha = $request->fecha;

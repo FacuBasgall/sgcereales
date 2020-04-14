@@ -36,9 +36,9 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ action('CargadorController@index') }}">
+          <a class="nav-link" href="{{ action('TitularController@index') }}">
             <i class="fa fa-user-o"></i>
-            Cargadores
+            Titulares
           </a>
         </li>
         <li class="nav-item">

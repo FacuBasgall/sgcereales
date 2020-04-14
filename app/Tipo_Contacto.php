@@ -15,8 +15,8 @@ class Tipo_Contacto extends Model
     public function corredor_contacto(){
         return $this->belongsToMany('App\Corredor_Contacto', 'tipo', 'idTipoContacto');
     }
-    public function cargador_contacto(){
-        return $this->belongsToMany('App\Cargador_Contacto', 'tipo', 'idTipoContacto');
+    public function titular_contacto(){
+        return $this->belongsToMany('App\Titular_Contacto', 'tipo', 'idTipoContacto');
     }
     public function destino_contacto(){
         return $this->belongsToMany('App\Destino_Contacto', 'tipo', 'idTipoContacto');

@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Cargador extends Model
+class Titular extends Model
 {
-    protected $table = 'cargador';
+    protected $table = 'titular';
     protected $primaryKey = 'cuit';
     protected $keyType = 'string';
     public $timestamps = false;
@@ -17,13 +17,13 @@ class Cargador extends Model
         'borrado' => false,
     ];
 
-    public function cargador_contacto(){
-        return $this->hasMany('App\Cargador_Contacto', 'cuit', 'cuit');
+    public function titular_contacto(){
+        return $this->hasMany('App\Titular_Contacto', 'cuit', 'cuit');
     } 
     public function condicion_iva(){
         return $this->belongsTo('App\Condicion_IVA', 'condIva', 'cuit');
     }
     public function carga(){
-        return $this->hasMany('App\Carga', 'idCargador', 'cuit');
+        return $this->hasMany('App\Carga', 'idTitular', 'cuit');
     }
 }

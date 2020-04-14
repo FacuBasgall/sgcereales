@@ -10,7 +10,7 @@ use App\Carga;
 use App\Corredor;
 use App\Producto;
 use App\Destino;
-use App\Cargador;
+use App\Titular;
 use App\Aviso_Producto;
 
 
