@@ -79,11 +79,12 @@ Route::put('/descarga/update/{id}', 'DescargaController@update');
 //Route::get('/descarga/destroy/{id}', 'DescargaController@destroy');
 
 Route::get('/producto', 'ProductoController@index');
-Route::get('/producto/create', 'ProductoController@create');
-Route::post('/producto/store', 'ProductoController@store');
-Route::get('/producto/edit/{id}', 'ProductoController@edit');
-Route::put('/producto/update/{id}', 'ProductoController@update');
-Route::get('/producto/destroy/{id}', 'ProductoController@destroy');
+Route::get('/producto/show/{id}', 'ProductoController@show');
+//Route::get('/producto/create', 'ProductoController@create');
+//Route::post('/producto/store', 'ProductoController@store');
+//Route::get('/producto/edit/{id}', 'ProductoController@edit');
+//Route::put('/producto/update/{id}', 'ProductoController@update');
+//Route::get('/producto/destroy/{id}', 'ProductoController@destroy');
 
 Route::get('/aviso', 'AvisoController@index');
 //Route::get('/aviso/create', 'AvisoController@create');

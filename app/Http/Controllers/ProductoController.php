@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Producto;
+use App\Merma;
 use DB;
 use Exception;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
@@ -17,8 +18,8 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $arrayProductos = DB::table('producto')->where('borrado', false)->orderBy('nombre')->get();
-        return view('producto.index', array('arrayProductos'=>$arrayProductos));
+        $productos = Producto::where('borrado', false)->orderBy('nombre')->get();
+        return view('producto.index', array('productos'=>$productos));
     }
 
     /**
@@ -28,7 +29,7 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        return view('producto.create');
+        //
     }
 
     /**
@@ -39,19 +40,7 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        $existe = Producto::where('nombre', $request->nombre)->exists();
-        if($existe){
-            $nuevo = Producto::where('nombre', $request->nombre)->first();
-        }
-        else{
-            $nuevo = new Producto;
-            $nuevo->nombre = $request->nombre;
-        }
-        $nuevo->merma = $request->merma;
-        $nuevo->borrado = false;
-        $nuevo->save();
-        alert()->success("El producto $nuevo->nombre fue creado con exito", 'Creado con exito');
-        return redirect('/producto');
+        //
     }
 
     /**
@@ -62,7 +51,9 @@ class ProductoController extends Controller
      */
      public function show($idProducto)
     {
-        //
+        $producto = Producto::where('idProducto', $idProducto)->first();
+        $mermas = Merma::where('idProducto', $idProducto)->get();
+        return view('producto.show', compact('producto', 'mermas'));
     }  
 
     /**
@@ -73,14 +64,7 @@ class ProductoController extends Controller
      */
     public function edit($idProducto)
     {
-        
-        try {
-            $producto = Producto::findOrFail($idProducto);
-        }catch(MethodNotAllowedHttpException $e){
-            alert()->error('Ese producto no fue encontrado','Producto no encontrado')->persistent('Close');
-            return redirect('/producto') ;
-        }
-        return view('producto.edit', array('producto'=>$producto));
+        //
     }
 
     /**
@@ -92,17 +76,7 @@ class ProductoController extends Controller
      */
     public function update(Request $request, $idProducto)
     {
-        try { //no funciona el catch
-            $nuevo = Producto::findOrFail($idProducto);
-        }catch(Exception  $e){
-            alert()->error('Error Message', 'Optional Title')->persistent('Close');
-            return redirect('/producto') ;
-        }
-        $nuevo->merma = $request->input('merma');
-        $nuevo->save();
-        alert()->success("El producto $nuevo->nombre fue editado con exito", 'Editado con exito');
-        return redirect('/producto') ;
-
+        //
     }
 
     /**
@@ -113,10 +87,6 @@ class ProductoController extends Controller
      */
      public function destroy($idProducto)
     {
-        $producto = Producto::findOrFail($idProducto);
-        $producto->borrado = true;
-        $producto->save();
-        alert()->success("El producto fue eliminado con exito", 'Eliminado con exito');
-        return redirect('/producto');
+        //
     }  
 }
