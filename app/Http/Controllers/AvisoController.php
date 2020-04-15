@@ -11,6 +11,8 @@ use App\Corredor;
 use App\Producto;
 use App\Destino;
 use App\Titular;
+use App\Intermediario;
+use App\Remitente_Comercial;
 use App\User;
 use App\Aviso_Producto;
 use App\Aviso_Entregador;
@@ -31,13 +33,15 @@ class AvisoController extends Controller
         $descargas = Descarga::where('borrado', false)->get();
         $destinos = Destino::where('borrado', false)->get();
         $titulares = Titular::where('borrado', false)->get();
+        $intermediarios = Intermediario::where('borrado', false)->get();
+        $remitentes = Remitente_Comercial::where('borrado', false)->get();
         $corredores = Corredor::where('borrado', false)->get();
         $entregadores = User::where('tipoUser', 'E')->get(); //Solo Usuarios Entregadores
         $productos = Producto::where('borrado', false)->get();
         $avisos_productos = Aviso_Producto::all();
         $avisos_entregadores = Aviso_Entregador::all();
 
-        return view('aviso.index', compact(['avisos', 'cargas', 'descargas', 'destinos', 'titulares', 'corredores', 'entregadores', 'productos', 'avisos_productos', 'avisos_entregadores']));
+        return view('aviso.index', compact(['avisos', 'cargas', 'descargas', 'destinos', 'titulares', 'intermediarios', 'remitentes', 'corredores', 'entregadores', 'productos', 'avisos_productos', 'avisos_entregadores']));
 
     }
 
@@ -75,13 +79,15 @@ class AvisoController extends Controller
         $descargas = Descarga::where('borrado', false)->where('idCarga', $carga->idCarga)->get();
         $destinos = Destino::where('borrado', false)->get();
         $titular = Titular::where('cuit', $carga->idTitular)->first();
+        $intermediario = Intermediario::where('cuit', $carga->idIntermediario)->first();
+        $remitente = Remitente_Comercial::where('cuit', $carga->idRemitenteComercial)->first();
         $corredor = Corredor::where('cuit', $aviso->idCorredor)->first();
         $entregador = User::where('idUser', $aviso->idEntregador)->first();
         $producto = Producto::where('idProducto', $aviso->idProducto)->first();
-        $aviso_producto = Aviso_Producto::where('idAviso', $idAviso);
-        $aviso_entregador = Aviso_Entregador::where('idAviso', $idAviso);
+        $aviso_producto = Aviso_Producto::where('idAviso', $idAviso)->get();
+        $aviso_entregador = Aviso_Entregador::where('idAviso', $idAviso)->get();
 
-        return view('aviso.show', compact(['aviso', 'carga', 'descargas', 'destinos', 'titular', 'corredor', 'entregador', 'producto', 'aviso_producto', 'aviso_entregador']));    
+        return view('aviso.show', compact(['aviso', 'carga', 'descargas', 'destinos', 'titular', 'intermediario', 'remitente', 'corredor', 'entregador', 'producto', 'aviso_producto', 'aviso_entregador']));    
     }
 
     /**
@@ -97,13 +103,15 @@ class AvisoController extends Controller
         $descargas = Descarga::where('borrado', false)->where('idCarga', $carga->idCarga)->get();
         $destinos = Destino::where('borrado', false)->get();
         $titular = Titular::where('cuit', $carga->idTitular)->first();
+        $intermediario = Intermediario::where('cuit', $carga->idIntermediario)->first();
+        $remitente = Remitente_Comercial::where('cuit', $carga->idRemitenteComercial)->first();
         $corredor = Corredor::where('cuit', $aviso->idCorredor)->first();
         $entregador = User::where('idUser', $aviso->idEntregador)->first();
         $producto = Producto::where('idProducto', $aviso->idProducto)->first();
-        $aviso_producto = Aviso_Producto::where('idAviso', $idAviso);
-        $aviso_entregador = Aviso_Entregador::where('idAviso', $idAviso);
+        $aviso_producto = Aviso_Producto::where('idAviso', $idAviso)->get();
+        $aviso_entregador = Aviso_Entregador::where('idAviso', $idAviso)->get();
         
-        return view('aviso.edit', compact(['avisos', 'carga', 'descargas', 'destinos', 'titular', 'corredor', 'entregador', 'producto', 'aviso_producto', 'aviso_entregador']));    
+        return view('aviso.edit', compact(['avisos', 'carga', 'descargas', 'destinos', 'titular', 'intermediario', 'remitente', 'corredor', 'entregador', 'producto', 'aviso_producto', 'aviso_entregador']));    
     }
 
     /**

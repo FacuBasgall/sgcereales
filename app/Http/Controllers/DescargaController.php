@@ -12,8 +12,6 @@ use App\Producto;
 use App\Destino;
 use App\Titular;
 use App\Aviso_Producto;
-
-
 use DB;
 
 class DescargaController extends Controller
@@ -56,6 +54,8 @@ class DescargaController extends Controller
        $nuevo->idCarga = $request->carga;
        $nuevo->idDestinatario = $request->destino;
        $nuevo->fecha = $request->fecha;
+       $nuevo->localidad = $request->localidad;
+       $nuevo->provicia = $request->provincia;
        $nuevo->bruto = $request->bruto;
        $nuevo->tara = $request->tara;
        $nuevo->humedad = $request->humedad;

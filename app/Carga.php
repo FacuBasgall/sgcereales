@@ -10,7 +10,7 @@ class Carga extends Model
     protected $primaryKey = 'idCarga';
     public $timestamps = false;
 
-    protected $fillable = ['idAviso', 'idTitular', 'idIntermediario', 'idRemitenteComercial', 'matriculaCamion', 'nroCartaPorte', 'fecha', 'kilos', 'borrado'];
+    protected $fillable = ['idAviso', 'idTitular', 'idIntermediario', 'idRemitenteComercial', 'matriculaCamion', 'nroCartaPorte', 'localidadProcedencia', 'provinciaProcedencia', 'fecha', 'kilos', 'borrado'];
 
     protected $attributes = [
         'borrado' => false,

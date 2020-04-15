@@ -39,6 +39,24 @@
                            @endforeach
                         </select>
                      </label>
+                     <label for="intermediario">
+                        <span>Intermediario: </span>
+                        <select name="intermediario"  class="input" >
+                        <option value="" selected disabled hidden></option>
+                           @foreach ($intermediarios as $intermediario)
+                              <option value="{{ $intermediario->cuit }}">{{$intermediario->nombre}}</option>
+                           @endforeach
+                        </select>
+                     </label>
+                     <label for="remitente">
+                        <span>Remitente: *</span>
+                        <select name="remitente"  class="input" required>
+                        <option value="" selected disabled hidden></option>
+                           @foreach ($remitentes as $remitente)
+                              <option value="{{ $remitente->cuit }}">{{$remitente->nombre}}</option>
+                           @endforeach
+                        </select>
+                     </label>
                      <label for="corredor">
                         <span>Corredor:*</span>
                         <select name="corredor"  class="input" required>
@@ -56,6 +74,14 @@
                      <label for="cartaPorte">
                         <span>N° Carta Porte: </span>
                         <input type="text" name="cartaPorte" id="cartaPorte" class="input" style="margin: 10px 20px;">
+                     </label>
+                     <label for="localidad">
+                        <span>Localidad de procedencia: </span>
+                        <input type="text" name="localidad" id="localidad" class="input" style="margin: 10px 20px;" required>
+                     </label>
+                     <label for="provincia">
+                        <span>Provincia de procedencia: </span>
+                        <input type="text" name="provincia" id="provincia" class="input" style="margin: 10px 20px;" required>
                      </label>
 		               <label for="fecha">
                         <span>Fecha de Carga:*</span>

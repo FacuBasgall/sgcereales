@@ -31,6 +31,14 @@
                         <span>Fecha de la Descarga: *</span>
                         <input type="date" name="fecha" id="fecha" class="input" style="margin: 10px 20px;" required>
                      </label>
+                     <label for="localidad">
+                        <span>Localidad de descarga: </span>
+                        <input type="text" name="localidad" id="localidad" class="input" style="margin: 10px 20px;" required>
+                     </label>
+                     <label for="provincia">
+                        <span>Provincia de descarga: </span>
+                        <input type="text" name="provincia" id="provincia" class="input" style="margin: 10px 20px;" required>
+                     </label>
                      <label for="bruto">
                         <span>Kilos Brutos: *</span>
                         <input type="number" name="bruto" id="bruto" class="input" style="margin: 10px 20px;" required>

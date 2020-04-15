@@ -20,7 +20,7 @@
                      </label>
                      <label for="cuit">
                         <span>CUIT: </span>
-                        <input type="number" name="cuit" id="cuit" class="input" value="{{$titular->cuit}}" style="margin: 10px 20px;" readonly>
+                        <input type="text" name="cuit" id="cuit" class="input" value="{{$titular->cuit}}" style="margin: 10px 20px;" readonly>
                      </label>	
                      <label for="dgr">
                         <span>DGR: </span>

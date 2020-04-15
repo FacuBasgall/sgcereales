@@ -19,7 +19,7 @@
                      </label>
                      <label for="cuit">
                         <span>CUIT: </span>
-                        <input type="number" name="cuit" id="cuit" class="input" value="{{$intermediario->cuit}}" style="margin: 10px 20px;" readonly>
+                        <input type="text" name="cuit" id="cuit" class="input" value="{{$intermediario->cuit}}" style="margin: 10px 20px;" readonly>
                      </label>	
                      <button type="submit" class="save-button" style="position:relative; top:65%; left:45%;"><i class="fa fa-check"></i></button>
                      <a href="{{ action('IntermediarioController@index') }}"><button type="button" class="back-button" title="Volver" style="position: relative; top: 50%; right: 35%;"><i class="fa fa-arrow-left"></i></button></a>
