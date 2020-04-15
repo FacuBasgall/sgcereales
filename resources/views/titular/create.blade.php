@@ -18,7 +18,7 @@
                      </label>
                      <label for="cuit">
                         <span>CUIT: *</span>
-                        <input type="number" name="cuit" id="cuit" class="input" style="margin: 10px 20px;" min="0" max="999999999999999" required>
+                        <input type="text" name="cuit" id="cuit" class="input" style="margin: 10px 20px;" min="0" max="999999999999999" required>
                      </label>	
                      <label for="dgr">
                         <span>DGR: </span>

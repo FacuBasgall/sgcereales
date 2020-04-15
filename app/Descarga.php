@@ -10,7 +10,7 @@ class Descarga extends Model
     protected $primaryKey = 'idDescarga';
     public $timestamps = false;
 
-    protected $fillable = ['idCarga', 'idDestinatario', 'fecha', 'bruto', 'tara', 'humedad', 'merma', 'ph', 'proteina', 'calidad', 'borrado'];
+    protected $fillable = ['idCarga', 'idDestinatario', 'fecha', 'localidad', 'provincia', 'bruto', 'tara', 'humedad', 'merma', 'ph', 'proteina', 'calidad', 'borrado'];
 
     protected $attributes = [
         'borrado' => false,

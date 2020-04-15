@@ -9,12 +9,11 @@ use App\Aviso;
 use App\Corredor;
 use App\Producto;
 use App\Titular;
+use App\Intermediario;
+use App\Remitente_Comercial;
 use App\User;
 use App\Aviso_Entregador;
 use App\Aviso_Producto;
-
-
-
 use DB;
 
 class CargaController extends Controller
@@ -37,11 +36,13 @@ class CargaController extends Controller
     public function create()
     {
         $titulares = Titular::where('borrado', false)->get();
+        $intermediarios = Intermediario::where('borrado', false)->get();
+        $remitentes = Remitente_Comercial::where('borrado', false)->get();
         $corredores = Corredor::where('borrado', false)->get();
         $entregadores = User::where('tipoUser', 'E')->get(); //Solo Usuarios Entregadores
         $productos = Producto::where('borrado', false)->get();
 
-        return view('carga.create', compact(['titulares', 'corredores', 'entregadores', 'productos']));    
+        return view('carga.create', compact(['titulares', 'intermediarios', 'remitentes', 'corredores', 'entregadores', 'productos']));    
      
     }
 
@@ -61,17 +62,19 @@ class CargaController extends Controller
         $aviso->idProducto = $request->producto;
         $aviso->idEntregador = 1;
         $aviso->estado = false;
-        $aviso->borrado = false;
         $aviso->save();
 
         $nuevo = new Carga;
         $nuevo->idAviso = $aviso->idAviso;
         $nuevo->idTitular = $request->titular;
+        $nuevo->idIntermediario = $request->intermediario;
+        $nuevo->idRemitenteComercial = $request->remitente;
         $nuevo->matriculaCamion = $request->matriculaCamion;
         $nuevo->nroCartaPorte = $request->cartaPorte;
+        $nuevo->localidadProcedencia = $request->localidad;
+        $nuevo->provinciaProcedencia = $request->provincia;
         $nuevo->fecha = $request->fecha;
         $nuevo->kilos = $request->kilos;
-        $nuevo->borrado = false;
         $nuevo->save(); 
 
         $aviso_producto = new Aviso_Producto;
