@@ -13,7 +13,7 @@
 		<div class="card">
                 <div class="box">
 					<div class="img">
-						<img src="{{ URL::to('/image/titular-icon.jpg') }}">
+						<img src="{{ URL::to('/image/cargador-icon.jpg') }}">
 					</div>
 					<h2>{{$key->nombre}}</h2>
 					<p>CUIT: {{$key->cuit}}</p>
