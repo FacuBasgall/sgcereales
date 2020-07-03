@@ -21,6 +21,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/usuario/show/{id}', 'UsuarioController@show');
 Route::get('/usuario/edit/{id}', 'UsuarioController@edit');
 Route::put('/usuario/update/{id}', 'UsuarioController@update');
+Route::get('/usuario/contact/{id}', 'UsuarioController@contact');
+Route::get('/usuario/add_contact/{id}', 'UsuarioController@add_contact');
+Route::get('/usuario/delete_contact/{id}', 'UsuarioController@delete_contact');
 
 Route::get('/titular', 'TitularController@index');
 Route::get('/titular/create', 'TitularController@create');
@@ -29,6 +32,9 @@ Route::get('/titular/show/{id}', 'TitularController@show');
 Route::get('/titular/edit/{id}', 'TitularController@edit');
 Route::put('/titular/update/{id}', 'TitularController@update');
 Route::get('/titular/destroy/{id}', 'TitularController@destroy');
+Route::get('/titular/contact/{id}', 'TitularController@contact');
+Route::get('/titular/add_contact/{id}', 'TitularController@add_contact');
+Route::get('/titular/delete_contact/{id}', 'TitularController@delete_contact');
 
 Route::get('/intermediario', 'IntermediarioController@index');
 Route::get('/intermediario/create', 'IntermediarioController@create');
@@ -37,6 +43,9 @@ Route::get('/intermediario/show/{id}', 'IntermediarioController@show');
 Route::get('/intermediario/edit/{id}', 'IntermediarioController@edit');
 Route::put('/intermediario/update/{id}', 'IntermediarioController@update');
 Route::get('/intermediario/destroy/{id}', 'IntermediarioController@destroy');
+Route::get('/intermediario/contact/{id}', 'IntermediarioController@contact');
+Route::get('/intermediario/add_contact/{id}', 'IntermediarioController@add_contact');
+Route::get('/intermediario/delete_contact/{id}', 'IntermediarioController@delete_contact');
 
 Route::get('/remitente', 'RemitenteController@index');
 Route::get('/remitente/create', 'RemitenteController@create');
@@ -45,6 +54,9 @@ Route::get('/remitente/show/{id}', 'RemitenteController@show');
 Route::get('/remitente/edit/{id}', 'RemitenteController@edit');
 Route::put('/remitente/update/{id}', 'RemitenteController@update');
 Route::get('/remitente/destroy/{id}', 'RemitenteController@destroy');
+Route::get('/remitente/contact/{id}', 'RemitenteController@contact');
+Route::get('/remitente/add_contact/{id}', 'RemitenteController@add_contact');
+Route::get('/remitente/delete_contact/{id}', 'RemitenteController@delete_contact');
 
 Route::get('/destino', 'DestinoController@index');
 Route::get('/destino/create', 'DestinoController@create');
@@ -53,6 +65,9 @@ Route::get('/destino/show/{id}', 'DestinoController@show');
 Route::get('/destino/edit/{id}', 'DestinoController@edit');
 Route::put('/destino/update/{id}', 'DestinoController@update');
 Route::get('/destino/destroy/{id}', 'DestinoController@destroy');
+Route::get('/destino/contact/{id}', 'DestinoController@contact');
+Route::get('/destino/add_contact/{id}', 'DestinoController@add_contact');
+Route::get('/destino/delete_contact/{id}', 'DestinoController@delete_contact');
 
 Route::get('/corredor', 'CorredorController@index');
 Route::get('/corredor/create', 'CorredorController@create');
@@ -61,6 +76,9 @@ Route::get('/corredor/show/{id}', 'CorredorController@show');
 Route::get('/corredor/edit/{id}', 'CorredorController@edit');
 Route::put('/corredor/update/{id}', 'CorredorController@update');
 Route::get('/corredor/destroy/{id}', 'CorredorController@destroy');
+Route::get('/corredor/contact/{id}', 'CorredorController@contact');
+Route::get('/corredor/add_contact/{id}', 'CorredorController@add_contact');
+Route::get('/corredor/delete_contact/{id}', 'CorredorController@delete_contact');
 
 //Route::get('/carga', 'CargaController@index');
 Route::get('/carga/create', 'CargaController@create');

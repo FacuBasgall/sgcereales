@@ -4,9 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class Titular_Contacto extends Model
 {
     protected $table = 'titular_contacto';
+    protected $primaryKey = 'id';
     public $timestamps = false;
     protected $fillable = ['cuit', 'contacto', 'tipo'];
 

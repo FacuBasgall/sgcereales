@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Corredor_Contacto extends Model
 {
     protected $table = 'corredor_contacto';
+    protected $primaryKey = 'id';
     public $timestamps = false;
     protected $fillable = ['cuit', 'contacto', 'tipo'];
 

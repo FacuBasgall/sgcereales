@@ -20,7 +20,7 @@
                      <label for="cuit">
                         <span>CUIT: </span>
                         <input type="text" name="cuit" id="cuit" class="input" value="{{$destino->cuit}}" style="margin: 10px 20px;" readonly>
-                     </label>	
+                     </label>
                      <label for="dgr">
                         <span>DGR: </span>
                         <input type="text" name="dgr" id="dgr" class="input" value="{{$destino->dgr}}" style="margin: 10px 20px;">
@@ -57,7 +57,7 @@
                         <input type="text" name="domicilio" id="domicilio" class="input" value="{{$destino->domicilio}}" style="margin: 10px 20px;">
                      </label>
                      <button type="submit" class="save-button" style="position:relative; top:65%; left:30%;"><i class="fa fa-check"></i></button>
-                     <a href="{{ action('DestinoController@index') }}"><button type="button" class="back-button" title="Volver" style="position: relative; top: 50%; right: 30%;"><i class="fa fa-arrow-left"></i></button></a>
+                     <a href="{{ action('DestinoController@show', $destino->cuit) }}"><button type="button" class="back-button" title="Volver" style="position: relative; top: 50%; right: 30%;"><i class="fa fa-arrow-left"></i></button></a>
                   </form>
                </div>
             </div>

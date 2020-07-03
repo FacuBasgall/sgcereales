@@ -28,8 +28,7 @@ class IntermediarioController extends Controller
      */
     public function create()
     {
-        $tipoContacto = Tipo_Contacto::all();
-        return view('intermediario.create', array('tipoContacto'=>$tipoContacto));   
+        return view('intermediario.create');
     }
 
     /**
@@ -52,7 +51,7 @@ class IntermediarioController extends Controller
         $nuevo->borrado = false;
         $nuevo->save();
         alert()->success("El intermediario $nuevo->nombre fue creado con exito", 'Creado con exito');
-        return redirect('/intermediario');
+        return redirect()->action('IntermediariorController@contact', $request->cuit);
     }
 
     /**
@@ -94,7 +93,7 @@ class IntermediarioController extends Controller
         $nuevo->nombre = $request->input('nombre');
         $nuevo->save();
         alert()->success("El intermediario $nuevo->nombre fue editado con exito", 'Editado con exito');
-        return redirect('/intermediario');
+        return redirect()->action('IntermediarioController@show', $cuit);
     }
 
     /**
@@ -110,5 +109,36 @@ class IntermediarioController extends Controller
         $intermediario->save();
         alert()->success("El intermediario fue eliminado con exito", 'Eliminado con exito');
         return redirect('/intermediario');
+    }
+
+    public function contact($cuit){
+        $tipoContacto = Tipo_Contacto::all();
+        $intermediarioContacto = Intermediario_Contacto::where('cuit', $cuit)->get();
+        return view('intermediario.contact', compact(['tipoContacto', 'intermediarioContacto', 'cuit']));
+    }
+
+    public function add_contact(Request $request, $cuit)
+    {
+        $existe = Intermediario_Contacto::where('cuit', $cuit)->where('contacto', $request->contacto)->exists();
+        if($existe){
+            alert()->error("El contacto ya existe para este intermediario", "Ha ocurrido un error");
+        }
+        else{
+            $nuevo = new Intermediario_Contacto;
+            $nuevo->cuit = $cuit;
+            $nuevo->contacto = $request->contacto;
+            $nuevo->tipo = $request->tipo;
+            $nuevo->save();
+            alert()->success("El contacto fue agregado con exito", 'Contacto agregado');
+        }
+        return back();
+    }
+
+    public function delete_contact($id)
+    {
+        $delete = Intermediario_Contacto::where('id', $id)->first();
+        $delete->delete();
+        alert()->success("El contacto fue eliminado con exito", 'Contacto eliminado');
+        return back();
     }
 }
