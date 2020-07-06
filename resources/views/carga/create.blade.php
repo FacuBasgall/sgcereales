@@ -70,18 +70,18 @@
                      <label for="matricula">
                         <span>Matricula del Camión: </span>
                         <input type="text" name="matricula" id="matricula" class="input" style="margin: 10px 20px;">
-                     </label>	
+                     </label>
                      <label for="cartaPorte">
                         <span>Número de Carta Porte: </span>
                         <input type="text" name="cartaPorte" id="cartaPorte" class="input" style="margin: 10px 20px;">
                      </label>
-                     <label for="localidad">
-                        <span>Localidad de procedencia: </span>
-                        <input type="text" name="localidad" id="localidad" class="input" style="margin: 10px 20px;" required>
-                     </label>
                      <label for="provincia">
                         <span>Provincia de procedencia: </span>
                         <input type="text" name="provincia" id="provincia" class="input" style="margin: 10px 20px;" required>
+                     </label>
+                     <label for="localidad">
+                        <span>Localidad de procedencia: </span>
+                        <input type="text" name="localidad" id="localidad" class="input" style="margin: 10px 20px;" required>
                      </label>
 		               <label for="fecha">
                         <span>Fecha de Carga: *</span>

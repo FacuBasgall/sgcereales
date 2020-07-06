@@ -42,8 +42,8 @@ class CargaController extends Controller
         $entregadores = User::where('tipoUser', 'E')->get(); //Solo Usuarios Entregadores
         $productos = Producto::where('borrado', false)->get();
 
-        return view('carga.create', compact(['titulares', 'intermediarios', 'remitentes', 'corredores', 'entregadores', 'productos']));    
-     
+        return view('carga.create', compact(['titulares', 'intermediarios', 'remitentes', 'corredores', 'entregadores', 'productos']));
+
     }
 
     /**
@@ -55,7 +55,7 @@ class CargaController extends Controller
     public function store(Request $request)
     {
         /* $request->validate([
-            
+
         ]); */
         $aviso = new Aviso;
         $aviso->idCorredor = $request->corredor;
@@ -75,7 +75,7 @@ class CargaController extends Controller
         $nuevo->provinciaProcedencia = $request->provincia;
         $nuevo->fecha = $request->fecha;
         $nuevo->kilos = $request->kilos;
-        $nuevo->save(); 
+        $nuevo->save();
 
         $aviso_producto = new Aviso_Producto;
         $aviso_producto->idAviso = $aviso->idAviso;
@@ -94,7 +94,7 @@ class CargaController extends Controller
             return redirect()->action('DescargaController@create', $nuevo->idCarga);
         }else{
             return redirect()->action('AvisoController@index');
-        }   
+        }
     }
 
     /**

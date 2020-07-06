@@ -22,7 +22,8 @@
 		</head>
 		<body>
 			<h1>{{$producto->nombre}}</h1>
-			<h4>Tabla de merma por secado</h4>
+            <h4>Merma por manipuleo: {{$producto->mermaManipuleo}}</h4><br>
+			<h4>Tabla de merma por secado: </h4>
 			<table style="width:15%">
 				<tr>
 					<th>Humedad</th>

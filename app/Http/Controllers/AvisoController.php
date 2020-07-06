@@ -87,7 +87,7 @@ class AvisoController extends Controller
         $aviso_producto = Aviso_Producto::where('idAviso', $idAviso)->get();
         $aviso_entregador = Aviso_Entregador::where('idAviso', $idAviso)->get();
 
-        return view('aviso.show', compact(['aviso', 'carga', 'descargas', 'destinos', 'titular', 'intermediario', 'remitente', 'corredor', 'entregador', 'producto', 'aviso_producto', 'aviso_entregador']));    
+        return view('aviso.show', compact(['aviso', 'carga', 'descargas', 'destinos', 'titular', 'intermediario', 'remitente', 'corredor', 'entregador', 'producto', 'aviso_producto', 'aviso_entregador']));
     }
 
     /**
@@ -110,8 +110,8 @@ class AvisoController extends Controller
         $producto = Producto::where('idProducto', $aviso->idProducto)->first();
         $aviso_producto = Aviso_Producto::where('idAviso', $idAviso)->get();
         $aviso_entregador = Aviso_Entregador::where('idAviso', $idAviso)->get();
-        
-        return view('aviso.edit', compact(['avisos', 'carga', 'descargas', 'destinos', 'titular', 'intermediario', 'remitente', 'corredor', 'entregador', 'producto', 'aviso_producto', 'aviso_entregador']));    
+
+        return view('aviso.edit', compact(['avisos', 'carga', 'descargas', 'destinos', 'titular', 'intermediario', 'remitente', 'corredor', 'entregador', 'producto', 'aviso_producto', 'aviso_entregador']));
     }
 
     /**

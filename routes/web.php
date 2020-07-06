@@ -105,8 +105,8 @@ Route::get('/producto/show/{id}', 'ProductoController@show');
 //Route::get('/producto/destroy/{id}', 'ProductoController@destroy');
 
 Route::get('/aviso', 'AvisoController@index');
-//Route::get('/aviso/create', 'AvisoController@create');
-//Route::post('/aviso/store', 'AvisoController@store');
+Route::get('/aviso/create', 'AvisoController@create');
+Route::post('/aviso/store', 'AvisoController@store');
 Route::get('/aviso/show/{id}', 'AvisoController@show');
 Route::get('/aviso/edit/{id}', 'AvisoController@edit');
 Route::put('/aviso/update/{id}', 'AvisoController@update');

@@ -21,10 +21,12 @@ class Titular extends Model
     public function titular_contacto(){
         return $this->hasMany('App\Titular_Contacto', 'cuit', 'cuit');
     }
+
     public function condicion_iva(){
         return $this->belongsTo('App\Condicion_IVA', 'condIva', 'cuit');
     }
-    public function carga(){
-        return $this->hasMany('App\Carga', 'idTitular', 'cuit');
+
+    public function aviso(){
+        return $this->hasMany('App\Aviso', 'idTitularCartaPorte', 'cuit');
     }
 }

@@ -10,7 +10,7 @@ class Producto extends Model
     protected $primaryKey = 'idProducto';
     public $timestamps = false;
 
-    protected $fillable = ['nombre', 'borrado'];
+    protected $fillable = ['nombre', 'mermaManipuleo', 'borrado'];
 
     protected $attributes = [
         'borrado' => false,

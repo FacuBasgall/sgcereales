@@ -16,12 +16,12 @@ class Intermediario extends Model
     protected $attributes = [
         'borrado' => false,
     ];
-    
-    public function carga(){
-        return $this->hasMany('App\Carga', 'idRemitente', 'cuit');
-    }
 
     public function intermediario_contacto(){
         return $this->hasMany('App\Intermediario_Contacto', 'cuit', 'cuit');
-    } 
+    }
+
+    public function aviso(){
+        return $this->hasMany('App\Aviso', 'idIntermediario', 'cuit');
+    }
 }
