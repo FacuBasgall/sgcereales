@@ -81,7 +81,7 @@ Route::get('/corredor/add_contact/{id}', 'CorredorController@add_contact');
 Route::get('/corredor/delete_contact/{id}', 'CorredorController@delete_contact');
 
 //Route::get('/carga', 'CargaController@index');
-Route::get('/carga/create', 'CargaController@create');
+Route::get('/carga/create/{id}', 'CargaController@create');
 Route::post('/carga/store', 'CargaController@store');
 //Route::get('/carga/show/{id}', 'CargaController@show');
 Route::get('/carga/edit/{id}', 'CargaController@edit');

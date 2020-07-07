@@ -7,11 +7,8 @@ use Illuminate\Http\Request;
 use App\Descarga;
 use App\Aviso;
 use App\Carga;
-use App\Corredor;
+use App\Merma;
 use App\Producto;
-use App\Destino;
-use App\Titular;
-use App\Aviso_Producto;
 use DB;
 
 class DescargaController extends Controller
@@ -33,10 +30,8 @@ class DescargaController extends Controller
      */
     public function create(int $idCarga)
     {
-        $destinos = Destino::where('borrado', false)->get();
         $carga = Carga::where('idCarga', $idCarga)->first();
-        $descargas = Descarga::where('idCarga', $idCarga)->get();
-        return view('descarga.create', compact(['carga', 'destinos', 'descargas']));    
+        return view('descarga.create', array('carga'=>$carga));
     }
 
     /**
@@ -48,47 +43,39 @@ class DescargaController extends Controller
     public function store(Request $request)
     {
         /* $request->validate([
-            
+
         ]); */
-       $nuevo = new Descarga;
-       $nuevo->idCarga = $request->carga;
-       $nuevo->idDestinatario = $request->destino;
-       $nuevo->fecha = $request->fecha;
-       $nuevo->localidad = $request->localidad;
-       $nuevo->provicia = $request->provincia;
-       $nuevo->bruto = $request->bruto;
-       $nuevo->tara = $request->tara;
-       $nuevo->humedad = $request->humedad;
-       $nuevo->merma = $request->merma;
-       $nuevo->ph = $request->ph;
-       $nuevo->proteina = $request->proteina;
-       $nuevo->calidad = $request->calidad;
-       $nuevo->borrado = false;
+       $descarga = new Descarga;
+       $descarga->idCarga = $request->carga;
+       $descarga->fecha = $request->fecha;
+       $descarga->bruto = $request->bruto;
+       $descarga->tara = $request->tara;
+       $descarga->humedad = $request->humedad;
+       $descarga->ph = $request->ph;
+       $descarga->proteina = $request->proteina;
+       $descarga->calidad = $request->calidad;
+       $descarga->borrado = false;
 
-       $carga = Carga::where('idCarga', $nuevo->idCarga)->first();
+        $carga = Carga::where('idCarga', $request->carga)->first();
+        $aviso = Aviso::where('idAviso', $carga->idAviso)->first();
+        $producto = Producto::where('idProducto', $aviso->idProducto)->first();
+        $merma = Merma::where('idProducto', $producto->idProducto)->where('humedad', $descarga->humedad)->exists();
+        if ($merma){
+            $mermaManipuleo = $producto->mermaManipuleo;
+            $mermaSecado = $merma->merma;
+            $descarga->merma = $mermaManipuleo + $mermaSecado;
+        }
+        $descarga->save();
 
-       if($carga->kilos == $nuevo->bruto){ //NO ESTOY SEGURO SI ES BRUTO - VER FORMULA
-            /**Si se descargaron todos los kilos */
-            if(isset($request->check)){
-                //ERROR
-                return print_r("No puede estar seleccionado el checkbox porque no hay mas kilos para descargar");
-            }else{
-                $nuevo->save();
-                $aviso = Aviso::where('idAviso', $carga->idAviso)->update('estado', true);
-                return redirect()->action('AvisoController@index');
-            }
-       }elseif ($carga->kilos > $nuevo->bruto){
-            $nuevo->save();
-           /**Si NO se descargaron todos los kilos */
-           if(isset($request->check)){
-                return redirect()->action('DescargaController@create', $carga->idCarga);
-           }else{
-                return redirect()->action('AvisoController@index');
-           }
-       }else{
-           //ERROR
-           return print_r("Los kilos descargados no pueden ser mayores a los kilos cargados");
-       }
+       /**FORMULAS
+        *   NETO KG = BRUTO - TARA
+            MERMA % = MERMA HUMEDAD + MERMA MANIPULEO
+            MERMA KG = NETO KG x (MERMA % / 100)
+            NETO FINAL = NETO KG - MERMA KG
+            DIFERENCIA = NETO FINAL - KG CARGA
+        */
+
+        return redirect()->action('AvisoController@index');
     }
 
     /**

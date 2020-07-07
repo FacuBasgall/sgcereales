@@ -14,7 +14,7 @@
     <div class="card">
     <div class="card-header">
     <label class="col-md-8 col-form-label"><b>Listado de Avisos</b></b></label>
-    <a href="{{ action('CargaController@create') }}" ><button class="small-plus-button" title="Agregar Aviso" style="font-family:sans-serif;"> Añadir</button></a>
+    <a href="{{ action('AvisoController@create') }}" ><button class="small-plus-button" title="Agregar Aviso" style="font-family:sans-serif;"> Añadir</button></a>
     </div>
     <div class="card-body border">
         <table id="idDataTable" class="table table-striped" >
@@ -22,13 +22,14 @@
                 <tr>
                     <th>#</th>
                     <th>Producto</th>
-                    <th>Corredor</th>
-                    <th>Entregador</th>
                     <th>Titular</th>
-                    <th>Fecha</th>
+                    <th>Procedencia</th>
+                    <th>Destinatario</th>
+                    <th>Destino</th>
+                    <th>Fecha de Creacion</th>
                     <th>Estado</th>
                     <th>Acciones</th>
-                   
+
                 </tr>
             </thead>
             <tbody>
@@ -40,38 +41,31 @@
                             <td>{{$producto->nombre}}</td>
                         @endif
                     @endforeach
-                    @foreach ($corredores as $corredor)
-                        @if ($corredor->cuit == $aviso->idCorredor)
-                            <td>{{ $corredor->nombre }}</td>
+                    @foreach ($titulares as $titular)
+                        @if ($titular->cuit == $aviso->idTitularCartaPorte)
+                            <td>{{ $titular->nombre }}</td>
                         @endif
                     @endforeach
-                    @foreach ($entregadores as $entregador)
-                        @if ($entregador->idUser == $aviso->idEntregador)
-                            <td>{{ $entregador->username }}</td>
+                    <td>{{$aviso->localidadProcedencia}} ({{$aviso->provinciaProcedencia}})</td>
+                    @foreach ($destinatarios as $destinatario)
+                        @if ($destinatario->cuit == $aviso->idDestinatario)
+                            <td>{{ $destinatario->nombre }}</td>
                         @endif
                     @endforeach
-                    @foreach ($cargas as $carga)
-                        @if ($carga->idAviso == $aviso->idAviso)
-                            @foreach ($titulares as $titular)
-                                @if ($carga->idTitular == $titular->cuit)
-                                    <td>{{$titular->nombre}}</td>
-                                @endif
-                            @endforeach
-                        @endif
-                    @endforeach
+                    <td>{{$aviso->lugarDescarga}}</td>
                     @foreach ($avisos_entregadores as $aviso_entregador)
                         @if ($aviso_entregador->idAviso == $aviso->idAviso)
-                            <td>{{ $aviso_entregador->fecha }}</td>
+                            <td>{{$aviso_entregador->fecha}}</td>
                         @endif
                     @endforeach
                     @if ($aviso->estado == true)
-                        <td style="color: red;">Terminado</td>
+                        <td style="color: green;">Terminado</td>
                     @else
-                        <td style="color: green;">Pendiente</td>
+                        <td style="color: red;">Pendiente</td>
                     @endif
                     <td>
                         <a onclick="warning( '{{$aviso->idAviso}}' , 'aviso');"><button class="delete-button" title="Eliminar" style="padding: 7px; margin:0px;"><i class="fa fa-trash"></i></button></a>
-                        <a onclick="failEdit('{{$aviso->idAviso}}' , 'aviso', '{{$aviso->estado}}');"><button class="edit-button" title="Editar" style="padding: 7px; margin:0px;"><i class="fa fa-pencil"></i></button></a> 
+                        <a onclick="failEdit('{{$aviso->idAviso}}' , 'aviso', '{{$aviso->estado}}');"><button class="edit-button" title="Editar" style="padding: 7px; margin:0px;"><i class="fa fa-pencil"></i></button></a>
                         <a href="{{ action('AvisoController@show', $aviso->idAviso) }}"><button class="show-button" title="Ver más" style="padding: 7px; margin:0px"><i class="fa fa-eye"></i></button></a>
                     </td>
                 </tr>
@@ -90,4 +84,4 @@
 </script>
 @stop
 
-    
+

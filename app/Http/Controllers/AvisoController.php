@@ -31,7 +31,7 @@ class AvisoController extends Controller
         $avisos = Aviso::where('borrado', false)->orderBy('idAviso', 'desc')->get();
         $cargas = Carga::where('borrado', false)->get();
         $descargas = Descarga::where('borrado', false)->get();
-        $destinos = Destino::where('borrado', false)->get();
+        $destinatarios = Destino::where('borrado', false)->get();
         $titulares = Titular::where('borrado', false)->get();
         $intermediarios = Intermediario::where('borrado', false)->get();
         $remitentes = Remitente_Comercial::where('borrado', false)->get();
@@ -41,7 +41,7 @@ class AvisoController extends Controller
         $avisos_productos = Aviso_Producto::all();
         $avisos_entregadores = Aviso_Entregador::all();
 
-        return view('aviso.index', compact(['avisos', 'cargas', 'descargas', 'destinos', 'titulares', 'intermediarios', 'remitentes', 'corredores', 'entregadores', 'productos', 'avisos_productos', 'avisos_entregadores']));
+        return view('aviso.index', compact(['avisos', 'cargas', 'descargas', 'destinatarios', 'titulares', 'intermediarios', 'remitentes', 'corredores', 'entregadores', 'productos', 'avisos_productos', 'avisos_entregadores']));
 
     }
 
@@ -52,7 +52,16 @@ class AvisoController extends Controller
      */
     public function create()
     {
-        //
+        $titulares = Titular::where('borrado', false)->get();
+        $intermediarios = Intermediario::where('borrado', false)->get();
+        $remitentes = Remitente_Comercial::where('borrado', false)->get();
+        $corredores = Corredor::where('borrado', false)->get();
+        $entregadores = User::where('tipoUser', 'E')->get(); //Solo Usuarios Entregadores
+        $destinatarios = Destino::where('borrado', false)->get();
+        $productos = Producto::where('borrado', false)->get();
+
+        return view('aviso.create', compact(['titulares', 'intermediarios', 'remitentes', 'corredores', 'entregadores', 'destinatarios', 'productos']));
+
     }
 
     /**
@@ -63,7 +72,35 @@ class AvisoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $aviso = new Aviso;
+        $aviso->idTitularCartaPorte = $request->titular;
+        $aviso->idIntermediario = $request->intermediario;
+        $aviso->idRemitenteComercial = $request->remitente;
+        $aviso->idCorredor = $request->corredor;
+        $aviso->idDestinatario = $request->destinatario;
+        $aviso->idEntregador = 1;
+        $aviso->lugarDescarga = $request->lugarDescarga;
+        $aviso->provinciaProcedencia = $request->provincia;
+        $aviso->localidadProcedencia = $request->localidad;
+        $aviso->idProducto = $request->producto;
+        $aviso->borrado = false;
+        $aviso->estado = false;
+        $aviso->save();
+
+        $aviso_producto = new Aviso_Producto;
+        $aviso_producto->idAviso = $aviso->idAviso;
+        $aviso_producto->idProducto = $request->producto;
+        $aviso_producto->cosecha = $request->cosecha;
+        $aviso_producto->tipo = $request->tipo;
+        $aviso_producto->save();
+
+        $aviso_entregador = new Aviso_Entregador;
+        $aviso_entregador->idAviso = $aviso->idAviso;
+        $aviso_entregador->idEntregador = 1;
+        $aviso_entregador->fecha = date("Y-m-d");
+        $aviso_entregador->save();
+
+        return redirect()->action('CargaController@create', $aviso->idAviso);
     }
 
     /**

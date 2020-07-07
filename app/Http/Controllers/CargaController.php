@@ -6,14 +6,6 @@ use Illuminate\Http\Request;
 
 use App\Carga;
 use App\Aviso;
-use App\Corredor;
-use App\Producto;
-use App\Titular;
-use App\Intermediario;
-use App\Remitente_Comercial;
-use App\User;
-use App\Aviso_Entregador;
-use App\Aviso_Producto;
 use DB;
 
 class CargaController extends Controller
@@ -33,17 +25,10 @@ class CargaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(int $idAviso)
     {
-        $titulares = Titular::where('borrado', false)->get();
-        $intermediarios = Intermediario::where('borrado', false)->get();
-        $remitentes = Remitente_Comercial::where('borrado', false)->get();
-        $corredores = Corredor::where('borrado', false)->get();
-        $entregadores = User::where('tipoUser', 'E')->get(); //Solo Usuarios Entregadores
-        $productos = Producto::where('borrado', false)->get();
-
-        return view('carga.create', compact(['titulares', 'intermediarios', 'remitentes', 'corredores', 'entregadores', 'productos']));
-
+        $aviso = Aviso::where('idAviso', $idAviso)->first();
+        return view('carga.create', array('aviso'=>$aviso));
     }
 
     /**
@@ -57,41 +42,18 @@ class CargaController extends Controller
         /* $request->validate([
 
         ]); */
-        $aviso = new Aviso;
-        $aviso->idCorredor = $request->corredor;
-        $aviso->idProducto = $request->producto;
-        $aviso->idEntregador = 1;
-        $aviso->estado = false;
-        $aviso->save();
 
-        $nuevo = new Carga;
-        $nuevo->idAviso = $aviso->idAviso;
-        $nuevo->idTitular = $request->titular;
-        $nuevo->idIntermediario = $request->intermediario;
-        $nuevo->idRemitenteComercial = $request->remitente;
-        $nuevo->matriculaCamion = $request->matriculaCamion;
-        $nuevo->nroCartaPorte = $request->cartaPorte;
-        $nuevo->localidadProcedencia = $request->localidad;
-        $nuevo->provinciaProcedencia = $request->provincia;
-        $nuevo->fecha = $request->fecha;
-        $nuevo->kilos = $request->kilos;
-        $nuevo->save();
-
-        $aviso_producto = new Aviso_Producto;
-        $aviso_producto->idAviso = $aviso->idAviso;
-        $aviso_producto->idProducto = $request->producto;
-        $aviso_producto->cosecha = $request->cosecha;
-        $aviso_producto->tipo = $request->tipo;
-        $aviso_producto->save();
-
-        $aviso_entregador = new Aviso_Entregador;
-        $aviso_entregador->idAviso = $aviso->idAviso;
-        $aviso_entregador->idEntregador = 1;
-        $aviso_entregador->fecha = date("Y-m-d");
-        $aviso_entregador->save();
+        $carga = new Carga;
+        $carga->idAviso = $request->idAviso;
+        $carga->matriculaCamion = $request->matricula;
+        $carga->nroCartaPorte = $request->cartaPorte;
+        $carga->fecha = $request->fecha;
+        $carga->kilos = $request->kilos;
+        $carga->borrado = false;
+        $carga->save();
 
         if(isset($request->check)){
-            return redirect()->action('DescargaController@create', $nuevo->idCarga);
+            return redirect()->action('DescargaController@create', $carga->idCarga);
         }else{
             return redirect()->action('AvisoController@index');
         }
