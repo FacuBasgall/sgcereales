@@ -112,19 +112,19 @@ class AvisoController extends Controller
     public function show($idAviso)
     {
         $aviso = Aviso::findOrFail($idAviso);
-        $carga = Carga::where('borrado', false)->where('idAviso', $idAviso)->first();
-        $descargas = Descarga::where('borrado', false)->where('idCarga', $carga->idCarga)->get();
-        $destinos = Destino::where('borrado', false)->get();
-        $titular = Titular::where('cuit', $carga->idTitular)->first();
-        $intermediario = Intermediario::where('cuit', $carga->idIntermediario)->first();
-        $remitente = Remitente_Comercial::where('cuit', $carga->idRemitenteComercial)->first();
+        $cargas = Carga::where('borrado', false)->where('idAviso', $idAviso)->get();
+        $descargas = Descarga::where('borrado', false)->get();
+        $destino = Destino::where('borrado', false)->where('cuit', $aviso->idDestinatario)->first();
+        $titular = Titular::where('cuit', $aviso->idTitularCartaPorte)->first();
+        $intermediario = Intermediario::where('cuit', $aviso->idIntermediario)->first();
+        $remitente = Remitente_Comercial::where('cuit', $aviso->idRemitenteComercial)->first();
         $corredor = Corredor::where('cuit', $aviso->idCorredor)->first();
         $entregador = User::where('idUser', $aviso->idEntregador)->first();
         $producto = Producto::where('idProducto', $aviso->idProducto)->first();
         $aviso_producto = Aviso_Producto::where('idAviso', $idAviso)->get();
         $aviso_entregador = Aviso_Entregador::where('idAviso', $idAviso)->get();
 
-        return view('aviso.show', compact(['aviso', 'carga', 'descargas', 'destinos', 'titular', 'intermediario', 'remitente', 'corredor', 'entregador', 'producto', 'aviso_producto', 'aviso_entregador']));
+        return view('aviso.show', compact(['aviso', 'cargas', 'descargas', 'destino', 'titular', 'intermediario', 'remitente', 'corredor', 'entregador', 'producto', 'aviso_producto', 'aviso_entregador']));
     }
 
     /**
@@ -136,19 +136,16 @@ class AvisoController extends Controller
     public function edit($idAviso)
     {
         $aviso = Aviso::findOrFail($idAviso);
-        $carga = Carga::where('borrado', false)->where('idAviso', $idAviso)->first();
-        $descargas = Descarga::where('borrado', false)->where('idCarga', $carga->idCarga)->get();
-        $destinos = Destino::where('borrado', false)->get();
-        $titular = Titular::where('cuit', $carga->idTitular)->first();
-        $intermediario = Intermediario::where('cuit', $carga->idIntermediario)->first();
-        $remitente = Remitente_Comercial::where('cuit', $carga->idRemitenteComercial)->first();
-        $corredor = Corredor::where('cuit', $aviso->idCorredor)->first();
-        $entregador = User::where('idUser', $aviso->idEntregador)->first();
-        $producto = Producto::where('idProducto', $aviso->idProducto)->first();
-        $aviso_producto = Aviso_Producto::where('idAviso', $idAviso)->get();
-        $aviso_entregador = Aviso_Entregador::where('idAviso', $idAviso)->get();
+        $titulares = Titular::where('borrado', false)->get();
+        $intermediarios = Intermediario::where('borrado', false)->get();
+        $remitentes = Remitente_Comercial::where('borrado', false)->get();
+        $corredores = Corredor::where('borrado', false)->get();
+        $entregadores = User::where('tipoUser', 'E')->get(); //Solo Usuarios Entregadores
+        $destinatarios = Destino::where('borrado', false)->get();
+        $productos = Producto::where('borrado', false)->get();
+        $aviso_producto = Aviso_Producto::where('idAviso', $idAviso)->first();
 
-        return view('aviso.edit', compact(['avisos', 'carga', 'descargas', 'destinos', 'titular', 'intermediario', 'remitente', 'corredor', 'entregador', 'producto', 'aviso_producto', 'aviso_entregador']));
+        return view('aviso.edit', compact(['aviso', 'titulares', 'intermediarios', 'remitentes', 'corredores', 'entregadores', 'destinatarios', 'productos', 'aviso_producto']));
     }
 
     /**
@@ -185,5 +182,17 @@ class AvisoController extends Controller
         $aviso->delete();
         alert()->success("El aviso fue eliminado con exito", 'Eliminado con exito');
         return redirect('/aviso');
+    }
+
+    public function change_status($idAviso){
+        //FALTA CONTROLAR -> PARA QUE PUEDA ESTAR TERMINADO DEBE TENER TODAS LAS DESCARGAS
+        $aviso = Aviso::findOrFail($idAviso);
+        if($aviso->estado == false){
+            $aviso->estado = true;
+        }else{
+            $aviso->estado = false;
+        }
+        $aviso->save();
+        return back();
     }
 }

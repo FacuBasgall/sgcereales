@@ -28,8 +28,8 @@ class RemitenteController extends Controller
      */
     public function create()
     {
-        return view('remitente.create');
-    }
+        $iva = Condicion_IVA::all();
+        return view('remitente.create', array('iva'=>$iva));    }
 
     /**
      * Store a newly created resource in storage.

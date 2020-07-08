@@ -28,8 +28,8 @@ class IntermediarioController extends Controller
      */
     public function create()
     {
-        return view('intermediario.create');
-    }
+        $iva = Condicion_IVA::all();
+        return view('intermediario.create', array('iva'=>$iva));    }
 
     /**
      * Store a newly created resource in storage.

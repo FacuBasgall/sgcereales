@@ -29,7 +29,8 @@ class TitularController extends Controller
      */
     public function create()
     {
-        return view('titular.create');
+        $iva = Condicion_IVA::all();
+        return view('titular.create', array('iva'=>$iva));
     }
 
     /**

@@ -111,3 +111,4 @@ Route::get('/aviso/show/{id}', 'AvisoController@show');
 Route::get('/aviso/edit/{id}', 'AvisoController@edit');
 Route::put('/aviso/update/{id}', 'AvisoController@update');
 Route::get('/aviso/destroy/{id}', 'AvisoController@destroy');
+Route::get('/aviso/change_status/{id}', 'AvisoController@change_status');
