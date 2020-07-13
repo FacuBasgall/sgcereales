@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Descarga;
+use App\Merma;
 use App\Aviso;
 use App\Carga;
-use App\Merma;
 use App\Producto;
 use DB;
 
@@ -56,7 +56,7 @@ class DescargaController extends Controller
        $descarga->calidad = $request->calidad;
        $descarga->borrado = false;
 
-        $carga = Carga::where('idCarga', $request->carga)->first();
+        $carga = Carga::where('idCarga', $request->idCarga)->first();
         $aviso = Aviso::where('idAviso', $carga->idAviso)->first();
         $producto = Producto::where('idProducto', $aviso->idProducto)->first();
         $merma = Merma::where('idProducto', $producto->idProducto)->where('humedad', $descarga->humedad)->exists();
@@ -64,6 +64,8 @@ class DescargaController extends Controller
             $mermaManipuleo = $producto->mermaManipuleo;
             $mermaSecado = $merma->merma;
             $descarga->merma = $mermaManipuleo + $mermaSecado;
+        }else{
+            $descarga->merma = NULL;
         }
         $descarga->save();
 
@@ -74,7 +76,7 @@ class DescargaController extends Controller
             NETO FINAL = NETO KG - MERMA KG
             DIFERENCIA = NETO FINAL - KG CARGA
         */
-
+        alert()->success("El aviso fue creado con exito", 'Creado con exito');
         return redirect()->action('AvisoController@index');
     }
 
@@ -109,7 +111,27 @@ class DescargaController extends Controller
      */
     public function update(Request $request, $idDescarga)
     {
-        //
+        $descarga = Descarga::findOrfail($idDescarga);
+        $descarga->fecha = $request->fecha;
+        $descarga->bruto = $request->bruto;
+        $descarga->tara = $request->tara;
+        $descarga->humedad = $request->humedad;
+        $descarga->ph = $request->ph;
+        $descarga->proteina = $request->proteina;
+        $descarga->calidad = $request->calidad;
+        $aviso = Aviso::where('idAviso', $request->idAviso)->first();
+        $producto = Producto::where('idProducto', $aviso->idProducto)->first();
+        $merma = Merma::where('idProducto', $producto->idProducto)->where('humedad', $request->humedad)->first();
+        if ($merma){
+            $mermaManipuleo = $producto->mermaManipuleo;
+            $mermaSecado = $merma->merma;
+            $descarga->merma = $mermaManipuleo + $mermaSecado;
+        }else{
+            $descarga->merma = NULL;
+        }
+        $descarga->save();
+         alert()->success("La descarga fue editada con exito", 'Editado con exito');
+        return back();
     }
 
     /**

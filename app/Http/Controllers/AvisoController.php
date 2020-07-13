@@ -157,7 +157,28 @@ class AvisoController extends Controller
      */
     public function update(Request $request, $idAviso)
     {
-        //FALTA
+        $aviso = Aviso::findOrfail($idAviso);
+        $aviso->idTitularCartaPorte = $request->titular;
+        $aviso->idIntermediario = $request->intermediario;
+        $aviso->idRemitenteComercial = $request->remitente;
+        $aviso->idCorredor = $request->corredor;
+        $aviso->idDestinatario = $request->destinatario;
+        $aviso->lugarDescarga = $request->lugarDescarga;
+        $aviso->provinciaProcedencia = $request->provincia;
+        $aviso->localidadProcedencia = $request->localidad;
+        $aviso->idProducto = $request->producto;
+        if($request->estado == "Terminado")
+            $aviso->estado = true;
+        else $aviso->estado = false;
+        $aviso->save();
+
+        $aviso_producto = Aviso_Producto::findOrfail($idAviso);
+        $aviso_producto->idProducto = $request->producto;
+        $aviso_producto->cosecha = $request->cosecha;
+        $aviso_producto->tipo = $request->tipo;
+        $aviso_producto->save();
+
+        return redirect()->action('CargaController@edit', $aviso->idAviso);
     }
 
     /**
@@ -185,9 +206,15 @@ class AvisoController extends Controller
     }
 
     public function change_status($idAviso){
-        //FALTA CONTROLAR -> PARA QUE PUEDA ESTAR TERMINADO DEBE TENER TODAS LAS DESCARGAS
         $aviso = Aviso::findOrFail($idAviso);
         if($aviso->estado == false){
+            $cargas = Carga::where('idAviso', $idAviso)->get();
+            foreach ($cargas as $carga){
+                $descarga = Descarga::where('idCarga', $carga->idCarga)->exists();
+                if(!$descarga){
+                    //DEVOLVER ERROR -> PARA QUE PUEDA ESTAR TERMINADO DEBE TENER TODAS LAS DESCARGAS
+                }
+            }
             $aviso->estado = true;
         }else{
             $aviso->estado = false;

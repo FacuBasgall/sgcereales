@@ -119,6 +119,16 @@
                         <input type="text" value="{{$aviso->localidadProcedencia}}" name="localidad" id="localidad" class="input" style="margin: 10px 20px;" required>
                      </label>
                      <hr>
+                     <label>
+                        @if($aviso->estado == false)
+                            <strong>Estado: </strong><input type="radio" name="estado" id="estado" value="Pendiente" checked/>Pendiente
+                            <input type="radio" name="estado" id="estado" value="Terminado"/>Terminado<br>
+
+                        @else
+                            <strong>Estado: </strong><input type="radio" name="estado" id="estado" value="Pendiente"/>Pendiente
+                            <input type="radio" name="estado" id="estado" value="Terminado" checked/>Terminado<br>
+                        @endif
+                    </label>
                      <button type="submit" class="save-button" style="position:relative; top:65%; left:30%;"><i class="fa fa-check"></i></button>
                      <a href="{{ action('AvisoController@index') }}"><button type="button" class="back-button" title="Volver" style="position: relative; top: 50%; right: 30%;"><i class="fa fa-arrow-left"></i></button></a>
                   </form>

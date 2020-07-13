@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Carga;
 use App\Aviso;
+use App\Descarga;
 use DB;
 
 class CargaController extends Controller
@@ -55,6 +56,7 @@ class CargaController extends Controller
         if(isset($request->check)){
             return redirect()->action('DescargaController@create', $carga->idCarga);
         }else{
+            alert()->success("El aviso fue creado con exito", 'Creado con exito');
             return redirect()->action('AvisoController@index');
         }
     }
@@ -76,9 +78,11 @@ class CargaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($idCarga)
+    public function edit($idAviso)
     {
-        //
+        $cargas = Carga::where('idAviso', $idAviso)->get();
+        $descargas = Descarga::all();
+        return view('carga.edit', compact(['cargas', 'descargas']));
     }
 
     /**
@@ -90,7 +94,15 @@ class CargaController extends Controller
      */
     public function update(Request $request, $idCarga)
     {
-        //
+        $carga = Carga::findOrfail($idCarga);
+        $carga->matriculaCamion = $request->matricula;
+        $carga->nroCartaPorte = $request->cartaPorte;
+        $carga->fecha = $request->fecha;
+        $carga->kilos = $request->kilos;
+        $carga->save();
+
+        alert()->success("La carga fue editada con exito", 'Editado con exito');
+        return back();
     }
 
     /**

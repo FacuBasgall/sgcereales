@@ -92,7 +92,7 @@ Route::put('/carga/update/{id}', 'CargaController@update');
 Route::get('/descarga/create/{id}', 'DescargaController@create');
 Route::post('/descarga/store', 'DescargaController@store');
 //Route::get('/descarga/show/{id}', 'DescargaController@show');
-Route::get('/descarga/edit/{id}', 'DescargaController@edit');
+//Route::get('/descarga/edit/{id}', 'DescargaController@edit');
 Route::put('/descarga/update/{id}', 'DescargaController@update');
 //Route::get('/descarga/destroy/{id}', 'DescargaController@destroy');
 

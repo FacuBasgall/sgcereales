@@ -65,7 +65,7 @@
                     @endif
                     <td>
                         <a onclick="warning( '{{$aviso->idAviso}}' , 'aviso');"><button class="delete-button" title="Eliminar" style="padding: 7px; margin:0px;"><i class="fa fa-trash"></i></button></a>
-                        <a onclick="failEdit('{{$aviso->idAviso}}' , 'aviso', '{{$aviso->estado}}');"><button class="edit-button" title="Editar" style="padding: 7px; margin:0px;"><i class="fa fa-pencil"></i></button></a>
+                        <a href="{{ action('AvisoController@edit', $aviso->idAviso) }}"><button class="edit-button" title="Editar" style="padding: 7px; margin:0px;"><i class="fa fa-pencil"></i></button></a>
                         <a href="{{ action('AvisoController@show', $aviso->idAviso) }}"><button class="show-button" title="Ver más" style="padding: 7px; margin:0px"><i class="fa fa-eye"></i></button></a>
                     </td>
                 </tr>
