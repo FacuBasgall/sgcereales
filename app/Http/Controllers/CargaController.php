@@ -81,7 +81,7 @@ class CargaController extends Controller
     public function edit($idAviso)
     {
         $cargas = Carga::where('idAviso', $idAviso)->get();
-        $descargas = Descarga::all();
+        $descargas = Descarga::where('borrado', false)->get();
         return view('carga.edit', compact(['cargas', 'descargas']));
     }
 

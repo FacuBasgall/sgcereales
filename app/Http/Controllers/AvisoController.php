@@ -190,16 +190,17 @@ class AvisoController extends Controller
     public function destroy($idAviso)
     {
         $aviso = Aviso::findOrFail($idAviso);
-        $carga = Carga::where('idAviso', $idAviso)->first();
-        $descargas = Descarga::where('idCarga', $carga->idCarga)->get();
-        foreach($descargas as $descarga){
-            $descarga->delete();
+        $cargas = Carga::where('idAviso', $idAviso)->get();
+        foreach ($cargas as $carga){
+            $descarga = Descarga::where('idCarga', $carga->idCarga)->first();
+            if($descarga)
+                $descarga->delete();
+            $carga->delete();
         }
         $aviso_entregador = Aviso_Entregador::where('idAviso', $idAviso)->first();
         $aviso_producto = Aviso_Producto::where('idAviso', $idAviso)->first();
         $aviso_entregador->delete();
         $aviso_producto->delete();
-        $carga->delete();
         $aviso->delete();
         alert()->success("El aviso fue eliminado con exito", 'Eliminado con exito');
         return redirect('/aviso');
