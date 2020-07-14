@@ -8,6 +8,7 @@ class Aviso_Producto extends Model
 {
     protected $table = 'aviso_producto';
     protected $primaryKey = 'idAviso';
+    protected $keyType = 'string';
     public $timestamps = false;
     protected $fillable = ['idProducto', 'cosecha', 'tipo'];
 

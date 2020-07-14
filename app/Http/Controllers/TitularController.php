@@ -60,7 +60,7 @@ class TitularController extends Controller
         $nuevo->borrado = false;
         $nuevo->save();
         alert()->success("El titular $nuevo->nombre fue creado con exito", 'Creado con exito');
-        return redirect('/titular');
+        return redirect()->action('TitularController@contact', $request->cuit);
     }
 
     /**
@@ -113,7 +113,7 @@ class TitularController extends Controller
         $nuevo->pais = $request->input('pais');
         $nuevo->save();
         alert()->success("El titular $nuevo->nombre fue editado con exito", 'Editado con exito');
-        return redirect('/titular');
+        return redirect()->action('TitularController@show', $cuit);
     }
 
     /**
@@ -129,5 +129,36 @@ class TitularController extends Controller
         $titular->save();
         alert()->success("El titular de carta porte fue eliminado con exito", 'Eliminado con exito');
         return redirect('/titular');
+    }
+
+    public function contact($cuit){
+        $tipoContacto = Tipo_Contacto::all();
+        $titularContacto = Titular_Contacto::where('cuit', $cuit)->get();
+        return view('titular.contact', compact(['tipoContacto', 'titularContacto', 'cuit']));
+    }
+
+    public function add_contact(Request $request, $cuit)
+    {
+        $existe = Titular_Contacto::where('cuit', $cuit)->where('contacto', $request->contacto)->exists();
+        if($existe){
+            alert()->error("El contacto ya existe para este titular", "Ha ocurrido un error");
+        }
+        else{
+            $nuevo = new Titular_Contacto;
+            $nuevo->cuit = $cuit;
+            $nuevo->contacto = $request->contacto;
+            $nuevo->tipo = $request->tipo;
+            $nuevo->save();
+            alert()->success("El contacto fue agregado con exito", 'Contacto agregado');
+        }
+        return back();
+    }
+
+    public function delete_contact($id)
+    {
+        $delete = Titular_Contacto::where('id', $id)->first();
+        $delete->delete();
+        alert()->success("El contacto fue eliminado con exito", 'Contacto eliminado');
+        return back();
     }
 }

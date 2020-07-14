@@ -9,7 +9,7 @@
     </head>
 	<body>
     <div class="container">
-		@foreach( $arrayIntermediario as $key)
+		@foreach( $arrayRemitente as $key)
 		<div class="card">
                 <div class="box">
 					<div class="img">
@@ -19,7 +19,7 @@
 					<p>CUIT: {{$key->cuit}}</p>
 
 					<hr></hr>
-					<a href="{{ action('IntermediarioController@show', $key->cuit) }}"><button class="show-button" style="position: relative; top: 15%;" title="Ver más"><i class="fa fa-eye"></i></button></a>
+					<a href="{{ action('RemitenteController@show', $key->cuit) }}"><button class="show-button" style="position: relative; top: 15%;" title="Ver más"><i class="fa fa-eye"></i></button></a>
 					<br><br>
 					</a>
                 </div>
@@ -27,8 +27,8 @@
 
 		@endforeach
         </div>
-        <a href="{{ action('IntermediarioController@create') }}"><button class="plus-button" title="Agregar intermediario"><i class="fa fa-plus"></i></button></a>
+        <a href="{{ action('RemitenteController@create') }}"><button class="plus-button" title="Agregar remitente"><i class="fa fa-plus"></i></button></a>
 		@include('sweet::alert')
-	</body>	
+	</body>
 @endsection
 

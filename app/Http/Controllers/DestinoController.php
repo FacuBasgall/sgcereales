@@ -30,9 +30,7 @@ class DestinoController extends Controller
     public function create()
     {
         $iva = Condicion_IVA::all();
-        $tipoContacto = Tipo_Contacto::all();
-        return view('destino.create', compact(['iva', 'tipoContacto']));
-    }
+        return view('destino.create', array('iva'=>$iva));    }
 
     /**
      * Store a newly created resource in storage.
@@ -68,12 +66,7 @@ class DestinoController extends Controller
         $nuevo->borrado = false;
         $nuevo->save();
         alert()->success("El destinatario $nuevo->nombre fue creado con exito", 'Creado con exito');
-        /* $destino_contacto = new Destino_Contacto;
-        $destino_contacto->cuit = $request->cuit;
-        $destino_contacto->contacto = $request
-        $destino_contacto->tipo = $request */
-
-        return redirect('/destino');
+        return redirect()->action('DestinoController@contact', $request->cuit);
     }
 
     /**
@@ -126,8 +119,7 @@ class DestinoController extends Controller
         $nuevo->pais = $request->input('pais');
         $nuevo->save();
         alert()->success("El destinatario $nuevo->nombre fue editado con exito", 'Editado con exito');
-        //CONTACTOS
-        return redirect('/destino');
+        return redirect()->action('DestinoController@show', $cuit);
     }
 
     /**
@@ -143,5 +135,36 @@ class DestinoController extends Controller
         $destino->save();
         alert()->success("El destinatario fue eliminado con exito", 'Eliminado con exito');
         return redirect('/destino');
+    }
+
+    public function contact($cuit){
+        $tipoContacto = Tipo_Contacto::all();
+        $destinoContacto = Destino_Contacto::where('cuit', $cuit)->get();
+        return view('destino.contact', compact(['tipoContacto', 'destinoContacto', 'cuit']));
+    }
+
+    public function add_contact(Request $request, $cuit)
+    {
+        $existe = Destino_Contacto::where('cuit', $cuit)->where('contacto', $request->contacto)->exists();
+        if($existe){
+            alert()->error("El contacto ya existe para este destino", "Ha ocurrido un error");
+        }
+        else{
+            $nuevo = new Destino_Contacto;
+            $nuevo->cuit = $cuit;
+            $nuevo->contacto = $request->contacto;
+            $nuevo->tipo = $request->tipo;
+            $nuevo->save();
+            alert()->success("El contacto fue agregado con exito", 'Contacto agregado');
+        }
+        return back();
+    }
+
+    public function delete_contact($id)
+    {
+        $delete = Destino_Contacto::where('id', $id)->first();
+        $delete->delete();
+        alert()->success("El contacto fue eliminado con exito", 'Contacto eliminado');
+        return back();
     }
 }

@@ -55,22 +55,26 @@
                         <p><strong>País: </strong>País no definido</p>
                     @endif
             <hr>
-            <h4><strong>Infomación de contacto:</strong></h4>
-            @foreach ($tipoContacto as $tipo)
-               @foreach ($contacto as $numero)
-                   @if ($tipo->idTipoContacto == $numero->tipo)
-                        <p><strong>{{$tipo->descripcion}}: </strong>{{$numero->contacto}}</p>
-                   @endif
-               @endforeach
-            @endforeach
+            <h4><strong>Infomación de contacto: </strong><a href="{{ action('TitularController@contact', $titular->cuit) }}">Editar</a></h4>
+            @if (!$contacto->isEmpty())
+                @foreach ($tipoContacto as $tipo)
+                    @foreach ($contacto as $numero)
+                        @if ($tipo->idTipoContacto == $numero->tipo)
+                                <p><strong>{{$tipo->descripcion}}: </strong>{{$numero->contacto}}</p>
+                        @endif
+                    @endforeach
+                @endforeach
+            @else
+            <p>No se encontró información</p>
+            @endif
             <hr>
             <a href="{{ action('TitularController@index') }}"><button class="back-button" title="Volver" style="position: relative; top: 10%; right: 20%;"><i class="fa fa-arrow-left"></i></button></a>
             <a onclick="warning( '{{$titular->cuit}}' , 'titular');"><button class="delete-button" title="Eliminar" style="position: relative; top: 10%; left: 20%;"><i class="fa fa-trash"></i></button></a>
-            <a href="{{ action('TitularController@edit', $titular->cuit)}}"><button class="edit-button" title="Editar" style="position: relative; top: 10%; left: 20%;"><i class="fa fa-pencil"></i></button></a>        
+            <a href="{{ action('TitularController@edit', $titular->cuit)}}"><button class="edit-button" title="Editar" style="position: relative; top: 10%; left: 20%;"><i class="fa fa-pencil"></i></button></a>
             </div>
             </div>
         </div>
     </body>
 
-			
+
 @endsection

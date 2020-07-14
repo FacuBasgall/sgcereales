@@ -17,7 +17,7 @@ class RemitenteController extends Controller
      */
     public function index()
     {
-        $arrayRemitente = DB::table('remitente')->where('borrado', false)->orderBy('nombre')->get();
+        $arrayRemitente = DB::table('remitente_comercial')->where('borrado', false)->orderBy('nombre')->get();
         return view('remitente.index', array('arrayRemitente'=>$arrayRemitente));
     }
 
@@ -28,9 +28,8 @@ class RemitenteController extends Controller
      */
     public function create()
     {
-        $tipoContacto = Tipo_Contacto::all();
-        return view('remitente.create', array('tipoContacto'=>$tipoContacto));   
-    }
+        $iva = Condicion_IVA::all();
+        return view('remitente.create', array('iva'=>$iva));    }
 
     /**
      * Store a newly created resource in storage.
@@ -52,7 +51,7 @@ class RemitenteController extends Controller
         $nuevo->borrado = false;
         $nuevo->save();
         alert()->success("El remitente $nuevo->nombre fue creado con exito", 'Creado con exito');
-        return redirect('/remitente');
+        return redirect()->action('RemitenteController@contact', $request->cuit);
     }
 
     /**
@@ -94,7 +93,7 @@ class RemitenteController extends Controller
         $nuevo->nombre = $request->input('nombre');
         $nuevo->save();
         alert()->success("El remitente $nuevo->nombre fue editado con exito", 'Editado con exito');
-        return redirect('/remitente');
+        return redirect()->action('RemitenteController@show', $cuit);
     }
 
     /**
@@ -110,5 +109,36 @@ class RemitenteController extends Controller
         $remitente->save();
         alert()->success("El remitente fue eliminado con exito", 'Eliminado con exito');
         return redirect('/remitente');
+    }
+
+    public function contact($cuit){
+        $tipoContacto = Tipo_Contacto::all();
+        $remitenteContacto = Remitente_Contacto::where('cuit', $cuit)->get();
+        return view('remitente.contact', compact(['tipoContacto', 'remitenteContacto', 'cuit']));
+    }
+
+    public function add_contact(Request $request, $cuit)
+    {
+        $existe = Remitente_Contacto::where('cuit', $cuit)->where('contacto', $request->contacto)->exists();
+        if($existe){
+            alert()->error("El contacto ya existe para este remitente", "Ha ocurrido un error");
+        }
+        else{
+            $nuevo = new Remitente_Contacto;
+            $nuevo->cuit = $cuit;
+            $nuevo->contacto = $request->contacto;
+            $nuevo->tipo = $request->tipo;
+            $nuevo->save();
+            alert()->success("El contacto fue agregado con exito", 'Contacto agregado');
+        }
+        return back();
+    }
+
+    public function delete_contact($id)
+    {
+        $delete = Remitente_Contacto::where('id', $id)->first();
+        $delete->delete();
+        alert()->success("El contacto fue eliminado con exito", 'Contacto eliminado');
+        return back();
     }
 }

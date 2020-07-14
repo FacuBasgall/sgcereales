@@ -20,9 +20,9 @@
                      <label for="cuit">
                         <span>CUIT: </span>
                         <input type="text" name="cuit" id="cuit" class="input" value="{{$corredor->cuit}}" style="margin: 10px 20px;" readonly>
-                     </label>	
+                     </label>
                      <button type="submit" class="save-button" style="position:relative; top:65%; left:45%;"><i class="fa fa-check"></i></button>
-                     <a href="{{ action('CorredorController@index') }}"><button type="button" class="back-button" title="Volver" style="position: relative; top: 50%; right: 35%;"><i class="fa fa-arrow-left"></i></button></a>
+                     <a href="{{ action('CorredorController@show', $corredor->cuit) }}"><button type="button" class="back-button" title="Volver" style="position: relative; top: 50%; right: 35%;"><i class="fa fa-arrow-left"></i></button></a>
                   </form>
                </div>
             </div>

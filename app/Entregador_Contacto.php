@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Entregador_Contacto extends Model
 {
     protected $table = 'entregador_contacto';
+    protected $primaryKey = 'id';
     public $timestamps = false;
     protected $fillable = ['idUser', 'contacto', 'tipo'];
 

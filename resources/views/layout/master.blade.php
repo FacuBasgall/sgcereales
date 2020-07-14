@@ -6,7 +6,7 @@
   <script type="text/javascript" src="{{ asset('sweetalert/sweetAlert.min.js') }}"></script>
   <link href="{{ asset('css/bootstrap-home.min.css') }}" rel="stylesheet">
   <script type="text/javascript" src="{{ asset('js/sweetAlert.js') }}"></script>
-  <script type="text/javascript" src="{{ asset('js/loading.js') }}"></script> 
+  <script type="text/javascript" src="{{ asset('js/loading.js') }}"></script>
   <link rel="stylesheet" type="text/css" href="{{ asset('css/common-buttons.css') }}" >
 
   <!------ Include the above in your HEAD tag ---------->
@@ -42,6 +42,18 @@
           </a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="{{ action('IntermediarioController@index') }}">
+            <i class="fa fa-user-o"></i>
+            Intermediario
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ action('RemitenteController@index') }}">
+            <i class="fa fa-user-o"></i>
+            Remitente
+          </a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="{{ action('DestinoController@index') }}">
             <i class="fa fa-truck"></i>
             Destinatarios
@@ -73,6 +85,6 @@
       </ul>
     </div>
   </nav>
-  <div id="loader" class="center"></div> 
+  <div id="loader" class="center"></div>
   @yield('content')
 </body>

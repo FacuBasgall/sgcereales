@@ -28,8 +28,7 @@ class CorredorController extends Controller
      */
     public function create()
     {
-        $tipoContacto = Tipo_Contacto::all();
-        return view('corredor.create', array('tipoContacto'=>$tipoContacto));   
+        return view('corredor.create');
     }
 
     /**
@@ -52,7 +51,7 @@ class CorredorController extends Controller
         $nuevo->borrado = false;
         $nuevo->save();
         alert()->success("El corredor $nuevo->nombre fue creado con exito", 'Creado con exito');
-        return redirect('/corredor');
+        return redirect()->action('CorredorController@contact', $request->cuit);
     }
 
     /**
@@ -94,7 +93,7 @@ class CorredorController extends Controller
         $nuevo->nombre = $request->input('nombre');
         $nuevo->save();
         alert()->success("El corredor $nuevo->nombre fue editado con exito", 'Editado con exito');
-        return redirect('/corredor');
+        return redirect()->action('CorredorController@show', $cuit);
     }
 
     /**
@@ -110,5 +109,36 @@ class CorredorController extends Controller
         $corredor->save();
         alert()->success("El corredor fue eliminado con exito", 'Eliminado con exito');
         return redirect('/corredor');
+    }
+
+    public function contact($cuit){
+        $tipoContacto = Tipo_Contacto::all();
+        $corredorContacto = Corredor_Contacto::where('cuit', $cuit)->get();
+        return view('corredor.contact', compact(['tipoContacto', 'corredorContacto', 'cuit']));
+    }
+
+    public function add_contact(Request $request, $cuit)
+    {
+        $existe = Corredor_Contacto::where('cuit', $cuit)->where('contacto', $request->contacto)->exists();
+        if($existe){
+            alert()->error("El contacto ya existe para este corredor", "Ha ocurrido un error");
+        }
+        else{
+            $nuevo = new Corredor_Contacto;
+            $nuevo->cuit = $cuit;
+            $nuevo->contacto = $request->contacto;
+            $nuevo->tipo = $request->tipo;
+            $nuevo->save();
+            alert()->success("El contacto fue agregado con exito", 'Contacto agregado');
+        }
+        return back();
+    }
+
+    public function delete_contact($id)
+    {
+        $delete = Corredor_Contacto::where('id', $id)->first();
+        $delete->delete();
+        alert()->success("El contacto fue eliminado con exito", 'Contacto eliminado');
+        return back();
     }
 }

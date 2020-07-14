@@ -10,65 +10,36 @@
 			<div class="container">
 			    <div class="card">
                 <h2>Añadir datos de la descarga</h2>
-               @if($descargas->count()>0)
-                  <div>
-                  DESCARGAS ANTERIORES
-                  </div>
-               @endif
                 <div class="box">
 			         <form action="{{action('DescargaController@store')}}" method="POST">
                      {{ csrf_field() }}
-                     <label for="destino">
-                        <span>Destinatario: *</span>
-                        <select name="destino"  class="input" required>
-                        <option value="" selected disabled hidden></option>
-                           @foreach ($destinos as $destino)
-                              <option value="{{ $destino->cuit }}"> {{$destino->nombre}}</option>
-                           @endforeach
-                        </select>
-                     </label>
                      <label for="fecha">
                         <span>Fecha de la Descarga: *</span>
                         <input type="date" name="fecha" id="fecha" class="input" style="margin: 10px 20px;" required>
                      </label>
-                     <label for="localidad">
-                        <span>Localidad de descarga: </span>
-                        <input type="text" name="localidad" id="localidad" class="input" style="margin: 10px 20px;" required>
-                     </label>
-                     <label for="provincia">
-                        <span>Provincia de descarga: </span>
-                        <input type="text" name="provincia" id="provincia" class="input" style="margin: 10px 20px;" required>
-                     </label>
                      <label for="bruto">
                         <span>Kilos Brutos: *</span>
-                        <input type="number" name="bruto" id="bruto" class="input" style="margin: 10px 20px;" required>
+                        <input type="number" min="0" name="bruto" id="bruto" class="input" style="margin: 10px 20px;" required>
                      </label>
                      <label for="tara">
                         <span>Tara Kg: *</span>
-                        <input type="number" name="tara" id="tara" class="input" style="margin: 10px 20px;" required>
+                        <input type="number" min="0" name="tara" id="tara" class="input" style="margin: 10px 20px;" required>
                      </label>
                      <label for="humedad">
                         <span>Humedad (%): *</span>
-                        <input type="number" name="humedad" id="humedad" class="input" style="margin: 10px 20px;">
+                        <input type="number" step=".1" min="0" name="humedad" id="humedad" class="input" style="margin: 10px 20px;" required>
                      </label>
-                     <label for="merma">
-                        <span>merma: </span>
-                        <input type="number" name="merma" id="merma" class="input" style="margin: 10px 20px;">
-                     </label>	
                      <label for="ph">
                         <span>Ph: </span>
-                        <input type="number" name="ph" id="ph" class="input" style="margin: 10px 20px;">
+                        <input type="number" step=".1" min="0" name="ph" id="ph" class="input" style="margin: 10px 20px;">
                      </label>
 		               <label for="proteina">
                         <span>Proteina: </span>
-                        <input type="number" name="proteina" id="proteina" class="input" style="margin: 10px 20px;">
+                        <input type="number" step=".1" min="0" name="proteina" id="proteina" class="input" style="margin: 10px 20px;">
                      </label>
                      <label for="calidad">
                         <span>Calidad: </span>
                         <input type="text" name="calidad" id="calidad" class="input" style="margin: 10px 20px;">
-                     </label>
-                     <label for="check">
-                        <input type="checkbox" name= "check" id="check" value="masDescargas"> Deseo ingresar más descargas ahora
                      </label>
                      <input id="carga" name="carga" type="hidden" value="{{$carga->idCarga}}">
                      <button type="submit" class="save-button" style="position:relative; top:65%; left:30%;"><i class="fa fa-check"></i></button>

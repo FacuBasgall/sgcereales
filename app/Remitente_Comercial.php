@@ -16,12 +16,12 @@ class Remitente_Comercial extends Model
     protected $attributes = [
         'borrado' => false,
     ];
-    
-    public function carga(){
-        return $this->hasMany('App\Carga', 'idRemitente', 'cuit');
-    }
 
     public function remitente_contacto(){
         return $this->hasMany('App\Remitente_Contacto', 'cuit', 'cuit');
-    } 
+    }
+
+    public function aviso(){
+        return $this->hasMany('App\Aviso', 'idRemitenteComercial', 'cuit');
+    }
 }
