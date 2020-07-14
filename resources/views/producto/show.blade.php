@@ -2,28 +2,18 @@
 @section('content')
 	@parent
 		<head>
-			<style>
-				table {
-					font-family: arial, sans-serif;
-					border-collapse: collapse;
-					width: 100%;
-				}
-
-				td, th {
-				border: 1px solid #dddddd;
-				text-align: left;
-				padding: 8px;
-				}
-
-				tr:nth-child(even) {
-				background-color: #dddddd;
-				}
-			</style>
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/show.css') }}">
 		</head>
-		<body>
-			<h1>{{$producto->nombre}}</h1>
-            <h4>Merma por manipuleo: {{$producto->mermaManipuleo}}</h4><br>
-			<h4>Tabla de merma por secado: </h4>
+		<body style="background:url(/image/silo.jpg) no-repeat center center fixed">
+		<div class="container">
+			<div class="card">
+                <div class="box">
+                    <div class="header">
+			            <h1>{{$producto->nombre}}</h1>
+                        <hr></hr>
+                    </div>
+            <p><strong>Merma por manipuleo: </strong>{{$producto->mermaManipuleo}}</p>
+			<p><strong>Tabla de merma por secado: </strong></p>
 			<table style="width:15%">
 				<tr>
 					<th>Humedad</th>
@@ -36,5 +26,7 @@
 					</tr>
 				@endforeach
 			</table>
-		</body>
+            </div>
+            </div>
+    </body>
 @endsection

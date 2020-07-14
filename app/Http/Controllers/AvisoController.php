@@ -73,6 +73,8 @@ class AvisoController extends Controller
     public function store(Request $request)
     {
         $aviso = new Aviso;
+        $keyAviso = $this->generate_key();
+        $aviso->idAviso = $keyAviso;
         $aviso->idTitularCartaPorte = $request->titular;
         $aviso->idIntermediario = $request->intermediario;
         $aviso->idRemitenteComercial = $request->remitente;
@@ -88,19 +90,19 @@ class AvisoController extends Controller
         $aviso->save();
 
         $aviso_producto = new Aviso_Producto;
-        $aviso_producto->idAviso = $aviso->idAviso;
+        $aviso_producto->idAviso = $keyAviso;
         $aviso_producto->idProducto = $request->producto;
         $aviso_producto->cosecha = $request->cosecha;
         $aviso_producto->tipo = $request->tipo;
         $aviso_producto->save();
 
         $aviso_entregador = new Aviso_Entregador;
-        $aviso_entregador->idAviso = $aviso->idAviso;
+        $aviso_entregador->idAviso = $keyAviso;
         $aviso_entregador->idEntregador = 1;
         $aviso_entregador->fecha = date("Y-m-d");
         $aviso_entregador->save();
 
-        return redirect()->action('CargaController@create', $aviso->idAviso);
+        return redirect()->action('CargaController@create', $keyAviso);
     }
 
     /**
@@ -222,5 +224,20 @@ class AvisoController extends Controller
         }
         $aviso->save();
         return back();
+    }
+
+    private function generate_key(){
+        $key = "";
+        $existe = Aviso::all();
+        if($existe->isEmpty()){
+            $key = "SGC-0000000001";
+        }else{
+            $ultimo = Aviso::orderBy('idAviso', 'desc')->first();
+            $array = explode("-", $ultimo->idAviso);
+            $array[1] = intval($array[1]+1);
+            $nro = str_pad($array[1], 10, "0", STR_PAD_LEFT);
+            $key = "SGC-" . $nro;
+        }
+        return $key;
     }
 }

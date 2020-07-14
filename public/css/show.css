@@ -30,7 +30,7 @@ body {
     width:auto;
 }
 
-.card hr { 
+.card hr {
     width: 300px;
 }
 
@@ -52,4 +52,25 @@ body {
 .card h1 {
     font-size:30px;
     color:#262626;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-right: 120px;
+    margin-left: 120px;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
 }

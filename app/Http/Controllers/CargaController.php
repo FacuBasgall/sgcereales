@@ -26,7 +26,7 @@ class CargaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(int $idAviso)
+    public function create($idAviso)
     {
         $aviso = Aviso::where('idAviso', $idAviso)->first();
         return view('carga.create', array('aviso'=>$aviso));

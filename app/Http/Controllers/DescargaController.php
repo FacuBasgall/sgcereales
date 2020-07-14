@@ -28,7 +28,7 @@ class DescargaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(int $idCarga)
+    public function create($idCarga)
     {
         $carga = Carga::where('idCarga', $idCarga)->first();
         return view('descarga.create', array('carga'=>$carga));
