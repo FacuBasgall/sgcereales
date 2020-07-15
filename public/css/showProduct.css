@@ -55,4 +55,11 @@ body {
     font-size: 15px;
 }
 
+.title {
+    font-size: 19px;
+}
+
+.card-header {
+    background-color: #ffffffd2;
+}
 

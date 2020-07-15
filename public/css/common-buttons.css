@@ -4,56 +4,20 @@
   100%{ -webkit-transform:rotateZ( 5deg); }
 }
 
-
-.plus-button {
+  .plus-button{
     background-color: #4CAF50;
     border: none;
     color: white;
-    padding: 20px;
+    padding: 7px;
     text-align: center;
-    text-decoration: none;
-    display: flex;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 50%;
-    position: fixed;
-  }
-
-  .small-plus-button{
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 16px;
-    padding-left: 20px;
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
+    font-size: 18px;
     cursor: pointer;
     position: absolute;
     left: 87%;
-    top: 0.2%;
-    font-family:sans-serif;
+    border-radius: 5%;
+    font-family: sans-serif;
   }
 
-  .plus-button:hover{
-    background-color: rgb(48, 121, 50);
-    -webkit-animation: tiembla 0.7s ;
-  }
-
-  @media (min-width: 250px) {
-    .plus-button {
-      top: 85%;
-      left: 93%;
-    }
-    }
-
-  @media only screen and (max-width: 700px) {
-    .plus-button {
-      top: 85%;
-      left: 80%;
-    }
-  }
 
 
   .edit-button {
@@ -120,7 +84,7 @@
   }
 
   .back-button:hover{
-    background-color: rgb(158, 99, 22); 
+    background-color: rgb(158, 99, 22);
   }
 
   .save-button {

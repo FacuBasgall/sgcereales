@@ -13,8 +13,8 @@
     <div class="cuadro">
     <div class="card">
     <div class="card-header">
-    <label class="col-md-8 col-form-label"><b>Listado de Avisos</b></b></label>
-    <a href="{{ action('AvisoController@create') }}" ><button class="small-plus-button" title="Agregar Aviso" style="font-family:sans-serif;"> Añadir</button></a>
+    <label class="title col-md-8 col-form-label"><b>Listado de Avisos</b></b></label>
+    <a href="{{ action('AvisoController@create') }}" ><button class="plus-button" title="Crear Aviso"><i class="fa fa-plus"></i> Crear Aviso</button></a>
     </div>
     <div class="card-body border">
         <table id="idDataTable" class="table table-striped" >
@@ -82,6 +82,15 @@
         } );
 
 </script>
+<style>
+    .title {
+        font-size: 19px;
+    }
+
+    .card-header {
+        background-color: #ffffffd2;
+    }
+</style>
 @stop
 
 

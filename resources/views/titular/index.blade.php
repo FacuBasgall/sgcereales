@@ -8,6 +8,10 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
 	<body>
+    <div class="card-header">
+    <label class="title col-md-8 col-form-label"><b>Titulares carta porte</b></b></label>
+    <a href="{{ action('TitularController@create') }}"><button class="plus-button" title="Añadir titular carta porte"><i class="fa fa-plus"></i> Añadir titular</button></a>
+    </div>
     <div class="container">
 		@foreach( $arrayTitular as $key)
 		<div class="card">
@@ -27,8 +31,7 @@
 
 		@endforeach
         </div>
-        <a href="{{ action('TitularController@create') }}"><button class="plus-button" title="Agregar destino"><i class="fa fa-plus"></i></button></a>
 	@include('sweet::alert')
-	</body>	
+	</body>
 @endsection
 
