@@ -1,5 +1,7 @@
 <?php
 
+use App\Exports\RomaneoExport;
+use Maatwebsite\Excel\Facades\Excel;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -112,3 +114,4 @@ Route::get('/aviso/edit/{id}', 'AvisoController@edit');
 Route::put('/aviso/update/{id}', 'AvisoController@update');
 Route::get('/aviso/destroy/{id}', 'AvisoController@destroy');
 Route::get('/aviso/change_status/{id}', 'AvisoController@change_status');
+Route::get('/aviso/export/', 'AvisoController@export');

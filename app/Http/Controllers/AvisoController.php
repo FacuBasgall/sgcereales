@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Exports\RomaneoExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 use App\Aviso;
 use App\Descarga;
@@ -72,6 +74,8 @@ class AvisoController extends Controller
      */
     public function store(Request $request)
     {
+        $cosecha = "20" . $request->cosecha1 . "/20" . $request->cosecha2;
+
         $aviso = new Aviso;
         $keyAviso = $this->generate_key();
         $aviso->idAviso = $keyAviso;
@@ -92,7 +96,7 @@ class AvisoController extends Controller
         $aviso_producto = new Aviso_Producto;
         $aviso_producto->idAviso = $keyAviso;
         $aviso_producto->idProducto = $request->producto;
-        $aviso_producto->cosecha = $request->cosecha;
+        $aviso_producto->cosecha = $cosecha;
         $aviso_producto->tipo = $request->tipo;
         $aviso_producto->save();
 
@@ -180,7 +184,13 @@ class AvisoController extends Controller
         $aviso_producto->tipo = $request->tipo;
         $aviso_producto->save();
 
-        return redirect()->action('CargaController@edit', $aviso->idAviso);
+        $existeCarga = Carga::where('idAviso', $idAviso)->exists();
+        if($existeCarga){
+            return redirect()->action('CargaController@edit', $aviso->idAviso);
+        }else{
+            return redirect()->action('AvisoController@show', $aviso->idAviso);
+        }
+
     }
 
     /**
@@ -216,6 +226,8 @@ class AvisoController extends Controller
                 $descarga = Descarga::where('idCarga', $carga->idCarga)->exists();
                 if(!$descarga){
                     //DEVOLVER ERROR -> PARA QUE PUEDA ESTAR TERMINADO DEBE TENER TODAS LAS DESCARGAS
+                    alert()->error("Se debe completar el aviso para poder cambiar su estado", 'Ha ocurrido un error');
+                    return back();
                 }
             }
             $aviso->estado = true;
@@ -223,6 +235,7 @@ class AvisoController extends Controller
             $aviso->estado = false;
         }
         $aviso->save();
+        alert()->success("El estado del aviso fue cambiado con exito", 'Estado cambiado');
         return back();
     }
 
@@ -239,5 +252,10 @@ class AvisoController extends Controller
             $key = "SGC-" . $nro;
         }
         return $key;
+    }
+
+    public function export()
+    {
+        return Excel::download(new RomaneoExport, 'romaneo.xlsx');
     }
 }

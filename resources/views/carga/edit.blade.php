@@ -73,7 +73,7 @@
                             <span>Calidad: </span>
                             <input type="text" name="calidad" id="calidad" value="{{$descarga->calidad}}" class="input" style="margin: 10px 20px;">
                         </label>
-                        <input type="hidden" name="idAviso" id="idAviso" value="{{$carga->idAviso}}">
+                        <input type="hidden" name="carga" id="carga" value="{{$carga->idCarga}}">
                         <button type="submit" class="save-button" style="position:relative; top:65%; left:30%;"><i class="fa fa-check"></i></button>
                     </form>
                     </div>

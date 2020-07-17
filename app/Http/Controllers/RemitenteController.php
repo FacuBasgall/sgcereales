@@ -42,6 +42,10 @@ class RemitenteController extends Controller
         $existe = Remitente_Comercial::where('cuit', $request->cuit)->exists();
         if($existe){
             $nuevo = Remitente_Comercial::where('cuit', $request->cuit)->first();
+            if(!$nuevo->borrado){
+                alert()->error("El remitente comercial $request->nombre ya existe", 'Ha surgido un error');
+                return back();
+            }
         }
         else{
             $nuevo = new Remitente_Comercial;

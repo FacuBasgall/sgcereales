@@ -42,32 +42,42 @@ class DescargaController extends Controller
      */
     public function store(Request $request)
     {
-        /* $request->validate([
+        $carga = Carga::where('idCarga', $request->carga)->first();
+        $hoy = date("Y-m-d");
 
-        ]); */
-       $descarga = new Descarga;
-       $descarga->idCarga = $request->carga;
-       $descarga->fecha = $request->fecha;
-       $descarga->bruto = $request->bruto;
-       $descarga->tara = $request->tara;
-       $descarga->humedad = $request->humedad;
-       $descarga->ph = $request->ph;
-       $descarga->proteina = $request->proteina;
-       $descarga->calidad = $request->calidad;
-       $descarga->borrado = false;
+        if($request->fecha >= $carga->fecha && $request->fecha <= $hoy){
+            $descarga = new Descarga;
+            $descarga->idCarga = $request->carga;
+            $descarga->fecha = $request->fecha;
+            $descarga->bruto = $request->bruto;
+            $descarga->tara = $request->tara;
+            $descarga->humedad = $request->humedad;
+            $descarga->ph = $request->ph;
+            $descarga->proteina = $request->proteina;
+            $descarga->calidad = $request->calidad;
+            $descarga->borrado = false;
 
-        $carga = Carga::where('idCarga', $request->idCarga)->first();
-        $aviso = Aviso::where('idAviso', $carga->idAviso)->first();
-        $producto = Producto::where('idProducto', $aviso->idProducto)->first();
-        $merma = Merma::where('idProducto', $producto->idProducto)->where('humedad', $descarga->humedad)->exists();
-        if ($merma){
-            $mermaManipuleo = $producto->mermaManipuleo;
-            $mermaSecado = $merma->merma;
-            $descarga->merma = $mermaManipuleo + $mermaSecado;
+            $aviso = Aviso::where('idAviso', $carga->idAviso)->first();
+            $producto = Producto::where('idProducto', $aviso->idProducto)->first();
+            $merma = Merma::where('idProducto', $producto->idProducto)->where('humedad', $descarga->humedad)->exists();
+            if ($merma){
+                $mermaManipuleo = $producto->mermaManipuleo;
+                $mermaSecado = $merma->merma;
+                $descarga->merma = $mermaManipuleo + $mermaSecado;
+            }else{
+                $descarga->merma = NULL;
+            }
+            $descarga->save();
+
+            alert()->success("El aviso fue creado con exito", 'Creado con exito');
+            return redirect()->action('AvisoController@index');
+        }elseif($request->fecha > $hoy){
+            alert()->error("La fecha no puede ser mayor al dia de hoy", 'Ha ocurrido un error');
+            return back();
         }else{
-            $descarga->merma = NULL;
+            alert()->error("La fecha no puede ser menor a la fecha de carga", 'Ha ocurrido un error');
+            return back();
         }
-        $descarga->save();
 
        /**FORMULAS
         *   NETO KG = BRUTO - TARA
@@ -76,8 +86,7 @@ class DescargaController extends Controller
             NETO FINAL = NETO KG - MERMA KG
             DIFERENCIA = NETO FINAL - KG CARGA
         */
-        alert()->success("El aviso fue creado con exito", 'Creado con exito');
-        return redirect()->action('AvisoController@index');
+
     }
 
     /**
@@ -111,27 +120,39 @@ class DescargaController extends Controller
      */
     public function update(Request $request, $idDescarga)
     {
-        $descarga = Descarga::findOrfail($idDescarga);
-        $descarga->fecha = $request->fecha;
-        $descarga->bruto = $request->bruto;
-        $descarga->tara = $request->tara;
-        $descarga->humedad = $request->humedad;
-        $descarga->ph = $request->ph;
-        $descarga->proteina = $request->proteina;
-        $descarga->calidad = $request->calidad;
-        $aviso = Aviso::where('idAviso', $request->idAviso)->first();
-        $producto = Producto::where('idProducto', $aviso->idProducto)->first();
-        $merma = Merma::where('idProducto', $producto->idProducto)->where('humedad', $request->humedad)->exists();
-        if ($merma){
-            $mermaManipuleo = $producto->mermaManipuleo;
-            $mermaSecado = $merma->merma;
-            $descarga->merma = $mermaManipuleo + $mermaSecado;
+        $carga = Carga::where('idCarga', $request->carga)->first();
+        $hoy = date("Y-m-d");
+
+        if($request->fecha >= $carga->fecha && $request->fecha <= $hoy){
+            $descarga = Descarga::findOrfail($idDescarga);
+            $descarga->fecha = $request->fecha;
+            $descarga->bruto = $request->bruto;
+            $descarga->tara = $request->tara;
+            $descarga->humedad = $request->humedad;
+            $descarga->ph = $request->ph;
+            $descarga->proteina = $request->proteina;
+            $descarga->calidad = $request->calidad;
+
+            $aviso = Aviso::where('idAviso', $carga->idAviso)->first();
+            $producto = Producto::where('idProducto', $aviso->idProducto)->first();
+            $merma = Merma::where('idProducto', $producto->idProducto)->where('humedad', $request->humedad)->exists();
+            if ($merma){
+                $mermaManipuleo = $producto->mermaManipuleo;
+                $mermaSecado = $merma->merma;
+                $descarga->merma = $mermaManipuleo + $mermaSecado;
+            }else{
+                $descarga->merma = NULL;
+            }
+            $descarga->save();
+             alert()->success("La descarga fue editada con exito", 'Editado con exito');
+            return back();
+        }elseif($request->fecha > $hoy){
+            alert()->error("La fecha no puede ser mayor al dia de hoy", 'Ha ocurrido un error');
+            return back();
         }else{
-            $descarga->merma = NULL;
+            alert()->error("La fecha no puede ser menor a la fecha de carga", 'Ha ocurrido un error');
+            return back();
         }
-        $descarga->save();
-         alert()->success("La descarga fue editada con exito", 'Editado con exito');
-        return back();
     }
 
     /**

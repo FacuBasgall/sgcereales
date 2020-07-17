@@ -18,8 +18,8 @@
                      </label>
                      <label for="cuit">
                         <span>CUIT: *</span>
-                        <input type="text" name="cuit" id="cuit" class="input" style="margin: 10px 20px;" min="0" max="999999999999999" required>
-                     </label>	
+                        <input type="number" name="cuit" id="cuit" class="input" style="margin: 10px 20px;" min="0" max="99999999999" required>
+                     </label>
                      <label for="dgr">
                         <span>DGR: </span>
                         <input type="text" name="dgr" id="dgr" class="input" style="margin: 10px 20px;">
@@ -35,7 +35,7 @@
                      </label>
 		               <label for="cp">
                         <span>Codigo postal: </span>
-                        <input type="text" name="cp" id="cp" class="input" style="margin: 10px 20px;">
+                        <input type="number" name="cp" id="cp" class="input" style="margin: 10px 20px;">
                      </label>
                      <label for="pais">
                         <span>Pais: </span>
@@ -59,5 +59,6 @@
                </div>
             </div>
          </div>
+         @include('sweet::alert')
    </body>
 @endsection

@@ -42,6 +42,10 @@ class CorredorController extends Controller
         $existe = Corredor::where('cuit', $request->cuit)->exists();
         if($existe){
             $nuevo = Corredor::where('cuit', $request->cuit)->first();
+            if(!$nuevo->borrado){
+                alert()->error("El corredor $request->nombre ya existe", 'Ha surgido un error');
+                return back();
+            }
         }
         else{
             $nuevo = new Corredor;
@@ -90,7 +94,7 @@ class CorredorController extends Controller
     public function update(Request $request, $cuit)
     {
         $nuevo = Corredor::findOrFail($cuit);
-        $nuevo->nombre = $request->input('nombre');
+        $nuevo->nombre = $request->nombre;
         $nuevo->save();
         alert()->success("El corredor $nuevo->nombre fue editado con exito", 'Editado con exito');
         return redirect()->action('CorredorController@show', $cuit);

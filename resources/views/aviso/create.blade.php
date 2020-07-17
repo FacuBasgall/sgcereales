@@ -60,7 +60,7 @@
                         </select>
                      </label>
                      <label for="destino">
-                        <span>Destino: *</span>
+                        <span>Lugar de descarga: *</span>
                         <input type="text" name="lugarDescarga" id="lugarDescarga" class="input" style="margin: 10px 20px;" required>
                      </label>
                     <!-- EL ENTREGADOR ES EL USUARIO QUE ESTA AUTENTICADO EN EL MOMENTO -->
@@ -81,7 +81,10 @@
                      </label>
                      <label for="cosecha">
                         <span>Año de Cosecha: *</span>
-                        <input type="text" name="cosecha" id="cosecha" class="input" style="margin: 10px 20px;" required>
+                        20
+                        <input type="number" name="cosecha1" id="cosecha1" class="input" style="margin: 10px 20px;" min="10" max="99" required>
+                        /20
+                        <input type="number" name="cosecha2" id="cosecha2" class="input" style="margin: 10px 20px;" min="10" max="99" required>
                      </label>
                      <hr>
                      <p>Procedencia de la mercaderia</p>

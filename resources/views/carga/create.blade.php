@@ -8,14 +8,14 @@
 	</head>
 	<body style="background:url(/image/silo.jpg) no-repeat center center fixed">
 			<div class="container">
-			    <div class="card"  style="min-height: 900px">
+			    <div class="card"  style="min-height: 500px">
                 <h2>Añadir datos de la carga</h2>
                 <div class="box">
 			        <form action="{{action('CargaController@store')}}" method="POST">
                      {{ csrf_field() }}
                      <label for="cartaPorte">
                         <span>N° Carta Porte: </span>
-                        <input type="text" name="cartaPorte" id="cartaPorte" class="input" style="margin: 10px 20px;">
+                        <input type="number" name="cartaPorte" id="cartaPorte" class="input" style="margin: 10px 20px;">
                      </label>
                      <label for="fecha">
                         <span>Fecha de Carga: *</span>
@@ -39,5 +39,6 @@
                </div>
             </div>
          </div>
+         @include('sweet::alert')
    </body>
 @endsection

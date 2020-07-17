@@ -37,7 +37,11 @@
                 <strong>KG Tara: </strong>{{$descarga->tara}}<br>
                 <strong>KG Netos: </strong>{{$descarga->bruto - $descarga->tara}}<br>
                 <strong>Humedad: </strong>{{$descarga->humedad}}<br>
-                <strong>Merma (%): </strong>{{$descarga->merma}}<br>
+                @if (isset($descarga->merma))
+                    <strong>Merma (%): </strong>{{$descarga->merma}}<br>
+                @else
+                    <strong>Merma (%): </strong>No posee<br>
+                @endif
                 <strong>Merma (KG): </strong>{{round(($descarga->bruto - $descarga->tara) * ($descarga->merma / 100))}}<br>
                 <strong>KG Neto Final: </strong>{{round(($descarga->bruto - $descarga->tara) - (($descarga->bruto - $descarga->tara) * ($descarga->merma / 100)))}}<br>
                 <strong>KG Diferencia: </strong>{{round((($descarga->bruto - $descarga->tara) - (($descarga->bruto - $descarga->tara) * ($descarga->merma / 100))) - $carga->kilos)}}<br>
@@ -80,5 +84,6 @@
     <a href="{{ action('CargaController@create', $aviso->idAviso) }}"><button>Nueva carga</button></a>
     <a onclick="warning( '{{$aviso->idAviso}}' , 'aviso');"><button class="delete-button" title="Eliminar" style="padding: 7px; margin:0px;"><i class="fa fa-trash"></i></button></a>
     <br><br>
+    @include('sweet::alert')
 
 @endsection

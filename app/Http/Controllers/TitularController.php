@@ -44,6 +44,10 @@ class TitularController extends Controller
         $existe = Titular::where('cuit', $request->cuit)->exists();
         if($existe){
             $nuevo = Titular::where('cuit', $request->cuit)->first();
+            if(!$nuevo->borrado){
+                alert()->error("El titular de carta porte $request->nombre ya existe", 'Ha surgido un error');
+                return back();
+            }
         }
         else{
             $nuevo = new Titular;
@@ -103,14 +107,14 @@ class TitularController extends Controller
     public function update(Request $request, $cuit)
     {
         $nuevo = Titular::findOrFail($cuit);
-        $nuevo->nombre = $request->input('nombre');
-        $nuevo->dgr = $request->input('dgr');
-        $nuevo->cp = $request->input('cp');
-        $nuevo->condIva = $request->input('iva');
-        $nuevo->domicilio = $request->input('domicilio');
-        $nuevo->localidad = $request->input('localidad');
-        $nuevo->provincia = $request->input('provincia');
-        $nuevo->pais = $request->input('pais');
+        $nuevo->nombre = $request->nombre;
+        $nuevo->dgr = $request->dgr;
+        $nuevo->cp = $request->cp;
+        $nuevo->condIva = $request->iva;
+        $nuevo->domicilio = $request->domicilio;
+        $nuevo->localidad = $request->localidad;
+        $nuevo->provincia = $request->provincia;
+        $nuevo->pais = $request->pais;
         $nuevo->save();
         alert()->success("El titular $nuevo->nombre fue editado con exito", 'Editado con exito');
         return redirect()->action('TitularController@show', $cuit);

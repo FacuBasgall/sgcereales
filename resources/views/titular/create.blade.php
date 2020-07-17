@@ -7,7 +7,7 @@
 	</head>
 	<body style="background:url(/image/cargador-camion.jpg) no-repeat center center fixed">
 			<div class="container">
-				<div class="card"> 
+				<div class="card">
                <h2>Añadir titulares</h2>
                <div class="box">
 			         <form action="{{action('TitularController@store')}}" method="POST">
@@ -19,7 +19,7 @@
                      <label for="cuit">
                         <span>CUIT: *</span>
                         <input type="text" name="cuit" id="cuit" class="input" style="margin: 10px 20px;" min="0" max="999999999999999" required>
-                     </label>	
+                     </label>
                      <label for="dgr">
                         <span>DGR: </span>
                         <input type="text" name="dgr" id="dgr" class="input" style="margin: 10px 20px;">
@@ -59,5 +59,6 @@
                </div>
             </div>
          </div>
+         @include('sweet::alert')
    </body>
 @endsection
