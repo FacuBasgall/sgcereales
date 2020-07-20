@@ -114,4 +114,5 @@ Route::get('/aviso/edit/{id}', 'AvisoController@edit');
 Route::put('/aviso/update/{id}', 'AvisoController@update');
 Route::get('/aviso/destroy/{id}', 'AvisoController@destroy');
 Route::get('/aviso/change_status/{id}', 'AvisoController@change_status');
-Route::get('/aviso/export/', 'AvisoController@export');
+Route::get('/aviso/export_excel/{id}', 'AvisoController@export_excel');
+Route::get('/aviso/export_pdf/{id}', 'AvisoController@export_pdf');

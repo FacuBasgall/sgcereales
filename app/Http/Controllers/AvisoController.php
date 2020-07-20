@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Exports\RomaneoExport;
 use Maatwebsite\Excel\Facades\Excel;
+use PDF;
 
 use App\Aviso;
 use App\Descarga;
@@ -254,8 +255,48 @@ class AvisoController extends Controller
         return $key;
     }
 
-    public function export()
+    public function export_excel($idAviso)
     {
-        return Excel::download(new RomaneoExport, 'romaneo.xlsx');
+        $aviso = Aviso::where('idAviso', $idAviso)->first();
+
+        if($aviso->estado){
+            $titular = Titular::where('cuit', $aviso->idTitularCartaPorte)->first();
+            $filename = $idAviso . " " . $titular->nombre . ".xlsx";
+            return Excel::download(new RomaneoExport($idAviso), $filename);
+        }else{
+            alert()->error("El aviso debe estar terminado para exportalo", 'No se puede ejecutar la acción');
+            return back();
+        }
+
+    }
+
+    public function export_pdf($idAviso)
+    {
+        $aviso = Aviso::where('idAviso', $idAviso)->first();
+
+        if($aviso->estado){
+            $aviso = Aviso::where('idAviso', $idAviso)->first();
+            $cargas = Carga::where('idAviso', $aviso->idAviso)->get();
+            $descargas = Descarga::all();
+            $corredor = Corredor::where('cuit', $aviso->idCorredor)->first();
+            $destinatario = Destino::where('cuit', $aviso->idDestinatario)->first();
+            $intermediario = Intermediario::where('cuit', $aviso->idIntermediario)->first();
+            $producto = Producto::where('idProducto', $aviso->idProducto)->first();
+            $remitente = Remitente_Comercial::where('cuit', $aviso->idRemitenteComercial)->first();
+            $titular = Titular::where('cuit', $aviso->idTitularCartaPorte)->first();
+            $aviso_producto = Aviso_Producto::where('idAviso', $aviso->idAviso)->first();
+            $aviso_entregador = Aviso_Entregador::where('idAviso', $aviso->idAviso)->first();
+
+            $filename = $idAviso . " " . $titular->nombre . ".pdf";
+
+            $pdf = PDF::loadView('exports.romaneo', compact(['aviso', 'cargas', 'descargas', 'corredor', 'destinatario',
+            'intermediario', 'producto', 'remitente', 'titular', 'aviso_producto', 'aviso_entregador']));
+            $pdf->setPaper('a4', 'landscape');
+            return $pdf->download($filename);
+        }else{
+            alert()->error("El aviso debe estar terminado para exportalo", 'No se puede ejecutar la acción');
+            return back();
+        }
+
     }
 }

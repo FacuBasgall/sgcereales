@@ -1,7 +1,7 @@
 @extends('layout.master')
 @section('content')
     @parent
-    <strong>ID Aviso: </strong>{{$aviso->idAviso}}<br>
+    <strong>Nro Aviso: </strong>{{$aviso->idAviso}}<br>
     <strong>Producto: </strong>{{$producto->nombre}}<br>
     <strong>Entregador: </strong>{{$entregador->descripcion}}<br>
     <strong>Titular: </strong>{{$titular->nombre}}<br>
@@ -82,6 +82,8 @@
     <a href="{{ action('AvisoController@index') }}"><button>Volver</button></a>
     <a href="{{ action('AvisoController@edit', $aviso->idAviso) }}"><button>Editar</button></a>
     <a href="{{ action('CargaController@create', $aviso->idAviso) }}"><button>Nueva carga</button></a>
+    <a href="{{ action('AvisoController@export_excel', $aviso->idAviso) }}"><button>Exportar Excel</button></a>
+    <a href="{{ action('AvisoController@export_pdf', $aviso->idAviso) }}"><button>Exportar PDF</button></a>
     <a onclick="warning( '{{$aviso->idAviso}}' , 'aviso');"><button class="delete-button" title="Eliminar" style="padding: 7px; margin:0px;"><i class="fa fa-trash"></i></button></a>
     <br><br>
     @include('sweet::alert')
