@@ -117,8 +117,9 @@ class CorredorController extends Controller
 
     public function contact($cuit){
         $tipoContacto = Tipo_Contacto::all();
+        $corredor = Corredor::findOrFail($cuit);
         $corredorContacto = Corredor_Contacto::where('cuit', $cuit)->get();
-        return view('corredor.contact', compact(['tipoContacto', 'corredorContacto', 'cuit']));
+        return view('corredor.contact', compact(['tipoContacto', 'corredorContacto', 'corredor']));
     }
 
     public function add_contact(Request $request, $cuit)

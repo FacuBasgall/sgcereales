@@ -28,8 +28,8 @@ class RemitenteController extends Controller
      */
     public function create()
     {
-        $iva = Condicion_IVA::all();
-        return view('remitente.create', array('iva'=>$iva));    }
+        return view('remitente.create');
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -117,8 +117,9 @@ class RemitenteController extends Controller
 
     public function contact($cuit){
         $tipoContacto = Tipo_Contacto::all();
+        $remitente = Remitente_Comercial::findOrFail($cuit);
         $remitenteContacto = Remitente_Contacto::where('cuit', $cuit)->get();
-        return view('remitente.contact', compact(['tipoContacto', 'remitenteContacto', 'cuit']));
+        return view('remitente.contact', compact(['tipoContacto', 'remitenteContacto', 'remitente']));
     }
 
     public function add_contact(Request $request, $cuit)

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Exports\RomaneoExport;
 use Maatwebsite\Excel\Facades\Excel;
-use PDF;
 
 use App\Aviso;
 use App\Descarga;
@@ -19,6 +18,7 @@ use App\Remitente_Comercial;
 use App\User;
 use App\Aviso_Producto;
 use App\Aviso_Entregador;
+use PDF;
 use Datatables;
 use DB;
 
@@ -275,7 +275,6 @@ class AvisoController extends Controller
         $aviso = Aviso::where('idAviso', $idAviso)->first();
 
         if($aviso->estado){
-            $aviso = Aviso::where('idAviso', $idAviso)->first();
             $cargas = Carga::where('idAviso', $aviso->idAviso)->get();
             $descargas = Descarga::all();
             $corredor = Corredor::where('cuit', $aviso->idCorredor)->first();
@@ -283,14 +282,13 @@ class AvisoController extends Controller
             $intermediario = Intermediario::where('cuit', $aviso->idIntermediario)->first();
             $producto = Producto::where('idProducto', $aviso->idProducto)->first();
             $remitente = Remitente_Comercial::where('cuit', $aviso->idRemitenteComercial)->first();
-            $titular = Titular::where('cuit', $aviso->idTitularCartaPorte)->first();
             $aviso_producto = Aviso_Producto::where('idAviso', $aviso->idAviso)->first();
             $aviso_entregador = Aviso_Entregador::where('idAviso', $aviso->idAviso)->first();
+            $titular = Titular::where('cuit', $aviso->idTitularCartaPorte)->first();
 
             $filename = $idAviso . " " . $titular->nombre . ".pdf";
 
-            $pdf = PDF::loadView('exports.romaneo', compact(['aviso', 'cargas', 'descargas', 'corredor', 'destinatario',
-            'intermediario', 'producto', 'remitente', 'titular', 'aviso_producto', 'aviso_entregador']));
+            $pdf = PDF::loadView('aviso.pdf', compact(['aviso', 'cargas', 'descargas', 'corredor', 'destinatario', 'intermediario', 'producto', 'remitente', 'titular', 'aviso_producto', 'aviso_entregador']));
             $pdf->setPaper('a4', 'landscape');
             return $pdf->download($filename);
         }else{

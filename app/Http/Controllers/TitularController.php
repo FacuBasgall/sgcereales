@@ -137,8 +137,9 @@ class TitularController extends Controller
 
     public function contact($cuit){
         $tipoContacto = Tipo_Contacto::all();
+        $titular = Titular::findOrFail($cuit);
         $titularContacto = Titular_Contacto::where('cuit', $cuit)->get();
-        return view('titular.contact', compact(['tipoContacto', 'titularContacto', 'cuit']));
+        return view('titular.contact', compact(['tipoContacto', 'titularContacto', 'titular']));
     }
 
     public function add_contact(Request $request, $cuit)

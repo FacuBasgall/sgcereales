@@ -136,8 +136,9 @@ class DestinoController extends Controller
 
     public function contact($cuit){
         $tipoContacto = Tipo_Contacto::all();
+        $destinatario = Destino::findOrFail($cuit);
         $destinoContacto = Destino_Contacto::where('cuit', $cuit)->get();
-        return view('destino.contact', compact(['tipoContacto', 'destinoContacto', 'cuit']));
+        return view('destino.contact', compact(['tipoContacto', 'destinoContacto', 'destinatario']));
     }
 
     public function add_contact(Request $request, $cuit)

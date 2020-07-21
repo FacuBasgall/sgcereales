@@ -3,10 +3,14 @@
 	@parent
     <head>
          <link rel="stylesheet" type="text/css" href="{{ asset('css/showProduct.css') }}" >
+         <link rel="stylesheet" type="text/css" href="{{ asset('css/header.css') }}">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     </head>
     <body>
+    <div class="card-header">
+        <label class="title col-md-8 col-form-label"><b>Productos</b></label>
+    </div>
     <div class="container">
 		@foreach( $productos as $key)
 

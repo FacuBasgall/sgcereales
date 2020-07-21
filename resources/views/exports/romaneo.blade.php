@@ -15,7 +15,7 @@
         <tr>
             <th><strong>Titular de C.P.</strong></th>
             <td>{{ $titular->nombre }}</td>
-            <th><strong>Procedencia</strong></th>
+            <th  ><strong>Procedencia</strong></th>
             <td>{{$aviso->localidadProcedencia}} ({{$aviso->provinciaProcedencia}})</td>
         </tr>
         <tr>
@@ -85,5 +85,17 @@
                 @endforeach
             </tr>
         @endforeach
+        <tr>
+            <th colspan="4">Observaciones: </th>
+            <th>Total descargado: </th>
+            <td>NETO</td>
+            <th>Merma: </th>
+            <td>MERMA KG</td>
+            <th>Neto final: </th>
+            <td>NETO FINAL</td>
+        </tr>
+        <tr>
+            <td>{{$aviso->observacion}}</td>
+        </tr>
     </tbody>
 </table>

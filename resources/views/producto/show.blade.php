@@ -3,8 +3,12 @@
 	@parent
 		<head>
             <link rel="stylesheet" type="text/css" href="{{ asset('css/show.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/header.css') }}">
 		</head>
 		<body style="background:url(/image/silo.jpg) no-repeat center center fixed">
+        <div class="card-header">
+        <label class="title col-md-8 col-form-label"><b>Detalle de producto</b></label>
+        </div>
 		<div class="container">
 			<div class="card">
                 <div class="box">

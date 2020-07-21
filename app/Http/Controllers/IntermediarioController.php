@@ -28,8 +28,8 @@ class IntermediarioController extends Controller
      */
     public function create()
     {
-        $iva = Condicion_IVA::all();
-        return view('intermediario.create', array('iva'=>$iva));    }
+        return view('intermediario.create');
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -117,8 +117,9 @@ class IntermediarioController extends Controller
 
     public function contact($cuit){
         $tipoContacto = Tipo_Contacto::all();
+        $intermediario = Intermediario::findOrFail($cuit);
         $intermediarioContacto = Intermediario_Contacto::where('cuit', $cuit)->get();
-        return view('intermediario.contact', compact(['tipoContacto', 'intermediarioContacto', 'cuit']));
+        return view('intermediario.contact', compact(['tipoContacto', 'intermediarioContacto', 'intermediario']));
     }
 
     public function add_contact(Request $request, $cuit)

@@ -4,7 +4,6 @@ namespace App\Exports;
 
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
-use PDF;
 
 use App\Aviso;
 use App\Carga;

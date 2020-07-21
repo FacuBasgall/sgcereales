@@ -3,8 +3,12 @@
 	@parent
 	<head>
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/forms.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/header.css') }}">
 	</head>
 	<body style="background-image:url(/image/corredor.jpg); no-repeat center center fixed">
+    <div class="card-header">
+        <label class="title col-md-8 col-form-label"><b>Crear corredor</b></label>
+    </div>
 			<div class="container">
 				<div class="card" style="min-height:350px;">
                <h2>Agregar Corredor</h2>

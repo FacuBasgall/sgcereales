@@ -3,12 +3,15 @@
 	@parent
 	<head>
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/forms.css') }}">
-      		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/header.css') }}">
+      	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</head>
 	<body style="background:url(/image/corredor.jpg) no-repeat center center fixed">
+    <div class="card-header">
+        <label class="title col-md-8 col-form-label"><b>Editar corredor</b></label>
+    </div>
 			<div class="container">
 				<div class="card" style="min-height:325px; padding:10px;">
-               <h2>Editar: {{$corredor->nombre}}</h2>
                <div class="box" style="margin-top: 20px">
 			         <form action="{{action('CorredorController@update', $corredor->cuit)}}" method="POST">
                     	{{ method_field('PUT') }}
