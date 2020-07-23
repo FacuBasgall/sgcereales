@@ -1,16 +1,32 @@
+<html>
+<head>
+<style>
+    @page {
+        margin: 0cm 0cm;
+        font-family: Arial;
+    }
+
+    table {
+        border-collapse:collapse;
+        width:100%;
+    }
+
+    .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:center;
+    }
+
+    .row {
+
+    }
+</style>
+</head>
+<body class="container">
+<title>Nro Aviso: {{$aviso->idAviso}}, {{$titular->nombre}}</title>
 <table>
     <thead>
         <tr>
-            <th rowspan="6" colspan="4">
-                {{$entregador->nombre}}<br>
-                {{$entregador->descripcion}}<br>
-                @foreach ($entregador_domicilio as $domicilio)
-                    {{$domicilio->domicilio}}, {{$domicilio->localidad}} ({{$domicilio->provincia}} - {{$domicilio->cp}})<br>
-                @endforeach
-                @foreach ($entregador_contacto as $contacto)
-                    | {{$contacto->contacto}} |
-                @endforeach
-            </th>
             <th><strong>Nro Aviso</strong></th>
             <td>{{ $aviso->idAviso }}</td>
             <th><strong>Fecha</strong></th>
@@ -25,7 +41,7 @@
         <tr>
             <th><strong>Titular de C.P.</strong></th>
             <td>{{ $titular->nombre }}</td>
-            <th  ><strong>Procedencia</strong></th>
+            <th><strong>Procedencia</strong></th>
             <td>{{$aviso->localidadProcedencia}} ({{$aviso->provinciaProcedencia}})</td>
         </tr>
         <tr>
@@ -35,10 +51,10 @@
             <td>{{ $corredor->nombre }}</td>
         </tr>
         @if (isset($intermediario->nombre))
-            <tr>
-                <th><strong>Intermediario: </strong></th>
-                <td>{{$intermediario->nombre}}</td>
-            </tr>
+        <tr>
+            <th><strong>Intermediario: </strong></th>
+            <td>{{$intermediario->nombre}}</td>
+        </tr>
         @endif
         <tr>
             <th><strong>Destinatario</strong></th>
@@ -112,3 +128,5 @@
         </tr>
     </tbody>
 </table>
+</body>
+</html>

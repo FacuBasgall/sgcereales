@@ -16,11 +16,11 @@
                      {{ csrf_field() }}
                      <label for="nombre">
                         <span>Nombre y Apellido: *</span>
-                        <input type="text" name="nombre" id="nombre" class="input" style="margin: 10px 20px;" required>
+                        <input type="text" value="{{old('nombre')}}" name="nombre" id="nombre" class="input" style="margin: 10px 20px;" required>
                      </label>
                      <label for="cuit">
                         <span>CUIT: *</span>
-                        <input type="text" name="cuit" id="cuit" class="input" style="margin: 10px 20px;" step="0.01" required>
+                        <input type="text" value="{{old('cuit')}}" name="cuit" id="cuit" class="input" style="margin: 10px 20px;" step="0.01" required>
                      </label>
                      <button type="submit" class="save-button" style="position:absolute; top:90%; left:70%;"><i class="fa fa-check"></i></button>
                      <a href="{{ action('IntermediarioController@index') }}"><button type="button" class="back-button" title="Volver" style="position: absolute; top: 90%; left: 25%;"><i class="fa fa-arrow-left"></i></button></a>

@@ -70,14 +70,14 @@ class DescargaController extends Controller
             }
             $descarga->save();
 
-            alert()->success("El aviso fue creado con exito", 'Creado con exito');
-            return redirect()->action('AvisoController@index');
+            alert()->success("La descarga fue creada con exito", 'Descarga guardada');
+            return redirect()->action('AvisoController@show', $carga->idAviso);
         }elseif($request->fecha > $hoy){
             alert()->error("La fecha no puede ser mayor al dia de hoy", 'Ha ocurrido un error');
-            return back();
+            return back()->withInput();
         }else{
             alert()->error("La fecha no puede ser menor a la fecha de carga", 'Ha ocurrido un error');
-            return back();
+            return back()->withInput();
         }
 
        /**FORMULAS
@@ -145,14 +145,14 @@ class DescargaController extends Controller
                 $descarga->merma = NULL;
             }
             $descarga->save();
-             alert()->success("La descarga fue editada con exito", 'Editado con exito');
+            alert()->success("La descarga fue editada con exito", 'Descarga guardada');
             return back();
         }elseif($request->fecha > $hoy){
             alert()->error("La fecha no puede ser mayor al dia de hoy", 'Ha ocurrido un error');
-            return back();
+            return back()->withInput();
         }else{
             alert()->error("La fecha no puede ser menor a la fecha de carga", 'Ha ocurrido un error');
-            return back();
+            return back()->withInput();
         }
     }
 

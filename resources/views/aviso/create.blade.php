@@ -24,16 +24,16 @@
                         <select name="titular" class="input" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($titulares as $titular)
-                            <option value="{{ $titular->cuit }}">{{$titular->nombre}}</option>
+                            <option value="{{ $titular->cuit }}" {{old('titular') == $titular->cuit ? 'selected':''}}>{{$titular->nombre}}</option>
                             @endforeach
                         </select>
                     </label>
                     <label for="intermediario">
                         <span>Intermediario:</span>
                         <select name="intermediario" class="input">
-                            <option value="" selected disabled hidden></option>
+                            <option value="" selected></option>
                             @foreach ($intermediarios as $intermediario)
-                            <option value="{{ $intermediario->cuit }}">{{$intermediario->nombre}}</option>
+                            <option value="{{ $intermediario->cuit }}" {{old('intermediario') == $intermediario->cuit ? 'selected':''}}>{{$intermediario->nombre}}</option>
                             @endforeach
                         </select>
                     </label>
@@ -42,7 +42,7 @@
                         <select name="remitente" class="input" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($remitentes as $remitente)
-                            <option value="{{ $remitente->cuit }}">{{$remitente->nombre}}</option>
+                            <option value="{{ $remitente->cuit }}" {{old('remitente') == $remitente->cuit ? 'selected':''}}>{{$remitente->nombre}}</option>
                             @endforeach
                         </select>
                     </label>
@@ -51,7 +51,7 @@
                         <select name="corredor" class="input" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($corredores as $corredor)
-                            <option value="{{ $corredor->cuit }}">{{$corredor->nombre}}</option>
+                            <option value="{{ $corredor->cuit }}" {{old('corredor') == $corredor->cuit ? 'selected':''}}>{{$corredor->nombre}}</option>
                             @endforeach
                         </select>
                     </label>
@@ -60,13 +60,13 @@
                         <select name="destinatario" class="input" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($destinatarios as $destinatario)
-                            <option value="{{ $destinatario->cuit }}">{{$destinatario->nombre}}</option>
+                            <option value="{{ $destinatario->cuit }}" {{old('destinatario') == $destinatario->cuit ? 'selected':''}}>{{$destinatario->nombre}}</option>
                             @endforeach
                         </select>
                     </label>
                     <label for="destino">
                         <span>Lugar de descarga:*</span>
-                        <input type="text" name="lugarDescarga" id="lugarDescarga" class="input" required>
+                        <input type="text" value="{{old('lugarDescarga')}}" name="lugarDescarga" id="lugarDescarga" class="input" required>
                     </label>
                     <!-- EL ENTREGADOR ES EL USUARIO QUE ESTA AUTENTICADO EN EL MOMENTO -->
                     <hr>
@@ -76,30 +76,30 @@
                         <select name="producto" class="input" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($productos as $producto)
-                            <option value="{{ $producto->idProducto }}"> {{$producto->nombre}}</option>
+                            <option value="{{ $producto->idProducto }}" {{old('producto') == $producto->idProducto ? 'selected':''}}> {{$producto->nombre}}</option>
                             @endforeach
                         </select>
                     </label>
                     <label for="tipo">
                         <span>Tipo de Producto:</span>
-                        <input type="text" name="tipo" id="tipo" class="input">
+                        <input type="text" value="{{old('tipo')}}" name="tipo" id="tipo" class="input">
                     </label>
                     <label for="cosecha">
                         <span>Año de Cosecha:* </span>
-                        20 <input type="number" name="cosecha1" id="cosecha1" class="input-year" min="10" max="99"
+                        20 <input type="number" value="{{old('cosecha1')}}" name="cosecha1" id="cosecha1" class="input-year" min="10" max="99"
                             required>
-                        /20 <input type="number" name="cosecha2" id="cosecha2" class="input-year" min="10" max="99"
+                        /20 <input type="number" value="{{old('cosecha2')}}" name="cosecha2" id="cosecha2" class="input-year" min="10" max="99"
                             required>
                     </label>
                     <hr>
                     <p>Procedencia de la mercaderia</p>
                     <label for="provincia">
                         <span>Provincia de procedencia:*</span>
-                        <input type="text" name="provincia" id="provincia" class="input" required>
+                        <input type="text" value="{{old('provincia')}}" name="provincia" id="provincia" class="input" required>
                     </label>
                     <label for="localidad">
                         <span>Localidad de procedencia:*</span>
-                        <input type="text" name="localidad" id="localidad" class="input" required>
+                        <input type="text" value="{{old('localidad')}}" name="localidad" id="localidad" class="input" required>
                     </label>
                     <hr>
                     <label for="obs">
@@ -117,5 +117,6 @@
             </div>
         </div>
     </div>
+    @include('sweet::alert')
 </body>
 @endsection

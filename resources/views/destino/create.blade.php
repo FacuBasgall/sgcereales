@@ -17,44 +17,44 @@
                      {{ csrf_field() }}
                      <label for="nombre">
                         <span>Nombre y apellido: *</span>
-                        <input type="text" name="nombre" id="nombre" class="input" style="margin: 10px 20px;" required>
+                        <input type="text" value="{{old('nombre')}}" name="nombre" id="nombre" class="input" style="margin: 10px 20px;" required>
                      </label>
                      <label for="cuit">
                         <span>CUIT: *</span>
-                        <input type="number" name="cuit" id="cuit" class="input" style="margin: 10px 20px;" min="0" max="99999999999" required>
+                        <input type="number" value="{{old('cuit')}}" name="cuit" id="cuit" class="input" style="margin: 10px 20px;" min="0" max="99999999999" required>
                      </label>
                      <label for="dgr">
                         <span>DGR: </span>
-                        <input type="text" name="dgr" id="dgr" class="input" style="margin: 10px 20px;">
+                        <input type="text" value="{{old('dgr')}}" name="dgr" id="dgr" class="input" style="margin: 10px 20px;">
                      </label>
                      <label for="iva">
                         <span>IVA: *</span>
                         <select name="iva"  class="input" required>
                         <option value="" selected disabled hidden></option>
                            @foreach ($iva as $condicion)
-                           <option value="{{ $condicion->idCondIva }}">{{ $condicion->descripcion }}</option>
+                           <option value="{{ $condicion->idCondIva }}" {{old('iva') == $condicion->idCondIva ? 'selected':''}}>{{ $condicion->descripcion }}</option>
                            @endforeach
                         </select>
                      </label>
 		               <label for="cp">
                         <span>Codigo postal: </span>
-                        <input type="number" name="cp" id="cp" class="input" style="margin: 10px 20px;">
+                        <input type="number" value="{{old('cp')}}" name="cp" id="cp" class="input" style="margin: 10px 20px;">
                      </label>
                      <label for="pais">
                         <span>Pais: </span>
-                        <input type="text" name="pais" id="pais" class="input" style="margin: 10px 20px;">
+                        <input type="text" value="{{old('pais')}}" name="pais" id="pais" class="input" style="margin: 10px 20px;">
                      </label>
                      <label for="provincia">
                         <span>Provincia: </span>
-                        <input type="text" name="provincia" id="provincia" class="input" style="margin: 10px 20px;">
+                        <input type="text" value="{{old('provincia')}}" name="provincia" id="provincia" class="input" style="margin: 10px 20px;">
                      </label>
                      <label for="localidad">
                         <span>Localidad: </span>
-                        <input type="text" name="localidad" id="localidad" class="input" style="margin: 10px 20px;">
+                        <input type="text" value="{{old('localidad')}}" name="localidad" id="localidad" class="input" style="margin: 10px 20px;">
                      </label>
 		               <label for="domicilio">
                         <span>Domicilio: </span>
-                        <input type="text" name="domicilio" id="domicilio" class="input" style="margin: 10px 20px;">
+                        <input type="text" value="{{old('domicilio')}}" name="domicilio" id="domicilio" class="input" style="margin: 10px 20px;">
                      </label>
                      <button type="submit" class="save-button" style="position:relative; top:65%; left:30%;"><i class="fa fa-check"></i></button>
                      <a href="{{ action('DestinoController@index') }}"><button type="button" class="back-button" title="Volver" style="position: relative; top: 50%; right: 30%;"><i class="fa fa-arrow-left"></i></button></a>

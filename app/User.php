@@ -20,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'password', 'tipoUser', 'cuit', 'descripcion',
+        'username', 'password', 'tipoUser', 'cuit', 'nombre', 'descripcion',
     ];
 
     /**
@@ -34,7 +34,7 @@ class User extends Authenticatable
 
     public function entregador_contacto(){
         return $this->hasMany('App\entregador_Contacto', 'idUser', 'idUser');
-    } 
+    }
     public function entregador_domicilio(){
         return $this->hasMany('App\Entregador_Domicilio', 'idUser', 'idUser');
     }

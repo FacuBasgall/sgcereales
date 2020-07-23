@@ -20,36 +20,36 @@
                     {{ csrf_field() }}
                     <label for="fecha">
                         <span>Fecha de la Descarga:*</span>
-                        <input type="date" name="fecha" id="fecha" class="input" style="margin: 10px 20px;" required>
+                        <input type="date" value="{{old('fecha')}}" name="fecha" id="fecha" class="input" style="margin: 10px 20px;" required>
                     </label>
                     <label for="bruto">
                         <span>Kilos Brutos:*</span>
-                        <input type="number" min="0" name="bruto" id="bruto" class="input" style="margin: 10px 20px;"
+                        <input type="number" value="{{old('bruto')}}" min="0" name="bruto" id="bruto" class="input" style="margin: 10px 20px;"
                             required>
                     </label>
                     <label for="tara">
                         <span>Tara Kg:*</span>
-                        <input type="number" min="0" name="tara" id="tara" class="input" style="margin: 10px 20px;"
+                        <input type="number" value="{{old('tara')}}" min="0" name="tara" id="tara" class="input" style="margin: 10px 20px;"
                             required>
                     </label>
                     <label for="humedad">
                         <span>Humedad (%):*</span>
-                        <input type="number" step=".1" min="0" name="humedad" id="humedad" class="input"
+                        <input type="number" value="{{old('humedad')}}" step=".1" min="0" name="humedad" id="humedad" class="input"
                             style="margin: 10px 20px;" required>
                     </label>
                     <label for="ph">
                         <span>Ph: </span>
-                        <input type="number" step=".1" min="0" name="ph" id="ph" class="input"
+                        <input type="number" value="{{old('ph')}}" step=".1" min="0" name="ph" id="ph" class="input"
                             style="margin: 10px 20px;">
                     </label>
                     <label for="proteina">
                         <span>Proteina: </span>
-                        <input type="number" step=".1" min="0" name="proteina" id="proteina" class="input"
+                        <input type="number" value="{{old('proteina')}}" step=".1" min="0" name="proteina" id="proteina" class="input"
                             style="margin: 10px 20px;">
                     </label>
                     <label for="calidad">
                         <span>Calidad: </span>
-                        <input type="text" name="calidad" id="calidad" class="input" style="margin: 10px 20px;">
+                        <input type="text" value="{{old('calidad')}}" name="calidad" id="calidad" class="input" style="margin: 10px 20px;">
                     </label>
                     <input id="carga" name="carga" type="hidden" value="{{$carga->idCarga}}">
                     <button type="submit" class="save-button" style="position:relative; top:65%; left:30%;"><i

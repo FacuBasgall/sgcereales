@@ -35,7 +35,7 @@
                      <label for="intermediario">
                         <span>Intermediario: </span>
                         <select name="intermediario"  class="input" >
-                        <option value="" selected disabled hidden></option>
+                        <option value="" selected></option>
                            @foreach ($intermediarios as $intermediario)
                                 @if($intermediario->cuit == $aviso->idIntermediario)
 								    <option value="{{$intermediario->cuit}}" selected>{{ $intermediario->nombre }}</option>
@@ -109,9 +109,15 @@
                         <input type="text" value="{{$aviso_producto->tipo}}" name="tipo" id="tipo" class="input" style="margin: 10px 20px;">
                      </label>
                      <label for="cosecha">
-                        <span>Año de Cosecha: *</span>
-                        <input type="text" value="{{$aviso_producto->cosecha}}" name="cosecha" id="cosecha" class="input" style="margin: 10px 20px;" required>
-                     </label>
+                        @php $año1 = substr($aviso_producto->cosecha, 2, 2);
+                            $año2 = substr($aviso_producto->cosecha, -2, 2);
+                        @endphp
+                        <span>Año de Cosecha:* </span>
+                        20 <input type="number" value="{{$año1}}" name="cosecha1" id="cosecha1" class="input-year" min="10" max="99"
+                            required>
+                        /20 <input type="number" value="{{$año2}}" name="cosecha2" id="cosecha2" class="input-year" min="10" max="99"
+                            required>
+                    </label>
                      <hr>
                      <p>Procedencia de la mercaderia</p>
                      <label for="provincia">
@@ -143,5 +149,6 @@
                </div>
             </div>
          </div>
+         @include('sweet::alert')
    </body>
 @endsection

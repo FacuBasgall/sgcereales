@@ -82,6 +82,7 @@
                 @endif
             @endforeach
         @endforeach
+        @include('sweet::alert')
         <a href="{{ action('AvisoController@show', $carga->idAviso) }}"><button>Salir</button></a>
     </body>
 @endsection

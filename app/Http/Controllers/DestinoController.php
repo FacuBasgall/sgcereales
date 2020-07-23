@@ -41,11 +41,11 @@ class DestinoController extends Controller
     public function store(Request $request)
     {
         $existe = Destino::where('cuit', $request->cuit)->exists();
+        $nuevo = Destino::where('cuit', $request->cuit)->first();
         if($existe){
-            $nuevo = Destino::where('cuit', $request->cuit)->first();
             if(!$nuevo->borrado){
                 alert()->error("El destinatario $request->nombre ya existe", 'Ha surgido un error');
-                return back();
+                return back()->withInput();
             }
         }
         else{

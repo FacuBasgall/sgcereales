@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Exports\RomaneoExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade as PDF;
+use App\Mail\RomaneoSendMail;
 
 use App\Aviso;
 use App\Descarga;
@@ -18,9 +20,12 @@ use App\Remitente_Comercial;
 use App\User;
 use App\Aviso_Producto;
 use App\Aviso_Entregador;
-use PDF;
+use App\Entregador_Contacto;
+use App\Entregador_Domicilio;
+
 use Datatables;
 use DB;
+use Mail;
 
 class AvisoController extends Controller
 {
@@ -75,7 +80,16 @@ class AvisoController extends Controller
      */
     public function store(Request $request)
     {
-        $cosecha = "20" . $request->cosecha1 . "/20" . $request->cosecha2;
+        $fecha1 = "20" . $request->cosecha1;
+        $fecha2 = "20" . $request->cosecha2;
+        $dif = intval($fecha2) - intval($fecha1);
+
+        if($dif != 1 || $fecha2 > date("Y")){
+            alert()->error("Verifique las fechas ingresadas", 'Ha ocurrido un error');
+            return back()->withInput();
+        }
+
+        $cosecha = $fecha1 . "/" . $fecha2;
 
         $aviso = new Aviso;
         $keyAviso = $this->generate_key();
@@ -90,6 +104,7 @@ class AvisoController extends Controller
         $aviso->provinciaProcedencia = $request->provincia;
         $aviso->localidadProcedencia = $request->localidad;
         $aviso->idProducto = $request->producto;
+        $aviso->observacion = $request->obs;
         $aviso->borrado = false;
         $aviso->estado = false;
         $aviso->save();
@@ -107,6 +122,7 @@ class AvisoController extends Controller
         $aviso_entregador->fecha = date("Y-m-d");
         $aviso_entregador->save();
 
+        alert()->success("El aviso fue creado con exito", 'Aviso guardado');
         return redirect()->action('CargaController@create', $keyAviso);
     }
 
@@ -164,6 +180,17 @@ class AvisoController extends Controller
      */
     public function update(Request $request, $idAviso)
     {
+        $fecha1 = "20" . $request->cosecha1;
+        $fecha2 = "20" . $request->cosecha2;
+        $dif = intval($fecha2) - intval($fecha1);
+
+        if($dif != 1 || $fecha2 > date("Y")){
+            alert()->error("Verifique las fechas ingresadas", 'Ha ocurrido un error');
+            return back();
+        }
+
+        $cosecha = $fecha1 . "/" . $fecha2;
+
         $aviso = Aviso::findOrfail($idAviso);
         $aviso->idTitularCartaPorte = $request->titular;
         $aviso->idIntermediario = $request->intermediario;
@@ -174,6 +201,7 @@ class AvisoController extends Controller
         $aviso->provinciaProcedencia = $request->provincia;
         $aviso->localidadProcedencia = $request->localidad;
         $aviso->idProducto = $request->producto;
+        $aviso->observacion = $request->obs;
         if($request->estado == "Terminado")
             $aviso->estado = true;
         else $aviso->estado = false;
@@ -181,11 +209,12 @@ class AvisoController extends Controller
 
         $aviso_producto = Aviso_Producto::findOrfail($idAviso);
         $aviso_producto->idProducto = $request->producto;
-        $aviso_producto->cosecha = $request->cosecha;
+        $aviso_producto->cosecha = $cosecha;
         $aviso_producto->tipo = $request->tipo;
         $aviso_producto->save();
 
         $existeCarga = Carga::where('idAviso', $idAviso)->exists();
+        alert()->success("El aviso fue editado con exito", 'Aviso guardado');
         if($existeCarga){
             return redirect()->action('CargaController@edit', $aviso->idAviso);
         }else{
@@ -285,16 +314,23 @@ class AvisoController extends Controller
             $aviso_producto = Aviso_Producto::where('idAviso', $aviso->idAviso)->first();
             $aviso_entregador = Aviso_Entregador::where('idAviso', $aviso->idAviso)->first();
             $titular = Titular::where('cuit', $aviso->idTitularCartaPorte)->first();
+            $entregador = User::where('idUser', $aviso_entregador->idEntregador)->first();
+            $entregador_contacto = Entregador_Contacto::where('idUser', $entregador->idUser)->get();
+            $entregador_domicilio = Entregador_Domicilio::where('idUser', $entregador->idUser)->get();
 
             $filename = $idAviso . " " . $titular->nombre . ".pdf";
 
-            $pdf = PDF::loadView('aviso.pdf', compact(['aviso', 'cargas', 'descargas', 'corredor', 'destinatario', 'intermediario', 'producto', 'remitente', 'titular', 'aviso_producto', 'aviso_entregador']));
+            $pdf = PDF::loadView('exports.pdf', compact(['aviso', 'cargas', 'descargas', 'corredor', 'destinatario', 'intermediario', 'producto', 'remitente', 'titular', 'aviso_producto', 'aviso_entregador', 'entregador', 'entregador_contacto', 'entregador_domicilio']));
             $pdf->setPaper('a4', 'landscape');
             return $pdf->download($filename);
         }else{
             alert()->error("El aviso debe estar terminado para exportalo", 'No se puede ejecutar la acción');
             return back();
         }
+    }
 
+    public function send_email(){
+        $nombre = "Facundo";
+        Mail::to("facubasgall@gmail.com")->send(new RomaneoSendMail());
     }
 }

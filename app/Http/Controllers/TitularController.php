@@ -42,11 +42,11 @@ class TitularController extends Controller
     public function store(Request $request)
     {
         $existe = Titular::where('cuit', $request->cuit)->exists();
+        $nuevo = Titular::where('cuit', $request->cuit)->first();
         if($existe){
-            $nuevo = Titular::where('cuit', $request->cuit)->first();
             if(!$nuevo->borrado){
                 alert()->error("El titular de carta porte $request->nombre ya existe", 'Ha surgido un error');
-                return back();
+                return back()->withInput();
             }
         }
         else{

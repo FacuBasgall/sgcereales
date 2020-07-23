@@ -37,13 +37,13 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ action('TitularController@index') }}">
-            <i class="fa fa-user-o"></i>
+          <i class="fa fa-address-card"></i>
             Titulares
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ action('IntermediarioController@index') }}">
-            <i class="fa fa-user-o"></i>
+          <i class="fa fa-users"></i>
             Intermediario
           </a>
         </li>
@@ -61,7 +61,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ action('CorredorController@index') }}">
-            <i class="fa fa-handshake-o"></i>
+          <i class="fa fa-handshake-o"></i>
             Corredores
           </a>
         </li>

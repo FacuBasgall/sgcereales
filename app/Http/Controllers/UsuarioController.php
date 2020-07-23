@@ -75,7 +75,7 @@ class UsuarioController extends Controller
         $nuevo = User::findOrFail($idUser);
         $nuevo = $request->all();
         $nuevo->save();
-        return view('usuario.show', array('usuario'=>$usuario));
+        return view('usuario.show', array('usuario'=>$nuevo));
     }
 
     /**

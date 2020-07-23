@@ -40,11 +40,11 @@ class IntermediarioController extends Controller
     public function store(Request $request)
     {
         $existe = Intermediario::where('cuit', $request->cuit)->exists();
+        $nuevo = Intermediario::where('cuit', $request->cuit)->first();
         if($existe){
-            $nuevo = Intermediario::where('cuit', $request->cuit)->first();
             if(!$nuevo->borrado){
                 alert()->error("El intermediario $request->nombre ya existe", 'Ha surgido un error');
-                return back();
+                return back()->withInput();
             }
         }
         else{

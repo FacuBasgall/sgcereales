@@ -4,6 +4,7 @@ namespace App\Exports;
 
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
 use App\Aviso;
 use App\Carga;
@@ -18,8 +19,10 @@ use App\Merma;
 use App\User;
 use App\Aviso_Entregador;
 use App\Aviso_Producto;
+use App\Entregador_Contacto;
+use App\Entregador_Domicilio;
 
-class RomaneoExport implements FromView
+class RomaneoExport implements FromView, ShouldAutoSize
 {
     protected $nroAviso;
 
@@ -41,8 +44,25 @@ class RomaneoExport implements FromView
         $titular = Titular::where('cuit', $aviso->idTitularCartaPorte)->first();
         $aviso_producto = Aviso_Producto::where('idAviso', $aviso->idAviso)->first();
         $aviso_entregador = Aviso_Entregador::where('idAviso', $aviso->idAviso)->first();
+        $entregador = User::where('idUser', $aviso_entregador->idEntregador)->first();
+        $entregador_contacto = Entregador_Contacto::where('idUser', $entregador->idUser)->get();
+        $entregador_domicilio = Entregador_Domicilio::where('idUser', $entregador->idUser)->get();
 
         return view('exports.romaneo', compact(['aviso', 'cargas', 'descargas', 'corredor', 'destinatario',
-        'intermediario', 'producto', 'remitente', 'titular', 'aviso_producto', 'aviso_entregador']));
+        'intermediario', 'producto', 'remitente', 'titular', 'aviso_producto', 'aviso_entregador', 'entregador', 'entregador_contacto', 'entregador_domicilio']));
     }
 }
+
+
+/*
+MOSTRAR DATOS DE USUARIOS EN EL EXCEL
+<th rowspan="6" colspan="4">
+    {{$entregador->nombre}}<br>
+    {{$entregador->descripcion}}<br>
+    @foreach ($entregador_domicilio as $domicilio)
+        {{$domicilio->domicilio}}, {{$domicilio->localidad}} ({{$domicilio->provincia}} - {{$domicilio->cp}})<br>
+    @endforeach
+    @foreach ($entregador_contacto as $contacto)
+        | {{$contacto->contacto}} |
+    @endforeach
+</th> */

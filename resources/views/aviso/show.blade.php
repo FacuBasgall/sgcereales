@@ -10,7 +10,7 @@
     </div>
         <strong>Nro Aviso: </strong>{{$aviso->idAviso}}<br>
         <strong>Producto: </strong>{{$producto->nombre}}<br>
-        <strong>Entregador: </strong>{{$entregador->descripcion}}<br>
+        <strong>Entregador: </strong>{{$entregador->nombre}}<br>
         <strong>Titular: </strong>{{$titular->nombre}}<br>
         @if (isset($intermediario->nombre))
             <strong>Intermediario: </strong>{{$intermediario->nombre}}<br>

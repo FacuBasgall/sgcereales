@@ -75,6 +75,7 @@
         </div>
         </div>
         </div>
+        @include('sweet::alert')
         </body>
 <script>
         $(document).ready(function() {

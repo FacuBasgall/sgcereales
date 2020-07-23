@@ -52,15 +52,15 @@ class CargaController extends Controller
             $carga->borrado = false;
             $carga->save();
 
+            alert()->success("La carga fue creada con exito", 'Carga guardada');
             if(isset($request->check)){
                 return redirect()->action('DescargaController@create', $carga->idCarga);
             }else{
-                alert()->success("El aviso fue creado con exito", 'Creado con exito');
                 return redirect()->action('AvisoController@index');
             }
         }else{
             alert()->error("La fecha no puede ser mayor al dia de hoy", 'Ha ocurrido un error');
-            return back();
+            return back()->withInput();
         }
     }
 
@@ -107,7 +107,7 @@ class CargaController extends Controller
             $carga->kilos = $request->kilos;
             $carga->save();
 
-            alert()->success("La carga fue editada con exito", 'Editado con exito');
+            alert()->success("La carga fue editada con exito", 'Carga guardada');
             return back();
         }else{
             alert()->error("La fecha no puede ser mayor al dia de hoy", 'Ha ocurrido un error');

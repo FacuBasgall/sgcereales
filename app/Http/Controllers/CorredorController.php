@@ -44,7 +44,7 @@ class CorredorController extends Controller
             $nuevo = Corredor::where('cuit', $request->cuit)->first();
             if(!$nuevo->borrado){
                 alert()->error("El corredor $request->nombre ya existe", 'Ha surgido un error');
-                return back();
+                return back()->withInput();
             }
         }
         else{
