@@ -46,6 +46,15 @@ body {
     box-sizing: border-box;
 }
 
+.edit-aviso-input {
+    width: 100px;
+    padding: 10px 15px;
+    margin: 10px 0px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
 .input-year{
     width: 15%;
     padding: 10px 15px;
@@ -77,6 +86,10 @@ label span
     margin-left: 20px;
 }
 
+span {
+    margin:10px;
+}
+
 .observation-box {
     border-radius: 4px;
     width: 55%;
@@ -93,3 +106,26 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    padding: 10px;
+    margin: 20px;
+}
+
+.grid-container > div{
+    text-align: center;
+    padding: 20px 0;
+    font-size: 20px;
+}
+
+.column1 {
+    grid-row: 1 / 2;
+}
+
+.column2 {
+    grid-row:   1 / 2;
+    border-left: 1px solid grey;
+}
+

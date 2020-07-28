@@ -15,6 +15,7 @@ use App\Corredor;
 use App\Producto;
 use App\Destino;
 use App\Titular;
+use App\Titular_Contacto;
 use App\Intermediario;
 use App\Remitente_Comercial;
 use App\User;
@@ -329,8 +330,18 @@ class AvisoController extends Controller
         }
     }
 
-    public function send_email(){
-        $nombre = "Facundo";
-        Mail::to("facubasgall@gmail.com")->send(new RomaneoSendMail());
+    public function send_email($idAviso)
+    {
+        $aviso = Aviso::where('idAviso', $idAviso)->first();
+        $titular = Titular::where('cuit', $aviso->idTitularCartaPorte)->first();
+
+        if($aviso->estado){
+            $correos = Titular_Contacto::where('cuit', $aviso->idTitularCartaPorte)->where('tipo', 3)->pluck('contacto'); //Tipo = 3 = Emails / funcion pluck('contacto') solo selecciona del array los contactos
+            Mail::to($correos)->send(new RomaneoSendMail($idAviso));
+            alert()->success("El aviso ha sido enviado con exito", 'Correo enviado');
+        }else{
+            alert()->error("El aviso debe estar terminado para poder enviarlo", 'No se puede ejecutar la acción');
+        }
+        return back();
     }
 }

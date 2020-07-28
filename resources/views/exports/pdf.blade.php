@@ -27,6 +27,16 @@
 <table>
     <thead>
         <tr>
+            <th rowspan="6" colspan="4">
+                {{$entregador->nombre}}<br>
+                {{$entregador->descripcion}}<br>
+                @foreach ($entregador_domicilio as $domicilio)
+                    {{$domicilio->domicilio}}, {{$domicilio->localidad}} ({{$domicilio->provincia}} - {{$domicilio->cp}})<br>
+                @endforeach
+                @foreach ($entregador_contacto as $contacto)
+                    | {{$contacto->contacto}} |
+                @endforeach
+            </th>
             <th><strong>Nro Aviso</strong></th>
             <td>{{ $aviso->idAviso }}</td>
             <th><strong>Fecha</strong></th>

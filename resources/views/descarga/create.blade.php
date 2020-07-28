@@ -52,11 +52,11 @@
                         <input type="text" value="{{old('calidad')}}" name="calidad" id="calidad" class="input" style="margin: 10px 20px;">
                     </label>
                     <input id="carga" name="carga" type="hidden" value="{{$carga->idCarga}}">
-                    <button type="submit" class="save-button" style="position:relative; top:65%; left:30%;"><i
-                            class="fa fa-check"></i></button>
+                    <button type="submit" class="save-button" style="position:relative; left:35%;"><i
+                            class="fa fa-check"></i> Guardar</button>
                     <a href="{{ action('AvisoController@index') }}"><button type="button" class="back-button"
-                            title="Salir" style="position: relative; top: 50%; right: 30%;"><i
-                                class="fa fa-arrow-left"></i></button></a>
+                            title="Salir" style="position: relative; right: 40%;"><i
+                                class="fa fa-arrow-left"></i> Salir</button></a>
                 </form>
             </div>
         </div>

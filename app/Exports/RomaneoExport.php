@@ -52,17 +52,3 @@ class RomaneoExport implements FromView, ShouldAutoSize
         'intermediario', 'producto', 'remitente', 'titular', 'aviso_producto', 'aviso_entregador', 'entregador', 'entregador_contacto', 'entregador_domicilio']));
     }
 }
-
-
-/*
-MOSTRAR DATOS DE USUARIOS EN EL EXCEL
-<th rowspan="6" colspan="4">
-    {{$entregador->nombre}}<br>
-    {{$entregador->descripcion}}<br>
-    @foreach ($entregador_domicilio as $domicilio)
-        {{$domicilio->domicilio}}, {{$domicilio->localidad}} ({{$domicilio->provincia}} - {{$domicilio->cp}})<br>
-    @endforeach
-    @foreach ($entregador_contacto as $contacto)
-        | {{$contacto->contacto}} |
-    @endforeach
-</th> */

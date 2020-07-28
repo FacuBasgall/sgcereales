@@ -73,3 +73,11 @@ td, th {
 tr:nth-child(even) {
     background-color: #dddddd;
 }
+
+.finished {
+    color:green;
+}
+
+.pending {
+    color: red;
+}

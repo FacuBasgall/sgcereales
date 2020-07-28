@@ -14,7 +14,7 @@
         <label class="title col-md-8 col-form-label"><b>Crear nuevo aviso</b></label>
     </div>
     <div class="container">
-        <div class="card" style="height:1450px;width:450px;">
+        <div class="card" style="height:1430px;width:450px;">
             <div class="box" style="height:100%">
                 <form action="{{action('AvisoController@store')}}" method="POST">
                     {{ csrf_field() }}
@@ -109,10 +109,10 @@
                     </label>
                     <hr>
                     <button type="submit" class="save-button" style="position:relative; top:50%; left:30%;"><i
-                            class="fa fa-check"></i></button>
+                            class="fa fa-check"></i> Guardar y continuar</button>
                     <a href="{{ action('AvisoController@index') }}"><button type="button" class="back-button"
-                            title="Volver" style="position: relative; top: 50%; right: 30%;"><i
-                                class="fa fa-arrow-left"></i></button></a>
+                            title="Volver" style="position: relative; top: 50%; right: 50%;"><i
+                                class="fa fa-arrow-left"></i> Volver</button></a>
                 </form>
             </div>
         </div>
