@@ -138,6 +138,7 @@ class DescargaController extends Controller
             $producto = Producto::where('idProducto', $aviso->idProducto)->first();
             $merma = Merma::where('idProducto', $producto->idProducto)->where('humedad', $request->humedad)->exists();
             if ($merma){
+                $merma = Merma::where('idProducto', $producto->idProducto)->where('humedad', $descarga->humedad)->first();
                 $mermaManipuleo = $producto->mermaManipuleo;
                 $mermaSecado = $merma->merma;
                 $descarga->merma = $mermaManipuleo + $mermaSecado;

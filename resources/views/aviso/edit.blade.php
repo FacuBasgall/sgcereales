@@ -141,8 +141,7 @@
                     <hr style="width: 420px;">
                     <button type="submit" class="save-button" style="position:relative; left:30%;"><i
                             class="fa fa-check"></i> Guardar y continuar</button>
-                    <a href="{{ action('AvisoController@show', $aviso->idAviso) }}"><button type="button"
-                            class="back-button" title="Volver" style="position: relative; right: 50%;"><i
+                    <button type="button" onclick="goBack()" class="back-button" title="Volver" style="position: relative; right: 50%;"><i
                                 class="fa fa-arrow-left"></i> Volver</button></a>
                 </form>
             </div>
@@ -150,4 +149,11 @@
     </div>
     @include('sweet::alert')
 </body>
+
+<script>
+function goBack() {
+  window.history.back();
+}
+</script>
+
 @endsection

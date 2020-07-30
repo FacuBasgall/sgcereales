@@ -22,7 +22,7 @@
                             <h2>{{$key->nombre}}</h2>
                             <p>Merma por manipuleo: {{$key->mermaManipuleo}}</p>
                             <hr></hr>
-                            <a href="{{ action('ProductoController@show', $key->idProducto)}}"><button class="show-button" style="position: relative; top: 15%;" title="Ver más"><i class="fa fa-eye"></i></button></a>
+                            <a href="{{ action('ProductoController@show', $key->idProducto)}}"><button class="show-button" style="position: relative; top: 15%;" title="Ver más"><i class="fa fa-eye"></i> Ver</button></a>
                             <br><br>
                         </a>
                 </div>

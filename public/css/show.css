@@ -57,11 +57,7 @@ table {
     font-family: sans-serif;
     border-collapse: collapse;
     width: 100%;
-    justify-content: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    margin-right: 120px;
-    margin-left: 120px;
+    margin-left: 25%;
 }
 
 td, th {

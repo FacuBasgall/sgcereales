@@ -24,7 +24,7 @@
 					<p>CUIT: {{$key->cuit}}</p>
 
 					<hr></hr>
-					<a href="{{ action('TitularController@show', $key->cuit) }}"><button class="show-button" style="position: relative; top: 15%;" title="Ver más"><i class="fa fa-eye"></i></button></a>
+					<a href="{{ action('TitularController@show', $key->cuit) }}"><button class="show-button" style="position: relative; top: 15%;" title="Ver más"><i class="fa fa-eye"></i> Ver</button></a>
 					<br><br>
 					</a>
                 </div>

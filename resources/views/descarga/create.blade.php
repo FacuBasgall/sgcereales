@@ -14,7 +14,7 @@
         <label class="title col-md-8 col-form-label"><b>Crear aviso / Datos de descarga</b></label>
     </div>
     <div class="container">
-        <div class="card" style="min-height:660px;">
+        <div class="card" style="min-height:600px; width:460px;">
             <div class="box">
                 <form action="{{action('DescargaController@store')}}" method="POST">
                     {{ csrf_field() }}

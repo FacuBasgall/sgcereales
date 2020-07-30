@@ -14,7 +14,7 @@
         <label class="title col-md-8 col-form-label"><b>Crear nuevo aviso</b></label>
     </div>
     <div class="container">
-        <div class="card" style="height:1430px;width:450px;">
+        <div class="card" style="height:1500px;width:450px;">
             <div class="box" style="height:100%">
                 <form action="{{action('AvisoController@store')}}" method="POST">
                     {{ csrf_field() }}

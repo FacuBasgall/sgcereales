@@ -86,7 +86,8 @@
                     @if ($control == false)
                     <h2>Información de la descarga</h2><br>
                     No existe una descarga asociada<br>
-                    <a href="{{ action('DescargaController@create', $carga->idCarga) }}"><button>Añadir</button></a>
+                    <a href="{{ action('DescargaController@create', $carga->idCarga) }}"><button class="show-plus-button"
+                            title="Añadir descarga" style="margin:5px"><i class="fa fa-plus"></i> Añadir descarga</button></a>
                     @endif
                     @endforeach
                     <br>

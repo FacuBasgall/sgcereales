@@ -47,7 +47,7 @@ body {
 }
 
 .edit-aviso-input {
-    width: 100px;
+    width: 215px;
     padding: 10px 15px;
     margin: 10px 0px;
     border: 1px solid #ccc;
@@ -111,21 +111,14 @@ input::-webkit-inner-spin-button {
     display: grid;
     grid-template-columns: auto auto auto auto;
     padding: 10px;
-    margin: 20px;
-}
-
-.grid-container > div{
-    text-align: center;
-    padding: 20px 0;
-    font-size: 20px;
 }
 
 .column1 {
     grid-row: 1 / 2;
+    border-right: 1px solid grey;
 }
 
 .column2 {
     grid-row:   1 / 2;
-    border-left: 1px solid grey;
 }
 
