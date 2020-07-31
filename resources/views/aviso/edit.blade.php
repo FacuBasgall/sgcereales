@@ -94,7 +94,7 @@
                     <hr>
                     <p>Granos/Especie</p>
                     <label for="producto">
-                        <span>Producto: *</span>
+                        <span>Producto:*</span>
                         <select name="producto" class="input" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($productos as $producto)

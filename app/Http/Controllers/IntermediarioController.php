@@ -55,7 +55,7 @@ class IntermediarioController extends Controller
         $nuevo->borrado = false;
         $nuevo->save();
         alert()->success("El intermediario $nuevo->nombre fue creado con exito", 'Creado con exito');
-        return redirect()->action('IntermediariorController@contact', $request->cuit);
+        return redirect()->action('IntermediarioController@contact', $request->cuit);
     }
 
     /**

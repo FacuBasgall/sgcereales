@@ -83,7 +83,8 @@
                 <a href="{{ action('TitularController@index') }}"><button class="back-button" title="Volver"
                         style="position: relative;"><i class="fa fa-arrow-left"></i> Volver</button></a>
                 <a onclick="warning( '{{$titular->cuit}}' , 'titular');"><button class="delete-button" title="Eliminar"
-                        style="position: relative; top: 10%; left: 20%;"><i class="fa fa-trash"></i> Eliminar</button></a>
+                        style="position: relative; top: 10%; left: 20%;"><i class="fa fa-trash"></i>
+                        Eliminar</button></a>
                 <a href="{{ action('TitularController@edit', $titular->cuit)}}"><button class="edit-button"
                         title="Editar" style="position: relative; top: 10%; left: 20%;"><i class="fa fa-pencil"></i>
                         Editar</button></a>
