@@ -10,6 +10,7 @@ use App\Aviso;
 use App\Carga;
 use App\Producto;
 use DB;
+use SweetAlert;
 
 class DescargaController extends Controller
 {

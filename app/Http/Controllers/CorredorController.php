@@ -7,6 +7,7 @@ use App\Corredor;
 use App\Corredor_Contacto;
 use App\Tipo_Contacto;
 use DB;
+use SweetAlert;
 
 class CorredorController extends Controller
 {

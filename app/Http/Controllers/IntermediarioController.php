@@ -7,6 +7,7 @@ use App\Intermediario;
 use App\Intermediario_Contacto;
 use App\Tipo_Contacto;
 use DB;
+use SweetAlert;
 
 class IntermediarioController extends Controller
 {

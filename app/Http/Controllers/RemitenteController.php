@@ -7,6 +7,7 @@ use App\Remitente_Comercial;
 use App\Remitente_Contacto;
 use App\Tipo_Contacto;
 use DB;
+use SweetAlert;
 
 class RemitenteController extends Controller
 {

@@ -8,6 +8,7 @@ use App\Titular_Contacto;
 use App\Condicion_IVA;
 use App\Tipo_Contacto;
 use DB;
+use SweetAlert;
 
 class TitularController extends Controller
 {

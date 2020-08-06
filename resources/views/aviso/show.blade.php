@@ -127,7 +127,7 @@
                     <a href="{{ action('AvisoController@export_pdf', $aviso->idAviso) }}"><button
                             class="export-button"><i class="fa fa-file-pdf-o"></i> Exportar
                             PDF</button></a>
-                    <a href="{{action('AvisoController@send_email', $aviso->idAviso)}}"><button
+                    <a onclick="warningSendEmails( '{{$aviso->idAviso}}');"><button
                             class="export-button"><i class="fa fa-share"></i> Enviar correos</button></a>
                     <br><br>
                 </div>

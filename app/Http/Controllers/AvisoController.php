@@ -27,6 +27,7 @@ use App\Entregador_Domicilio;
 use Datatables;
 use DB;
 use Mail;
+use SweetAlert;
 
 class AvisoController extends Controller
 {
@@ -318,6 +319,7 @@ class AvisoController extends Controller
 
             $filename = $idAviso . " " . $titular->nombre . ".pdf";
 
+            //return view('exports.pdf', compact(['aviso', 'cargas', 'descargas', 'corredor', 'destinatario', 'intermediario', 'producto', 'remitente', 'titular', 'aviso_producto', 'aviso_entregador', 'entregador', 'entregador_contacto', 'entregador_domicilio']));
             $pdf = PDF::loadView('exports.pdf', compact(['aviso', 'cargas', 'descargas', 'corredor', 'destinatario', 'intermediario', 'producto', 'remitente', 'titular', 'aviso_producto', 'aviso_entregador', 'entregador', 'entregador_contacto', 'entregador_domicilio']));
             $pdf->setPaper('a4', 'landscape');
             return $pdf->download($filename);

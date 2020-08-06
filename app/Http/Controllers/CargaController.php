@@ -8,6 +8,7 @@ use App\Carga;
 use App\Aviso;
 use App\Descarga;
 use DB;
+use SweetAlert;
 
 class CargaController extends Controller
 {

@@ -7,6 +7,7 @@ use App\Producto;
 use App\Merma;
 use DB;
 use Exception;
+use SweetAlert;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 class ProductoController extends Controller
@@ -54,7 +55,7 @@ class ProductoController extends Controller
         $producto = Producto::where('idProducto', $idProducto)->first();
         $mermas = Merma::where('idProducto', $idProducto)->get();
         return view('producto.show', compact('producto', 'mermas'));
-    }  
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -88,5 +89,5 @@ class ProductoController extends Controller
      public function destroy($idProducto)
     {
         //
-    }  
+    }
 }
