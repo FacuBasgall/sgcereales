@@ -19,7 +19,7 @@
                     {{ method_field('PUT') }}
                     {{ csrf_field() }}
                     <label for="nombre">
-                        <span>Nombre y apellido: </span>
+                        <span>Nombre y apellido:*</span>
                         <input type="text" name="nombre" id="nombre" class="input" value="{{$destino->nombre}}"
                             style="margin: 10px 20px;" required>
                     </label>
@@ -34,8 +34,8 @@
                             style="margin: 10px 20px;">
                     </label>
                     <label for="iva">
-                        <span>IVA: </span>
-                        <select name="iva" class="input">
+                        <span>IVA:*</span>
+                        <select name="iva" class="input" required>
                             @foreach ($iva as $condicion)
                             @if($condicion->idCondIva == $destino->condIva)
                             <option value="{{$condicion->idCondIva}}" selected>{{ $condicion->descripcion }}</option>

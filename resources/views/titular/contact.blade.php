@@ -36,12 +36,14 @@
                         <select name="tipo" class="input" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($tipoContacto as $tipo)
-                            <option value="{{$tipo->idTipoContacto}}">{{$tipo->descripcion}}</option>
+                            <option value="{{$tipo->idTipoContacto}}"
+                                {{old('tipo') == $tipo->idTipoContacto ? 'selected':''}}>
+                                {{$tipo->descripcion}}</option>
                             @endforeach
                     </label>
                     <label for="contacto">
-                        <input type="text" name="contacto" id="contacto" class="input" style="margin: 10px 20px;"
-                            required>
+                        <input type="text" value="{{old('contacto')}}" name="contacto" id="contacto" class="input"
+                            style="margin: 10px 20px;" required>
                     </label>
                     <button type="submit" class="save-button" style="position:absolute; top:90%; left:70%;"><i
                             class="fa fa-check"></i> Guardar</button>

@@ -29,7 +29,7 @@ class TitularController extends Controller
      */
     public function create()
     {
-        $iva = Condicion_IVA::all();
+        $iva = Condicion_IVA::orderBy('descripcion')->get();
         return view('titular.create', array('iva'=>$iva));
     }
 
@@ -92,9 +92,8 @@ class TitularController extends Controller
     {
         $titular = Titular::findOrFail($cuit);
         $contacto = Titular_Contacto::where('cuit', $cuit)->get();
-        $tipoContacto = Tipo_Contacto::all();
-        $iva = Condicion_IVA::all();
-        return view('titular.edit', compact(['titular', 'contacto', 'tipoContacto', 'iva']));
+        $iva = Condicion_IVA::orderBy('descripcion')->get();
+        return view('titular.edit', compact(['titular', 'contacto', 'iva']));
     }
 
     /**
@@ -136,7 +135,7 @@ class TitularController extends Controller
     }
 
     public function contact($cuit){
-        $tipoContacto = Tipo_Contacto::all();
+        $tipoContacto = Tipo_Contacto::orderBy('descripcion')->get();
         $titular = Titular::findOrFail($cuit);
         $titularContacto = Titular_Contacto::where('cuit', $cuit)->get();
         return view('titular.contact', compact(['tipoContacto', 'titularContacto', 'titular']));
@@ -151,12 +150,49 @@ class TitularController extends Controller
         else{
             $nuevo = new Titular_Contacto;
             $nuevo->cuit = $cuit;
-            $nuevo->contacto = $request->contacto;
-            $nuevo->tipo = $request->tipo;
-            $nuevo->save();
-            alert()->success("El contacto fue agregado con exito", 'Contacto agregado');
+            $error = NULL;
+            switch ($request->tipo) {
+                case '1':
+                    if(!is_numeric($request->contacto)){
+                        $error = "No es un número de celular valido";
+                    }
+                    break;
+
+                case '2':
+                    if(!is_numeric($request->contacto)){
+                        $error = "No es un número de telefono valido";;
+                    }
+                    break;
+
+                case '3':
+                    if(!filter_var($request->contacto, FILTER_VALIDATE_EMAIL)){
+                        $error = "No es una dirección de correo valida";
+                    }
+                    break;
+
+                case '4':
+                    if(!is_string($request->contacto)){
+                        $error = "No es una página web valida";
+                    }
+                    break;
+
+                case '5':
+                    if(!is_numeric($request->contacto)){
+                        $error = "No es un número de fax valido";
+                    }
+                    break;
+            }
+            if($error == NULL){
+                $nuevo->contacto = $request->contacto;
+                $nuevo->tipo = $request->tipo;
+                $nuevo->save();
+                alert()->success("El contacto fue agregado con exito", 'Contacto agregado');
+                return back();
+            }else{
+                alert()->error($error, "Ha ocurrido un error");
+                return back()->withInput();
+            }
         }
-        return back();
     }
 
     public function delete_contact($id)

@@ -116,7 +116,7 @@ class CorredorController extends Controller
     }
 
     public function contact($cuit){
-        $tipoContacto = Tipo_Contacto::all();
+        $tipoContacto = Tipo_Contacto::orderBy('descripcion')->get();
         $corredor = Corredor::findOrFail($cuit);
         $corredorContacto = Corredor_Contacto::where('cuit', $cuit)->get();
         return view('corredor.contact', compact(['tipoContacto', 'corredorContacto', 'corredor']));
@@ -131,12 +131,49 @@ class CorredorController extends Controller
         else{
             $nuevo = new Corredor_Contacto;
             $nuevo->cuit = $cuit;
-            $nuevo->contacto = $request->contacto;
-            $nuevo->tipo = $request->tipo;
-            $nuevo->save();
-            alert()->success("El contacto fue agregado con exito", 'Contacto agregado');
+            $error = NULL;
+            switch ($request->tipo) {
+                case '1':
+                    if(!is_numeric($request->contacto)){
+                        $error = "No es un número de celular valido";
+                    }
+                    break;
+
+                case '2':
+                    if(!is_numeric($request->contacto)){
+                        $error = "No es un número de telefono valido";;
+                    }
+                    break;
+
+                case '3':
+                    if(!filter_var($request->contacto, FILTER_VALIDATE_EMAIL)){
+                        $error = "No es una dirección de correo valida";
+                    }
+                    break;
+
+                case '4':
+                    if(!is_string($request->contacto)){
+                        $error = "No es una página web valida";
+                    }
+                    break;
+
+                case '5':
+                    if(!is_numeric($request->contacto)){
+                        $error = "No es un número de fax valido";
+                    }
+                    break;
+            }
+            if($error == NULL){
+                $nuevo->contacto = $request->contacto;
+                $nuevo->tipo = $request->tipo;
+                $nuevo->save();
+                alert()->success("El contacto fue agregado con exito", 'Contacto agregado');
+                return back();
+            }else{
+                alert()->error($error, "Ha ocurrido un error");
+                return back()->withInput();
+            }
         }
-        return back();
     }
 
     public function delete_contact($id)

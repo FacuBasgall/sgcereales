@@ -1,5 +1,6 @@
 @extends('layout.master')
 @section ('content')
 @parent
-	<p> Esta es nuestra pantalla de inicio jeje </p>
+	<p> Bienvenido al Sistema Gestor de Cereales <br>
+    Esta es nuestra pantalla de inicio</p>
 @endsection

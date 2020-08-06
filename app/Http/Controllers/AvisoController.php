@@ -203,9 +203,6 @@ class AvisoController extends Controller
         $aviso->localidadProcedencia = $request->localidad;
         $aviso->idProducto = $request->producto;
         $aviso->observacion = $request->obs;
-        if($request->estado == "Terminado")
-            $aviso->estado = true;
-        else $aviso->estado = false;
         $aviso->save();
 
         $aviso_producto = Aviso_Producto::findOrfail($idAviso);
@@ -336,9 +333,14 @@ class AvisoController extends Controller
         $titular = Titular::where('cuit', $aviso->idTitularCartaPorte)->first();
 
         if($aviso->estado){
-            $correos = Titular_Contacto::where('cuit', $aviso->idTitularCartaPorte)->where('tipo', 3)->pluck('contacto'); //Tipo = 3 = Emails / funcion pluck('contacto') solo selecciona del array los contactos
-            Mail::to($correos)->send(new RomaneoSendMail($idAviso));
-            alert()->success("El aviso ha sido enviado con exito", 'Correo enviado');
+            $existe = Titular_Contacto::where('cuit', $aviso->idTitularCartaPorte)->where('tipo', 3)->exists();
+            if($existe){
+                $correos = Titular_Contacto::where('cuit', $aviso->idTitularCartaPorte)->where('tipo', 3)->pluck('contacto'); //Tipo = 3 = Emails / funcion pluck('contacto') solo selecciona del array los contactos
+                Mail::to($correos)->send(new RomaneoSendMail($idAviso));
+                alert()->success("El aviso ha sido enviado con exito", 'Correo enviado');
+            }else{
+                alert()->error("El titular: $titular->nombre no posee dirección de correo", 'No se puede ejecutar la acción');
+            }
         }else{
             alert()->error("El aviso debe estar terminado para poder enviarlo", 'No se puede ejecutar la acción');
         }

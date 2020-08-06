@@ -1,7 +1,5 @@
 <?php
 
-use App\Exports\RomaneoExport;
-use Maatwebsite\Excel\Facades\Excel;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
