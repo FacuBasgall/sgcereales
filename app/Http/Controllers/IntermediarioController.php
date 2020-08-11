@@ -128,6 +128,7 @@ class IntermediarioController extends Controller
         $existe = Intermediario_Contacto::where('cuit', $cuit)->where('contacto', $request->contacto)->exists();
         if($existe){
             alert()->error("El contacto ya existe para este intermediario", "Ha ocurrido un error");
+            return back()->withInput();
         }
         else{
             $nuevo = new Intermediario_Contacto;

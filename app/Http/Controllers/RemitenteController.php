@@ -128,6 +128,7 @@ class RemitenteController extends Controller
         $existe = Remitente_Contacto::where('cuit', $cuit)->where('contacto', $request->contacto)->exists();
         if($existe){
             alert()->error("El contacto ya existe para este remitente", "Ha ocurrido un error");
+            return back()->withInput();
         }
         else{
             $nuevo = new Remitente_Contacto;

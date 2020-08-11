@@ -62,13 +62,13 @@ class AvisoController extends Controller
      */
     public function create()
     {
-        $titulares = Titular::where('borrado', false)->get();
-        $intermediarios = Intermediario::where('borrado', false)->get();
-        $remitentes = Remitente_Comercial::where('borrado', false)->get();
-        $corredores = Corredor::where('borrado', false)->get();
+        $titulares = Titular::where('borrado', false)->orderBy('nombre')->get();
+        $intermediarios = Intermediario::where('borrado', false)->orderBy('nombre')->get();
+        $remitentes = Remitente_Comercial::where('borrado', false)->orderBy('nombre')->get();
+        $corredores = Corredor::where('borrado', false)->orderBy('nombre')->get();
         $entregadores = User::where('tipoUser', 'E')->get(); //Solo Usuarios Entregadores
-        $destinatarios = Destino::where('borrado', false)->get();
-        $productos = Producto::where('borrado', false)->get();
+        $destinatarios = Destino::where('borrado', false)->orderBy('nombre')->get();
+        $productos = Producto::where('borrado', false)->orderBy('nombre')->get();
 
         return view('aviso.create', compact(['titulares', 'intermediarios', 'remitentes', 'corredores', 'entregadores', 'destinatarios', 'productos']));
 
@@ -161,13 +161,13 @@ class AvisoController extends Controller
     public function edit($idAviso)
     {
         $aviso = Aviso::findOrFail($idAviso);
-        $titulares = Titular::where('borrado', false)->get();
-        $intermediarios = Intermediario::where('borrado', false)->get();
-        $remitentes = Remitente_Comercial::where('borrado', false)->get();
-        $corredores = Corredor::where('borrado', false)->get();
+        $titulares = Titular::where('borrado', false)->orderBy('nombre')->get();
+        $intermediarios = Intermediario::where('borrado', false)->orderBy('nombre')->get();
+        $remitentes = Remitente_Comercial::where('borrado', false)->orderBy('nombre')->get();
+        $corredores = Corredor::where('borrado', false)->orderBy('nombre')->get();
         $entregadores = User::where('tipoUser', 'E')->get(); //Solo Usuarios Entregadores
-        $destinatarios = Destino::where('borrado', false)->get();
-        $productos = Producto::where('borrado', false)->get();
+        $destinatarios = Destino::where('borrado', false)->orderBy('nombre')->get();
+        $productos = Producto::where('borrado', false)->orderBy('nombre')->get();
         $aviso_producto = Aviso_Producto::where('idAviso', $idAviso)->first();
 
         return view('aviso.edit', compact(['aviso', 'titulares', 'intermediarios', 'remitentes', 'corredores', 'entregadores', 'destinatarios', 'productos', 'aviso_producto']));

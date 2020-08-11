@@ -1,14 +1,15 @@
 
 <head>
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <link href="{{ asset('css/bootstrap-home.min.css') }}" rel="stylesheet">
-  <script type="text/javascript" src="{{ asset('js/sweetAlert.js') }}"></script>
-  <script type="text/javascript" src="{{ asset('js/loading.js') }}"></script>
-  <link rel="stylesheet" type="text/css" href="{{ asset('css/common-buttons.css') }}" >
-
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link href="{{ asset('css/bootstrap-home.min.css') }}" rel="stylesheet">
+    <script type="text/javascript" src="{{ asset('js/sweetAlert.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/loading.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/common-buttons.css') }}" >
+    <meta charset="utf-8">
+    <title>Sistema Gestor de Cereales</title>
   <!------ Include the above in your HEAD tag ---------->
 </head>
 <body>

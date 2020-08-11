@@ -147,6 +147,7 @@ class TitularController extends Controller
         $existe = Titular_Contacto::where('cuit', $cuit)->where('contacto', $request->contacto)->exists();
         if($existe){
             alert()->error("El contacto ya existe para este titular", "Ha ocurrido un error");
+            return back()->withInput();
         }
         else{
             $nuevo = new Titular_Contacto;

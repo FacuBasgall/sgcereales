@@ -1,7 +1,7 @@
 <table>
     <thead>
         <tr>
-            <th rowspan="6" colspan="4">
+            <th rowspan="6" colspan="6">
                 {{$entregador->nombre}}<br>
                 {{$entregador->descripcion}}<br>
                 @foreach ($entregador_domicilio as $domicilio)

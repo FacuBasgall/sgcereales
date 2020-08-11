@@ -42,7 +42,7 @@
     <div class="box">
         <table>
             <tr>
-                <th rowspan="6" colspan="10">
+                <th rowspan="6" colspan="6">
                     {{$entregador->nombre}}<br>
                     {{$entregador->descripcion}}<br>
                     @foreach ($entregador_domicilio as $domicilio)
