@@ -92,9 +92,8 @@ class TitularController extends Controller
     public function edit($cuit)
     {
         $titular = Titular::findOrFail($cuit);
-        $contacto = Titular_Contacto::where('cuit', $cuit)->get();
         $iva = Condicion_IVA::orderBy('descripcion')->get();
-        return view('titular.edit', compact(['titular', 'contacto', 'iva']));
+        return view('titular.edit', compact(['titular', 'iva']));
     }
 
     /**

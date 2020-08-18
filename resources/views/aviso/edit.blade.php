@@ -85,8 +85,8 @@
                             @endforeach
                         </select>
                     </label>
-                    <label for="destino">
-                        <span>Lugar de descarga:*</span>
+                    <label for="lugarDescarga">
+                        <span>Destino:*</span>
                         <input type="text" value="{{$aviso->lugarDescarga}}" name="lugarDescarga" id="lugarDescarga"
                             class="input" required>
                     </label>
@@ -114,7 +114,7 @@
                         @php $año1 = substr($aviso_producto->cosecha, 2, 2);
                         $año2 = substr($aviso_producto->cosecha, -2, 2);
                         @endphp
-                        <span>Año de Cosecha:*</span>
+                        <span>Cosecha:*</span>
                         20 <input type="number" value="{{$año1}}" name="cosecha1" id="cosecha1" class="input-year"
                             min="10" max="99" required>
                         /20 <input type="number" value="{{$año2}}" name="cosecha2" id="cosecha2" class="input-year"

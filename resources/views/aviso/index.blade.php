@@ -4,11 +4,8 @@
 
 <head>
     <!-- Links de dataTable -->
-    <link rel="stylesheet" href="{!! asset('datatable/jquery.dataTables.min.css') !!}">
-    <link rel="stylesheet" href="{!! asset('datatable/dataTables.bootstrap4.min.css') !!}">
-    <script src="{{ asset('datatable/jquery-3.3.1.js') }}"></script>
-    <script src="{{ asset('datatable/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('datatable/dataTables.bootstrap4.min.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('dataTable/jquery.dataTables.min.css') }}">
+    <script type="text/javascript" src="/dataTable/jquery.dataTables.min.js"></script>
 </head>
 
 <body>
@@ -24,8 +21,11 @@
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>Entregador</th>
                             <th>Producto</th>
                             <th>Titular</th>
+                            <th>Remitente</th>
+                            <th>Corredor</th>
                             <th>Procedencia</th>
                             <th>Destinatario</th>
                             <th>Destino</th>
@@ -36,17 +36,37 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($avisos_entregadores as $aviso_entregador)
                         @foreach($avisos as $aviso)
+                        @if($aviso->idAviso == $aviso_entregador->idAviso)
                         <tr>
-                            <td>{{ $aviso->idAviso }}</td>
+                            <td>{{ $aviso->nroAviso }}</td>
+
+                            @if (isset($aviso->entregador))
+                            <td>{{$aviso->entregador}}</td>
+                            @else
+                            <td>{{$entregador->nombre}}</td>
+                            @endif
+
                             @foreach ($productos as $producto)
                             @if ($producto->idProducto == $aviso->idProducto)
                             <td>{{$producto->nombre}}</td>
                             @endif
                             @endforeach
+
                             @foreach ($titulares as $titular)
                             @if ($titular->cuit == $aviso->idTitularCartaPorte)
                             <td>{{ $titular->nombre }}</td>
+                            @endif
+                            @endforeach
+                            @foreach ($remitentes as $remitente)
+                            @if ($remitente->cuit == $aviso->idRemitenteComercial)
+                            <td>{{ $remitente->nombre }}</td>
+                            @endif
+                            @endforeach
+                            @foreach ($corredores as $corredor)
+                            @if ($corredor->cuit == $aviso->idCorredor)
+                            <td>{{ $corredor->nombre }}</td>
                             @endif
                             @endforeach
                             <td>{{$aviso->localidadProcedencia}} ({{$aviso->provinciaProcedencia}})</td>
@@ -56,11 +76,9 @@
                             @endif
                             @endforeach
                             <td>{{$aviso->lugarDescarga}}</td>
-                            @foreach ($avisos_entregadores as $aviso_entregador)
-                            @if ($aviso_entregador->idAviso == $aviso->idAviso)
+
                             <td>{{$aviso_entregador->fecha}}</td>
-                            @endif
-                            @endforeach
+
                             @if ($aviso->estado == true)
                             <td style="color: green;">Terminado</td>
                             @else
@@ -70,14 +88,13 @@
                                 <a onclick="warning( '{{$aviso->idAviso}}' , 'aviso');"><button class="delete-button"
                                         title="Eliminar" style="padding: 7px; margin:0px;"><i
                                             class="fa fa-trash"></i></button></a>
-                                <a href="{{ action('AvisoController@edit', $aviso->idAviso) }}"><button
-                                        class="edit-button" title="Editar" style="padding: 7px; margin:0px;"><i
-                                            class="fa fa-pencil"></i></button></a>
                                 <a href="{{ action('AvisoController@show', $aviso->idAviso) }}"><button
-                                        class="show-button" title="Ver más" style="padding: 7px; margin:0px"><i
+                                        class="show-button" title="Ver más" style="padding: 7px;"><i
                                             class="fa fa-eye"></i></button></a>
                             </td>
                         </tr>
+                        @endif
+                        @endforeach
                         @endforeach
                     </tbody>
                 </table>
@@ -88,7 +105,39 @@
 </body>
 <script>
 $(document).ready(function() {
-    $('#idDataTable').DataTable();
+    $('#idDataTable').DataTable({
+        "order": [
+            [9, "desc"]
+        ],
+        "language": {
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ avisos",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sInfo": "Mostrando avisos del _START_ al _END_ de un total de _TOTAL_ avisos",
+            "sInfoEmpty": "Mostrando avisos del 0 al 0 de un total de 0 avisos",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ avisos)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            },
+            "buttons": {
+                "copy": "Copiar",
+                "colvis": "Visibilidad"
+            }
+        }
+    });
 });
 </script>
 <style>

@@ -31,16 +31,16 @@ class RomaneoSendMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $nroAviso;
+    protected $idAviso;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($nroAviso)
+    public function __construct($idAviso)
     {
-        $this->nroAviso = $nroAviso;
+        $this->idAviso = $idAviso;
     }
 
     /**
@@ -50,9 +50,8 @@ class RomaneoSendMail extends Mailable
      */
     public function build()
     {
-        $aviso = Aviso::where('idAviso', $this->nroAviso)->first();
+        $aviso = Aviso::where('idAviso', $this->idAviso)->first();
         $titular = Titular::where('cuit', $aviso->idTitularCartaPorte)->first();
-
         $cargas = Carga::where('idAviso', $aviso->idAviso)->get();
         $descargas = Descarga::all();
         $corredor = Corredor::where('cuit', $aviso->idCorredor)->first();
@@ -70,13 +69,14 @@ class RomaneoSendMail extends Mailable
         $pdf = PDF::loadView('exports.pdf', compact(['aviso', 'cargas', 'descargas', 'corredor', 'destinatario', 'intermediario', 'producto', 'remitente', 'titular', 'aviso_producto', 'aviso_entregador', 'entregador', 'entregador_contacto', 'entregador_domicilio']));
         $pdf->setPaper('a4', 'landscape');
 
-        $filenameExcel = $this->nroAviso . " " . $titular->nombre . ".xlsx";
-        $filenamePdf = $this->nroAviso . " " . $titular->nombre . ".pdf";
-        $asunto = "Envio del aviso nro: " . $this->nroAviso;
+        $filenameExcel = $aviso->nroAviso . " " . $titular->nombre . ".xlsx";
+        $filenamePdf = $aviso->nroAviso . " " . $titular->nombre . ".pdf";
+        $asunto = "Envio del aviso nro: " . $aviso->nroAviso;
+
 
         return $this->view('mails.romaneo_mail')
             ->subject($asunto)
             ->attachData($pdf->output(), $filenamePdf)
-            ->attach(Excel::download(new RomaneoExport($this->nroAviso), $filenameExcel)->getFile(), ['as' => $filenameExcel]);
+            ->attach(Excel::download(new RomaneoExport($this->idAviso), $filenameExcel)->getFile(), ['as' => $filenameExcel]);
     }
 }

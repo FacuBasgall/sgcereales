@@ -11,7 +11,7 @@ class Intermediario extends Model
     protected $keyType = 'string';
     public $timestamps = false;
 
-    protected $fillable = ['nombre', 'borrado'];
+    protected $fillable = ['nombre', 'condIva', 'dgr', 'cp', 'domicilio', 'localidad', 'provincia', 'pais', 'borrado'];
 
     protected $attributes = [
         'borrado' => false,
@@ -19,6 +19,10 @@ class Intermediario extends Model
 
     public function intermediario_contacto(){
         return $this->hasMany('App\Intermediario_Contacto', 'cuit', 'cuit');
+    }
+
+    public function condicion_iva(){
+        return $this->belongsTo('App\Condicion_IVA', 'condIva', 'cuit');
     }
 
     public function aviso(){

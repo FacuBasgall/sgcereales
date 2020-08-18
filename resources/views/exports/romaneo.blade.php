@@ -12,7 +12,7 @@
                 @endforeach
             </th>
             <th><strong>Nro Aviso</strong></th>
-            <td>{{ $aviso->idAviso }}</td>
+            <td>{{ $aviso->nroAviso }}</td>
             <th><strong>Fecha</strong></th>
             <td>{{ $aviso_entregador->fecha }}</td>
         </tr>
@@ -25,7 +25,7 @@
         <tr>
             <th><strong>Titular de C.P.</strong></th>
             <td>{{ $titular->nombre }}</td>
-            <th  ><strong>Procedencia</strong></th>
+            <th><strong>Procedencia</strong></th>
             <td>{{$aviso->localidadProcedencia}} ({{$aviso->provinciaProcedencia}})</td>
         </tr>
         <tr>
@@ -34,12 +34,18 @@
             <th><strong>Corredor</strong></th>
             <td>{{ $corredor->nombre }}</td>
         </tr>
-        @if (isset($intermediario->nombre))
-            <tr>
-                <th><strong>Intermediario: </strong></th>
+        <tr>
+            <th><strong>Intermediario: </strong></th>
+            @if (isset($intermediario->nombre))
                 <td>{{$intermediario->nombre}}</td>
-            </tr>
-        @endif
+            @else <td>-</td>
+            @endif
+            <th><strong>Entregador: </strong></th>
+            @if (isset($aviso->entregador))
+                <td>{{$aviso->entregador}}</td>
+            @else <td>-</td>
+            @endif
+        </tr>
         <tr>
             <th><strong>Destinatario</strong></th>
             <td>{{ $destinatario->nombre }}</td>
@@ -98,16 +104,19 @@
                 @endforeach
             </tr>
         @endforeach
+        <tr></tr>
         <tr>
-            <th colspan="4">Observaciones: </th>
-            <th colspan="3">Total descargado: </th>
+            <th colspan="4"></th>
+            <th colspan="3"><strong>Total descargado: </strong></th>
             <td>{{$totalDescargado}}</td>
-            <th colspan="2">Merma: </th>
+            <th colspan="2"><strong>Merma: </strong></th>
             <td>{{$mermaTotal}}</td>
-            <th>Neto final: </th>
+            <th><strong>Neto final: </strong></th>
             <td>{{$totalDescargado - $mermaTotal}}</td>
         </tr>
+        <tr></tr>
         <tr>
+            <th colspan="4"><strong>Observaciones: </strong></th>
             <td>{{$aviso->observacion}}</td>
         </tr>
     </tbody>

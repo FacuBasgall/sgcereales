@@ -24,16 +24,16 @@ use App\Entregador_Domicilio;
 
 class RomaneoExport implements FromView, ShouldAutoSize
 {
-    protected $nroAviso;
+    protected $idAviso;
 
-    public function __construct($nroAviso)
+    public function __construct($idAviso)
     {
-        $this->nroAviso = $nroAviso;
+        $this->idAviso = $idAviso;
     }
 
     public function view(): View
     {
-        $aviso = Aviso::where('idAviso', $this->nroAviso)->first();
+        $aviso = Aviso::where('idAviso', $this->idAviso)->first();
         $cargas = Carga::where('idAviso', $aviso->idAviso)->get();
         $descargas = Descarga::all();
         $corredor = Corredor::where('cuit', $aviso->idCorredor)->first();

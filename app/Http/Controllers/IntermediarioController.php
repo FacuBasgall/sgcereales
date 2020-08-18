@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Intermediario;
 use App\Intermediario_Contacto;
 use App\Tipo_Contacto;
+use App\Condicion_IVA;
+
 use DB;
 use SweetAlert;
 
@@ -29,8 +31,8 @@ class IntermediarioController extends Controller
      */
     public function create()
     {
-        return view('intermediario.create');
-    }
+        $iva = Condicion_IVA::orderBy('descripcion')->get();
+        return view('intermediario.create', array('iva'=>$iva));    }
 
     /**
      * Store a newly created resource in storage.
@@ -53,7 +55,13 @@ class IntermediarioController extends Controller
             $nuevo->cuit = $request->cuit;
         }
         $nuevo->nombre = $request->nombre;
-        $nuevo->borrado = false;
+        $nuevo->dgr = $request->dgr;
+        $nuevo->cp = $request->cp;
+        $nuevo->condIva = $request->iva;
+        $nuevo->domicilio = $request->domicilio;
+        $nuevo->localidad = $request->localidad;
+        $nuevo->provincia = $request->provincia;
+        $nuevo->pais = $request->pais;        $nuevo->borrado = false;
         $nuevo->save();
         alert()->success("El intermediario $nuevo->nombre fue creado con exito", 'Creado con exito');
         return redirect()->action('IntermediarioController@contact', $request->cuit);
@@ -70,7 +78,8 @@ class IntermediarioController extends Controller
         $intermediario = Intermediario::findOrFail($cuit);
         $contacto = Intermediario_Contacto::where('cuit', $cuit)->get();
         $tipoContacto = Tipo_Contacto::all();
-        return view('intermediario.show', compact(['intermediario', 'contacto', 'tipoContacto']));
+        $iva = Condicion_IVA::all();
+        return view('intermediario.show', compact(['intermediario', 'contacto', 'tipoContacto', 'iva']));
     }
 
     /**
@@ -82,7 +91,8 @@ class IntermediarioController extends Controller
     public function edit($cuit)
     {
         $intermediario = Intermediario::findOrFail($cuit);
-        return view('intermediario.edit', array('intermediario'=>$intermediario));
+        $iva = Condicion_IVA::all();
+        return view('intermediario.edit', compact(['intermediario', 'iva']));
     }
 
     /**
@@ -95,7 +105,14 @@ class IntermediarioController extends Controller
     public function update(Request $request, $cuit)
     {
         $nuevo = Intermediario::findOrFail($cuit);
-        $nuevo->nombre = $request->input('nombre');
+        $nuevo->nombre = $request->nombre;
+        $nuevo->dgr = $request->dgr;
+        $nuevo->cp = $request->cp;
+        $nuevo->condIva = $request->iva;
+        $nuevo->domicilio = $request->domicilio;
+        $nuevo->localidad = $request->localidad;
+        $nuevo->provincia = $request->provincia;
+        $nuevo->pais = $request->pais;
         $nuevo->save();
         alert()->success("El intermediario $nuevo->nombre fue editado con exito", 'Editado con exito');
         return redirect()->action('IntermediarioController@show', $cuit);

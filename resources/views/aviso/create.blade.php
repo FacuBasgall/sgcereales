@@ -14,7 +14,7 @@
         <label class="title col-md-8 col-form-label"><b>Crear nuevo aviso</b></label>
     </div>
     <div class="container">
-        <div class="card" style="height:1500px;width:450px;">
+        <div class="card" style="height:1550px;width:450px;">
             <div class="box" style="height:100%">
                 <form action="{{action('AvisoController@store')}}" method="POST">
                     {{ csrf_field() }}
@@ -64,11 +64,14 @@
                             @endforeach
                         </select>
                     </label>
-                    <label for="destino">
-                        <span>Lugar de descarga:*</span>
+                    <label for="lugarDescarga">
+                        <span>Destino:*</span>
                         <input type="text" value="{{old('lugarDescarga')}}" name="lugarDescarga" id="lugarDescarga" class="input" required>
                     </label>
-                    <!-- EL ENTREGADOR ES EL USUARIO QUE ESTA AUTENTICADO EN EL MOMENTO -->
+                    <label for="entregador">
+                        <span>Entregador:</span>
+                        <input type="text" value="{{old('entregador')}}" name="entregador" id="entregador" class="input">
+                    </label>
                     <hr>
                     <p>Granos/Especie</p>
                     <label for="producto">
@@ -85,7 +88,7 @@
                         <input type="text" value="{{old('tipo')}}" name="tipo" id="tipo" class="input">
                     </label>
                     <label for="cosecha">
-                        <span>Año de Cosecha:* </span>
+                        <span>Cosecha:* </span>
                         20 <input type="number" value="{{old('cosecha1')}}" name="cosecha1" id="cosecha1" class="input-year" min="10" max="99"
                             required>
                         /20 <input type="number" value="{{old('cosecha2')}}" name="cosecha2" id="cosecha2" class="input-year" min="10" max="99"

@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,12 +10,36 @@
 |
 */
 
+//Auth::routes();
+
 Route::get('/', function () {
     return view('home');
 });
-//DESCOMENTAR ABAJO
-/* Auth::routes(); */
+
 Route::get('/home', 'HomeController@index')->name('home');
+
+/*Route::get('/login', 'Auth\LoginController@login')->name('login');
+Route::post('/login', 'Auth\LoginController@authenticate');
+Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
+
+Route::post('/register', 'Auth\RegisterController@register');
+Route::get('/register', 'Auth\RegisterController@store');
+
+Route::post('/password/email','Auth\ForgotPasswordController@sendResetLinkEmail');
+Route::get('/password/reset','Auth\ForgotPasswordController@showLinkRequestForm');
+
+Route::post('/password/reset','Auth\ResetPasswordController@reset');
+Route::get('/password/reset/{token}','Auth\ResetPasswordController@showResetForm');*/
+
+Route::get('/backup', function(){
+    $cmd = shell_exec("cd .. & php artisan backup:clean");
+    $cmd = shell_exec("cd .. & php artisan backup:run --only-db");
+    if(stristr($cmd, "Backup completed") === false){
+        dd("Ha ocurrido un error");
+    }else{
+        dd("Backup completo");
+    }
+});
 
 Route::get('/usuario/show/{id}', 'UsuarioController@show');
 Route::get('/usuario/edit/{id}', 'UsuarioController@edit');
@@ -115,3 +138,13 @@ Route::get('/aviso/change_status/{id}', 'AvisoController@change_status');
 Route::get('/aviso/export_excel/{id}', 'AvisoController@export_excel');
 Route::get('/aviso/export_pdf/{id}', 'AvisoController@export_pdf');
 Route::get('/aviso/send_email/{id}', 'AvisoController@send_email');
+
+/* ASI VAN LOS FILTROS
+* Route::group(['middleware'=>'auth'],function(){
+    Route::get('catalogo', 'CatalogoController@index');
+    Route::get('catalogo/show/{id}', 'CatalogoController@show');
+    Route::get('catalogo/create', 'CatalogoController@create');
+    Route::get('catalogo/edit/{id}', 'CatalogoController@edit');
+    Route::get('catalogo/save', 'CatalogoController@save');
+    Route::get('catalogo/update/{id}', 'CatalogoController@update');
+  });*/

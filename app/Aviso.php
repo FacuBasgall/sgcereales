@@ -8,9 +8,8 @@ class Aviso extends Model
 {
     protected $table = 'aviso';
     protected $primaryKey = 'idAviso';
-    protected $keyType = 'string';
     public $timestamps = false;
-    protected $fillable = ['idProducto', 'idCorredor', 'idEntregador', 'idTitularCartaPorte', 'idIntermediario', 'idRemitenteComercial', 'idDestinatario', 'localidadProcedencia', 'provinciaProcedencia', 'lugarDescarga', 'estado', 'observacion', 'borrado'];
+    protected $fillable = ['nroAviso', 'idProducto', 'idCorredor', 'entregador', 'idTitularCartaPorte', 'idIntermediario', 'idRemitenteComercial', 'idDestinatario', 'localidadProcedencia', 'provinciaProcedencia', 'lugarDescarga', 'estado', 'observacion', 'borrado'];
 
     protected $attributes = [
         'borrado' => false,

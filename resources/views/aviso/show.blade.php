@@ -16,19 +16,25 @@
         <div class="card" style="width:530px;">
             <div class="box">
                 <div class="header">
-                    <h2>Nro Aviso: {{$aviso->idAviso}}</h2>
+                    <h2>Nro Aviso: {{$aviso->nroAviso}}</h2>
                     <strong>Producto: </strong>{{$producto->nombre}}<br>
+                    @if(isset($aviso->entregador))
+                    <strong>Entregador: </strong>{{$aviso->entregador}}<br>
+                    @else
                     <strong>Entregador: </strong>{{$entregador->nombre}}<br>
+                    @endif
                     <strong>Titular: </strong>{{$titular->nombre}}<br>
                     @if (isset($intermediario->nombre))
                     <strong>Intermediario: </strong>{{$intermediario->nombre}}<br>
+                    @else
+                    <strong>Intermediario: </strong>-<br>
                     @endif
                     <strong>Remitente Comercial: </strong>{{$remitente->nombre}}<br>
                     <strong>Lugar de procedencia: </strong>{{$aviso->localidadProcedencia}},
                     {{$aviso->provinciaProcedencia}}<br>
                     <strong>Corredor: </strong>{{$corredor->nombre}}<br>
                     <strong>Destinatario: </strong>{{$destino->nombre}}<br>
-                    <strong>Lugar de destino: </strong>{{$aviso->lugarDescarga}}
+                    <strong>Destino: </strong>{{$aviso->lugarDescarga}}
 
                     @foreach ($cargas as $carga)
                     @php $control = false @endphp
@@ -38,9 +44,13 @@
                     <strong>Fecha de la Carga: </strong>{{$carga->fecha}}<br>
                     @if (isset($carga->nroCartaPorte))
                     <strong>Numero de carta porte: </strong>{{$carga->nroCartaPorte}}<br>
+                    @else
+                    <strong>Numero de carta porte: </strong>-<br>
                     @endif
                     @if (isset($carga->matriculaCamion))
                     <strong>Matricula del camion: </strong>{{$carga->matriculaCamion}}<br>
+                    @else
+                    <strong>Matricula del camion: </strong>-<br>
                     @endif
                     <strong>Kilos Cargados: </strong>{{$carga->kilos}}<br>
                     <br>

@@ -8,7 +8,6 @@ class Aviso_Entregador extends Model
 {
     protected $table = 'aviso_entregador';
     protected $primaryKey = 'idAviso';
-    protected $keyType = 'string';
     public $timestamps = false;
     protected $fillable = ['idEntregador', 'fecha'];
 

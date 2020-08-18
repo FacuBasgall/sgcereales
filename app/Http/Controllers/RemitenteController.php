@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Remitente_Comercial;
 use App\Remitente_Contacto;
 use App\Tipo_Contacto;
+use App\Condicion_IVA;
+
 use DB;
 use SweetAlert;
 
@@ -18,7 +20,7 @@ class RemitenteController extends Controller
      */
     public function index()
     {
-        $arrayRemitente = DB::table('remitente_comercial')->where('borrado', false)->orderBy('nombre')->get();
+        $arrayRemitente = DB::table('remitente')->where('borrado', false)->orderBy('nombre')->get();
         return view('remitente.index', array('arrayRemitente'=>$arrayRemitente));
     }
 
@@ -29,7 +31,8 @@ class RemitenteController extends Controller
      */
     public function create()
     {
-        return view('remitente.create');
+        $iva = Condicion_IVA::orderBy('descripcion')->get();
+        return view('remitente.create', array('iva'=>$iva));
     }
 
     /**
@@ -53,6 +56,13 @@ class RemitenteController extends Controller
             $nuevo->cuit = $request->cuit;
         }
         $nuevo->nombre = $request->nombre;
+        $nuevo->dgr = $request->dgr;
+        $nuevo->cp = $request->cp;
+        $nuevo->condIva = $request->iva;
+        $nuevo->domicilio = $request->domicilio;
+        $nuevo->localidad = $request->localidad;
+        $nuevo->provincia = $request->provincia;
+        $nuevo->pais = $request->pais;
         $nuevo->borrado = false;
         $nuevo->save();
         alert()->success("El remitente $nuevo->nombre fue creado con exito", 'Creado con exito');
@@ -70,7 +80,8 @@ class RemitenteController extends Controller
         $remitente = Remitente_Comercial::findOrFail($cuit);
         $contacto = Remitente_Contacto::where('cuit', $cuit)->get();
         $tipoContacto = Tipo_Contacto::all();
-        return view('remitente.show', compact(['remitente', 'contacto', 'tipoContacto']));
+        $iva = Condicion_IVA::all();
+        return view('remitente.show', compact(['remitente', 'contacto', 'tipoContacto', 'iva']));
     }
 
     /**
@@ -82,7 +93,8 @@ class RemitenteController extends Controller
     public function edit($cuit)
     {
         $remitente = Remitente_Comercial::findOrFail($cuit);
-        return view('remitente.edit', array('remitente'=>$remitente));
+        $iva = Condicion_IVA::all();
+        return view('remitente.edit', compact(['remitente', 'iva']));
     }
 
     /**
@@ -95,7 +107,14 @@ class RemitenteController extends Controller
     public function update(Request $request, $cuit)
     {
         $nuevo = Remitente_Comercial::findOrFail($cuit);
-        $nuevo->nombre = $request->input('nombre');
+        $nuevo->nombre = $request->nombre;
+        $nuevo->dgr = $request->dgr;
+        $nuevo->cp = $request->cp;
+        $nuevo->condIva = $request->iva;
+        $nuevo->domicilio = $request->domicilio;
+        $nuevo->localidad = $request->localidad;
+        $nuevo->provincia = $request->provincia;
+        $nuevo->pais = $request->pais;
         $nuevo->save();
         alert()->success("El remitente $nuevo->nombre fue editado con exito", 'Editado con exito');
         return redirect()->action('RemitenteController@show', $cuit);

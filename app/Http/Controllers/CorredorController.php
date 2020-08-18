@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Corredor;
 use App\Corredor_Contacto;
 use App\Tipo_Contacto;
+use App\Condicion_IVA;
+
 use DB;
 use SweetAlert;
 
@@ -29,8 +31,8 @@ class CorredorController extends Controller
      */
     public function create()
     {
-        return view('corredor.create');
-    }
+        $iva = Condicion_IVA::orderBy('descripcion')->get();
+        return view('corredor.create', array('iva'=>$iva));    }
 
     /**
      * Store a newly created resource in storage.
@@ -53,7 +55,13 @@ class CorredorController extends Controller
             $nuevo->cuit = $request->cuit;
         }
         $nuevo->nombre = $request->nombre;
-        $nuevo->borrado = false;
+        $nuevo->dgr = $request->dgr;
+        $nuevo->cp = $request->cp;
+        $nuevo->condIva = $request->iva;
+        $nuevo->domicilio = $request->domicilio;
+        $nuevo->localidad = $request->localidad;
+        $nuevo->provincia = $request->provincia;
+        $nuevo->pais = $request->pais;        $nuevo->borrado = false;
         $nuevo->save();
         alert()->success("El corredor $nuevo->nombre fue creado con exito", 'Creado con exito');
         return redirect()->action('CorredorController@contact', $request->cuit);
@@ -70,7 +78,8 @@ class CorredorController extends Controller
         $corredor = Corredor::findOrFail($cuit);
         $contacto = Corredor_Contacto::where('cuit', $cuit)->get();
         $tipoContacto = Tipo_Contacto::all();
-        return view('corredor.show', compact(['corredor', 'contacto', 'tipoContacto']));
+        $iva = Condicion_IVA::all();
+        return view('corredor.show', compact(['corredor', 'contacto', 'tipoContacto', 'iva']));
     }
 
     /**
@@ -82,7 +91,8 @@ class CorredorController extends Controller
     public function edit($cuit)
     {
         $corredor = Corredor::findOrFail($cuit);
-        return view('corredor.edit', array('corredor'=>$corredor));
+        $iva = Condicion_IVA::all();
+        return view('corredor.edit', compact(['corredor', 'iva']));
     }
 
     /**
@@ -96,6 +106,13 @@ class CorredorController extends Controller
     {
         $nuevo = Corredor::findOrFail($cuit);
         $nuevo->nombre = $request->nombre;
+        $nuevo->dgr = $request->dgr;
+        $nuevo->cp = $request->cp;
+        $nuevo->condIva = $request->iva;
+        $nuevo->domicilio = $request->domicilio;
+        $nuevo->localidad = $request->localidad;
+        $nuevo->provincia = $request->provincia;
+        $nuevo->pais = $request->pais;
         $nuevo->save();
         alert()->success("El corredor $nuevo->nombre fue editado con exito", 'Editado con exito');
         return redirect()->action('CorredorController@show', $cuit);

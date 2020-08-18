@@ -38,7 +38,7 @@
 </head>
 
 <body class="container">
-    <title>Nro Aviso: {{$aviso->idAviso}}, {{$titular->nombre}}</title>
+    <title>Nro Aviso: {{$aviso->nroAviso}}, {{$titular->nombre}}</title>
     <div class="box">
         <table>
             <tr>
@@ -54,7 +54,7 @@
                     @endforeach
                 </th>
                 <th><strong>Nro Aviso:</strong></th>
-                <td>{{ $aviso->idAviso }}</td>
+                <td>{{ $aviso->nroAviso }}</td>
                 <th><strong>Fecha:</strong></th>
                 <td>{{ $aviso_entregador->fecha }}</td>
             </tr>
@@ -76,14 +76,18 @@
                 <th><strong>Corredor:</strong></th>
                 <td>{{ $corredor->nombre }}</td>
             </tr>
-            @if (isset($intermediario->nombre))
             <tr>
                 <th><strong>Intermediario: </strong></th>
-                <td>{{$intermediario->nombre}}</td>
-                <th></th>
-                <td></td>
+                @if (isset($intermediario->nombre))
+                    <td>{{$intermediario->nombre}}</td>
+                @else <td>-</td>
+                @endif
+                <th><strong>Entregador: </strong></th>
+                @if (isset($aviso->entregador))
+                    <td>{{$aviso->entregador}}</td>
+                @else <td>-</td>
+                @endif
             </tr>
-            @endif
             <tr>
                 <th><strong>Destinatario:</strong></th>
                 <td>{{ $destinatario->nombre }}</td>
@@ -152,10 +156,13 @@
     </div>
     <br>
     <div>
-        <span colspan="5">Observaciones: {{$aviso->observacion}}</span> <br>
-        <span colspan="3">Total descargado: {{$totalDescargado}}</span> <br>
-        <span colspan="2">Merma: {{$mermaTotal}}</span> <br>
-        <span>Neto final: {{$totalDescargado - $mermaTotal}}</span> <br>
+        <span colspan="3"><strong>Total descargado: </strong>{{$totalDescargado}}</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span colspan="2"><strong>Merma: </strong>{{$mermaTotal}}</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span><strong>Neto final: </strong>{{$totalDescargado - $mermaTotal}}</span>
+        <br><br>
+        <span colspan="5"><strong>Observaciones: </strong>{{$aviso->observacion}}</span>
     </div>
 </body>
 
