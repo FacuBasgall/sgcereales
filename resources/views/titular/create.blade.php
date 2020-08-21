@@ -46,7 +46,7 @@
                     </label>
                     <label for="pais">
                         <span>Pais: </span>
-                        <input type="text" value="{{old('pais')}}" name="pais" id="pais" class="input">
+                        <input type="text" value="Argentina" name="pais" id="pais" class="input">
                     </label>
                     <label for="provincia">
                         <span>Provincia: </span>

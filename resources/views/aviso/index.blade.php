@@ -20,7 +20,7 @@
                 <table id="idDataTable" class="table table-striped">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th>Número</th>
                             <th>Entregador</th>
                             <th>Producto</th>
                             <th>Titular</th>
@@ -77,7 +77,7 @@
                             @endforeach
                             <td>{{$aviso->lugarDescarga}}</td>
 
-                            <td>{{$aviso_entregador->fecha}}</td>
+                            <td>{{date("d/m/Y", strtotime($aviso_entregador->fecha))}}</td>
 
                             @if ($aviso->estado == true)
                             <td style="color: green;">Terminado</td>
@@ -85,12 +85,9 @@
                             <td style="color: red;">Pendiente</td>
                             @endif
                             <td>
-                                <a onclick="warning( '{{$aviso->idAviso}}' , 'aviso');"><button class="delete-button"
-                                        title="Eliminar" style="padding: 7px; margin:0px;"><i
-                                            class="fa fa-trash"></i></button></a>
                                 <a href="{{ action('AvisoController@show', $aviso->idAviso) }}"><button
                                         class="show-button" title="Ver más" style="padding: 7px;"><i
-                                            class="fa fa-eye"></i></button></a>
+                                            class="fa fa-eye"></i> Ver</button></a>
                             </td>
                         </tr>
                         @endif

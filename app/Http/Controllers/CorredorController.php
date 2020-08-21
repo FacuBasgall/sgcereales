@@ -46,7 +46,7 @@ class CorredorController extends Controller
         if($existe){
             $nuevo = Corredor::where('cuit', $request->cuit)->first();
             if(!$nuevo->borrado){
-                alert()->error("El corredor $request->nombre ya existe", 'Ha surgido un error');
+                alert()->error("El corredor $request->nombre ya existe", 'Ha surgido un error')->persistent('Cerrar');
                 return back()->withInput();
             }
         }
@@ -144,7 +144,7 @@ class CorredorController extends Controller
     {
         $existe = Corredor_Contacto::where('cuit', $cuit)->where('contacto', $request->contacto)->exists();
         if($existe){
-            alert()->error("El contacto ya existe para este corredor", "Ha ocurrido un error");
+            alert()->error("El contacto ya existe para este corredor", "Ha ocurrido un error")->persistent('Cerrar');
             return back()->withInput();
         }
         else{
@@ -189,7 +189,7 @@ class CorredorController extends Controller
                 alert()->success("El contacto fue agregado con exito", 'Contacto agregado');
                 return back();
             }else{
-                alert()->error($error, "Ha ocurrido un error");
+                alert()->error($error, "Ha ocurrido un error")->persistent('Cerrar');
                 return back()->withInput();
             }
         }

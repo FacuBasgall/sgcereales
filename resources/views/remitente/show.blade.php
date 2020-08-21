@@ -46,9 +46,9 @@
                 @endif
 
                 @if (isset($remitente->localidad))
-                <p><strong>Cuidad: </strong>{{$remitente->localidad}}</p>
+                <p><strong>Ciudad: </strong>{{$remitente->localidad}}</p>
                 @else
-                <p><strong>Cuidad: </strong>Cuidad no definida</p>
+                <p><strong>Ciudad: </strong>Ciudad no definida</p>
                 @endif
 
                 @if (isset($remitente->provincia))

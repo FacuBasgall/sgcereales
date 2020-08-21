@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "851661b3f71eb1e1cfe96abfd3eeeade",
+    "content-hash": "a0ad268367308c9789afc9107c9ed8f2",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -465,6 +465,59 @@
                 "trusted proxy"
             ],
             "time": "2020-06-23T01:36:47+00:00"
+        },
+        {
+            "name": "iwasherefirst2/laravel-multimail",
+            "version": "1.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/iwasherefirst2/laravel-multimail.git",
+                "reference": "5764e889e347c3dc4910b6d05a1812157fbff0f9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/iwasherefirst2/laravel-multimail/zipball/5764e889e347c3dc4910b6d05a1812157fbff0f9",
+                "reference": "5764e889e347c3dc4910b6d05a1812157fbff0f9",
+                "shasum": ""
+            },
+            "require-dev": {
+                "guzzlehttp/guzzle": "^6.4",
+                "orchestra/testbench": "^4.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "IWasHereFirst2\\LaravelMultiMail\\MultiMailServiceProvider"
+                    ],
+                    "aliases": {
+                        "MultiMail": "IWasHereFirst2\\LaravelMultiMail\\Facades\\MultiMail"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "IWasHereFirst2\\LaravelMultiMail\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dr. Adam Nielsen",
+                    "email": "info@drnielsen.de"
+                }
+            ],
+            "description": "A package to send mails easily from multiple mail accounts with Laravel",
+            "homepage": "https://github.com/iwasherefirst2/Laravel-MultiMail",
+            "keywords": [
+                "emails",
+                "laravel",
+                "multiple providers"
+            ],
+            "time": "2020-06-18T07:58:39+00:00"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -2356,6 +2409,44 @@
                 "stylesheet"
             ],
             "time": "2020-06-01T09:10:00+00:00"
+        },
+        {
+            "name": "select2/select2",
+            "version": "4.0.13",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/select2/select2.git",
+                "reference": "45f2b83ceed5231afa7b3d5b12b58ad335edd82e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/select2/select2/zipball/45f2b83ceed5231afa7b3d5b12b58ad335edd82e",
+                "reference": "45f2b83ceed5231afa7b3d5b12b58ad335edd82e",
+                "shasum": ""
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "dist/js/select2.js"
+                    ],
+                    "styles": [
+                        "dist/css/select2.css"
+                    ],
+                    "files": [
+                        "dist/js/select2.js",
+                        "dist/js/i18n/*.js",
+                        "dist/css/select2.css"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Select2 is a jQuery based replacement for select boxes.",
+            "homepage": "https://select2.org/",
+            "time": "2020-01-28T05:01:22+00:00"
         },
         {
             "name": "spatie/db-dumper",
@@ -5506,6 +5597,7 @@
             "keywords": [
                 "tokenizer"
             ],
+            "abandoned": true,
             "time": "2019-09-17T06:23:10+00:00"
         },
         {
