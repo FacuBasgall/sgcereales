@@ -6,16 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Carga;
 use App\Aviso;
-use App\Corredor;
-use App\Producto;
-use App\Cargador;
-use App\User;
-use App\Aviso_Entregador;
-use App\Aviso_Producto;
-
-
-
+use App\Descarga;
 use DB;
+use SweetAlert;
 
 class CargaController extends Controller
 {
@@ -34,15 +27,10 @@ class CargaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($idAviso)
     {
-        $cargadores = Cargador::where('borrado', false)->get();
-        $corredores = Corredor::where('borrado', false)->get();
-        $entregadores = User::where('tipoUser', 'E')->get(); //Solo Usuarios Entregadores
-        $productos = Producto::where('borrado', false)->get();
-
-        return view('carga.create', compact(['cargadores', 'corredores', 'entregadores', 'productos']));    
-     
+        $aviso = Aviso::where('idAviso', $idAviso)->first();
+        return view('carga.create', array('aviso'=>$aviso));
     }
 
     /**
@@ -53,45 +41,28 @@ class CargaController extends Controller
      */
     public function store(Request $request)
     {
-        /* $request->validate([
-            
-        ]); */
-        $aviso = new Aviso;
-        $aviso->idCorredor = $request->corredor;
-        $aviso->idProducto = $request->producto;
-        $aviso->idEntregador = 1;
-        $aviso->estado = false;
-        $aviso->borrado = false;
-        $aviso->save();
+        $hoy = date("Y-m-d");
 
-        $nuevo = new Carga;
-        $nuevo->idAviso = $aviso->idAviso;
-        $nuevo->idCargador = $request->cargador;
-        $nuevo->matriculaCamion = $request->matriculaCamion;
-        $nuevo->nroCartaPorte = $request->cartaPorte;
-        $nuevo->fecha = $request->fecha;
-        $nuevo->kilos = $request->kilos;
-        $nuevo->borrado = false;
-        $nuevo->save(); 
+        if($request->fecha <= $hoy){
+            $carga = new Carga;
+            $carga->idAviso = $request->idAviso;
+            $carga->matriculaCamion = $request->matricula;
+            $carga->nroCartaPorte = $request->cartaPorte;
+            $carga->fecha = $request->fecha;
+            $carga->kilos = $request->kilos;
+            $carga->borrado = false;
+            $carga->save();
 
-        $aviso_producto = new Aviso_Producto;
-        $aviso_producto->idAviso = $aviso->idAviso;
-        $aviso_producto->idProducto = $request->producto;
-        $aviso_producto->cosecha = $request->cosecha;
-        $aviso_producto->tipo = $request->tipo;
-        $aviso_producto->save();
-
-        $aviso_entregador = new Aviso_Entregador;
-        $aviso_entregador->idAviso = $aviso->idAviso;
-        $aviso_entregador->idEntregador = 1;
-        $aviso_entregador->fecha = date("Y-m-d");
-        $aviso_entregador->save();
-
-        if(isset($request->check)){
-            return redirect()->action('DescargaController@create', $nuevo->idCarga);
+            alert()->success("La carga fue creada con exito", 'Carga guardada');
+            if(isset($request->check)){
+                return redirect()->action('DescargaController@create', $carga->idCarga);
+            }else{
+                return redirect()->action('AvisoController@index');
+            }
         }else{
-            return redirect()->action('AvisoController@index');
-        }   
+            alert()->error("La fecha no puede ser mayor al dia de hoy", 'Ha ocurrido un error');
+            return back()->withInput();
+        }
     }
 
     /**
@@ -111,9 +82,11 @@ class CargaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($idCarga)
+    public function edit($idAviso)
     {
-        //
+        $cargas = Carga::where('idAviso', $idAviso)->get();
+        $descargas = Descarga::where('borrado', false)->get();
+        return view('carga.edit', compact(['cargas', 'descargas']));
     }
 
     /**
@@ -125,7 +98,22 @@ class CargaController extends Controller
      */
     public function update(Request $request, $idCarga)
     {
-        //
+        $hoy = date("Y-m-d");
+
+        if($request->fecha <= $hoy){
+            $carga = Carga::findOrfail($idCarga);
+            $carga->matriculaCamion = $request->matricula;
+            $carga->nroCartaPorte = $request->cartaPorte;
+            $carga->fecha = $request->fecha;
+            $carga->kilos = $request->kilos;
+            $carga->save();
+
+            alert()->success("La carga fue editada con exito", 'Carga guardada');
+            return back();
+        }else{
+            alert()->error("La fecha no puede ser mayor al dia de hoy", 'Ha ocurrido un error');
+            return back();
+        }
     }
 
     /**

@@ -11,16 +11,21 @@ class Corredor extends Model
     protected $keyType = 'string';
     public $timestamps = false;
 
-    protected $fillable = ['nombre', 'borrado'];
+    protected $fillable = ['nombre', 'condIva', 'dgr', 'cp', 'domicilio', 'localidad', 'provincia', 'pais', 'borrado'];
 
     protected $attributes = [
         'borrado' => false,
     ];
-    
+
     public function aviso(){
         return $this->hasMany('App\Aviso', 'idCorredor', 'cuit');
     }
+
+    public function condicion_iva(){
+        return $this->belongsTo('App\Condicion_IVA', 'condIva', 'cuit');
+    }
+
     public function corredor_contacto(){
         return $this->hasMany('App\Corredor_Contacto', 'cuit', 'cuit');
-    } 
+    }
 }

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Destino_Contacto extends Model
 {
     protected $table = 'destinatario_contacto';
+    protected $primaryKey = 'id';
     public $timestamps = false;
     protected $fillable = ['cuit', 'contacto', 'tipo'];
 

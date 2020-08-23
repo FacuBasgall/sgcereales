@@ -1,14 +1,15 @@
 
 <head>
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script type="text/javascript" src="{{ asset('sweetalert/sweetAlert.min.js') }}"></script>
-  <link href="{{ asset('css/bootstrap-home.min.css') }}" rel="stylesheet">
-  <script type="text/javascript" src="{{ asset('js/sweetAlert.js') }}"></script>
-  <script type="text/javascript" src="{{ asset('js/loading.js') }}"></script> 
-  <link rel="stylesheet" type="text/css" href="{{ asset('css/common-buttons.css') }}" >
-
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link href="{{ asset('css/bootstrap-home.min.css') }}" rel="stylesheet">
+    <script type="text/javascript" src="{{ asset('js/sweetAlert.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/loading.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/common-buttons.css') }}" >
+    <meta charset="utf-8">
+    <title>Sistema Gestor de Cereales</title>
   <!------ Include the above in your HEAD tag ---------->
 </head>
 <body>
@@ -36,9 +37,21 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ action('CargadorController@index') }}">
+          <a class="nav-link" href="{{ action('TitularController@index') }}">
+          <i class="fa fa-address-card"></i>
+            Titulares
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ action('IntermediarioController@index') }}">
+          <i class="fa fa-users"></i>
+            Intermediario
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ action('RemitenteController@index') }}">
             <i class="fa fa-user-o"></i>
-            Cargadores
+            Remitente
           </a>
         </li>
         <li class="nav-item">
@@ -49,7 +62,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ action('CorredorController@index') }}">
-            <i class="fa fa-handshake-o"></i>
+          <i class="fa fa-handshake-o"></i>
             Corredores
           </a>
         </li>
@@ -73,6 +86,6 @@
       </ul>
     </div>
   </nav>
-  <div id="loader" class="center"></div> 
+  <div id="loader" class="center"></div>
   @yield('content')
 </body>

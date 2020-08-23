@@ -4,7 +4,7 @@ function warning(key, redirect) {
         title: "¿Está seguro?",
         text: "Una vez borrado, no podrá recuperarlo",
         icon: "warning",
-        buttons: true,
+        buttons: ["Cancelar", true],
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
@@ -12,13 +12,28 @@ function warning(key, redirect) {
       }});
 }
 
-function failEdit(key, redirect, estado) {
-  if(estado == 1){
-  swal({
-    title: "No se puede editar",
-    text: "Este aviso está Terminado",
-    icon: "error",
-  })}else{
-      window.location.href = '//127.0.0.1:8000/' + redirect + '/edit/' + key;
-  };
+function warningContact(key, redirect) {
+    swal({
+        title: "¿Está seguro?",
+        text: "Una vez borrado, no podrá recuperarlo",
+        icon: "warning",
+        buttons: ["Cancelar", true],
+        dangerMode: true,
+      }).then((willDelete) => {
+        if (willDelete) {
+            window.location.href = '//127.0.0.1:8000/'+ redirect + '/delete_contact/' + key;
+      }});
+}
+
+function warningSendEmails(key) {
+    swal({
+        title: "¿Está seguro?",
+        text: "Enviará el romaneo al titular de carta porte",
+        icon: "warning",
+        buttons: ["Cancelar", true],
+        dangerMode: true,
+      }).then((willDelete) => {
+        if (willDelete) {
+            window.location.href = '//127.0.0.1:8000/aviso/send_email/' + key;
+      }});
 }

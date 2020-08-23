@@ -16,14 +16,16 @@ class Destino extends Model
     protected $attributes = [
         'borrado' => false,
     ];
-    
+
     public function destino_contacto(){
         return $this->hasMany('App\Destino_Contacto', 'cuit', 'cuit');
-    } 
+    }
+
     public function condicion_iva(){
         return $this->belongsTo('App\Condicion_IVA', 'condIva', 'cuit');
     }
-    public function descarga(){
-        return $this->hasMany('App\Descarga', 'idDestinatario', 'cuit');
+
+    public function aviso(){
+        return $this->hasMany('App\Aviso', 'idDestinatario', 'cuit');
     }
 }

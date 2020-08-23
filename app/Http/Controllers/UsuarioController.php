@@ -47,8 +47,7 @@ class UsuarioController extends Controller
      */
     public function show($idUser)
     {
-        $usuario = User::findOrFail($idUser);
-        return view('usuario.show', array('usuario'=>$usuario));
+       //
     }
 
     /**
@@ -59,8 +58,7 @@ class UsuarioController extends Controller
      */
     public function edit($idUser)
     {
-        $usuario = User::findOrFail($idUser);
-        return view('usuario.edit', array('usuario'=>$usuario));
+        //
     }
 
     /**
@@ -72,10 +70,7 @@ class UsuarioController extends Controller
      */
     public function update(Request $request, $idUser)
     {
-        $nuevo = User::findOrFail($idUser);
-        $nuevo = $request->all();
-        $nuevo->save();
-        return view('usuario.show', array('usuario'=>$usuario));
+        //
     }
 
     /**
