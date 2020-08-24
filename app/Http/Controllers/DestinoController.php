@@ -17,10 +17,21 @@ class DestinoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $arrayDestino = DB::table('destinatario')->where('borrado', false)->orderBy('nombre')->get();
-        return view('destino.index', array('arrayDestino'=>$arrayDestino));
+        $query = $request->search;
+        if($request->search == ''){
+            $arrayDestino = Destino::where('borrado', false)->orderBy('nombre')->get();
+        }else{
+            $titular =  Destino::where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->exists();
+            if($titular){
+                $arrayDestino = Destino::where('borrado', false)->where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->orderBy('nombre')->get();
+            }else{
+                $arrayDestino = Destino::where('borrado', false)->orderBy('nombre')->get();
+                alert()->error("La busqueda: $query no se ha encontrado", 'Ha surgido un error')->persistent('Cerrar');
+            }
+        }
+        return view('destino.index', compact('arrayDestino'));
     }
 
     /**

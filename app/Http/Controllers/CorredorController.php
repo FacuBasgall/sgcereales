@@ -18,10 +18,21 @@ class CorredorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $arrayCorredor = DB::table('corredor')->where('borrado', false)->orderBy('nombre')->get();
-        return view('corredor.index', array('arrayCorredor'=>$arrayCorredor));
+        $query = $request->search;
+        if($request->search == ''){
+            $arrayCorredor = Corredor::where('borrado', false)->orderBy('nombre')->get();
+        }else{
+            $titular =  Corredor::where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->exists();
+            if($titular){
+                $arrayCorredor = Corredor::where('borrado', false)->where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->orderBy('nombre')->get();
+            }else{
+                $arrayCorredor = Corredor::where('borrado', false)->orderBy('nombre')->get();
+                alert()->error("La busqueda: $query no se ha encontrado", 'Ha surgido un error')->persistent('Cerrar');
+            }
+        }
+        return view('corredor.index', compact('arrayCorredor'));
     }
 
     /**

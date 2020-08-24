@@ -17,10 +17,21 @@ class TitularController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $arrayTitular = DB::table('titular')->where('borrado', false)->orderBy('nombre')->get();
-        return view('titular.index', array('arrayTitular'=>$arrayTitular));
+        $query = $request->search;
+        if($request->search == ''){
+            $arrayTitular = Titular::where('borrado', false)->orderBy('nombre')->get();
+        }else{
+            $titular =  Titular::where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->exists();
+            if($titular){
+                $arrayTitular = Titular::where('borrado', false)->where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->orderBy('nombre')->get();
+            }else{
+                $arrayTitular = Titular::where('borrado', false)->orderBy('nombre')->get();
+                alert()->error("La busqueda: $query no se ha encontrado", 'Ha surgido un error')->persistent('Cerrar');
+            }
+        }
+        return view('titular.index', compact('arrayTitular'));
     }
 
     /**

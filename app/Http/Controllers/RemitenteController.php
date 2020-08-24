@@ -18,10 +18,21 @@ class RemitenteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $arrayRemitente = DB::table('remitente')->where('borrado', false)->orderBy('nombre')->get();
-        return view('remitente.index', array('arrayRemitente'=>$arrayRemitente));
+        $query = $request->search;
+        if($request->search == ''){
+            $arrayRemitente = Remitente::where('borrado', false)->orderBy('nombre')->get();
+        }else{
+            $titular =  Remitente::where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->exists();
+            if($titular){
+                $arrayRemitente = Remitente::where('borrado', false)->where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->orderBy('nombre')->get();
+            }else{
+                $arrayRemitente = Remitente::where('borrado', false)->orderBy('nombre')->get();
+                alert()->error("La busqueda: $query no se ha encontrado", 'Ha surgido un error')->persistent('Cerrar');
+            }
+        }
+        return view('remitente.index', compact('arrayRemitente'));
     }
 
     /**

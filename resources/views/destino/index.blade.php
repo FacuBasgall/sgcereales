@@ -16,6 +16,11 @@
         <a href="{{ action('DestinoController@create') }}"><button class="plus-button" title="Añadir destinatario"><i
                     class="fa fa-plus"></i> Añadir</button></a>
     </div>
+    <form class="{{action('DestinoController@index')}}" method="GET">
+        {{ csrf_field() }}
+        <input type="search" placeholder="Buscar..." name="search" id="search">
+        <button type="submit"><i class="fa fa-search"></i></button>
+    </form>
     <div class="container">
         @foreach( $arrayDestino as $key)
         <div class="card">
