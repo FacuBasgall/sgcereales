@@ -22,13 +22,13 @@ class RemitenteController extends Controller
     {
         $query = $request->search;
         if($request->search == ''){
-            $arrayRemitente = Remitente::where('borrado', false)->orderBy('nombre')->get();
+            $arrayRemitente = Remitente_Comercial::where('borrado', false)->orderBy('nombre')->get();
         }else{
-            $titular =  Remitente::where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->exists();
+            $titular =  Remitente_Comercial::where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->exists();
             if($titular){
-                $arrayRemitente = Remitente::where('borrado', false)->where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->orderBy('nombre')->get();
+                $arrayRemitente = Remitente_Comercial::where('borrado', false)->where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->orderBy('nombre')->get();
             }else{
-                $arrayRemitente = Remitente::where('borrado', false)->orderBy('nombre')->get();
+                $arrayRemitente = Remitente_Comercial::where('borrado', false)->orderBy('nombre')->get();
                 alert()->error("La busqueda: $query no se ha encontrado", 'Ha surgido un error')->persistent('Cerrar');
             }
         }
