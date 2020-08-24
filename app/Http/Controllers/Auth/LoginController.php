@@ -38,22 +38,36 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-       // $this->middleware('guest')->except('logout');
-    }
-
-    public function username()
-    {
-        //return 'username';
+        $this->middleware('guest')->except('logout');
     }
 
     public function login()
     {
-       // return view('auth.login');
+        return view('auth.login');
     }
 
     public function authenticate(Request $request)
     {
-       /* $request->validate([
+        $input = $request->all();
+
+        $this->validate($request, [
+            'username' => 'required',
+            'password' => 'required',
+        ]);
+
+        //$fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        if(auth()->attempt(array('username' => $input['username'], 'password' => $input['password'])))
+        {
+            return redirect()->route('home');
+        }else{
+            return redirect()->route('login')
+                ->with('error','Email-Address And Password Are Wrong.');
+        }
+    }
+
+   /* public function authenticate(Request $request)
+    {
+        $request->validate([
             'username' => 'required|string',
             'password' => 'required|string',
         ]);
@@ -65,13 +79,13 @@ class LoginController extends Controller
             return redirect()->intended('/home');
         }
 
-        return redirect('/login')->with('error', 'Oppes! You have entered invalid credentials');*/
-    }
+        return redirect('/login')->with('error', 'Oppes! You have entered invalid credentials');
+    }*/
 
     public function logout()
     {
-       /* Auth::logout();
+        Auth::logout();
 
-        return redirect('/login');*/
+        return redirect('/login');
     }
 }

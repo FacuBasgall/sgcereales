@@ -10,7 +10,7 @@
 |
 */
 
-//Auth::routes();
+Auth::routes();
 
 Route::get('/', function () {
     return view('home');
@@ -18,7 +18,7 @@ Route::get('/', function () {
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-/*Route::get('/login', 'Auth\LoginController@login')->name('login');
+Route::get('/login', 'Auth\LoginController@login')->name('login');
 Route::post('/login', 'Auth\LoginController@authenticate');
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 
@@ -29,7 +29,7 @@ Route::post('/password/email','Auth\ForgotPasswordController@sendResetLinkEmail'
 Route::get('/password/reset','Auth\ForgotPasswordController@showLinkRequestForm');
 
 Route::post('/password/reset','Auth\ResetPasswordController@reset');
-Route::get('/password/reset/{token}','Auth\ResetPasswordController@showResetForm');*/
+Route::get('/password/reset/{token}','Auth\ResetPasswordController@showResetForm');
 
 Route::get('/backup', function(){
     $cmd = shell_exec("cd .. & php artisan backup:clean");
