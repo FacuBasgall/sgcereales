@@ -9,6 +9,7 @@
     <script type="text/javascript" src="{{ asset('js/loading.js') }}"></script>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/common-buttons.css') }}" >
     <meta charset="utf-8">
+
     <title>Sistema Gestor de Cereales</title>
   <!------ Include the above in your HEAD tag ---------->
 </head>
@@ -24,43 +25,43 @@
       </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item ">
+        <li class="nav-item" id="aviso">
           <a class="nav-link" href="{{ action('AvisoController@index') }}">
             <i class="fa fa-newspaper-o"></i>
             Avisos
             </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" id="producto">
           <a class="nav-link" href="{{ action('ProductoController@index') }}">
             <i class="fa fa-leaf"></i>
             Productos
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" id="titular">
           <a class="nav-link" href="{{ action('TitularController@index') }}">
           <i class="fa fa-address-card"></i>
             Titulares
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" id="intermediario">
           <a class="nav-link" href="{{ action('IntermediarioController@index') }}">
           <i class="fa fa-users"></i>
             Intermediario
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" id="remitente">
           <a class="nav-link" href="{{ action('RemitenteController@index') }}">
             <i class="fa fa-user-o"></i>
             Remitente
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" id="destino">
           <a class="nav-link" href="{{ action('DestinoController@index') }}">
             <i class="fa fa-truck"></i>
             Destinatarios
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" id="corredor">
           <a class="nav-link" href="{{ action('CorredorController@index') }}">
           <i class="fa fa-handshake-o"></i>
             Corredores
@@ -68,7 +69,7 @@
         </li>
 
       </ul>
-      <ul class="navbar-nav ">
+      <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link" href="#" title="Manual de usuario">
             <i class="fa fa-book">
@@ -88,4 +89,14 @@
   </nav>
   <div id="loader" class="center"></div>
   @yield('content')
+  <script> 
+        $(document).ready(function () {
+    var loc = window.location.href; // grabbing the url
+    var str = loc.split("/")[3]; // splitting the url and taking the third string
+    if(str.localeCompare("") == 0)
+      $("#home").addClass("active");
+    else
+      $("#" + str).addClass("active");
+});
+    </script> 
 </body>
