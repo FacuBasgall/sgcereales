@@ -10,7 +10,9 @@
 
 <body style="background:url(/image/cargador-camion.jpg) no-repeat center center fixed">
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><b>Editar remitente</b></label>
+        <label class="title col-md-8 col-form-label"><a href="{{ action('RemitenteController@index') }}">Remitentes</a>
+            / <a href="{{ action('RemitenteController@show', $remitente->cuit) }}">Detalle del remitente</a> / Editar
+            remitente</label>
     </div>
     <div class="container">
         <div class="card" style="height:800px;width:450px;">
@@ -65,12 +67,7 @@
                         <input type="text" name="domicilio" id="domicilio" class="input"
                             value="{{$remitente->domicilio}}">
                     </label>
-                    <button type="submit" class="save-button" style="position:relative; left:40%; margin-top:10px"><i
-                            class="fa fa-check"></i> Guardar</button>
-                    <a href="{{ action('RemitenteController@show', $remitente->cuit) }}"><button type="button"
-                            class="back-button" title="Volver"
-                            style="position: relative; right: 40%; margin-top:10px"><i class="fa fa-arrow-left"></i>
-                            Volver</button></a>
+                    <button type="submit" class="save-button"><i class="fa fa-check"></i> Guardar</button>
                 </form>
             </div>
         </div>

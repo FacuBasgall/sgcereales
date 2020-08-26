@@ -10,7 +10,7 @@
 
 <body style="background:url(/image/field.jpg) no-repeat center center fixed">
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><b>Detalle del aviso</b></label>
+        <label class="title col-md-8 col-form-label"><a href="{{ action('AvisoController@index') }}">Avisos</a> / Detalle del aviso</label>
     </div>
     <div class="container">
         <div class="card" style="width:530px;">
@@ -34,7 +34,9 @@
                     {{$aviso->provinciaProcedencia}}<br>
                     <strong>Corredor: </strong>{{$corredor->nombre}}<br>
                     <strong>Destinatario: </strong>{{$destino->nombre}}<br>
-                    <strong>Destino: </strong>{{$aviso->lugarDescarga}}
+                    <strong>Destino: </strong>{{$aviso->lugarDescarga}}<br>
+                    <a href="{{ action('AvisoController@edit', $aviso->idAviso) }}"><button class="edit-button"
+                            title="Editar" style="margin:5px"><i class="fa fa-pencil"></i> Editar</button></a>
 
                     @foreach ($cargas as $carga)
                     @php $control = false @endphp
@@ -99,6 +101,8 @@
                     <a href="{{ action('DescargaController@create', $carga->idCarga) }}"><button class="show-plus-button"
                             title="Añadir descarga" style="margin:5px"><i class="fa fa-plus"></i> Añadir descarga</button></a>
                     @endif
+                    <a href="{{ action('CargaController@edit', $carga->idCarga) }}"><button class="edit-button"
+                            title="Editar" style="margin:5px"><i class="fa fa-pencil"></i> Editar</button></a>
                     @endforeach
                     <br>
                     <hr style="width: 420px;">
@@ -122,12 +126,8 @@
                             class="change-state-button" title="Cambiar estado" style="margin-left:90px"><i
                                 class="fa fa-exchange"></i> Cambiar estado</button></a>
                     <hr style="width: 420px;">
-                    <a href="{{ action('AvisoController@index') }}"><button type="button" class="back-button"
-                            title="Volver" style="margin:5px"><i class="fa fa-arrow-left"></i> Volver</button></a>
                     <a onclick="warning( '{{$aviso->idAviso}}' , 'aviso');"><button class="delete-button"
                             title="Eliminar" style="margin:5px"><i class="fa fa-trash"></i> Eliminar</button></a>
-                    <a href="{{ action('AvisoController@edit', $aviso->idAviso) }}"><button class="edit-button"
-                            title="Editar" style="margin:5px"><i class="fa fa-pencil"></i> Editar</button></a>
                     <a href="{{ action('CargaController@create', $aviso->idAviso) }}"><button class="show-plus-button"
                             title="Añadir carga" style="margin:5px"><i class="fa fa-plus"></i> Añadir carga</button></a>
                     <hr style="width: 420px;">

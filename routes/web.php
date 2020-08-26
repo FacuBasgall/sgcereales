@@ -106,7 +106,7 @@ Route::get('/carga/create/{id}', 'CargaController@create');
 Route::post('/carga/store', 'CargaController@store');
 //Route::get('/carga/show/{id}', 'CargaController@show');
 Route::get('/carga/edit/{id}', 'CargaController@edit');
-Route::put('/carga/update/{id}', 'CargaController@update');
+Route::put('/carga/update/', 'CargaController@update');
 //Route::get('/carga/destroy/{id}', 'CargaController@destroy');
 
 //Route::get('/descarga', 'DescargaController@index');
@@ -114,7 +114,7 @@ Route::get('/descarga/create/{id}', 'DescargaController@create');
 Route::post('/descarga/store', 'DescargaController@store');
 //Route::get('/descarga/show/{id}', 'DescargaController@show');
 //Route::get('/descarga/edit/{id}', 'DescargaController@edit');
-Route::put('/descarga/update/{id}', 'DescargaController@update');
+//Route::put('/descarga/update/{id}', 'DescargaController@update');
 //Route::get('/descarga/destroy/{id}', 'DescargaController@destroy');
 
 Route::get('/producto', 'ProductoController@index');

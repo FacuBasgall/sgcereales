@@ -22,14 +22,15 @@ class RemitenteController extends Controller
     {
         $query = $request->search;
         if($request->search == ''){
-            $arrayRemitente = Remitente_Comercial::where('borrado', false)->orderBy('nombre')->get();
+            $arrayRemitente = Remitente_Comercial::where('borrado', false)->orderBy('nombre')->paginate(2);
         }else{
-            $titular =  Remitente_Comercial::where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->exists();
-            if($titular){
-                $arrayRemitente = Remitente_Comercial::where('borrado', false)->where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->orderBy('nombre')->get();
+            $remitente =  Remitente_Comercial::where('borrado', false)->where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->exists();
+            if($remitente){
+                $arrayRemitente = Remitente_Comercial::where('borrado', false)->where('nombre', 'LIKE', "%$query%")
+                    ->orWhere('cuit', 'LIKE', "%$query%")->orderBy('nombre')->paginate(2);
             }else{
-                $arrayRemitente = Remitente_Comercial::where('borrado', false)->orderBy('nombre')->get();
-                alert()->error("La busqueda: $query no se ha encontrado", 'Ha surgido un error')->persistent('Cerrar');
+                $arrayRemitente = Remitente_Comercial::where('borrado', false)->orderBy('nombre')->paginate(2);
+                alert()->warning("No se encontraron resultados para: $query", 'No se encontraron resultados')->persistent('Cerrar');
             }
         }
         return view('remitente.index', compact('arrayRemitente'));

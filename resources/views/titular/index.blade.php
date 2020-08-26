@@ -22,6 +22,7 @@
         <button type="submit"><i class="fa fa-search"></i></button>
     </form>
     <div class="container">
+        @if(!empty($arrayTitular) && $arrayTitular->count())
         @foreach( $arrayTitular as $key)
         <div class="card">
             <div class="box">
@@ -40,7 +41,13 @@
             </div>
         </div>
         @endforeach
+        @else
+        <tr>
+            <td>No hay datos.</td>
+        </tr>
+        @endif
     </div>
+    {!! $arrayTitular->appends(Request::all())->links() !!}
     @include('sweet::alert')
 </body>
 @endsection

@@ -21,14 +21,15 @@ class TitularController extends Controller
     {
         $query = $request->search;
         if($request->search == ''){
-            $arrayTitular = Titular::where('borrado', false)->orderBy('nombre')->get();
+            $arrayTitular = Titular::where('borrado', false)->orderBy('nombre')->paginate(2);
         }else{
-            $titular =  Titular::where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->exists();
+            $titular =  Titular::where('borrado', false)->where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->exists();
             if($titular){
-                $arrayTitular = Titular::where('borrado', false)->where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->orderBy('nombre')->get();
+                $arrayTitular = Titular::where('borrado', false)->where('nombre', 'LIKE', "%$query%")
+                    ->orWhere('cuit', 'LIKE', "%$query%")->orderBy('nombre')->paginate(2);
             }else{
-                $arrayTitular = Titular::where('borrado', false)->orderBy('nombre')->get();
-                alert()->error("La busqueda: $query no se ha encontrado", 'Ha surgido un error')->persistent('Cerrar');
+                $arrayTitular = Titular::where('borrado', false)->orderBy('nombre')->paginate(2);
+                alert()->warning("No se encontraron resultados para: $query", 'No se encontraron resultados')->persistent('Cerrar');
             }
         }
         return view('titular.index', compact('arrayTitular'));

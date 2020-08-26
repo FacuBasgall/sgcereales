@@ -10,7 +10,9 @@
 
 <body style="background:url(/image/cargador-camion.jpg) no-repeat center center fixed">
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><b>Editar intermediario</b></label>
+        <label class="title col-md-8 col-form-label"><a
+                href="{{ action('IntermediarioController@index') }}">Intermediarios</a> / <a
+                href="{{ action('IntermediarioController@show', $intermediario->cuit) }}">Detalle del intermediario</a> / Editar intermediario</label>
     </div>
     <div class="container">
         <div class="card" style="height:800px;width:450px;">
@@ -25,7 +27,8 @@
                     </label>
                     <label for="cuit">
                         <span>CUIT: </span>
-                        <input type="text" name="cuit" id="cuit" class="input" value="{{$intermediario->cuit}}" readonly>
+                        <input type="text" name="cuit" id="cuit" class="input" value="{{$intermediario->cuit}}"
+                            readonly>
                     </label>
                     <label for="dgr">
                         <span>DGR: </span>
@@ -65,12 +68,7 @@
                         <input type="text" name="domicilio" id="domicilio" class="input"
                             value="{{$intermediario->domicilio}}">
                     </label>
-                    <button type="submit" class="save-button" style="position:relative; left:40%; margin-top:10px"><i
-                            class="fa fa-check"></i> Guardar</button>
-                    <a href="{{ action('IntermediarioController@show', $intermediario->cuit) }}"><button type="button"
-                            class="back-button" title="Volver"
-                            style="position: relative; right: 40%; margin-top:10px"><i class="fa fa-arrow-left"></i>
-                            Volver</button></a>
+                    <button type="submit" class="save-button"><i class="fa fa-check"></i> Guardar</button>
                 </form>
             </div>
         </div>

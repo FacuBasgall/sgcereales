@@ -11,7 +11,9 @@
 
 <body style="background:url(/image/silo.jpg) no-repeat center center fixed">
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><b>Crear aviso / Datos de descarga</b></label>
+        <label class="title col-md-8 col-form-label"><a href="{{ action('AvisoController@index')}}">Avisos</a> / <a
+                href="{{ action('AvisoController@show', $carga->idAviso)}}">Detalle del aviso</a> / Añadir
+            descarga</label>
     </div>
     <div class="container">
         <div class="card" style="min-height:600px; width:460px;">
@@ -54,11 +56,7 @@
                             style="margin: 10px 20px;">
                     </label>
                     <input id="carga" name="carga" type="hidden" value="{{$carga->idCarga}}">
-                    <button type="submit" class="save-button" style="position:relative; left:35%;"><i
-                            class="fa fa-check"></i> Guardar</button>
-                    <a href="{{ action('AvisoController@index') }}"><button type="button" class="back-button"
-                            title="Salir" style="position: relative; right: 40%;"><i class="fa fa-arrow-left"></i>
-                            Salir</button></a>
+                    <button type="submit" class="save-button"><i class="fa fa-check"></i> Guardar</button>
                 </form>
             </div>
         </div>

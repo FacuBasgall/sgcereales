@@ -11,7 +11,7 @@
 
 <body style="background:url(/image/silo.jpg) no-repeat center center fixed">
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><b>Editar aviso {{$aviso->idAviso}}</b></b></label>
+        <label class="title col-md-8 col-form-label"><a href="{{ action('AvisoController@index') }}">Avisos</a> / <a href="{{ action('AvisoController@show', $aviso->idAviso) }}">Detalle del aviso</a> / Editar aviso {{$aviso->nroAviso}}</label>
     </div>
     <div class="container">
         <div class="card" style="height:1500px;width:450px;">
@@ -139,21 +139,12 @@
                             cols="40"></textarea>
                     </label>
                     <hr style="width: 420px;">
-                    <button type="submit" class="save-button" style="position:relative; left:30%;"><i
-                            class="fa fa-check"></i> Guardar y continuar</button>
-                    <button type="button" onclick="goBack()" class="back-button" title="Volver" style="position: relative; right: 50%;"><i
-                                class="fa fa-arrow-left"></i> Volver</button></a>
+                    <button type="submit" class="save-button"><i
+                            class="fa fa-check"></i> Guardar</button>
                 </form>
             </div>
         </div>
     </div>
     @include('sweet::alert')
 </body>
-
-<script>
-function goBack() {
-  window.history.back();
-}
-</script>
-
 @endsection

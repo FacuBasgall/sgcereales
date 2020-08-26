@@ -11,6 +11,11 @@
     <div class="card-header">
         <label class="title col-md-8 col-form-label"><b>Productos</b></label>
     </div>
+    <form class="{{action('TitularController@index')}}" method="GET">
+        {{ csrf_field() }}
+        <input type="search" placeholder="Buscar..." name="search" id="search">
+        <button type="submit"><i class="fa fa-search"></i></button>
+    </form>
     <div class="container">
 		@foreach( $productos as $key)
 

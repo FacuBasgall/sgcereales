@@ -10,7 +10,9 @@
 
 <body style="background:url(/image/cargador-camion.jpg) no-repeat center center fixed">
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><b>Detalle de intermediario</b></label>
+        <label class="title col-md-8 col-form-label"><a
+                href="{{ action('IntermediarioController@index') }}">Intermediarios</a> / Detalle del
+            intermediario</label>
     </div>
     <div class="container">
         <div class="card">
@@ -64,7 +66,8 @@
                 @endif
                 <hr>
                 <strong>
-                    <h2>Contactos <a href="{{ action('IntermediarioController@contact', $intermediario->cuit) }}"><button
+                    <h2>Contactos <a
+                            href="{{ action('IntermediarioController@contact', $intermediario->cuit) }}"><button
                                 class="small-edit-button" title="Gestionar contactos"><i
                                     class="fa fa-pencil"></i></button></a></h2>
                 </strong>
@@ -80,10 +83,8 @@
                 <p>No se encontró información</p>
                 @endif
                 <hr>
-                <a href="{{ action('IntermediarioController@index') }}"><button class="back-button" title="Volver"
-                        style="position: relative;"><i class="fa fa-arrow-left"></i> Volver</button></a>
-                <a onclick="warning( '{{$intermediario->cuit}}' , 'intermediario');"><button class="delete-button" title="Eliminar"
-                        style="position: relative; top: 10%; left: 20%;"><i class="fa fa-trash"></i>
+                <a onclick="warning( '{{$intermediario->cuit}}' , 'intermediario');"><button class="delete-button"
+                        title="Eliminar" style="position: relative; top: 10%; left: 20%;"><i class="fa fa-trash"></i>
                         Eliminar</button></a>
                 <a href="{{ action('IntermediarioController@edit', $intermediario->cuit)}}"><button class="edit-button"
                         title="Editar" style="position: relative; top: 10%; left: 20%;"><i class="fa fa-pencil"></i>

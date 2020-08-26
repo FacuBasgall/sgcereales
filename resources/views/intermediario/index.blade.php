@@ -22,6 +22,7 @@
         <button type="submit"><i class="fa fa-search"></i></button>
     </form>
     <div class="container">
+        @if(!empty($arrayIntermediario) && $arrayIntermediario->count())
         @foreach( $arrayIntermediario as $key)
         <div class="card">
             <div class="box">
@@ -41,7 +42,13 @@
         </div>
 
         @endforeach
+        @else
+        <tr>
+            <td>No hay datos.</td>
+        </tr>
+        @endif
     </div>
+    {!! $arrayIntermediario->appends(Request::all())->links() !!}
     @include('sweet::alert')
 </body>
 @endsection

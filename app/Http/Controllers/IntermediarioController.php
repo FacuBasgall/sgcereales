@@ -22,14 +22,15 @@ class IntermediarioController extends Controller
     {
         $query = $request->search;
         if($request->search == ''){
-            $arrayIntermediario = Intermediario::where('borrado', false)->orderBy('nombre')->get();
+            $arrayIntermediario = Intermediario::where('borrado', false)->orderBy('nombre')->paginate(2);
         }else{
-            $titular =  Intermediario::where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->exists();
-            if($titular){
-                $arrayIntermediario = Intermediario::where('borrado', false)->where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->orderBy('nombre')->get();
+            $intermediario =  Intermediario::where('borrado', false)->where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->exists();
+            if($intermediario){
+                $arrayIntermediario = Intermediario::where('borrado', false)->where('nombre', 'LIKE', "%$query%")
+                    ->orWhere('cuit', 'LIKE', "%$query%")->orderBy('nombre')->paginate(2);
             }else{
-                $arrayIntermediario = Intermediario::where('borrado', false)->orderBy('nombre')->get();
-                alert()->error("La busqueda: $query no se ha encontrado", 'Ha surgido un error')->persistent('Cerrar');
+                $arrayIntermediario = Intermediario::where('borrado', false)->orderBy('nombre')->paginate(2);
+                alert()->warning("No se encontraron resultados para: $query", 'No se encontraron resultados')->persistent('Cerrar');
             }
         }
         return view('intermediario.index', compact('arrayIntermediario'));

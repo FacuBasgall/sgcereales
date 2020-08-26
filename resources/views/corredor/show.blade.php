@@ -10,7 +10,8 @@
 
 <body style="background:url(/image/cargador-camion.jpg) no-repeat center center fixed">
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><b>Detalle de corredor</b></label>
+        <label class="title col-md-8 col-form-label"><a href="{{ action('CorredorController@index') }}">Corredores</a> /
+            Detalle del corredor</label>
     </div>
     <div class="container">
         <div class="card">
@@ -80,10 +81,8 @@
                 <p>No se encontró información</p>
                 @endif
                 <hr>
-                <a href="{{ action('CorredorController@index') }}"><button class="back-button" title="Volver"
-                        style="position: relative;"><i class="fa fa-arrow-left"></i> Volver</button></a>
-                <a onclick="warning( '{{$corredor->cuit}}' , 'corredor');"><button class="delete-button" title="Eliminar"
-                        style="position: relative; top: 10%; left: 20%;"><i class="fa fa-trash"></i>
+                <a onclick="warning( '{{$corredor->cuit}}' , 'corredor');"><button class="delete-button"
+                        title="Eliminar" style="position: relative; top: 10%; left: 20%;"><i class="fa fa-trash"></i>
                         Eliminar</button></a>
                 <a href="{{ action('CorredorController@edit', $corredor->cuit)}}"><button class="edit-button"
                         title="Editar" style="position: relative; top: 10%; left: 20%;"><i class="fa fa-pencil"></i>

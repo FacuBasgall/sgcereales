@@ -10,7 +10,9 @@
 
 <body style="background:url(/image/cargador-camion.jpg) no-repeat center center fixed">
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><b>Editar corredor</b></label>
+        <label class="title col-md-8 col-form-label"><a href="{{ action('CorredorController@index') }}">Corredores</a> /
+            <a href="{{ action('CorredorController@show', $corredor->cuit) }}">Detalle del corredor</a> / Editar
+            corredor</label>
     </div>
     <div class="container">
         <div class="card" style="height:800px;width:450px;">
@@ -65,12 +67,7 @@
                         <input type="text" name="domicilio" id="domicilio" class="input"
                             value="{{$corredor->domicilio}}">
                     </label>
-                    <button type="submit" class="save-button" style="position:relative; left:40%; margin-top:10px"><i
-                            class="fa fa-check"></i> Guardar</button>
-                    <a href="{{ action('CorredorController@show', $corredor->cuit) }}"><button type="button"
-                            class="back-button" title="Volver"
-                            style="position: relative; right: 40%; margin-top:10px"><i class="fa fa-arrow-left"></i>
-                            Volver</button></a>
+                    <button type="submit" class="save-button"><i class="fa fa-check"></i> Guardar</button>
                 </form>
             </div>
         </div>

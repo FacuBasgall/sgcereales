@@ -17,10 +17,21 @@ class ProductoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $productos = Producto::where('borrado', false)->orderBy('nombre')->get();
-        return view('producto.index', array('productos'=>$productos));
+        $query = $request->search;
+        if($request->search == ''){
+            $productos = Producto::where('borrado', false)->orderBy('nombre')->get();
+        }else{
+            $producto =  Producto::where('nombre', 'LIKE', "%$query%")->where('borrado', false)->exists();
+            if($producto){
+                $productos = Producto::where('borrado', false)->where('nombre', 'LIKE', "%$query%")->orderBy('nombre')->get();
+            }else{
+                $productos = Producto::where('borrado', false)->orderBy('nombre')->get();
+                alert()->warning("No se encontraron resultados para: $query", 'No se encontraron resultados')->persistent('Cerrar');
+            }
+        }
+        return view('producto.index', compact('productos'));
     }
 
     /**
