@@ -13,9 +13,14 @@
 <body>
     <div class="card-header">
         <label class="title col-md-8 col-form-label"><b>Remitentes</b></label>
-        <a href="{{ action('RemitenteController@create') }}"><button class="plus-button"
-                title="Añadir remitente"><i class="fa fa-plus"></i> Añadir</button></a>
+        <a href="{{ action('RemitenteController@create') }}"><button class="plus-button" title="Añadir remitente"><i
+                    class="fa fa-plus"></i> Añadir</button></a>
     </div>
+    <form class="{{action('RemitenteController@index')}}" method="GET">
+        {{ csrf_field() }}
+        <input type="search" placeholder="Buscar..." name="search" id="search">
+        <button type="submit"><i class="fa fa-search"></i></button>
+    </form>
     <div class="container">
         @foreach( $arrayRemitente as $key)
         <div class="card">

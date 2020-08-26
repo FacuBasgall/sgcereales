@@ -16,6 +16,11 @@
         <a href="{{ action('TitularController@create') }}"><button class="plus-button"
                 title="Añadir titular carta porte"><i class="fa fa-plus"></i> Añadir</button></a>
     </div>
+    <form class="{{action('TitularController@index')}}" method="GET">
+        {{ csrf_field() }}
+        <input type="search" placeholder="Buscar..." name="search" id="search">
+        <button type="submit"><i class="fa fa-search"></i></button>
+    </form>
     <div class="container">
         @foreach( $arrayTitular as $key)
         <div class="card">
@@ -34,7 +39,6 @@
                 </a>
             </div>
         </div>
-
         @endforeach
     </div>
     @include('sweet::alert')

@@ -18,10 +18,21 @@ class IntermediarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $arrayIntermediario = DB::table('intermediario')->where('borrado', false)->orderBy('nombre')->get();
-        return view('intermediario.index', array('arrayIntermediario'=>$arrayIntermediario));
+        $query = $request->search;
+        if($request->search == ''){
+            $arrayIntermediario = Intermediario::where('borrado', false)->orderBy('nombre')->get();
+        }else{
+            $titular =  Intermediario::where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->exists();
+            if($titular){
+                $arrayIntermediario = Intermediario::where('borrado', false)->where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->orderBy('nombre')->get();
+            }else{
+                $arrayIntermediario = Intermediario::where('borrado', false)->orderBy('nombre')->get();
+                alert()->error("La busqueda: $query no se ha encontrado", 'Ha surgido un error')->persistent('Cerrar');
+            }
+        }
+        return view('intermediario.index', compact('arrayIntermediario'));
     }
 
     /**

@@ -16,6 +16,11 @@
         <a href="{{ action('IntermediarioController@create') }}"><button class="plus-button"
                 title="Añadir intermediario"><i class="fa fa-plus"></i> Añadir</button></a>
     </div>
+    <form class="{{action('IntermediarioController@index')}}" method="GET">
+        {{ csrf_field() }}
+        <input type="search" placeholder="Buscar..." name="search" id="search">
+        <button type="submit"><i class="fa fa-search"></i></button>
+    </form>
     <div class="container">
         @foreach( $arrayIntermediario as $key)
         <div class="card">
