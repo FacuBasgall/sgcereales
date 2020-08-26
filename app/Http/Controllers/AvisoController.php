@@ -218,14 +218,8 @@ class AvisoController extends Controller
         $aviso_producto->tipo = $request->tipo;
         $aviso_producto->save();
 
-        $existeCarga = Carga::where('idAviso', $idAviso)->exists();
         alert()->success("El aviso fue editado con exito", 'Aviso guardado');
-        if($existeCarga){
-            return redirect()->action('CargaController@edit', $aviso->idAviso);
-        }else{
-            return redirect()->action('AvisoController@show', $aviso->idAviso);
-        }
-
+        return redirect()->action('AvisoController@show', $aviso->idAviso);
     }
 
     /**

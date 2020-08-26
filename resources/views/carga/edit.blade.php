@@ -11,16 +11,15 @@
 
 <body style="background:url(/image/silo.jpg) no-repeat center center fixed">
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><b>Editar carga y descarga de aviso </b></label>
+        <label class="title col-md-8 col-form-label"><a href="{{ action('AvisoController@index')}}">Avisos</a> / <a
+                href="{{ action('AvisoController@show', $carga->idAviso)}}">Detalle del aviso</a> / Editar carga y
+            descarga</label>
     </div>
-    <a href="{{ action('AvisoController@show', $cargas[0]->idAviso)}}"><button type="button" class="back-button"
-            title="Salir"><i class="fa fa-arrow-left"></i> Salir</button></a>
-    @foreach ($cargas as $carga)
     <div class="container">
         <div class="card grid-container" style="min-height:650px;width:850px;">
             <div class="column1">
                 <span>Datos de la carga </span>
-                <form action="{{action('CargaController@update', $carga->idCarga)}}" method="POST">
+                <form action="{{action('CargaController@update')}}" method="POST">
                     {{ method_field('PUT') }}
                     {{ csrf_field() }}
                     <label for="cartaPorte">
@@ -33,76 +32,68 @@
                         <input type="date" name="fecha" id="fecha" value="{{$carga->fecha}}" class="edit-aviso-input"
                             required>
                     </label>
-                    <label for=" matricula">
+                    <label for="matricula">
                         <span>Matricula del Camión: </span>
                         <input type="text" name="matricula" id="matricula" value="{{$carga->matriculaCamion}}"
                             class="edit-aviso-input">
                     </label>
-                    <label for=" kilos">
+                    <label for="kilos">
                         <span>Kilos Cargados:*</span>
-                        <input type="number" min="0" name="kilos" id="kilos" value="{{$carga->kilos}}" class="edit-aviso-input"
-                            required>
+                        <input type="number" min="0" name="kilos" id="kilos" value="{{$carga->kilos}}"
+                            class="edit-aviso-input" required>
                     </label>
-                    <button type=" submit" class="save-button" style="position:absolute; bottom: 0; margin-bottom:20px;"><i
-                            class="fa fa-check"></i> Guardar carga</button>
-                </form>
+                    <input type="hidden" name="idCarga" id="idCarga" value="{{$carga->idCarga}}">
+                    <button type="submit" class="save-button"
+                        style="position:absolute; bottom: 0; margin-bottom:20px;"><i class="fa fa-check"></i> Guardar
+                    </button>
             </div>
-            @php $existe = false @endphp
-            @foreach ($descargas as $descarga)
-            @if ($descarga->idCarga == $carga->idCarga)
-                @php $existe = true @endphp
+            @if (isset($descarga))
             <div class="column2">
                 <span>Datos de la descarga</span>
-                <form action="{{action('DescargaController@update', $descarga->idDescarga)}}" method="POST">
-                    {{ method_field('PUT') }}
-                    {{ csrf_field() }}
-                    <label for="fecha">
-                        <span>Fecha de la Descarga:*</span>
-                        <input type="date" name="fecha" id="fecha" value="{{$descarga->fecha}}" class="edit-aviso-input"
-                            required>
-                    </label>
-                    <label for=" bruto">
-                        <span>Kilos Brutos:*</span>
-                        <input type="number" min="0" name="bruto" id="bruto" value="{{$descarga->bruto}}" class="edit-aviso-input"
-                            required>
-                    </label>
-                    <label for=" tara">
-                        <span>Tara Kg:*</span>
-                        <input type="number" min="0" name="tara" id="tara" value="{{$descarga->tara}}" class="edit-aviso-input"
-                            required>
-                    </label>
-                    <label for=" humedad">
-                        <span>Humedad (%):*</span>
-                        <input type="number" step=".1" min="0" name="humedad" id="humedad"
-                            value="{{$descarga->humedad}}" class="edit-aviso-input" required>
-                    </label>
-                    <label for=" ph">
-                        <span>Ph: </span>
-                        <input type="number" step=".1" min="0" name="ph" id="ph" value="{{$descarga->ph}}" class="edit-aviso-input"
-                           >
-                    </label>
-                    <label for=" proteina">
-                        <span>Proteina: </span>
-                        <input type="number" step=".1" min="0" name="proteina" id="proteina"
-                            value="{{$descarga->proteina}}" class="edit-aviso-input">
-                    </label>
-                    <label for=" calidad">
-                        <span>Calidad: </span>
-                        <input type="text" name="calidad" id="calidad" value="{{$descarga->calidad}}" class="edit-aviso-input">
-                    </label>
-                    <input type="hidden" name="carga" id="carga" value="{{$carga->idCarga}}">
-                    <button type="submit" class="save-button" style="position:absolute; bottom: 0; margin-bottom:20px;"><i
-                            class="fa fa-check"></i> Guardar descarga</button>
-                </form>
+                <label for="fechaDescarga">
+                    <span>Fecha de la Descarga:*</span>
+                    <input type="date" name="fechaDescarga" id="fechaDescarga" value="{{$descarga->fecha}}" class="edit-aviso-input"
+                        required>
+                </label>
+                <label for="bruto">
+                    <span>Kilos Brutos:*</span>
+                    <input type="number" min="0" name="bruto" id="bruto" value="{{$descarga->bruto}}"
+                        class="edit-aviso-input" required>
+                </label>
+                <label for="tara">
+                    <span>Tara Kg:*</span>
+                    <input type="number" min="0" name="tara" id="tara" value="{{$descarga->tara}}"
+                        class="edit-aviso-input" required>
+                </label>
+                <label for="humedad">
+                    <span>Humedad (%):*</span>
+                    <input type="number" step=".1" min="0" name="humedad" id="humedad" value="{{$descarga->humedad}}"
+                        class="edit-aviso-input" required>
+                </label>
+                <label for="ph">
+                    <span>Ph: </span>
+                    <input type="number" step=".1" min="0" name="ph" id="ph" value="{{$descarga->ph}}"
+                        class="edit-aviso-input">
+                </label>
+                <label for="proteina">
+                    <span>Proteina: </span>
+                    <input type="number" step=".1" min="0" name="proteina" id="proteina" value="{{$descarga->proteina}}"
+                        class="edit-aviso-input">
+                </label>
+                <label for="calidad">
+                    <span>Calidad: </span>
+                    <input type="text" name="calidad" id="calidad" value="{{$descarga->calidad}}"
+                        class="edit-aviso-input">
+                </label>
             </div>
+            @else
+            <div>
+                <p>No existe una descarga asociada</p>
+            </div>
+            @endif
+            </form>
         </div>
     </div>
-    @endif
-    @endforeach
-    @if ($existe == false)
-    <div>No existe una descarga asociada</div>
-    @endif
-    @endforeach
     @include('sweet::alert')
 
 </body>

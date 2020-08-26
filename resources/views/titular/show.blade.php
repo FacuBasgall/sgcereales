@@ -10,7 +10,8 @@
 
 <body style="background:url(/image/cargador-camion.jpg) no-repeat center center fixed">
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><b>Detalle de titular</b></label>
+        <label class="title col-md-8 col-form-label"><a href="{{ action('TitularController@index') }}">Titulares</a> /
+            Detalle del titular</label>
     </div>
     <div class="container">
         <div class="card">
@@ -80,8 +81,6 @@
                 <p>No se encontró información</p>
                 @endif
                 <hr>
-                <a href="{{ action('TitularController@index') }}"><button class="back-button" title="Volver"
-                        style="position: relative;"><i class="fa fa-arrow-left"></i> Volver</button></a>
                 <a onclick="warning( '{{$titular->cuit}}' , 'titular');"><button class="delete-button" title="Eliminar"
                         style="position: relative; top: 10%; left: 20%;"><i class="fa fa-trash"></i>
                         Eliminar</button></a>

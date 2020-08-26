@@ -10,7 +10,9 @@
 
 <body style="background:url(/image/silo.jpg) no-repeat center center fixed">
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><b>Editar destinatario</b></label>
+        <label class="title col-md-8 col-form-label"><a href="{{ action('DestinoController@index') }}">Destinatarios</a>
+            / <a href="{{ action('DestinoController@show', $destino->cuit) }}">Detalle del destinatario</a> / Editar
+            destinatario</label>
     </div>
     <div class="container">
         <div class="card" style="height:800px;width:450px;">
@@ -69,12 +71,7 @@
                         <input type="text" name="domicilio" id="domicilio" class="input" value="{{$destino->domicilio}}"
                             style="margin: 10px 20px;">
                     </label>
-                    <button type="submit" class="save-button" style="position:relative; top:65%; left:30%;"><i
-                            class="fa fa-check"></i> Guardar</button>
-                    <a href="{{ action('DestinoController@show', $destino->cuit) }}"><button type="button"
-                            class="back-button" title="Volver"
-                            style="position: relative; right: 40%; margin-top:10px"><i class="fa fa-arrow-left"></i>
-                            Volver</button></a>
+                    <button type="submit" class="save-button"><i class="fa fa-check"></i> Guardar</button>
                 </form>
             </div>
         </div>
