@@ -7,7 +7,7 @@
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     </head>
-    <body>
+    <body style="background:url(/image/corredor.jpg) no-repeat center center fixed">
     <div class="card-header">
         <label class="title col-md-8 col-form-label"><b>Productos</b></label>
     </div>
@@ -16,9 +16,6 @@
 
             <div class="card">
                 <div class="box">
-                <div class="img">
-                    <img src="{{ URL::to('/image/producto-cereal.jpg') }}">
-                </div>
                             <h2>{{$key->nombre}}</h2>
                             <p>Merma por manipuleo: {{$key->mermaManipuleo}}</p>
                             <hr></hr>

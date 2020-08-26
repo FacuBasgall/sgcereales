@@ -1,20 +1,23 @@
 
 <head>
+    <!-- Navbar menu -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="{{ asset('css/Navbar/bootstrap-home.min.css') }}" rel="stylesheet">
+    <!-- sweet alert -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <link href="{{ asset('css/bootstrap-home.min.css') }}" rel="stylesheet">
     <script type="text/javascript" src="{{ asset('js/sweetAlert.js') }}"></script>
+    <!-- Loading animation -->
     <script type="text/javascript" src="{{ asset('js/loading.js') }}"></script>
+    <!-- common buttons in the app -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/common-buttons.css') }}" >
     <meta charset="utf-8">
-
     <title>Sistema Gestor de Cereales</title>
   <!------ Include the above in your HEAD tag ---------->
 </head>
 <body>
-  <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark" style="font-family:sans-serif;">
     <a class="navbar-brand" href="{{action('HomeController@index')}}">
       <div class="img">
           <img src="{{ URL::to('/image/SGC.jpg') }}">
@@ -98,5 +101,6 @@
     else
       $("#" + str).addClass("active");
 });
+
     </script> 
 </body>

@@ -11,7 +11,7 @@
 
 <body style="background:url(/image/silo.jpg) no-repeat center center fixed">
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><b>Crear nuevo aviso</b></label>
+        <label class="title col-md-8 col-form-label"><b>Avisos / Crear aviso</b></label>
     </div>
     <div class="container">
         <div class="card" style="height:1550px;width:450px;">
