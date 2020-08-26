@@ -60,7 +60,7 @@ class CargaController extends Controller
                 return redirect()->action('AvisoController@index');
             }
         }else{
-            alert()->error("La fecha no puede ser mayor al dia de hoy", 'Ha ocurrido un error');
+            alert()->error("La fecha no puede ser mayor al dia de hoy", 'Ha ocurrido un error')->persistent('Cerrar');
             return back()->withInput();
         }
     }
@@ -111,7 +111,7 @@ class CargaController extends Controller
             alert()->success("La carga fue editada con exito", 'Carga guardada');
             return back();
         }else{
-            alert()->error("La fecha no puede ser mayor al dia de hoy", 'Ha ocurrido un error');
+            alert()->error("La fecha no puede ser mayor al dia de hoy", 'Ha ocurrido un error')->persistent('Cerrar');
             return back();
         }
     }

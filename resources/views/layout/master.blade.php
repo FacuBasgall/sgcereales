@@ -54,7 +54,7 @@
         </li>
         <li class="nav-item" id="remitente">
           <a class="nav-link" href="{{ action('RemitenteController@index') }}">
-            <i class="fa fa-user-o"></i>
+            <i class="fa fa-user"></i>
             Remitente
           </a>
         </li>
@@ -70,7 +70,12 @@
             Corredores
           </a>
         </li>
-
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+          <i class="fa fa-bar-chart"></i>
+            Reportes Generales
+          </a>
+        </li>
       </ul>
       <ul class="navbar-nav">
         <li class="nav-item">
@@ -84,7 +89,7 @@
           <a class="nav-link" href="#" title="Cerrar sesión">
             <i class="fa fa-power-off">
             </i>
-            Cerrar sesión
+            Cerrar Sesión
           </a>
         </li>
       </ul>

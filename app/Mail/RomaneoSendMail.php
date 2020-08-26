@@ -10,6 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use App\Exports\RomaneoExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade as PDF;
+use MultiMail;
 
 use App\Aviso;
 use App\Descarga;
@@ -26,6 +27,7 @@ use App\Aviso_Producto;
 use App\Aviso_Entregador;
 use App\Entregador_Contacto;
 use App\Entregador_Domicilio;
+use App\Corredor_Contacto;
 
 class RomaneoSendMail extends Mailable
 {
@@ -61,20 +63,21 @@ class RomaneoSendMail extends Mailable
         $remitente = Remitente_Comercial::where('cuit', $aviso->idRemitenteComercial)->first();
         $aviso_producto = Aviso_Producto::where('idAviso', $aviso->idAviso)->first();
         $aviso_entregador = Aviso_Entregador::where('idAviso', $aviso->idAviso)->first();
-        $titular = Titular::where('cuit', $aviso->idTitularCartaPorte)->first();
         $entregador = User::where('idUser', $aviso_entregador->idEntregador)->first();
         $entregador_contacto = Entregador_Contacto::where('idUser', $entregador->idUser)->get();
         $entregador_domicilio = Entregador_Domicilio::where('idUser', $entregador->idUser)->get();
 
-        $pdf = PDF::loadView('exports.pdf', compact(['aviso', 'cargas', 'descargas', 'corredor', 'destinatario', 'intermediario', 'producto', 'remitente', 'titular', 'aviso_producto', 'aviso_entregador', 'entregador', 'entregador_contacto', 'entregador_domicilio']));
+        $pdf = PDF::loadView('exports.pdf', compact(['aviso', 'titular', 'cargas', 'descargas', 'corredor', 'destinatario', 'intermediario', 'producto', 'remitente', 'aviso_producto', 'aviso_entregador', 'entregador', 'entregador_contacto', 'entregador_domicilio']));
         $pdf->setPaper('a4', 'landscape');
 
         $filenameExcel = $aviso->nroAviso . " " . $titular->nombre . ".xlsx";
         $filenamePdf = $aviso->nroAviso . " " . $titular->nombre . ".pdf";
         $asunto = "Envio del aviso nro: " . $aviso->nroAviso;
 
+        $correosCorredor = Corredor_Contacto::where('cuit', $aviso->idCorredor)->where('tipo', 3)->pluck('contacto');
 
         return $this->view('mails.romaneo_mail')
+            ->cc($correosCorredor)
             ->subject($asunto)
             ->attachData($pdf->output(), $filenamePdf)
             ->attach(Excel::download(new RomaneoExport($this->idAviso), $filenameExcel)->getFile(), ['as' => $filenameExcel]);

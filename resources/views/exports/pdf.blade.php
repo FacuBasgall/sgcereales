@@ -3,7 +3,7 @@
 <head>
     <style>
     @page {
-        margin: 0.5cm 0.5cm;
+        margin: 2cm 2cm;
         font-family: sans-serif;
     }
 
@@ -34,6 +34,21 @@
     th {
         border: 1px solid black;
     }
+
+    .footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 40px;
+    }
+
+    .fecha{
+        text-align: left;
+    }
+
+    .pagina{
+        text-align: right;
+    }
     </style>
 </head>
 
@@ -56,7 +71,7 @@
                 <th><strong>Nro Aviso:</strong></th>
                 <td>{{ $aviso->nroAviso }}</td>
                 <th><strong>Fecha:</strong></th>
-                <td>{{ $aviso_entregador->fecha }}</td>
+                <td>{{date("d/m/Y", strtotime($aviso_entregador->fecha ))}}</td>
             </tr>
             <tr>
                 <th><strong>Grano:</strong></th>
@@ -79,12 +94,12 @@
             <tr>
                 <th><strong>Intermediario: </strong></th>
                 @if (isset($intermediario->nombre))
-                    <td>{{$intermediario->nombre}}</td>
+                <td>{{$intermediario->nombre}}</td>
                 @else <td>-</td>
                 @endif
                 <th><strong>Entregador: </strong></th>
                 @if (isset($aviso->entregador))
-                    <td>{{$aviso->entregador}}</td>
+                <td>{{$aviso->entregador}}</td>
                 @else <td>-</td>
                 @endif
             </tr>
@@ -127,11 +142,11 @@
             <tr>
                 <td>{{$carga->matriculaCamion}}</td>
                 <td>{{$carga->nroCartaPorte}}</td>
-                <td>{{$carga->fecha}}</td>
+                <td>{{date("d/m/Y", strtotime($carga->fecha ))}}</td>
                 <td>{{$carga->kilos}}</td>
                 @foreach ($descargas as $descarga)
                 @if($descarga->idCarga == $carga->idCarga)
-                <td>{{$descarga->fecha}}</td>
+                <td>{{date("d/m/Y", strtotime($descarga->fecha ))}}</td>
                 <td>{{$descarga->bruto}}</td>
                 <td>{{$descarga->tara}}</td>
                 <td>{{$descarga->bruto - $descarga->tara}}</td>
@@ -164,6 +179,13 @@
         <br><br>
         <span colspan="5"><strong>Observaciones: </strong>{{$aviso->observacion}}</span>
     </div>
+    <footer class="footer">
+        @php $fecha = date("d/m/Y"); @endphp
+        <div>
+            <p class="fecha">{{$fecha}}</p>
+            <p class="pagina">Pagina 1</p>
+        </div>
+    </footer>
 </body>
 
 </html>

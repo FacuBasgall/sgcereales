@@ -17,12 +17,12 @@
             <div class="box">
                 <div class="header">
                     <h2>Nro Aviso: {{$aviso->nroAviso}}</h2>
-                    <strong>Producto: </strong>{{$producto->nombre}}<br>
                     @if(isset($aviso->entregador))
                     <strong>Entregador: </strong>{{$aviso->entregador}}<br>
                     @else
                     <strong>Entregador: </strong>{{$entregador->nombre}}<br>
                     @endif
+                    <strong>Producto: </strong>{{$producto->nombre}}<br>
                     <strong>Titular: </strong>{{$titular->nombre}}<br>
                     @if (isset($intermediario->nombre))
                     <strong>Intermediario: </strong>{{$intermediario->nombre}}<br>
@@ -41,7 +41,7 @@
                     <br><br>
                     <hr style="width: 420px;">
                     <h2>Información de la carga</h2>
-                    <strong>Fecha de la Carga: </strong>{{$carga->fecha}}<br>
+                    <strong>Fecha de la Carga: </strong>{{date("d/m/Y", strtotime($carga->fecha))}}<br>
                     @if (isset($carga->nroCartaPorte))
                     <strong>Numero de carta porte: </strong>{{$carga->nroCartaPorte}}<br>
                     @else
@@ -60,7 +60,7 @@
                     @if ($descarga->idCarga == $carga->idCarga)
                     @php $control = true @endphp
                     <h2>Información de la descarga</h2>
-                    <strong>Fecha de la Descarga: </strong>{{$descarga->fecha}}<br>
+                    <strong>Fecha de la Descarga: </strong>{{date("d/m/Y", strtotime($descarga->fecha))}}<br>
                     <strong>Brutos (KG): </strong>{{$descarga->bruto}}<br>
                     <strong>Tara (KG): </strong>{{$descarga->tara}}<br>
                     <strong>Neto (KG): </strong>{{$descarga->bruto - $descarga->tara}}<br>
@@ -79,17 +79,17 @@
                     @if (isset($descarga->ph))
                     <strong>PH: </strong>{{$descarga->ph}}<br>
                     @else
-                    <strong>PH: </strong>No ingresado<br>
+                    <strong>PH: </strong>-<br>
                     @endif
                     @if (isset($descarga->proteina))
                     <strong>Proteina: </strong>{{$descarga->proteina}}<br>
                     @else
-                    <strong>Proteina: </strong>No ingresado<br>
+                    <strong>Proteina: </strong>-<br>
                     @endif
                     @if (isset($descarga->calidad))
                     <strong>Calidad: </strong>{{$descarga->calidad}}<br>
                     @else
-                    <strong>Calidad: </strong>No ingresado<br>
+                    <strong>Calidad: </strong>-<br>
                     @endif
                     @endif
                     @endforeach

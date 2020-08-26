@@ -13,7 +13,7 @@
     <div class="card-header">
         <label class="title col-md-8 col-form-label"><b>Editar carga y descarga de aviso </b></label>
     </div>
-    <a href="{{ action('AvisoController@index')}}"><button type="button" class="back-button"
+    <a href="{{ action('AvisoController@show', $cargas[0]->idAviso)}}"><button type="button" class="back-button"
             title="Salir"><i class="fa fa-arrow-left"></i> Salir</button></a>
     @foreach ($cargas as $carga)
     <div class="container">
@@ -100,7 +100,7 @@
     @endif
     @endforeach
     @if ($existe == false)
-    <div> No existe una descarga asociada </div>
+    <div>No existe una descarga asociada</div>
     @endif
     @endforeach
     @include('sweet::alert')

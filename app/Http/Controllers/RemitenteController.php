@@ -47,7 +47,7 @@ class RemitenteController extends Controller
         $nuevo = Remitente_Comercial::where('cuit', $request->cuit)->first();
         if($existe){
             if(!$nuevo->borrado){
-                alert()->error("El remitente comercial $request->nombre ya existe", 'Ha surgido un error');
+                alert()->error("El remitente comercial $request->nombre ya existe", 'Ha surgido un error')->persistent('Cerrar');
                 return back()->withInput();
             }
         }
@@ -146,7 +146,7 @@ class RemitenteController extends Controller
     {
         $existe = Remitente_Contacto::where('cuit', $cuit)->where('contacto', $request->contacto)->exists();
         if($existe){
-            alert()->error("El contacto ya existe para este remitente", "Ha ocurrido un error");
+            alert()->error("El contacto ya existe para este remitente", "Ha ocurrido un error")->persistent('Cerrar');
             return back()->withInput();
         }
         else{
@@ -191,7 +191,7 @@ class RemitenteController extends Controller
                 alert()->success("El contacto fue agregado con exito", 'Contacto agregado');
                 return back();
             }else{
-                alert()->error($error, "Ha ocurrido un error");
+                alert()->error($error, "Ha ocurrido un error")->persistent('Cerrar');
                 return back()->withInput();
             }
         }

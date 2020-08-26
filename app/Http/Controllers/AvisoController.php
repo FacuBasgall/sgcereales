@@ -16,6 +16,8 @@ use App\Producto;
 use App\Destino;
 use App\Titular;
 use App\Titular_Contacto;
+use App\Remitente_Contacto;
+use App\Corredor_Contacto;
 use App\Intermediario;
 use App\Remitente_Comercial;
 use App\User;
@@ -27,6 +29,7 @@ use App\Entregador_Domicilio;
 use Datatables;
 use DB;
 use Mail;
+use MultiMail;
 use SweetAlert;
 
 class AvisoController extends Controller
@@ -88,7 +91,7 @@ class AvisoController extends Controller
         $dif = intval($fecha2) - intval($fecha1);
 
         if($dif != 1){
-            alert()->error("Verifique las fechas ingresadas", 'Ha ocurrido un error');
+            alert()->error("Verifique las fechas ingresadas", 'Ha ocurrido un error')->persistent('Cerrar');
             return back()->withInput();
         }
 
@@ -190,7 +193,7 @@ class AvisoController extends Controller
         $dif = intval($fecha2) - intval($fecha1);
 
         if($dif != 1){
-            alert()->error("Verifique las fechas ingresadas", 'Ha ocurrido un error');
+            alert()->error("Verifique las fechas ingresadas", 'Ha ocurrido un error')->persistent('Cerrar');
             return back();
         }
 
@@ -258,7 +261,7 @@ class AvisoController extends Controller
                 $descarga = Descarga::where('idCarga', $carga->idCarga)->exists();
                 if(!$descarga){
                     //DEVOLVER ERROR -> PARA QUE PUEDA ESTAR TERMINADO DEBE TENER TODAS LAS DESCARGAS
-                    alert()->error("Se debe completar el aviso para poder cambiar su estado", 'Ha ocurrido un error');
+                    alert()->error("Se debe completar el aviso para poder cambiar su estado", 'Ha ocurrido un error')->persistent('Cerrar');
                     return back();
                 }
             }
@@ -277,7 +280,7 @@ class AvisoController extends Controller
         if(!$existe){
             $key = "SGC-0000000001";
         }else{
-            $ultAviso = Aviso_Entregador::orderBy('idAviso', 'desc')->first();
+            $ultAviso = Aviso_Entregador::where('idEntregador', $idEntregador)->orderBy('idAviso', 'desc')->first();
             $ultimo = Aviso::where('idAviso', $ultAviso->idAviso)->first();
             $array = explode("-", $ultimo->nroAviso);
             $array[1] = intval($array[1]+1);
@@ -296,7 +299,7 @@ class AvisoController extends Controller
             $filename = $aviso->nroAviso . " " . $titular->nombre . ".xlsx";
             return Excel::download(new RomaneoExport($idAviso), $filename);
         }else{
-            alert()->error("El aviso debe estar terminado para exportalo", 'No se puede ejecutar la acción');
+            alert()->error("El aviso debe estar terminado para exportalo", 'No se puede ejecutar la acción')->persistent('Cerrar');
             return back();
         }
 
@@ -328,7 +331,7 @@ class AvisoController extends Controller
             $pdf->setPaper('a4', 'landscape');
             return $pdf->download($filename);
         }else{
-            alert()->error("El aviso debe estar terminado para exportalo", 'No se puede ejecutar la acción');
+            alert()->error("El aviso debe estar terminado para exportalo", 'No se puede ejecutar la acción')->persistent('Cerrar');
             return back();
         }
     }
@@ -337,18 +340,28 @@ class AvisoController extends Controller
     {
         $aviso = Aviso::where('idAviso', $idAviso)->first();
         $titular = Titular::where('cuit', $aviso->idTitularCartaPorte)->first();
+        $corredor = Corredor::where('cuit', $aviso->idCorredor)->first();
+        $remitente = Remitente_Comercial::where('cuit', $aviso->idRemitenteComercial)->first();
 
         if($aviso->estado){
-            $existe = Titular_Contacto::where('cuit', $aviso->idTitularCartaPorte)->where('tipo', 3)->exists();
-            if($existe){
-                $correos = Titular_Contacto::where('cuit', $aviso->idTitularCartaPorte)->where('tipo', 3)->pluck('contacto'); //Tipo = 3 = Emails / funcion pluck('contacto') solo selecciona del array los contactos
-                Mail::to($correos)->send(new RomaneoSendMail($idAviso));
-                alert()->success("El aviso ha sido enviado con exito", 'Correo enviado');
+            $existeTitular = Titular_Contacto::where('cuit', $aviso->idTitularCartaPorte)->where('tipo', 3)->exists();
+            $existeCorredor = Corredor_Contacto::where('cuit', $aviso->idCorredor)->where('tipo', 3)->exists();
+            $existeRemitente = Remitente_Contacto::where('cuit', $aviso->idRemitenteComercial)->where('tipo', 3)->exists();
+            if(!$existeTitular){
+                alert()->error("El titular: $titular->nombre no posee dirección de correo", 'No se puede ejecutar la acción')->persistent('Cerrar');
+            }elseif(!$existeCorredor){
+                alert()->error("El corredor: $corredor->nombre no posee dirección de correo", 'No se puede ejecutar la acción')->persistent('Cerrar');
+            }elseif(!$existeRemitente){
+                alert()->error("El remitente: $remitente->nombre no posee dirección de correo", 'No se puede ejecutar la acción')->persistent('Cerrar');
             }else{
-                alert()->error("El titular: $titular->nombre no posee dirección de correo", 'No se puede ejecutar la acción');
+                $correosTitular = Titular_Contacto::where('cuit', $aviso->idTitularCartaPorte)->where('tipo', 3)->pluck('contacto'); //Tipo = 3 = Emails / funcion pluck('contacto') solo selecciona del array los contactos
+                $correosRemitente = Remitente_Contacto::where('cuit', $aviso->idRemitenteComercial)->where('tipo', 3)->pluck('contacto');
+                //$correosCorredor se agregar en el RomaneoSendMail
+                \MultiMail::from('berniigotte@gmail.com')->to($correosTitular)->cc($correosRemitente)->send(new RomaneoSendMail($idAviso));
+                alert()->success("El aviso ha sido enviado con exito", 'Correo enviado');
             }
         }else{
-            alert()->error("El aviso debe estar terminado para poder enviarlo", 'No se puede ejecutar la acción');
+            alert()->error("El aviso debe estar terminado para poder enviarlo", 'No se puede ejecutar la acción')->persistent('Cerrar');
         }
         return back();
     }
