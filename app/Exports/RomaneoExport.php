@@ -21,6 +21,8 @@ use App\Aviso_Entregador;
 use App\Aviso_Producto;
 use App\Entregador_Contacto;
 use App\Entregador_Domicilio;
+use App\Localidad;
+use App\Provincia;
 
 class RomaneoExport implements FromView, ShouldAutoSize
 {

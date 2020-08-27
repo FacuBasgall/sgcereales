@@ -25,6 +25,8 @@ use App\Aviso_Producto;
 use App\Aviso_Entregador;
 use App\Entregador_Contacto;
 use App\Entregador_Domicilio;
+use App\Localidad;
+use App\Provincia;
 
 use Datatables;
 use DB;
@@ -73,8 +75,11 @@ class AvisoController extends Controller
         $entregadores = User::where('tipoUser', 'E')->get(); //Solo Usuarios Entregadores
         $destinatarios = Destino::where('borrado', false)->orderBy('nombre')->get();
         $productos = Producto::where('borrado', false)->orderBy('nombre')->get();
+        $localidades = Localidad::all();
+        $provincias = Provincia::all();
 
-        return view('aviso.create', compact(['titulares', 'intermediarios', 'remitentes', 'corredores', 'entregadores', 'destinatarios', 'productos']));
+        return view('aviso.create', compact(['titulares', 'intermediarios', 'remitentes', 'corredores',
+            'entregadores', 'destinatarios', 'productos', 'localidades', 'provincias']));
 
     }
 
@@ -130,8 +135,8 @@ class AvisoController extends Controller
         $aviso_entregador->fecha = date("Y-m-d");
         $aviso_entregador->save();
 
-        alert()->success("El aviso fue creado con exito", 'Aviso guardado');
-        return redirect()->action('CargaController@create', $aviso->idAviso);
+        alert()->success("El aviso fue creado con exito", 'Aviso creado');
+        return redirect()->action('AvisoController@show', $aviso->idAviso);
     }
 
     /**
@@ -243,7 +248,7 @@ class AvisoController extends Controller
         $aviso_entregador->delete();
         $aviso_producto->delete();
         $aviso->delete();
-        alert()->success("El aviso fue eliminado con exito", 'Eliminado con exito');
+        alert()->success("El aviso fue eliminado con exito", 'Aviso eliminado');
         return redirect('/aviso');
     }
 

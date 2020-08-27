@@ -6,6 +6,8 @@
     <!-- ver de poner en el layout.master  -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/i18n/es.js"></script>
+
 </head>
 
 <body>
@@ -29,8 +31,10 @@
                             @endforeach
                         </select>
                         <script>
+                        $.fn.select2.defaults.set('language', 'es');
                         $("#titular").select2({
-                            placeholder: 'Seleccione un titular',
+                            placeholder: 'Seleccione',
+                            dropdownAutoWidth: true,
                         });
                         </script>
                     </label>
@@ -45,8 +49,10 @@
                             @endforeach
                         </select>
                         <script>
+                        $.fn.select2.defaults.set('language', 'es');
                         $("#intermediario").select2({
-                            placeholder: 'Seleccione un intermediario',
+                            placeholder: 'Seleccione',
+                            dropdownAutoWidth: true,
                         });
                         </script>
                     </label>
@@ -60,8 +66,10 @@
                             @endforeach
                         </select>
                         <script>
+                        $.fn.select2.defaults.set('language', 'es');
                         $("#remitente").select2({
-                            placeholder: 'Seleccione un remitente',
+                            placeholder: 'Seleccione',
+                            dropdownAutoWidth: true,
                         });
                         </script>
                     </label>
@@ -75,8 +83,10 @@
                             @endforeach
                         </select>
                         <script>
+                        $.fn.select2.defaults.set('language', 'es');
                         $("#corredor").select2({
-                            placeholder: 'Seleccione un corredor',
+                            placeholder: 'Seleccione',
+                            dropdownAutoWidth: true
                         });
                         </script>
                     </label>
@@ -91,8 +101,10 @@
                             @endforeach
                         </select>
                         <script>
+                        $.fn.select2.defaults.set('language', 'es');
                         $("#destinatario").select2({
-                            placeholder: 'Seleccione un destinatario',
+                            placeholder: 'Seleccione',
+                            dropdownAutoWidth: true,
                         });
                         </script>
                     </label>
@@ -113,13 +125,20 @@
                 <p>Granos/Especie</p>
                 <label for="producto">
                     <span>Producto:*</span>
-                    <select name="producto" class="input" required>
+                    <select name="producto" class="input" id="producto" required>
                         <option value="" selected disabled hidden></option>
                         @foreach ($productos as $producto)
                         <option value="{{ $producto->idProducto }}"
                             {{old('producto') == $producto->idProducto ? 'selected':''}}> {{$producto->nombre}}</option>
                         @endforeach
                     </select>
+                    <script>
+                    $.fn.select2.defaults.set('language', 'es');
+                    $("#producto").select2({
+                        placeholder: 'Seleccione',
+                        dropdownAutoWidth: true,
+                    });
+                    </script>
                 </label>
                 <label for="tipo">
                     <span>Tipo de Producto:</span>
@@ -135,14 +154,38 @@
                 <hr>
                 <p>Procedencia de la mercaderia</p>
                 <label for="provincia">
-                    <span>Provincia de procedencia:*</span>
-                    <input type="text" value="{{old('provincia')}}" name="provincia" id="provincia" class="input"
-                        required>
+                    <span>Provincia:*</span>
+                    <select name="provincia" id="provincia" class="input" required>
+                        <option value="" selected disabled hidden></option>
+                        @foreach ($provincias as $provincia)
+                        <option value="{{ $provincia->id }}" {{old('provincia') == $provincia->id ? 'selected':''}}>
+                            {{$provincia->nombre}}</option>
+                        @endforeach
+                    </select>
+                    <script>
+                    $.fn.select2.defaults.set('language', 'es');
+                    $("#provincia").select2({
+                        placeholder: 'Seleccione',
+                        dropdownAutoWidth: true,
+                    });
+                    </script>
                 </label>
                 <label for="localidad">
-                    <span>Localidad de procedencia:*</span>
-                    <input type="text" value="{{old('localidad')}}" name="localidad" id="localidad" class="input"
-                        required>
+                    <span>Localidad:*</span>
+                    <select name="localidad" id="localidad" class="input" required>
+                        <option value="" selected disabled hidden></option>
+                        @foreach ($localidades as $localidad)
+                        <option value="{{ $localidad->id }}" {{old('localidad') == $localidad->id ? 'selected':''}}>
+                            {{$localidad->nombre}}</option>
+                        @endforeach
+                    </select>
+                    <script>
+                    $.fn.select2.defaults.set('language', 'es');
+                    $("#localidad").select2({
+                        placeholder: 'Seleccione',
+                        dropdownAutoWidth: true,
+                    });
+                    </script>
                 </label>
                 <hr>
                 <label for="obs">
