@@ -21,6 +21,8 @@ use App\Aviso_Producto;
 use App\Aviso_Entregador;
 use App\Entregador_Contacto;
 use App\Entregador_Domicilio;
+use App\Localidad;
+use App\Provincia;
 
 use Datatables;
 use DB;
@@ -58,9 +60,11 @@ class HomeController extends Controller
         $productos = Producto::where('borrado', false)->get();
         $avisos_productos = Aviso_Producto::all();
         $avisos_entregadores = Aviso_Entregador::where('idEntregador', $entregadorAutenticado)->get();
+        $localidades = Localidad::all();
+        $provincias = Provincia::all();
 
         return view('home', compact(['avisos', 'cargas', 'descargas', 'destinatarios', 'titulares',
             'intermediarios', 'remitentes', 'corredores', 'entregador', 'productos', 'avisos_productos',
-            'avisos_entregadores']));
+            'avisos_entregadores', 'localidades', 'provincias']));
     }
 }

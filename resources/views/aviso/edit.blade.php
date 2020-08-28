@@ -11,7 +11,9 @@
 
 <body style="background:url(/image/silo.jpg) no-repeat center center fixed">
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><a href="{{ action('AvisoController@index') }}">Avisos</a> / <a href="{{ action('AvisoController@show', $aviso->idAviso) }}">Detalle del aviso</a> / Editar aviso {{$aviso->nroAviso}}</label>
+        <label class="title col-md-8 col-form-label"><a href="{{ action('AvisoController@index') }}">Avisos</a> / <a
+                href="{{ action('AvisoController@show', $aviso->idAviso) }}">Detalle del aviso</a> / Editar aviso
+            {{$aviso->nroAviso}}</label>
     </div>
     <div class="container">
         <div class="card" style="height:1500px;width:450px;">
@@ -22,7 +24,7 @@
                     <p>Intermitentes</p>
                     <label for="titular">
                         <span>Titular:*</span>
-                        <select name="titular" class="input" required>
+                        <select name="titular" class="input" id="titular" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($titulares as $titular)
                             @if($titular->cuit == $aviso->idTitularCartaPorte)
@@ -32,10 +34,17 @@
                             @endif
                             @endforeach
                         </select>
+                        <script>
+                        $.fn.select2.defaults.set('language', 'es');
+                        $("#titular").select2({
+                            placeholder: 'Seleccione',
+                            dropdownAutoWidth: true,
+                        });
+                        </script>
                     </label>
                     <label for="intermediario">
                         <span>Intermediario:</span>
-                        <select name="intermediario" class="input">
+                        <select name="intermediario" id="intermediario" class="input">
                             <option value="" selected></option>
                             @foreach ($intermediarios as $intermediario)
                             @if($intermediario->cuit == $aviso->idIntermediario)
@@ -45,10 +54,17 @@
                             @endif
                             @endforeach
                         </select>
+                        <script>
+                        $.fn.select2.defaults.set('language', 'es');
+                        $("#intermediario").select2({
+                            placeholder: 'Seleccione',
+                            dropdownAutoWidth: true,
+                        });
+                        </script>
                     </label>
                     <label for="remitente">
                         <span>Remitente Comercial:*</span>
-                        <select name="remitente" class="input" required>
+                        <select name="remitente" class="input" id="remitente" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($remitentes as $remitente)
                             @if($remitente->cuit == $aviso->idRemitenteComercial)
@@ -58,10 +74,17 @@
                             @endif
                             @endforeach
                         </select>
+                        <script>
+                        $.fn.select2.defaults.set('language', 'es');
+                        $("#remitente").select2({
+                            placeholder: 'Seleccione',
+                            dropdownAutoWidth: true,
+                        });
+                        </script>
                     </label>
                     <label for="corredor">
                         <span>Corredor:*</span>
-                        <select name="corredor" class="input" required>
+                        <select name="corredor" class="input" id="corredor" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($corredores as $corredor)
                             @if($corredor->cuit == $aviso->idCorredor)
@@ -71,10 +94,17 @@
                             @endif
                             @endforeach
                         </select>
+                        <script>
+                        $.fn.select2.defaults.set('language', 'es');
+                        $("#corredor").select2({
+                            placeholder: 'Seleccione',
+                            dropdownAutoWidth: true,
+                        });
+                        </script>
                     </label>
                     <label for="destinatario">
                         <span>Destinatario:*</span>
-                        <select name="destinatario" class="input" required>
+                        <select name="destinatario" class="input" id="destinatario" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($destinatarios as $destinatario)
                             @if($destinatario->cuit == $aviso->idDestinatario)
@@ -84,6 +114,13 @@
                             @endif
                             @endforeach
                         </select>
+                        <script>
+                        $.fn.select2.defaults.set('language', 'es');
+                        $("#destinatario").select2({
+                            placeholder: 'Seleccione',
+                            dropdownAutoWidth: true,
+                        });
+                        </script>
                     </label>
                     <label for="lugarDescarga">
                         <span>Destino:*</span>
@@ -95,16 +132,23 @@
                     <p>Granos/Especie</p>
                     <label for="producto">
                         <span>Producto:*</span>
-                        <select name="producto" class="input" required>
+                        <select name="producto" class="input" id="producto" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($productos as $producto)
                             @if($producto->idProducto == $aviso->idProducto)
-                            <option value="{{$producto->idProducto}}" selected>{{ $producto->nombre }}</option>
+                            <option value="{{ $producto->idProducto }}" selected>{{ $producto->nombre }}</option>
                             @else
                             <option value="{{ $producto->idProducto }}">{{$producto->nombre}}</option>
                             @endif
                             @endforeach
                         </select>
+                        <script>
+                        $.fn.select2.defaults.set('language', 'es');
+                        $("#producto").select2({
+                            placeholder: 'Seleccione',
+                            dropdownAutoWidth: true,
+                        });
+                        </script>
                     </label>
                     <label for="tipo">
                         <span>Tipo de Producto:</span>
@@ -123,14 +167,44 @@
                     <hr>
                     <p>Procedencia de la mercaderia</p>
                     <label for="provincia">
-                        <span>Provincia de procedencia:*</span>
-                        <input type="text" value="{{$aviso->provinciaProcedencia}}" name="provincia" id="provincia"
-                            class="input" required>
+                        <span>Provincia:*</span>
+                        <select name="provincia" id="provincia" class="input" required>
+                            <option value="" selected disabled hidden></option>
+                            @foreach ($provincias as $provincia)
+                            @if($provincia->id == $aviso->provinciaProcedencia)
+                            <option value="{{ $provincia->id }}" selected>{{ $provincia->nombre }}</option>
+                            @else
+                            <option value="{{ $provincia->id }}">{{$provincia->nombre}}</option>
+                            @endif
+                            @endforeach
+                        </select>
+                        <script>
+                        $.fn.select2.defaults.set('language', 'es');
+                        $("#provincia").select2({
+                            placeholder: 'Seleccione',
+                            dropdownAutoWidth: true,
+                        });
+                        </script>
                     </label>
                     <label for="localidad">
-                        <span>Localidad de procedencia:*</span>
-                        <input type="text" value="{{$aviso->localidadProcedencia}}" name="localidad" id="localidad"
-                            class="input" required>
+                        <span>Localidad:*</span>
+                        <select name="localidad" id="localidad" class="input" required>
+                            <option value="" selected disabled hidden></option>
+                            @foreach ($localidades as $localidad)
+                            @if($localidad->id == $aviso->localidadProcedencia)
+                            <option value="{{ $localidad->id }}" selected>{{ $localidad->nombre }}</option>
+                            @else
+                            <option value="{{ $localidad->id }}">{{$localidad->nombre}}</option>
+                            @endif
+                            @endforeach
+                        </select>
+                        <script>
+                        $.fn.select2.defaults.set('language', 'es');
+                        $("#localidad").select2({
+                            placeholder: 'Seleccione',
+                            dropdownAutoWidth: true,
+                        });
+                        </script>
                     </label>
                     <hr>
                     <label for="obs">
@@ -139,8 +213,7 @@
                             cols="40"></textarea>
                     </label>
                     <hr style="width: 420px;">
-                    <button type="submit" class="save-button"><i
-                            class="fa fa-check"></i> Guardar</button>
+                    <button type="submit" class="save-button"><i class="fa fa-check"></i> Guardar</button>
                 </form>
             </div>
         </div>

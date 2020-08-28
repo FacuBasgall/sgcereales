@@ -67,7 +67,15 @@
                             <td>{{ $corredor->nombre }}</td>
                             @endif
                             @endforeach
-                            <td>{{$aviso->localidadProcedencia}} ({{$aviso->provinciaProcedencia}})</td>
+                            @foreach ($provincias as $provincia)
+                            @if ($provincia->id == $aviso->provinciaProcedencia)
+                            @foreach ($localidades as $localidad)
+                            @if ($localidad->id == $aviso->localidadProcedencia)
+                            <td>{{$localidad->nombre}} ({{$provincia->abreviatura}})</td>
+                            @endif
+                            @endforeach
+                            @endif
+                            @endforeach
                             @foreach ($destinatarios as $destinatario)
                             @if ($destinatario->cuit == $aviso->idDestinatario)
                             <td>{{ $destinatario->nombre }}</td>
@@ -98,7 +106,8 @@
 $(document).ready(function() {
     $('#idDataTable').DataTable({
         "order": [
-            [9, "desc"]
+            [9, "desc"],
+            [0, "desc"]
         ],
         "language": {
             "sProcessing": "Procesando...",

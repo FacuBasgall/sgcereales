@@ -54,14 +54,38 @@
                             style="margin: 10px 20px;">
                     </label>
                     <label for="provincia">
-                        <span>Provincia: </span>
-                        <input type="text" value="{{old('provincia')}}" name="provincia" id="provincia" class="input"
-                            style="margin: 10px 20px;">
+                        <span>Provincia:*</span>
+                        <select name="provincia" id="provincia" class="input" required>
+                            <option value="" selected disabled hidden></option>
+                            @foreach ($provincias as $provincia)
+                            <option value="{{ $provincia->id }}" {{old('provincia') == $provincia->id ? 'selected':''}}>
+                                {{$provincia->nombre}}</option>
+                            @endforeach
+                        </select>
+                        <script>
+                        $.fn.select2.defaults.set('language', 'es');
+                        $("#provincia").select2({
+                            placeholder: 'Seleccione',
+                            dropdownAutoWidth: true,
+                        });
+                        </script>
                     </label>
                     <label for="localidad">
-                        <span>Localidad: </span>
-                        <input type="text" value="{{old('localidad')}}" name="localidad" id="localidad" class="input"
-                            style="margin: 10px 20px;">
+                        <span>Localidad:*</span>
+                        <select name="localidad" id="localidad" class="input" required>
+                            <option value="" selected disabled hidden></option>
+                            @foreach ($localidades as $localidad)
+                            <option value="{{ $localidad->id }}" {{old('localidad') == $localidad->id ? 'selected':''}}>
+                                {{$localidad->nombre}}</option>
+                            @endforeach
+                        </select>
+                        <script>
+                        $.fn.select2.defaults.set('language', 'es');
+                        $("#localidad").select2({
+                            placeholder: 'Seleccione',
+                            dropdownAutoWidth: true,
+                        });
+                        </script>
                     </label>
                     <label for="domicilio">
                         <span>Domicilio: </span>

@@ -7,6 +7,8 @@ use App\Intermediario;
 use App\Intermediario_Contacto;
 use App\Tipo_Contacto;
 use App\Condicion_IVA;
+use App\Localidad;
+use App\Provincia;
 
 use DB;
 use SweetAlert;
@@ -44,7 +46,10 @@ class IntermediarioController extends Controller
     public function create()
     {
         $iva = Condicion_IVA::orderBy('descripcion')->get();
-        return view('intermediario.create', array('iva'=>$iva));    }
+        $localidades = Localidad::all();
+        $provincias = Provincia::all();
+        return view('intermediario.create', compact(['iva', 'localidades', 'provincias']));
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -91,7 +96,10 @@ class IntermediarioController extends Controller
         $contacto = Intermediario_Contacto::where('cuit', $cuit)->get();
         $tipoContacto = Tipo_Contacto::all();
         $iva = Condicion_IVA::all();
-        return view('intermediario.show', compact(['intermediario', 'contacto', 'tipoContacto', 'iva']));
+        $localidad = Localidad::where('id', $intermediario->localidad)->first();
+        $provincia = Provincia::where('id', $intermediario->provincia)->first();
+        return view('intermediario.show', compact(['intermediario', 'contacto', 'tipoContacto', 'iva',
+            'localidad', 'provincia']));
     }
 
     /**
@@ -104,7 +112,9 @@ class IntermediarioController extends Controller
     {
         $intermediario = Intermediario::findOrFail($cuit);
         $iva = Condicion_IVA::all();
-        return view('intermediario.edit', compact(['intermediario', 'iva']));
+        $localidades = Localidad::all();
+        $provincias = Provincia::all();
+        return view('intermediario.edit', compact(['intermediario', 'iva', 'localidades', 'provincias']));
     }
 
     /**

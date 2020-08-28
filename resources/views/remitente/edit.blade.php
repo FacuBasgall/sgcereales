@@ -53,14 +53,44 @@
                         <input type="text" name="pais" id="pais" class="input" value="{{$remitente->pais}}">
                     </label>
                     <label for="provincia">
-                        <span>Provincia: </span>
-                        <input type="text" name="provincia" id="provincia" class="input"
-                            value="{{$remitente->provincia}}">
+                        <span>Provincia:*</span>
+                        <select name="provincia" id="provincia" class="input" required>
+                            <option value="" selected disabled hidden></option>
+                            @foreach ($provincias as $provincia)
+                            @if($provincia->id == $remitente->provincia)
+                            <option value="{{ $provincia->id }}" selected>{{ $provincia->nombre }}</option>
+                            @else
+                            <option value="{{ $provincia->id }}">{{$provincia->nombre}}</option>
+                            @endif
+                            @endforeach
+                        </select>
+                        <script>
+                        $.fn.select2.defaults.set('language', 'es');
+                        $("#provincia").select2({
+                            placeholder: 'Seleccione',
+                            dropdownAutoWidth: true,
+                        });
+                        </script>
                     </label>
                     <label for="localidad">
-                        <span>Localidad: </span>
-                        <input type="text" name="localidad" id="localidad" class="input"
-                            value="{{$remitente->localidad}}">
+                        <span>Localidad:*</span>
+                        <select name="localidad" id="localidad" class="input" required>
+                            <option value="" selected disabled hidden></option>
+                            @foreach ($localidades as $localidad)
+                            @if($localidad->id == $remitente->localidad)
+                            <option value="{{ $localidad->id }}" selected>{{ $localidad->nombre }}</option>
+                            @else
+                            <option value="{{ $localidad->id }}">{{$localidad->nombre}}</option>
+                            @endif
+                            @endforeach
+                        </select>
+                        <script>
+                        $.fn.select2.defaults.set('language', 'es');
+                        $("#localidad").select2({
+                            placeholder: 'Seleccione',
+                            dropdownAutoWidth: true,
+                        });
+                        </script>
                     </label>
                     <label for="domicilio">
                         <span>Domicilio: </span>

@@ -45,13 +45,13 @@
                     @endif
 
                     @if (isset($destino->localidad))
-                    <p><strong>Ciudad: </strong>{{$destino->localidad}}</p>
+                    <p><strong>Ciudad: </strong>{{$localidad->nombre}}</p>
                     @else
                     <p><strong>Ciudad: </strong>Ciudad no definida</p>
                     @endif
 
                     @if (isset($destino->provincia))
-                    <p><strong>Provincia: </strong>{{$destino->provincia}}</p>
+                    <p><strong>Provincia: </strong>{{$provincia->nombre}}</p>
                     @else
                     <p><strong>Provincia: </strong>Provincia no definida</p>
                     @endif

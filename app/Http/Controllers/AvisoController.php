@@ -56,8 +56,12 @@ class AvisoController extends Controller
         $productos = Producto::where('borrado', false)->get();
         $avisos_productos = Aviso_Producto::all();
         $avisos_entregadores = Aviso_Entregador::where('idEntregador', $entregadorAutenticado)->get();
+        $localidades = Localidad::all();
+        $provincias = Provincia::all();
 
-        return view('aviso.index', compact(['avisos', 'cargas', 'descargas', 'destinatarios', 'titulares', 'intermediarios', 'remitentes', 'corredores', 'entregador', 'productos', 'avisos_productos', 'avisos_entregadores']));
+        return view('aviso.index', compact(['avisos', 'cargas', 'descargas', 'destinatarios', 'titulares',
+            'intermediarios', 'remitentes', 'corredores', 'entregador', 'productos', 'avisos_productos',
+            'avisos_entregadores', 'localidades', 'provincias']));
 
     }
 
@@ -159,8 +163,12 @@ class AvisoController extends Controller
         $aviso_producto = Aviso_Producto::where('idAviso', $idAviso)->get();
         $aviso_entregador = Aviso_Entregador::where('idAviso', $idAviso)->first();
         $entregador = User::where('idUser', $aviso_entregador->idEntregador)->first();
+        $localidad = Localidad::where('id', $aviso->localidadProcedencia)->first();
+        $provincia = Provincia::where('id', $aviso->provinciaProcedencia)->first();
 
-        return view('aviso.show', compact(['aviso', 'cargas', 'descargas', 'destino', 'titular', 'intermediario', 'remitente', 'corredor', 'producto', 'aviso_producto', 'aviso_entregador', 'entregador']));
+        return view('aviso.show', compact(['aviso', 'cargas', 'descargas', 'destino', 'titular',
+            'intermediario', 'remitente', 'corredor', 'producto', 'aviso_producto', 'aviso_entregador',
+            'entregador', 'localidad', 'provincia']));
     }
 
     /**
@@ -180,8 +188,11 @@ class AvisoController extends Controller
         $destinatarios = Destino::where('borrado', false)->orderBy('nombre')->get();
         $productos = Producto::where('borrado', false)->orderBy('nombre')->get();
         $aviso_producto = Aviso_Producto::where('idAviso', $idAviso)->first();
+        $localidades = Localidad::all();
+        $provincias = Provincia::all();
 
-        return view('aviso.edit', compact(['aviso', 'titulares', 'intermediarios', 'remitentes', 'corredores', 'entregadores', 'destinatarios', 'productos', 'aviso_producto']));
+        return view('aviso.edit', compact(['aviso', 'titulares', 'intermediarios', 'remitentes', 'corredores',
+            'entregadores', 'destinatarios', 'productos', 'aviso_producto', 'localidades', 'provincias']));
     }
 
     /**
