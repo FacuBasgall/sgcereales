@@ -333,11 +333,15 @@ class AvisoController extends Controller
             $entregador = User::where('idUser', $aviso_entregador->idEntregador)->first();
             $entregador_contacto = Entregador_Contacto::where('idUser', $entregador->idUser)->get();
             $entregador_domicilio = Entregador_Domicilio::where('idUser', $entregador->idUser)->get();
+            $localidad = Localidad::where('id', $aviso->localidadProcedencia)->first();
+            $provincia = Provincia::where('id', $aviso->provinciaProcedencia)->first();
 
             $filename = $aviso->nroAviso . " " . $titular->nombre . ".pdf";
 
-            //return view('exports.pdf', compact(['aviso', 'cargas', 'descargas', 'corredor', 'destinatario', 'intermediario', 'producto', 'remitente', 'titular', 'aviso_producto', 'aviso_entregador', 'entregador', 'entregador_contacto', 'entregador_domicilio']));
-            $pdf = PDF::loadView('exports.pdf', compact(['aviso', 'cargas', 'descargas', 'corredor', 'destinatario', 'intermediario', 'producto', 'remitente', 'titular', 'aviso_producto', 'aviso_entregador', 'entregador', 'entregador_contacto', 'entregador_domicilio']));
+            $pdf = PDF::loadView('exports.pdf', compact(['aviso', 'cargas', 'descargas', 'corredor',
+                'destinatario', 'intermediario', 'producto', 'remitente', 'titular', 'aviso_producto',
+                'aviso_entregador', 'entregador', 'entregador_contacto', 'entregador_domicilio',
+                'localidad', 'provincia']));
             $pdf->setPaper('a4', 'landscape');
             return $pdf->download($filename);
         }else{
@@ -367,7 +371,7 @@ class AvisoController extends Controller
                 $correosTitular = Titular_Contacto::where('cuit', $aviso->idTitularCartaPorte)->where('tipo', 3)->pluck('contacto'); //Tipo = 3 = Emails / funcion pluck('contacto') solo selecciona del array los contactos
                 $correosRemitente = Remitente_Contacto::where('cuit', $aviso->idRemitenteComercial)->where('tipo', 3)->pluck('contacto');
                 //$correosCorredor se agregar en el RomaneoSendMail
-                \MultiMail::from('berniigotte@gmail.com')->to($correosTitular)->cc($correosRemitente)->send(new RomaneoSendMail($idAviso));
+                \MultiMail::to($correosTitular)->cc($correosRemitente)->send(new RomaneoSendMail($idAviso));
                 alert()->success("El aviso ha sido enviado con exito", 'Correo enviado');
             }
         }else{
