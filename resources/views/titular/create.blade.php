@@ -3,17 +3,18 @@
 @parent
 
 <head>
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/forms.css') }}">
+    <!-- <link rel="stylesheet" type="text/css" href="{{ asset('css/forms.css') }}"> -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/header.css') }}">
+    <script type="text/javascript" src="{{ asset('js/select-localidad.js') }}"></script>
 </head>
 
-<body style="background:url(/image/cargador-camion.jpg) no-repeat center center fixed">
-    <div class="card-header">
-        <label class="title col-md-8 col-form-label"><b>Añadir titular</b></label>
+<body>
+    <div>
+        <label><b>Añadir titular</b></label>
     </div>
-    <div class="container">
-        <div class="card" style="height:800px;width:450px;">
-            <div class="box">
+    <div>
+        <div>
+            <div>
                 <form action="{{action('TitularController@store')}}" method="POST">
                     {{ csrf_field() }}
                     <label for="nombre">
@@ -67,13 +68,7 @@
                     </label>
                     <label for="localidad">
                         <span>Localidad:*</span>
-                        <select name="localidad" id="localidad" class="input" required>
-                            <option value="" selected disabled hidden></option>
-                            @foreach ($localidades as $localidad)
-                            <option value="{{ $localidad->id }}" {{old('localidad') == $localidad->id ? 'selected':''}}>
-                                {{$localidad->nombre}}</option>
-                            @endforeach
-                        </select>
+                        <select name="localidad" id="localidad" class="input" required></select>
                         <script>
                         $.fn.select2.defaults.set('language', 'es');
                         $("#localidad").select2({

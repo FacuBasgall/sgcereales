@@ -7,13 +7,17 @@
     <link href="{{ asset('css/bootstrap-home.min.css') }}" rel="stylesheet">
     <script type="text/javascript" src="{{ asset('js/sweetAlert.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/loading.js') }}"></script>
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/common-buttons.css') }}" >
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/common-buttons.css') }}">
+
+    <!-- lib jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <!-- select2 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/i18n/es.js"></script>
 
+    <!-- config app -->
     <meta charset="utf-8">
     <title>Sistema Gestor de Cereales</title>
   <!------ Include the above in your HEAD tag ---------->

@@ -226,4 +226,15 @@ class DestinoController extends Controller
         alert()->success("El contacto fue eliminado con exito", 'Contacto eliminado');
         return back();
     }
+
+    public function getLocalidades(Request $request)
+    {
+        if($request->ajax()){
+            $localidades = Localidad::where('idProvincia', $request->provincia_id)->get();
+            foreach($localidades as $localidad){
+                $localidadesArray[$localidad->id] = $localidad->nombre;
+            }
+            return response()->json($localidadesArray);
+        }
+    }
 }

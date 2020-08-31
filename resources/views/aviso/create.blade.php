@@ -3,7 +3,7 @@
 @parent
 
 <head>
-
+    <script type="text/javascript" src="{{ asset('js/select-localidad.js') }}"></script>
 </head>
 
 <body>
@@ -19,7 +19,7 @@
                     <p>Intermitentes</p>
                     <label for="titular">
                         <span>Titular:*</span>
-                        <select name="titular" id="titular" class="input" required>
+                        <select name="titular" id="titular" class="input" style="width:100%" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($titulares as $titular)
                             <option value="{{ $titular->cuit }}" {{old('titular') == $titular->cuit ? 'selected':''}}>
@@ -36,7 +36,7 @@
                     </label>
                     <label for="intermediario">
                         <span>Intermediario:</span>
-                        <select name="intermediario" id="intermediario" class="input">
+                        <select name="intermediario" id="intermediario" class="input" style="width:100%">
                             <option value="" selected></option>
                             @foreach ($intermediarios as $intermediario)
                             <option value="{{ $intermediario->cuit }}"
@@ -54,7 +54,7 @@
                     </label>
                     <label for="remitente">
                         <span>Remitente Comercial:*</span>
-                        <select name="remitente" id="remitente" class="input" required>
+                        <select name="remitente" id="remitente" class="input" style="width:100%" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($remitentes as $remitente)
                             <option value="{{ $remitente->cuit }}"
@@ -71,7 +71,7 @@
                     </label>
                     <label for="corredor">
                         <span>Corredor:*</span>
-                        <select name="corredor" id="corredor" class="input" required>
+                        <select name="corredor" id="corredor" class="input" style="width:100%" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($corredores as $corredor)
                             <option value="{{ $corredor->cuit }}"
@@ -88,7 +88,7 @@
                     </label>
                     <label for="destinatario">
                         <span>Destinatario:*</span>
-                        <select name="destinatario" id="destinatario" class="input" required>
+                        <select name="destinatario" id="destinatario" class="input" style="width:100%" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($destinatarios as $destinatario)
                             <option value="{{ $destinatario->cuit }}"
@@ -121,7 +121,7 @@
                 <p>Granos/Especie</p>
                 <label for="producto">
                     <span>Producto:*</span>
-                    <select name="producto" class="input" id="producto" required>
+                    <select name="producto" class="input" id="producto" style="width:100%" required>
                         <option value="" selected disabled hidden></option>
                         @foreach ($productos as $producto)
                         <option value="{{ $producto->idProducto }}"
@@ -151,7 +151,7 @@
                 <p>Procedencia de la mercaderia</p>
                 <label for="provincia">
                     <span>Provincia:*</span>
-                    <select name="provincia" id="provincia" class="input" required>
+                    <select name="provincia" id="provincia" class="input" style="width:100%" required>
                         <option value="" selected disabled hidden></option>
                         @foreach ($provincias as $provincia)
                         <option value="{{ $provincia->id }}" {{old('provincia') == $provincia->id ? 'selected':''}}>
@@ -163,12 +163,13 @@
                     $("#provincia").select2({
                         placeholder: 'Seleccione',
                         dropdownAutoWidth: true,
+                        width: 'resolve'
                     });
                     </script>
                 </label>
                 <label for="localidad">
                     <span>Localidad:*</span>
-                    <select name="localidad" id="localidad" class="input" required>
+                    <select name="localidad" id="localidad" class="input" style="width:100%" required>
                         <option value="" selected disabled hidden></option>
                         @foreach ($localidades as $localidad)
                         <option value="{{ $localidad->id }}" {{old('localidad') == $localidad->id ? 'selected':''}}>
