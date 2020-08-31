@@ -50,8 +50,8 @@
                         <input type="text" value="Argentina" name="pais" id="pais" class="input">
                     </label>
                     <label for="provincia">
-                        <span>Provincia:*</span>
-                        <select name="provincia" id="provincia" class="input" required>
+                        <span>Provincia:</span>
+                        <select name="provincia" id="provincia" class="input" >
                             <option value="" selected disabled hidden></option>
                             @foreach ($provincias as $provincia)
                             <option value="{{ $provincia->id }}" {{old('provincia') == $provincia->id ? 'selected':''}}>
@@ -67,7 +67,7 @@
                         </script>
                     </label>
                     <label for="localidad">
-                        <span>Localidad:*</span>
+                        <span>Localidad:</span>
                         <select name="localidad" id="localidad" class="input" required></select>
                         <script>
                         $.fn.select2.defaults.set('language', 'es');

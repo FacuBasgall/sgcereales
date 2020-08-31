@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/forms.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/header.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="{{ asset('js/select-localidad.js') }}"></script>
 </head>
 
 <body style="background:url(/image/silo.jpg) no-repeat center center fixed">
@@ -50,12 +51,12 @@
                     </label>
                     <label for="pais">
                         <span>Pais: </span>
-                        <input type="text" value="{{old('pais')}}" name="pais" id="pais" class="input"
+                        <input type="text" value="Argentina" name="pais" id="pais" class="input"
                             style="margin: 10px 20px;">
                     </label>
                     <label for="provincia">
-                        <span>Provincia:*</span>
-                        <select name="provincia" id="provincia" class="input" required>
+                        <span>Provincia:</span>
+                        <select name="provincia" id="provincia" class="input" >
                             <option value="" selected disabled hidden></option>
                             @foreach ($provincias as $provincia)
                             <option value="{{ $provincia->id }}" {{old('provincia') == $provincia->id ? 'selected':''}}>
@@ -71,8 +72,8 @@
                         </script>
                     </label>
                     <label for="localidad">
-                        <span>Localidad:*</span>
-                        <select name="localidad" id="localidad" class="input" required>
+                        <span>Localidad:</span>
+                        <select name="localidad" id="localidad" class="input" >
                             <option value="" selected disabled hidden></option>
                             @foreach ($localidades as $localidad)
                             <option value="{{ $localidad->id }}" {{old('localidad') == $localidad->id ? 'selected':''}}>

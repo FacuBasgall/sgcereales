@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/header.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/forms.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="{{ asset('js/select-localidad.js') }}"></script>
 </head>
 
 <body style="background:url(/image/cargador-camion.jpg) no-repeat center center fixed">
@@ -55,8 +56,8 @@
                         <input type="text" name="pais" id="pais" class="input" value="{{$intermediario->pais}}">
                     </label>
                     <label for="provincia">
-                        <span>Provincia:*</span>
-                        <select name="provincia" id="provincia" class="input" required>
+                        <span>Provincia:</span>
+                        <select name="provincia" id="provincia" class="input" >
                             <option value="" selected disabled hidden></option>
                             @foreach ($provincias as $provincia)
                             @if($provincia->id == $intermediario->provincia)
@@ -75,8 +76,8 @@
                         </script>
                     </label>
                     <label for="localidad">
-                        <span>Localidad:*</span>
-                        <select name="localidad" id="localidad" class="input" required>
+                        <span>Localidad:</span>
+                        <select name="localidad" id="localidad" class="input" >
                             <option value="" selected disabled hidden></option>
                             @foreach ($localidades as $localidad)
                             @if($localidad->id == $intermediario->localidad)
