@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <div class="card-header">
+    <div class="card-header"> 
         <a class="title">Titulares carta porte</a>
         <div class="search-bar">
             <form class="{{action('TitularController@index')}}" method="GET">
