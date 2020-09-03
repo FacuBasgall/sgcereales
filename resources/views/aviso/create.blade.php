@@ -192,7 +192,7 @@
                 </label>
                 <hr>
                 <button type="submit" class="save-button" style="position:relative; top:50%; left:30%;"><i
-                        class="fa fa-check"></i> Guardar y continuar</button>
+                        class="fa fa-check"></i> Guardar</button>
                 <a href="{{ action('AvisoController@index') }}"><button type="button" class="back-button" title="Volver"
                         style="position: relative; top: 50%; right: 50%;"><i class="fa fa-arrow-left"></i>
                         Volver</button></a>
