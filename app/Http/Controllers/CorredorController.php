@@ -7,6 +7,8 @@ use App\Corredor;
 use App\Corredor_Contacto;
 use App\Tipo_Contacto;
 use App\Condicion_IVA;
+use App\Localidad;
+use App\Provincia;
 
 use DB;
 use SweetAlert;
@@ -44,7 +46,10 @@ class CorredorController extends Controller
     public function create()
     {
         $iva = Condicion_IVA::orderBy('descripcion')->get();
-        return view('corredor.create', array('iva'=>$iva));    }
+        $localidades = Localidad::all();
+        $provincias = Provincia::all();
+        return view('corredor.create', compact(['iva', 'localidades', 'provincias']));
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -91,7 +96,10 @@ class CorredorController extends Controller
         $contacto = Corredor_Contacto::where('cuit', $cuit)->get();
         $tipoContacto = Tipo_Contacto::all();
         $iva = Condicion_IVA::all();
-        return view('corredor.show', compact(['corredor', 'contacto', 'tipoContacto', 'iva']));
+        $localidad = Localidad::where('id', $corredor->localidad)->first();
+        $provincia = Provincia::where('id', $corredor->provincia)->first();
+        return view('corredor.show', compact(['corredor', 'contacto', 'tipoContacto',
+            'iva', 'localidad', 'provincia']));
     }
 
     /**
@@ -104,7 +112,9 @@ class CorredorController extends Controller
     {
         $corredor = Corredor::findOrFail($cuit);
         $iva = Condicion_IVA::all();
-        return view('corredor.edit', compact(['corredor', 'iva']));
+        $localidades = Localidad::all();
+        $provincias = Provincia::all();
+        return view('corredor.edit', compact(['corredor', 'iva', 'localidades', 'provincias']));
     }
 
     /**
@@ -213,5 +223,16 @@ class CorredorController extends Controller
         $delete->delete();
         alert()->success("El contacto fue eliminado con exito", 'Contacto eliminado');
         return back();
+    }
+
+    public function getLocalidades(Request $request)
+    {
+        if($request->ajax()){
+            $localidades = Localidad::where('idProvincia', $request->provincia_id)->get();
+            foreach($localidades as $localidad){
+                $localidadesArray[$localidad->id] = $localidad->nombre;
+            }
+            return response()->json($localidadesArray);
+        }
     }
 }

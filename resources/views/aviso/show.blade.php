@@ -10,7 +10,8 @@
 
 <body style="background:url(/image/field.jpg) no-repeat center center fixed">
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><a href="{{ action('AvisoController@index') }}">Avisos</a> / Detalle del aviso</label>
+        <label class="title col-md-8 col-form-label"><a href="{{ action('AvisoController@index') }}">Avisos</a> /
+            Detalle del aviso</label>
     </div>
     <div class="container">
         <div class="card" style="width:530px;">
@@ -30,8 +31,7 @@
                     <strong>Intermediario: </strong>-<br>
                     @endif
                     <strong>Remitente Comercial: </strong>{{$remitente->nombre}}<br>
-                    <strong>Lugar de procedencia: </strong>{{$aviso->localidadProcedencia}},
-                    {{$aviso->provinciaProcedencia}}<br>
+                    <strong>Lugar de procedencia: </strong>{{$localidad->nombre}}, {{$provincia->nombre}}<br>
                     <strong>Corredor: </strong>{{$corredor->nombre}}<br>
                     <strong>Destinatario: </strong>{{$destino->nombre}}<br>
                     <strong>Destino: </strong>{{$aviso->lugarDescarga}}<br>
@@ -98,8 +98,9 @@
                     @if ($control == false)
                     <h2>Información de la descarga</h2><br>
                     No existe una descarga asociada<br>
-                    <a href="{{ action('DescargaController@create', $carga->idCarga) }}"><button class="show-plus-button"
-                            title="Añadir descarga" style="margin:5px"><i class="fa fa-plus"></i> Añadir descarga</button></a>
+                    <a href="{{ action('DescargaController@create', $carga->idCarga) }}"><button
+                            class="show-plus-button" title="Añadir descarga" style="margin:5px"><i
+                                class="fa fa-plus"></i> Añadir descarga</button></a>
                     @endif
                     <a href="{{ action('CargaController@edit', $carga->idCarga) }}"><button class="edit-button"
                             title="Editar" style="margin:5px"><i class="fa fa-pencil"></i> Editar</button></a>
@@ -137,8 +138,8 @@
                     <a href="{{ action('AvisoController@export_pdf', $aviso->idAviso) }}"><button
                             class="export-button"><i class="fa fa-file-pdf-o"></i> Exportar
                             PDF</button></a>
-                    <a onclick="warningSendEmails( '{{$aviso->idAviso}}');"><button
-                            class="export-button"><i class="fa fa-share"></i> Enviar correos</button></a>
+                    <a onclick="warningSendEmails( '{{$aviso->idAviso}}');"><button class="export-button"><i
+                                class="fa fa-share"></i> Enviar correos</button></a>
                     <br><br>
                 </div>
             </div>

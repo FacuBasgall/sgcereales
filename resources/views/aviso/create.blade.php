@@ -3,9 +3,7 @@
 @parent
 
 <head>
-    <!-- ver de poner en el layout.master  -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/select-localidad.js') }}"></script>
 </head>
 
 <body style="background:url(/image/silo.jpg) no-repeat center center fixed">
@@ -21,7 +19,7 @@
                     <p>Intermitentes</p>
                     <label for="titular">
                         <span>Titular:*</span>
-                        <select name="titular" id="titular" class="input" required>
+                        <select name="titular" id="titular" class="input" style="width:100%" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($titulares as $titular)
                             <option value="{{ $titular->cuit }}" {{old('titular') == $titular->cuit ? 'selected':''}}>
@@ -29,14 +27,16 @@
                             @endforeach
                         </select>
                         <script>
+                        $.fn.select2.defaults.set('language', 'es');
                         $("#titular").select2({
-                            placeholder: 'Seleccione un titular',
+                            placeholder: 'Seleccione',
+                            dropdownAutoWidth: true,
                         });
                         </script>
                     </label>
                     <label for="intermediario">
                         <span>Intermediario:</span>
-                        <select name="intermediario" id="intermediario" class="input">
+                        <select name="intermediario" id="intermediario" class="input" style="width:100%">
                             <option value="" selected></option>
                             @foreach ($intermediarios as $intermediario)
                             <option value="{{ $intermediario->cuit }}"
@@ -45,14 +45,16 @@
                             @endforeach
                         </select>
                         <script>
+                        $.fn.select2.defaults.set('language', 'es');
                         $("#intermediario").select2({
-                            placeholder: 'Seleccione un intermediario',
+                            placeholder: 'Seleccione',
+                            dropdownAutoWidth: true,
                         });
                         </script>
                     </label>
                     <label for="remitente">
                         <span>Remitente Comercial:*</span>
-                        <select name="remitente" id="remitente" class="input" required>
+                        <select name="remitente" id="remitente" class="input" style="width:100%" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($remitentes as $remitente)
                             <option value="{{ $remitente->cuit }}"
@@ -60,14 +62,16 @@
                             @endforeach
                         </select>
                         <script>
+                        $.fn.select2.defaults.set('language', 'es');
                         $("#remitente").select2({
-                            placeholder: 'Seleccione un remitente',
+                            placeholder: 'Seleccione',
+                            dropdownAutoWidth: true,
                         });
                         </script>
                     </label>
                     <label for="corredor">
                         <span>Corredor:*</span>
-                        <select name="corredor" id="corredor" class="input" required>
+                        <select name="corredor" id="corredor" class="input" style="width:100%" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($corredores as $corredor)
                             <option value="{{ $corredor->cuit }}"
@@ -75,14 +79,16 @@
                             @endforeach
                         </select>
                         <script>
+                        $.fn.select2.defaults.set('language', 'es');
                         $("#corredor").select2({
-                            placeholder: 'Seleccione un corredor',
+                            placeholder: 'Seleccione',
+                            dropdownAutoWidth: true
                         });
                         </script>
                     </label>
                     <label for="destinatario">
                         <span>Destinatario:*</span>
-                        <select name="destinatario" id="destinatario" class="input" required>
+                        <select name="destinatario" id="destinatario" class="input" style="width:100%" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($destinatarios as $destinatario)
                             <option value="{{ $destinatario->cuit }}"
@@ -91,8 +97,10 @@
                             @endforeach
                         </select>
                         <script>
+                        $.fn.select2.defaults.set('language', 'es');
                         $("#destinatario").select2({
-                            placeholder: 'Seleccione un destinatario',
+                            placeholder: 'Seleccione',
+                            dropdownAutoWidth: true,
                         });
                         </script>
                     </label>
@@ -113,13 +121,20 @@
                 <p>Granos/Especie</p>
                 <label for="producto">
                     <span>Producto:*</span>
-                    <select name="producto" class="input" required>
+                    <select name="producto" class="input" id="producto" style="width:100%" required>
                         <option value="" selected disabled hidden></option>
                         @foreach ($productos as $producto)
                         <option value="{{ $producto->idProducto }}"
                             {{old('producto') == $producto->idProducto ? 'selected':''}}> {{$producto->nombre}}</option>
                         @endforeach
                     </select>
+                    <script>
+                    $.fn.select2.defaults.set('language', 'es');
+                    $("#producto").select2({
+                        placeholder: 'Seleccione',
+                        dropdownAutoWidth: true,
+                    });
+                    </script>
                 </label>
                 <label for="tipo">
                     <span>Tipo de Producto:</span>
@@ -135,14 +150,39 @@
                 <hr>
                 <p>Procedencia de la mercaderia</p>
                 <label for="provincia">
-                    <span>Provincia de procedencia:*</span>
-                    <input type="text" value="{{old('provincia')}}" name="provincia" id="provincia" class="input"
-                        required>
+                    <span>Provincia:*</span>
+                    <select name="provincia" id="provincia" class="input" style="width:100%" required>
+                        <option value="" selected disabled hidden></option>
+                        @foreach ($provincias as $provincia)
+                        <option value="{{ $provincia->id }}" {{old('provincia') == $provincia->id ? 'selected':''}}>
+                            {{$provincia->nombre}}</option>
+                        @endforeach
+                    </select>
+                    <script>
+                    $.fn.select2.defaults.set('language', 'es');
+                    $("#provincia").select2({
+                        placeholder: 'Seleccione',
+                        dropdownAutoWidth: true,
+                        width: 'resolve'
+                    });
+                    </script>
                 </label>
                 <label for="localidad">
-                    <span>Localidad de procedencia:*</span>
-                    <input type="text" value="{{old('localidad')}}" name="localidad" id="localidad" class="input"
-                        required>
+                    <span>Localidad:*</span>
+                    <select name="localidad" id="localidad" class="input" style="width:100%" required>
+                        <option value="" selected disabled hidden></option>
+                        @foreach ($localidades as $localidad)
+                        <option value="{{ $localidad->id }}" {{old('localidad') == $localidad->id ? 'selected':''}}>
+                            {{$localidad->nombre}}</option>
+                        @endforeach
+                    </select>
+                    <script>
+                    $.fn.select2.defaults.set('language', 'es');
+                    $("#localidad").select2({
+                        placeholder: 'Seleccione',
+                        dropdownAutoWidth: true,
+                    });
+                    </script>
                 </label>
                 <hr>
                 <label for="obs">

@@ -65,7 +65,7 @@ class ProductoController extends Controller
     {
         $producto = Producto::where('idProducto', $idProducto)->first();
         $mermas = Merma::where('idProducto', $idProducto)->get();
-        return view('producto.show', compact('producto', 'mermas'));
+        return view('producto.show', compact(['producto', 'mermas']));
     }
 
     /**

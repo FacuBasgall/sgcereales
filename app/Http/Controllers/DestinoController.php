@@ -7,6 +7,9 @@ use App\Destino;
 use App\Destino_Contacto;
 use App\Condicion_IVA;
 use App\Tipo_Contacto;
+use App\Localidad;
+use App\Provincia;
+
 use DB;
 use SweetAlert;
 
@@ -43,7 +46,10 @@ class DestinoController extends Controller
     public function create()
     {
         $iva = Condicion_IVA::orderBy('descripcion')->get();
-        return view('destino.create', array('iva'=>$iva));    }
+        $localidades = Localidad::all();
+        $provincias = Provincia::all();
+        return view('destino.create', compact(['iva', 'localidades', 'provincias']));
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -91,7 +97,10 @@ class DestinoController extends Controller
         $contacto = Destino_Contacto::where('cuit', $cuit)->get();
         $tipoContacto = Tipo_Contacto::all();
         $iva = Condicion_IVA::all();
-        return view('destino.show', compact(['destino', 'contacto', 'tipoContacto', 'iva']));
+        $localidad = Localidad::where('id', $destino->localidad)->first();
+        $provincia = Provincia::where('id', $destino->provincia)->first();
+        return view('destino.show', compact(['destino', 'contacto', 'tipoContacto', 'iva',
+            'localidad', 'provincia']));
     }
 
     /**
@@ -103,9 +112,11 @@ class DestinoController extends Controller
     public function edit($cuit)
     {
         $destino = Destino::findOrFail($cuit);
-        $contacto = Destino_Contacto::where('cuit', $cuit)->get();
         $iva = Condicion_IVA::orderBy('descripcion')->get();
-        return view('destino.edit', compact(['destino', 'contacto', 'iva']));
+        $localidades = Localidad::all();
+        $provincias = Provincia::all();
+        return view('destino.edit', compact(['destino', 'contacto', 'iva',
+            'localidades', 'provincias']));
     }
 
     /**
@@ -214,5 +225,16 @@ class DestinoController extends Controller
         $delete->delete();
         alert()->success("El contacto fue eliminado con exito", 'Contacto eliminado');
         return back();
+    }
+
+    public function getLocalidades(Request $request)
+    {
+        if($request->ajax()){
+            $localidades = Localidad::where('idProvincia', $request->provincia_id)->get();
+            foreach($localidades as $localidad){
+                $localidadesArray[$localidad->id] = $localidad->nombre;
+            }
+            return response()->json($localidadesArray);
+        }
     }
 }

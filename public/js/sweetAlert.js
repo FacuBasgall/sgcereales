@@ -28,7 +28,7 @@ function warningContact(key, redirect) {
 function warningSendEmails(key) {
     swal({
         title: "¿Está seguro?",
-        text: "Enviará el romaneo al titular de carta porte",
+        text: "El Romaneo procedera a enviarse",
         icon: "warning",
         buttons: ["Cancelar", true],
         dangerMode: true,

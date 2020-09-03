@@ -7,6 +7,8 @@ use App\Remitente_Comercial;
 use App\Remitente_Contacto;
 use App\Tipo_Contacto;
 use App\Condicion_IVA;
+use App\Localidad;
+use App\Provincia;
 
 use DB;
 use SweetAlert;
@@ -44,7 +46,9 @@ class RemitenteController extends Controller
     public function create()
     {
         $iva = Condicion_IVA::orderBy('descripcion')->get();
-        return view('remitente.create', array('iva'=>$iva));
+        $localidades = Localidad::all();
+        $provincias = Provincia::all();
+        return view('remitente.create', compact(['iva', 'localidades', 'provincias']));
     }
 
     /**
@@ -93,7 +97,10 @@ class RemitenteController extends Controller
         $contacto = Remitente_Contacto::where('cuit', $cuit)->get();
         $tipoContacto = Tipo_Contacto::all();
         $iva = Condicion_IVA::all();
-        return view('remitente.show', compact(['remitente', 'contacto', 'tipoContacto', 'iva']));
+        $localidad = Localidad::where('id', $remitente->localidad)->first();
+        $provincia = Provincia::where('id', $remitente->provincia)->first();
+        return view('remitente.show', compact(['remitente', 'contacto', 'tipoContacto', 'iva',
+            'localidad', 'provincia']));
     }
 
     /**
@@ -106,7 +113,9 @@ class RemitenteController extends Controller
     {
         $remitente = Remitente_Comercial::findOrFail($cuit);
         $iva = Condicion_IVA::all();
-        return view('remitente.edit', compact(['remitente', 'iva']));
+        $localidades = Localidad::all();
+        $provincias = Provincia::all();
+        return view('remitente.edit', compact(['remitente', 'iva', 'localidades', 'provincias']));
     }
 
     /**
@@ -215,5 +224,16 @@ class RemitenteController extends Controller
         $delete->delete();
         alert()->success("El contacto fue eliminado con exito", 'Contacto eliminado');
         return back();
+    }
+
+    public function getLocalidades(Request $request)
+    {
+        if($request->ajax()){
+            $localidades = Localidad::where('idProvincia', $request->provincia_id)->get();
+            foreach($localidades as $localidad){
+                $localidadesArray[$localidad->id] = $localidad->nombre;
+            }
+            return response()->json($localidadesArray);
+        }
     }
 }
