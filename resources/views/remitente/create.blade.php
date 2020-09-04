@@ -33,7 +33,7 @@
                     </label>
                     <label for="iva">
                         <span>IVA:*</span>
-                        <select name="iva" class="input" required>
+                        <select name="iva" id="iva" class="input" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($iva as $condicion)
                             <option value="{{ $condicion->idCondIva }}"
@@ -41,6 +41,13 @@
                             </option>
                             @endforeach
                         </select>
+                        <script>
+                        $.fn.select2.defaults.set('language', 'es');
+                        $("#iva").select2({
+                            placeholder: 'Seleccione',
+                            dropdownAutoWidth: true,
+                        });
+                        </script>
                     </label>
                     <label for="cp">
                         <span>Codigo postal: </span>
@@ -64,6 +71,7 @@
                         $("#provincia").select2({
                             placeholder: 'Seleccione',
                             dropdownAutoWidth: true,
+                            allowClear: true
                         });
                         </script>
                     </label>
@@ -81,6 +89,7 @@
                         $("#localidad").select2({
                             placeholder: 'Seleccione',
                             dropdownAutoWidth: true,
+                            allowClear: true
                         });
                         </script>
                     </label>

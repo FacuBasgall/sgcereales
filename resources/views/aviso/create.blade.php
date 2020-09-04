@@ -51,6 +51,7 @@
                         $("#labelintermediario").select2({
                             placeholder: 'Seleccione',
                             dropdownAutoWidth: true,
+                            allowClear: true
                         });
                         </script>
                     </label>

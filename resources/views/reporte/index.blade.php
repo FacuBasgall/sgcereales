@@ -8,22 +8,22 @@
 
 <body>
     <div>
-        <form action="{{action('ReporteController@find')}}" method="GET">
+        <form action="{{action('ReporteController@index')}}" method="GET">
             {{ csrf_field() }}
             <label for="fechaDesde">
-                <span>Fecha desde:</span>
-                <input type="date" value="{{old('fechaDesde')}}" name="fechaDesde" id="fechaDesde" class="input">
+                <span>Fecha desde:*</span>
+                <input type="date" value="{{$filtros['fechaDesde']}}" name="fechaDesde" id="fechaDesde" class="input" required>
             </label>
             <label for="fechaHasta">
-                <span>Fecha hasta:</span>
-                <input type="date" value="{{old('fechaHasta')}}" name="fechaHasta" id="fechaHasta" class="input">
+                <span>Fecha hasta:*</span>
+                <input type="date" value="{{$filtros['fechaHasta']}}" name="fechaHasta" id="fechaHasta" class="input" required>
             </label>
             <label for="titular">
                 <span>Titular Carta Porte:</span>
-                <select name="titular" id="labeltitular" class="input" style="width:100%">
-                    <option value="" selected disabled hidden></option>
+                <select name="titular" id="labeltitular" class="input">
+                    <option value=""></option>
                     @foreach ($titulares as $titular)
-                    <option value="{{ $titular->cuit }}" {{old('titular') == $titular->cuit ? 'selected':''}}>
+                    <option value="{{ $titular->cuit }}" {{$filtros['titular'] == $titular->cuit ? 'selected':''}}>
                         {{$titular->nombre}}</option>
                     @endforeach
                 </select>
@@ -32,16 +32,17 @@
                 $("#labeltitular").select2({
                     placeholder: 'Seleccione',
                     dropdownAutoWidth: true,
+                    allowClear: true
                 });
                 </script>
             </label>
             <label for="intermediario">
                 <span>Intermediario:</span>
-                <select name="intermediario" id="labelintermediario" class="input" style="width:100%">
-                    <option value="" selected></option>
+                <select name="intermediario" id="labelintermediario" class="input">
+                    <option value=""></option>
                     @foreach ($intermediarios as $intermediario)
                     <option value="{{ $intermediario->cuit }}"
-                        {{old('intermediario') == $intermediario->cuit ? 'selected':''}}>
+                        {{$filtros['intermediario'] == $intermediario->cuit ? 'selected':''}}>
                         {{$intermediario->nombre}}</option>
                     @endforeach
                 </select>
@@ -50,15 +51,16 @@
                 $("#labelintermediario").select2({
                     placeholder: 'Seleccione',
                     dropdownAutoWidth: true,
+                    allowClear: true
                 });
                 </script>
             </label>
             <label for="remitente">
                 <span>Remitente Comercial:</span>
-                <select name="remitente" id="labelremitente" class="input" style="width:100%">
-                    <option value="" selected disabled hidden></option>
+                <select name="remitente" id="labelremitente" class="input">
+                    <option value=""></option>
                     @foreach ($remitentes as $remitente)
-                    <option value="{{ $remitente->cuit }}" {{old('remitente') == $remitente->cuit ? 'selected':''}}>
+                    <option value="{{ $remitente->cuit }}" {{$filtros['remitente'] == $remitente->cuit ? 'selected':''}}>
                         {{$remitente->nombre}}</option>
                     @endforeach
                 </select>
@@ -67,15 +69,16 @@
                 $("#labelremitente").select2({
                     placeholder: 'Seleccione',
                     dropdownAutoWidth: true,
+                    allowClear: true
                 });
                 </script>
             </label>
             <label for="corredor">
                 <span>Corredor:</span>
-                <select name="corredor" id="labelcorredor" class="input" style="width:100%">
-                    <option value="" selected disabled hidden></option>
+                <select name="corredor" id="labelcorredor" class="input">
+                    <option value=""></option>
                     @foreach ($corredores as $corredor)
-                    <option value="{{ $corredor->cuit }}" {{old('corredor') == $corredor->cuit ? 'selected':''}}>
+                    <option value="{{ $corredor->cuit }}" {{$filtros['corredor'] == $corredor->cuit ? 'selected':''}}>
                         {{$corredor->nombre}}</option>
                     @endforeach
                 </select>
@@ -83,17 +86,18 @@
                 $.fn.select2.defaults.set('language', 'es');
                 $("#labelcorredor").select2({
                     placeholder: 'Seleccione',
-                    dropdownAutoWidth: true
+                    dropdownAutoWidth: true,
+                    allowClear: true
                 });
                 </script>
             </label>
             <label for="destinatario">
                 <span>Destinatario:</span>
-                <select name="destinatario" id="labeldestinatario" class="input" style="width:100%">
-                    <option value="" selected disabled hidden></option>
+                <select name="destinatario" id="labeldestinatario" class="input">
+                    <option value=""></option>
                     @foreach ($destinatarios as $destinatario)
                     <option value="{{ $destinatario->cuit }}"
-                        {{old('destinatario') == $destinatario->cuit ? 'selected':''}}>{{$destinatario->nombre}}
+                        {{$filtros['destinatario'] == $destinatario->cuit ? 'selected':''}}>{{$destinatario->nombre}}
                     </option>
                     @endforeach
                 </select>
@@ -102,20 +106,21 @@
                 $("#labeldestinatario").select2({
                     placeholder: 'Seleccione',
                     dropdownAutoWidth: true,
+                    allowClear: true
                 });
                 </script>
             </label>
             <label for="entregador">
                 <span>Entregador:</span>
-                <input type="text" value="{{old('entregador')}}" name="entregador" id="entregador" class="input">
+                <input type="text" value="{{$filtros['entregador']}}" name="entregador" id="entregador" class="input">
             </label>
             <label for="producto">
                 <span>Producto:</span>
-                <select name="producto" class="input" id="labelproducto" style="width:100%">
-                    <option value="" selected disabled hidden></option>
+                <select name="producto" class="input" id="labelproducto">
+                    <option value=""></option>
                     @foreach ($productos as $producto)
                     <option value="{{ $producto->idProducto }}"
-                        {{old('producto') == $producto->idProducto ? 'selected':''}}> {{$producto->nombre}}</option>
+                        {{$filtros['producto'] == $producto->idProducto ? 'selected':''}}> {{$producto->nombre}}</option>
                     @endforeach
                 </select>
                 <script>
@@ -123,14 +128,115 @@
                 $("#labelproducto").select2({
                     placeholder: 'Seleccione',
                     dropdownAutoWidth: true,
+                    allowClear: true
                 });
                 </script>
             </label>
             <button type="submit">Buscar</button>
-            <hr>
+        </form>
+        <hr>
     </div>
     <div>
-        @yield('result')
+        <table>
+            @if(!empty($resultado) && $resultado->count())
+            <h4>Datos encontrados:</h4>
+            <thead>
+                <tr>
+                    <th>Nro de aviso</th>
+                    <th>Fecha de creación</th>
+                    <th>Titular carta porte</th>
+                    <th>Intermediario</th>
+                    <th>Remitente comercial</th>
+                    <th>Corredor</th>
+                    <th>Destinatario</th>
+                    <th>Producto</th>
+                    <th>Procedencia</th>
+                    <th>Destino</th>
+                    <th>Neto descargado (Kg)</th>
+                    <th>Neto con merma (Kg)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @php $total = 0; $totalMerma = 0; @endphp
+                @foreach ($resultado as $aviso)
+                <tr>
+                    <td>{{$aviso->nroAviso}}</td>
+                    @foreach ($avisos_entregadores as $aviso_entregador)
+                        @if($aviso_entregador->idAviso == $aviso->idAviso)
+                            <td>{{$aviso_entregador->fecha}}</td>
+                        @endif
+                    @endforeach
+                    @foreach ($titulares as $titular)
+                        @if($titular->cuit == $aviso->idTitularCartaPorte)
+                            <td>{{$titular->nombre}}</td>
+                        @endif
+                    @endforeach
+                    @foreach ($intermediarios as $intermediario)
+                        @if($intermediario->cuit == $aviso->idIntermediario)
+                            <td>{{$intermediario->nombre}}</td>
+                        @endif
+                    @endforeach
+                    @foreach ($remitentes as $remitente)
+                        @if($remitente->cuit == $aviso->idRemitenteComercial)
+                            <td>{{$remitente->nombre}}</td>
+                        @endif
+                    @endforeach
+                    @foreach ($corredores as $corredor)
+                        @if($corredor->cuit == $aviso->idCorredor)
+                            <td>{{$corredor->nombre}}</td>
+                        @endif
+                    @endforeach
+                    @foreach ($destinatarios as $destinatario)
+                        @if($destinatario->cuit == $aviso->idDestinatario)
+                            <td>{{$destinatario->nombre}}</td>
+                        @endif
+                    @endforeach
+                    @foreach ($productos as $producto)
+                        @if($producto->idProducto == $aviso->idProducto)
+                            <td>{{$producto->nombre}}</td>
+                        @endif
+                    @endforeach
+                    @foreach ($provincias as $provincia)
+                        @if ($provincia->id == $aviso->provinciaProcedencia)
+                            @foreach ($localidades as $localidad)
+                                @if ($localidad->id == $aviso->localidadProcedencia)
+                                    <td>{{$localidad->nombre}} ({{$provincia->abreviatura}})</td>
+                                @endif
+                            @endforeach
+                        @endif
+                    @endforeach
+                    <td>{{$aviso->lugarDescarga}}</td>
+                    @php $descargado = 0; $merma = 0 @endphp
+                    @foreach ($cargas as $carga)
+                        @if($carga->idAviso == $aviso->idAviso)
+                            @foreach ($descargas as $descarga)
+                                @if($descarga->idCarga == $carga->idCarga)
+                                    @php
+                                        $descargado += $descarga->bruto - $descarga->tara;
+                                        $merma += round(($descarga->bruto - $descarga->tara) * ($descarga->merma / 100));
+                                    @endphp
+                                @endif
+                            @endforeach
+                        @endif
+                    @endforeach
+                    <td>{{$descargado}}</td>
+                    <td>{{$descargado - $merma}}</td>
+                    @php $total += $descargado; $totalMerma += ($descargado - $merma); @endphp
+                </tr>
+                @endforeach
+                <tr>
+                    <th>Total descargado (Kg):</th>
+                    <td>{{$total}}</td>
+                </tr>
+                <tr>
+                    <th>Total descargado con merma (Kg):</th>
+                    <td>{{$totalMerma}}</td>
+                </tr>
+            </tbody>
+            @else
+                <h4>No se han encontrado resultados.</h4>
+            @endif
+        </table>
     </div>
     @include('sweet::alert')
 </body>
