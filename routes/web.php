@@ -144,6 +144,12 @@ Route::get('/aviso/export_pdf/{id}', 'AvisoController@export_pdf');
 Route::get('/aviso/send_email/{id}', 'AvisoController@send_email');
 Route::get('/aviso/getLocalidades', 'AvisoController@getLocalidades');
 
+Route::get('/reporte', 'ReporteController@index');
+Route::get('/reporte/find', 'ReporteController@find');
+Route::get('/reporte/export_excel/{id}', 'ReporteController@export_excel');
+Route::get('/reporte/export_pdf/{id}', 'ReporteController@export_pdf');
+Route::get('/reporte/send_email/{id}', 'ReporteController@send_email');
+Route::get('/reporte/getLocalidades', 'ReporteController@getLocalidades');
 
 /* ASI VAN LOS FILTROS
 * Route::group(['middleware'=>'auth'],function(){

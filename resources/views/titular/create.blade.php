@@ -68,7 +68,7 @@
                     </label>
                     <label for="localidad">
                         <span>Localidad:</span>
-                        <select name="localidad" id="localidad" class="input" required></select>
+                        <select name="localidad" id="localidad" class="input"></select>
                         <script>
                         $.fn.select2.defaults.set('language', 'es');
                         $("#localidad").select2({
