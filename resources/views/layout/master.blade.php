@@ -1,13 +1,17 @@
 
 <head>
+    <!-- Navbar menu -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="{{ asset('css/Navbar/bootstrap-home.min.css') }}" rel="stylesheet">
+    <!-- sweet alert -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <link href="{{ asset('css/bootstrap-home.min.css') }}" rel="stylesheet">
     <script type="text/javascript" src="{{ asset('js/sweetAlert.js') }}"></script>
+    <!-- Loading animation -->
     <script type="text/javascript" src="{{ asset('js/loading.js') }}"></script>
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/common-buttons.css') }}">
+    <!-- common buttons in the app -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/common-buttons.css') }}" >
 
     <!-- lib jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -23,7 +27,7 @@
   <!------ Include the above in your HEAD tag ---------->
 </head>
 <body>
-  <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark" style="font-family:sans-serif;">
     <a class="navbar-brand" href="{{action('HomeController@index')}}">
       <div class="img">
           <img src="{{ URL::to('/image/SGC.jpg') }}">
@@ -34,43 +38,43 @@
       </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item ">
+        <li class="nav-item" id="aviso">
           <a class="nav-link" href="{{ action('AvisoController@index') }}">
             <i class="fa fa-newspaper-o"></i>
             Avisos
             </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" id="producto">
           <a class="nav-link" href="{{ action('ProductoController@index') }}">
             <i class="fa fa-leaf"></i>
             Productos
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" id="titular">
           <a class="nav-link" href="{{ action('TitularController@index') }}">
           <i class="fa fa-address-card"></i>
             Titulares
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" id="intermediario">
           <a class="nav-link" href="{{ action('IntermediarioController@index') }}">
           <i class="fa fa-users"></i>
             Intermediario
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" id="remitente">
           <a class="nav-link" href="{{ action('RemitenteController@index') }}">
             <i class="fa fa-user"></i>
             Remitente
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" id="destino">
           <a class="nav-link" href="{{ action('DestinoController@index') }}">
             <i class="fa fa-truck"></i>
             Destinatarios
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" id="corredor">
           <a class="nav-link" href="{{ action('CorredorController@index') }}">
           <i class="fa fa-handshake-o"></i>
             Corredores
@@ -83,7 +87,7 @@
           </a>
         </li>
       </ul>
-      <ul class="navbar-nav ">
+      <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link" href="#" title="Manual de usuario">
             <i class="fa fa-book">
@@ -103,4 +107,15 @@
   </nav>
   <div id="loader" class="center"></div>
   @yield('content')
+  <script> 
+        $(document).ready(function () {
+    var loc = window.location.href; // grabbing the url
+    var str = loc.split("/")[3]; // splitting the url and taking the third string
+    if(str.localeCompare("") == 0)
+      $("#home").addClass("active");
+    else
+      $("#" + str).addClass("active");
+});
+
+    </script> 
 </body>

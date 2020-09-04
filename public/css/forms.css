@@ -80,8 +80,8 @@ label
 label span
 {
     display: inline-block;
-    text-align: left;
-    width: 110px;
+    text-align: right;
+    width: 100px;
     color: grey;
     margin-left: 20px;
 }

@@ -4,34 +4,32 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/header.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/showProduct.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/show-cards.css') }}">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
-    <div class="card-header">
-        <label class="title col-md-8 col-form-label"><b>Titulares carta porte</b></label>
+    <div class="card-header"> 
+        <a class="title">Titulares carta porte</a>
+        <div class="search-bar">
+            <form class="{{action('TitularController@index')}}" method="GET">
+                {{ csrf_field() }}
+                <input class="searchTerm" type="search" placeholder="Buscar..." name="search" id="search">
+                <button class="searchButton" type="submit"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
         <a href="{{ action('TitularController@create') }}"><button class="plus-button"
                 title="Añadir titular carta porte"><i class="fa fa-plus"></i> Añadir</button></a>
     </div>
-    <form class="{{action('TitularController@index')}}" method="GET">
-        {{ csrf_field() }}
-        <input type="search" placeholder="Buscar..." name="search" id="search">
-        <button type="submit"><i class="fa fa-search"></i></button>
-    </form>
     <div class="container">
         @if(!empty($arrayTitular) && $arrayTitular->count())
         @foreach( $arrayTitular as $key)
         <div class="card">
             <div class="box">
-                <div class="img">
-                    <img src="{{ URL::to('/image/cargador-icon.jpg') }}">
-                </div>
-                <h2>{{$key->nombre}}</h2>
+                <a class="title">{{$key->nombre}}</a>
                 <p>CUIT: {{$key->cuit}}</p>
-
                 <hr>
                 </hr>
                 <a href="{{ action('TitularController@show', $key->cuit) }}"><button class="show-button"
