@@ -1,5 +1,6 @@
 body {
     font-family:sans-serif;
+    background-color: rgb(230 225 225);
 }
 
 .container {
@@ -26,6 +27,31 @@ body {
     border: 1px solid #ccc;
     border-radius: 6px;
     box-sizing: border-box;
+    margin-right: 25px;
+}
+
+.margin-right {
+    margin-right: 25px;
+}
+
+.common-input-cp {
+    margin-top: 15px;
+    width: 60px;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    margin-right: 25px;
+}
+
+.common-input-address {
+    margin-top: 15px;
+    width: 240px;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    margin-right: 25px;
 }
 
 textarea {
@@ -44,18 +70,6 @@ textarea {
     outline: none;
 }
 
-.input-margin-granos {
-    margin-left: 25px;
-}
-
-.input-margin-procedencia {
-    margin-left: 25px;
-}
-
-.input-margin {
-    margin-left: 20px;
-}
-
 .year-input {
     width: 25px;
     border:none;
@@ -71,4 +85,17 @@ input::-webkit-inner-spin-button {
 
 .form-title {
     font-size: 17px;
+}
+
+.center-of-page {
+    display: flex; 
+    justify-content: center;
+}
+
+.card-header {
+    background-color: white;
+}
+
+.title {
+    font-size: 19px;
 }

@@ -4,35 +4,36 @@
 
 <head>
     <!-- <link rel="stylesheet" type="text/css" href="{{ asset('css/forms.css') }}"> -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/header.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/common-forms.css') }}">
     <script type="text/javascript" src="{{ asset('js/select-localidad.js') }}"></script>
 </head>
 
 <body>
-    <div>
-        <label><b>Añadir titular</b></label>
+    <div class="card-header">
+        <label class="title col-md-8 col-form-label"><b>Añadir titular</b></label>
     </div>
-    <div>
-        <div>
-            <div>
+    <div class="container">
+        <div class="card">
+            <div class="box">
                 <form action="{{action('TitularController@store')}}" method="POST">
                     {{ csrf_field() }}
+                    <p class="form-title"><strong>Datos del titular</strong></p>
                     <label for="nombre">
                         <span>Nombre y apellido:*</span>
-                        <input type="text" value="{{old('nombre')}}" name="nombre" id="nombre" class="input" required>
+                        <input type="text" value="{{old('nombre')}}" name="nombre" id="nombre" class="common-input" required>
                     </label>
-                    <label for="cuit">
+                    <label for="cuit" >
                         <span>CUIT:*</span>
-                        <input type="text" value="{{old('cuit')}}" name="cuit" id="cuit" class="input" min="0"
+                        <input type="text" value="{{old('cuit')}}" name="cuit" id="cuit" class="common-input" min="0"
                             max="999999999999999" required>
                     </label>
-                    <label for="dgr">
+                    <label for="dgr" >
                         <span>DGR: </span>
-                        <input type="text" value="{{old('dgr')}}" name="dgr" id="dgr" class="input">
+                        <input type="text" value="{{old('dgr')}}" name="dgr" id="dgr" class="common-input">
                     </label>
-                    <label for="iva">
+                    <label for="iva" >
                         <span>IVA:*</span>
-                        <select name="iva" class="input" required>
+                        <select name="iva" class="common-input" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($iva as $condicion)
                             <option value="{{ $condicion->idCondIva }}"
@@ -41,17 +42,13 @@
                             @endforeach
                         </select>
                     </label>
-                    <label for="cp">
-                        <span>Codigo postal: </span>
-                        <input type="text" value="{{old('cp')}}" name="cp" id="cp" class="input">
-                    </label>
                     <label for="pais">
                         <span>Pais: </span>
-                        <input type="text" value="Argentina" name="pais" id="pais" class="input">
+                        <input type="text" value="Argentina" name="pais" id="pais" class="common-input">
                     </label>
-                    <label for="provincia">
+                    <label for="provincia" class="margin-right">
                         <span>Provincia:</span>
-                        <select name="provincia" id="provincia" class="input" >
+                        <select name="provincia" id="provincia" class="common-input" >
                             <option value="" selected disabled hidden></option>
                             @foreach ($provincias as $provincia)
                             <option value="{{ $provincia->id }}" {{old('provincia') == $provincia->id ? 'selected':''}}>
@@ -66,9 +63,9 @@
                         });
                         </script>
                     </label>
-                    <label for="localidad">
+                    <label for="localidad" class="margin-right">
                         <span>Localidad:</span>
-                        <select name="localidad" id="localidad" class="input"></select>
+                        <select name="localidad" id="localidad" class="common-input"></select>
                         <script>
                         $.fn.select2.defaults.set('language', 'es');
                         $("#localidad").select2({
@@ -77,15 +74,16 @@
                         });
                         </script>
                     </label>
+                    <label for="cp" >
+                        <span>Codigo postal: </span>
+                        <input type="text" value="{{old('cp')}}" name="cp" id="cp" class="common-input-cp">
+                    </label>
                     <label for="domicilio">
                         <span>Domicilio: </span>
-                        <input type="text" value="{{old('domicilio')}}" name="domicilio" id="domicilio" class="input">
+                        <input type="text" value="{{old('domicilio')}}" name="domicilio" id="domicilio" class="common-input-address">
                     </label>
-                    <button type="submit" class="save-button" style="position:relative; left:40%; margin-top:10px"><i
-                            class="fa fa-check"></i> Guardar</button>
-                    <a href="{{ action('TitularController@index') }}"><button type="button" class="back-button"
-                            title="Volver" style="position: relative; right: 40%; margin-top:10px"><i
-                                class="fa fa-arrow-left"></i> Volver</button></a>
+                    <hr>
+                    <div class="center-of-page"> <button type="submit" class="save-button"><i class="fa fa-check"></i> Guardar</button> </div>
                 </form>
             </div>
         </div>
