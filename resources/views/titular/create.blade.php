@@ -10,7 +10,8 @@
 
 <body>
     <div>
-        <label><b>Añadir titular</b></label>
+        <label class="title col-md-8 col-form-label"><a href="{{ action('TitularController@index') }}">Titulares carta porte</a> /
+            Añadir titular</label>
     </div>
     <div>
         <div>
@@ -51,7 +52,7 @@
                     </label>
                     <label for="provincia">
                         <span>Provincia:</span>
-                        <select name="provincia" id="provincia" class="input" >
+                        <select name="provincia" id="provincia" class="input">
                             <option value="" selected disabled hidden></option>
                             @foreach ($provincias as $provincia)
                             <option value="{{ $provincia->id }}" {{old('provincia') == $provincia->id ? 'selected':''}}>

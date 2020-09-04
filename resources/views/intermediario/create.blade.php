@@ -10,7 +10,7 @@
 
 <body style="background:url(/image/cargador-camion.jpg) no-repeat center center fixed">
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><b>Añadir intermediario</b></label>
+    <label class="title col-md-8 col-form-label"><a href="{{ action('IntermediarioController@index') }}">Intermediarios</a> / Añadir intermediario</label>
     </div>
     <div class="container">
         <div class="card" style="height:800px;width:450px;">

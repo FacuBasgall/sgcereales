@@ -9,7 +9,8 @@
 
 <body>
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><b>Avisos / Crear aviso</b></label>
+        <label class="title col-md-8 col-form-label"><a href="{{ action('AvisoController@index') }}">Avisos</a> / Crear
+            aviso</label>
     </div>
     <div class="container">
         <div class="card">
@@ -186,17 +187,14 @@
                     </script>
                 </label>
                 <hr>
-                    <label for="obs">
-                        <p class="form-title"><strong>Observaciones</strong></p>
-                        <textarea name="obs" id="obs" class="observation-box" style="height:80px;"
-                            placeholder="Ingrese una observación" cols="150"></textarea>
-                    </label>
-                    <hr>
-                    <button type="submit" class="save-button" style="position:relative; top:50%; left:30%;"><i
-                            class="fa fa-check"></i> Guardar y continuar</button>
-                    <a href="{{ action('AvisoController@index') }}"><button type="button" class="back-button" title="Volver"
-                            style="position: relative; top: 50%; right: 50%;"><i class="fa fa-arrow-left"></i>
-                            Volver</button></a>
+                <label for="obs">
+                    <p class="form-title"><strong>Observaciones</strong></p>
+                    <textarea name="obs" id="obs" class="observation-box" style="height:80px;"
+                        placeholder="Ingrese una observación" cols="150"></textarea>
+                </label>
+                <hr>
+                <button type="submit" class="save-button" style="position:relative; top:50%; left:30%;"><i
+                        class="fa fa-check"></i> Guardar</button>
                 </form>
             </div>
         </div>
