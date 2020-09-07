@@ -24,14 +24,14 @@ class CorredorController extends Controller
     {
         $query = $request->search;
         if($request->search == ''){
-            $arrayCorredor = Corredor::where('borrado', false)->orderBy('nombre')->paginate(2);
+            $arrayCorredor = Corredor::where('borrado', false)->orderBy('nombre')->paginate(10);
         }else{
             $corredor =  Corredor::where('borrado', false)->where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->exists();
             if($corredor){
                 $arrayCorredor = Corredor::where('borrado', false)->where('nombre', 'LIKE', "%$query%")
-                    ->orWhere('cuit', 'LIKE', "%$query%")->orderBy('nombre')->paginate(2);
+                    ->orWhere('cuit', 'LIKE', "%$query%")->orderBy('nombre')->paginate(10);
             }else{
-                $arrayCorredor = Corredor::where('borrado', false)->orderBy('nombre')->paginate(2);
+                $arrayCorredor = Corredor::where('borrado', false)->orderBy('nombre')->paginate(10);
                 alert()->warning("No se encontraron resultados para: $query", 'No se encontraron resultados')->persistent('Cerrar');
             }
         }
