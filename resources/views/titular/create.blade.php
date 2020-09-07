@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div>
+    <div class="card-header">
         <label class="title col-md-8 col-form-label"><a href="{{ action('TitularController@index') }}">Titulares carta porte</a> /
             Añadir titular</label>
     </div>

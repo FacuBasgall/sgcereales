@@ -5,13 +5,14 @@
 <head>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/header.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/show-cards.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/cortar-card.css') }}">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
-    <div class="card-header"> 
+    <div class="card-header">
         <a class="title">Titulares carta porte</a>
         <div class="search-bar">
             <form class="{{action('TitularController@index')}}" method="GET">
@@ -28,7 +29,7 @@
         @foreach( $arrayTitular as $key)
         <div class="card">
             <div class="box">
-                <a class="title">{{$key->nombre}}</a>
+                <a class="title"><div class="cortar">{{$key->nombre}}</div></a>
                 <p>CUIT: {{$key->cuit}}</p>
                 <hr>
                 </hr>

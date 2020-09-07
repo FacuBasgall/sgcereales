@@ -5,6 +5,7 @@
 <head>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/header.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/showProduct.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/cortar-card.css') }}">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 </head>
@@ -28,7 +29,7 @@
                 <div class="img">
                     <img src="{{ URL::to('/image/cargador-icon.jpg') }}">
                 </div>
-                <h2>{{$key->nombre}}</h2>
+                <h2><div class="cortar">{{$key->nombre}}</div></h2>
                 <p>CUIT: {{$key->cuit}}</p>
 
                 <hr>
