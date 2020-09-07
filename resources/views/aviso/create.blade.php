@@ -9,7 +9,8 @@
 
 <body>
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><b>Avisos / Crear aviso</b></label>
+        <label class="title col-md-8 col-form-label"><a href="{{ action('AvisoController@index') }}">Avisos</a> / Crear
+            aviso</label>
     </div>
     <div class="container">
         <div class="card">
@@ -50,6 +51,7 @@
                         $("#labelintermediario").select2({
                             placeholder: 'Seleccione',
                             dropdownAutoWidth: true,
+                            allowClear: true
                         });
                         </script>
                     </label>

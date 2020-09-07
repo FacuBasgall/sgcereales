@@ -9,8 +9,9 @@
 
 <body style="background-image:url(/image/corredor.jpg); no-repeat center center fixed">
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><b>Editar contactos de destinatario
-                {{$destinatario->nombre}}</b></label>
+    <label class="title col-md-8 col-form-label"><a href="{{ action('DestinoController@index') }}">Destinatarios</a> /
+            <a href="{{ action('DestinoController@show', $destinatario->cuit) }}">Detalle del destinatario</a> / Información de
+            contacto</label>
     </div>
     <div class="container">
         <div class="card">

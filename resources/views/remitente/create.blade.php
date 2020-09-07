@@ -10,7 +10,8 @@
 
 <body style="background:url(/image/cargador-camion.jpg) no-repeat center center fixed">
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><b>Añadir remitente</b></label>
+        <label class="title col-md-8 col-form-label"><a href="{{ action('RemitenteController@index') }}">Remitentes
+                Comercial</a> / Añadir Remitente Comercial</label>
     </div>
     <div class="container">
         <div class="card" style="height:800px;width:450px;">
@@ -32,7 +33,7 @@
                     </label>
                     <label for="iva">
                         <span>IVA:*</span>
-                        <select name="iva" class="input" required>
+                        <select name="iva" id="iva" class="input" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($iva as $condicion)
                             <option value="{{ $condicion->idCondIva }}"
@@ -40,6 +41,13 @@
                             </option>
                             @endforeach
                         </select>
+                        <script>
+                        $.fn.select2.defaults.set('language', 'es');
+                        $("#iva").select2({
+                            placeholder: 'Seleccione',
+                            dropdownAutoWidth: true,
+                        });
+                        </script>
                     </label>
                     <label for="cp">
                         <span>Codigo postal: </span>
@@ -51,7 +59,7 @@
                     </label>
                     <label for="provincia">
                         <span>Provincia:</span>
-                        <select name="provincia" id="provincia" class="input" >
+                        <select name="provincia" id="provincia" class="input">
                             <option value="" selected disabled hidden></option>
                             @foreach ($provincias as $provincia)
                             <option value="{{ $provincia->id }}" {{old('provincia') == $provincia->id ? 'selected':''}}>
@@ -63,12 +71,13 @@
                         $("#provincia").select2({
                             placeholder: 'Seleccione',
                             dropdownAutoWidth: true,
+                            allowClear: true
                         });
                         </script>
                     </label>
                     <label for="localidad">
                         <span>Localidad:</span>
-                        <select name="localidad" id="localidad" class="input" >
+                        <select name="localidad" id="localidad" class="input">
                             <option value="" selected disabled hidden></option>
                             @foreach ($localidades as $localidad)
                             <option value="{{ $localidad->id }}" {{old('localidad') == $localidad->id ? 'selected':''}}>
@@ -80,6 +89,7 @@
                         $("#localidad").select2({
                             placeholder: 'Seleccione',
                             dropdownAutoWidth: true,
+                            allowClear: true
                         });
                         </script>
                     </label>

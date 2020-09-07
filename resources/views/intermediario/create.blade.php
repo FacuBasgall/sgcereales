@@ -9,7 +9,7 @@
 
 <body>
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><b>Añadir intermediario</b></label>
+    <label class="title col-md-8 col-form-label"><a href="{{ action('IntermediarioController@index') }}">Intermediarios</a> / Añadir intermediario</label>
     </div>
     <div class="container">
         <div class="card">
@@ -32,7 +32,7 @@
                     </label>
                     <label for="iva">
                         <span>IVA:*</span>
-                        <select name="iva" class="common-input" required>
+                        <select name="iva" id="iva" class="common-input" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($iva as $condicion)
                             <option value="{{ $condicion->idCondIva }}"
@@ -40,6 +40,13 @@
                             </option>
                             @endforeach
                         </select>
+                        <script>
+                        $.fn.select2.defaults.set('language', 'es');
+                        $("#iva").select2({
+                            placeholder: 'Seleccione',
+                            dropdownAutoWidth: true,
+                        });
+                        </script>
                     </label>
                     <label for="pais" class="margin-right">
                         <span>Pais: </span>
@@ -59,6 +66,7 @@
                         $("#provincia").select2({
                             placeholder: 'Seleccione',
                             dropdownAutoWidth: true,
+                            allowClear: true
                         });
                         </script>
                     </label>
@@ -76,6 +84,7 @@
                         $("#localidad").select2({
                             placeholder: 'Seleccione',
                             dropdownAutoWidth: true,
+                            allowClear: true
                         });
                         </script>
                     </label>
