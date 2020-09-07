@@ -112,22 +112,19 @@ class ReporteController extends Controller
             'avisos_entregadores', 'localidades', 'provincias', 'resultado', 'filtros']));
     }
 
-/*
-    public function export_excel($idAviso)
+    public function export_excel($filtros, $resultados)
     {
-        $aviso = Aviso::where('idAviso', $idAviso)->first();
-
-        if($aviso->estado){
-            $titular = Titular::where('cuit', $aviso->idTitularCartaPorte)->first();
-            $filename = $aviso->nroAviso . " " . $titular->nombre . ".xlsx";
-            return Excel::download(new RomaneoExport($idAviso), $filename);
+        if($resultados->count() > 0){
+            $hoy = date("Y-m-d");
+            $filename = "Reporte general " . $hoy . ".xlsx";
+            return Excel::download(new RomaneoExport($filtros, $resultados), $filename);
         }else{
-            alert()->error("El aviso debe estar terminado para exportalo", 'No se puede ejecutar la acción')->persistent('Cerrar');
-            return back();
+            alert()->error("No se encontraron resultados", 'No se puede ejecutar la acción')->persistent('Cerrar');
+            return back()->withInput();
         }
 
     }
-
+/*
     public function export_pdf($idAviso)
     {
         $aviso = Aviso::where('idAviso', $idAviso)->first();

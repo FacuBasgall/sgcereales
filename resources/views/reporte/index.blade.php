@@ -110,10 +110,6 @@
                 });
                 </script>
             </label>
-            <label for="entregador">
-                <span>Entregador:</span>
-                <input type="text" value="{{$filtros['entregador']}}" name="entregador" id="entregador" class="input">
-            </label>
             <label for="producto">
                 <span>Producto:</span>
                 <select name="producto" class="input" id="labelproducto">
@@ -132,6 +128,10 @@
                 });
                 </script>
             </label>
+            <label for="entregador">
+                <span>Entregador:</span>
+                <input type="text" value="{{$filtros['entregador']}}" name="entregador" id="entregador" class="input">
+            </label>
             <button type="submit">Buscar</button>
         </form>
         <hr>
@@ -142,18 +142,18 @@
             <h4>Datos encontrados:</h4>
             <thead>
                 <tr>
-                    <th>Nro de aviso</th>
-                    <th>Fecha de creación</th>
-                    <th>Titular carta porte</th>
-                    <th>Intermediario</th>
-                    <th>Remitente comercial</th>
-                    <th>Corredor</th>
-                    <th>Destinatario</th>
-                    <th>Producto</th>
-                    <th>Procedencia</th>
-                    <th>Destino</th>
-                    <th>Neto descargado (Kg)</th>
-                    <th>Neto con merma (Kg)</th>
+                    <th><strong>Nro de aviso</strong></th>
+                    <th><strong>Fecha de creación</strong></th>
+                    <th><strong>Titular carta porte</strong></th>
+                    <th><strong>Intermediario</strong></th>
+                    <th><strong>Remitente comercial</strong></th>
+                    <th><strong>Corredor</strong></th>
+                    <th><strong>Destinatario</strong></th>
+                    <th><strong>Producto</strong></th>
+                    <th><strong>Procedencia</strong></th>
+                    <th><strong>Destino</strong></th>
+                    <th><strong>Neto descargado (Kg)</strong></th>
+                    <th><strong>Neto con merma (Kg)</strong></th>
                 </tr>
             </thead>
             <tbody>
@@ -225,11 +225,11 @@
                 </tr>
                 @endforeach
                 <tr>
-                    <th>Total descargado (Kg):</th>
+                    <th><strong>Total descargado (Kg):</strong></th>
                     <td>{{$total}}</td>
                 </tr>
                 <tr>
-                    <th>Total descargado con merma (Kg):</th>
+                    <th><strong>Total descargado con merma (Kg):</strong></th>
                     <td>{{$totalMerma}}</td>
                 </tr>
             </tbody>
