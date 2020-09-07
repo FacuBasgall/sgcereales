@@ -24,14 +24,14 @@ class IntermediarioController extends Controller
     {
         $query = $request->search;
         if($request->search == ''){
-            $arrayIntermediario = Intermediario::where('borrado', false)->orderBy('nombre')->paginate(2);
+            $arrayIntermediario = Intermediario::where('borrado', false)->orderBy('nombre')->paginate(10);
         }else{
             $intermediario =  Intermediario::where('borrado', false)->where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->exists();
             if($intermediario){
                 $arrayIntermediario = Intermediario::where('borrado', false)->where('nombre', 'LIKE', "%$query%")
-                    ->orWhere('cuit', 'LIKE', "%$query%")->orderBy('nombre')->paginate(2);
+                    ->orWhere('cuit', 'LIKE', "%$query%")->orderBy('nombre')->paginate(10);
             }else{
-                $arrayIntermediario = Intermediario::where('borrado', false)->orderBy('nombre')->paginate(2);
+                $arrayIntermediario = Intermediario::where('borrado', false)->orderBy('nombre')->paginate(10);
                 alert()->warning("No se encontraron resultados para: $query", 'No se encontraron resultados')->persistent('Cerrar');
             }
         }

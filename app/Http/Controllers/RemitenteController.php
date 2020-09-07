@@ -24,14 +24,14 @@ class RemitenteController extends Controller
     {
         $query = $request->search;
         if($request->search == ''){
-            $arrayRemitente = Remitente_Comercial::where('borrado', false)->orderBy('nombre')->paginate(2);
+            $arrayRemitente = Remitente_Comercial::where('borrado', false)->orderBy('nombre')->paginate(10);
         }else{
             $remitente =  Remitente_Comercial::where('borrado', false)->where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->exists();
             if($remitente){
                 $arrayRemitente = Remitente_Comercial::where('borrado', false)->where('nombre', 'LIKE', "%$query%")
-                    ->orWhere('cuit', 'LIKE', "%$query%")->orderBy('nombre')->paginate(2);
+                    ->orWhere('cuit', 'LIKE', "%$query%")->orderBy('nombre')->paginate(10);
             }else{
-                $arrayRemitente = Remitente_Comercial::where('borrado', false)->orderBy('nombre')->paginate(2);
+                $arrayRemitente = Remitente_Comercial::where('borrado', false)->orderBy('nombre')->paginate(10);
                 alert()->warning("No se encontraron resultados para: $query", 'No se encontraron resultados')->persistent('Cerrar');
             }
         }

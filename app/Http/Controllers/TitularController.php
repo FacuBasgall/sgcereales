@@ -24,14 +24,14 @@ class TitularController extends Controller
     {
         $query = $request->search;
         if($request->search == ''){
-            $arrayTitular = Titular::where('borrado', false)->orderBy('nombre')->paginate(2);
+            $arrayTitular = Titular::where('borrado', false)->orderBy('nombre')->paginate(10);
         }else{
             $titular =  Titular::where('borrado', false)->where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->exists();
             if($titular){
                 $arrayTitular = Titular::where('borrado', false)->where('nombre', 'LIKE', "%$query%")
-                    ->orWhere('cuit', 'LIKE', "%$query%")->orderBy('nombre')->paginate(2);
+                    ->orWhere('cuit', 'LIKE', "%$query%")->orderBy('nombre')->paginate(10);
             }else{
-                $arrayTitular = Titular::where('borrado', false)->orderBy('nombre')->paginate(2);
+                $arrayTitular = Titular::where('borrado', false)->orderBy('nombre')->paginate(10);
                 alert()->warning("No se encontraron resultados para: $query", 'No se encontraron resultados')->persistent('Cerrar');
             }
         }
