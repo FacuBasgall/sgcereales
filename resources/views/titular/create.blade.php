@@ -32,7 +32,7 @@
                         <span>DGR: </span>
                         <input type="text" value="{{old('dgr')}}" name="dgr" id="dgr" class="common-input">
                     </label>
-                    <label for="iva" >
+                    <label for="iva" class="margin-right">
                         <span>IVA:*</span>
                         <select name="iva" id="iva" class="common-input" required>
                             <option value="" selected disabled hidden></option>
@@ -50,13 +50,13 @@
                         });
                         </script>
                     </label>
-                    <label for="pais">
+                    <label for="pais" class="margin-right">
                         <span>Pais: </span>
                         <input type="text" value="Argentina" name="pais" id="pais" class="common-input">
                     </label>
                     <label for="provincia" class="margin-right">
                         <span>Provincia:</span>
-                        <select name="provincia" id="provincia" class="common-input" >
+                        <select name="provincia" id="provincia" class="common-input">
                             <option value="" selected disabled hidden></option>
                             @foreach ($provincias as $provincia)
                             <option value="{{ $provincia->id }}" {{old('provincia') == $provincia->id ? 'selected':''}}>
