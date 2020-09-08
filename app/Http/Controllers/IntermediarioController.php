@@ -73,12 +73,17 @@ class IntermediarioController extends Controller
         }
         $nuevo->nombre = $request->nombre;
         $nuevo->dgr = $request->dgr;
-        $nuevo->cp = $request->cp;
         $nuevo->condIva = $request->iva;
+        if($request->pais == "Argentina"){
+            $nuevo->pais = $request->pais;
+            $nuevo->cp = $request->cp;
+            $nuevo->localidad = $request->localidad;
+            $nuevo->provincia = $request->provincia;
+        }else{
+            $nuevo->pais = $request->otroPais;
+        }
         $nuevo->domicilio = $request->domicilio;
-        $nuevo->localidad = $request->localidad;
-        $nuevo->provincia = $request->provincia;
-        $nuevo->pais = $request->pais;        $nuevo->borrado = false;
+        $nuevo->borrado = false;
         $nuevo->save();
         alert()->success("El intermediario $nuevo->nombre fue creado con exito", 'Creado con exito');
         return redirect()->action('IntermediarioController@contact', $request->cuit);
@@ -129,12 +134,16 @@ class IntermediarioController extends Controller
         $nuevo = Intermediario::findOrFail($cuit);
         $nuevo->nombre = $request->nombre;
         $nuevo->dgr = $request->dgr;
-        $nuevo->cp = $request->cp;
         $nuevo->condIva = $request->iva;
+        if($request->pais == "Argentina"){
+            $nuevo->pais = $request->pais;
+            $nuevo->cp = $request->cp;
+            $nuevo->localidad = $request->localidad;
+            $nuevo->provincia = $request->provincia;
+        }else{
+            $nuevo->pais = $request->otroPais;
+        }
         $nuevo->domicilio = $request->domicilio;
-        $nuevo->localidad = $request->localidad;
-        $nuevo->provincia = $request->provincia;
-        $nuevo->pais = $request->pais;
         $nuevo->save();
         alert()->success("El intermediario $nuevo->nombre fue editado con exito", 'Editado con exito');
         return redirect()->action('IntermediarioController@show', $cuit);

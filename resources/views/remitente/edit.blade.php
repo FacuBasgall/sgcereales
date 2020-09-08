@@ -7,6 +7,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/forms.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script type="text/javascript" src="{{ asset('js/select-localidad.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/select-pais.js') }}"></script>
+
 </head>
 
 <body style="background:url(/image/cargador-camion.jpg) no-repeat center center fixed">
@@ -52,15 +54,22 @@
                         });
                         </script>
                     </label>
-                    <label for="cp">
-                        <span>Codigo postal: </span>
-                        <input type="text" name="cp" id="cp" class="input" value="{{$remitente->cp}}">
-                    </label>
                     <label for="pais">
                         <span>Pais: </span>
-                        <input type="text" name="pais" id="pais" class="input" value="{{$remitente->pais}}">
+                        <select name="pais" id="pais" class="common-input" onChange="paisOnChange(this)">
+                            @if($remitente->pais == "Argentina")
+                            <option value="Argentina" selected>Argentina</option>
+                            <option value="Otro">Otro</option>
+                            @elseif($remitente->pais != "Argentina" && $remitente->pais != NULL)
+                            <option value="Argentina">Argentina</option>
+                            <option value="Otro" selected>Otro</option>
+                            @else
+                            <option value="Argentina">Argentina</option>
+                            <option value="Otro">Otro</option>
+                            @endif
+                        </select>
                     </label>
-                    <label for="provincia">
+                    <label for="provincia" class="margin-right" id="prov" style="display:;">
                         <span>Provincia:</span>
                         <select name="provincia" id="provincia" class="input" >
                             <option value="" selected disabled hidden></option>
@@ -81,7 +90,7 @@
                         });
                         </script>
                     </label>
-                    <label for="localidad">
+                    <label for="localidad" class="margin-right" id="loc" style="display:;">
                         <span>Localidad:</span>
                         <select name="localidad" id="localidad" class="input" >
                             <option value="" selected disabled hidden></option>
@@ -100,6 +109,15 @@
                             dropdownAutoWidth: true,
                         });
                         </script>
+                    </label>
+                    <label for="cp" id="cod" style="display:;">
+                        <span>Codigo postal: </span>
+                        <input type="text" name="cp" id="cp" class="input" value="{{$remitente->cp}}">
+                    </label>
+                    <label for="otroPais" id="otro" style="display:none;">
+                        <span>Especifique: </span>
+                        <input type="text" value="{{$remitente->pais}}" name="otroPais" id="otroPais"
+                            class="common-input">
                     </label>
                     <label for="domicilio">
                         <span>Domicilio: </span>

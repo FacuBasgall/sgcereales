@@ -5,6 +5,8 @@
 <head>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/common-forms.css') }}">
     <script type="text/javascript" src="{{ asset('js/select-localidad.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/select-pais.js') }}"></script>
+
 </head>
 
 <body>
@@ -48,11 +50,14 @@
                         });
                         </script>
                     </label>
-                    <label for="pais" class="margin-right">
+                    <label for="pais">
                         <span>Pais: </span>
-                        <input type="text" value="Argentina" name="pais" id="pais" class="common-input">
+                        <select name="pais" id="pais" class="common-input" onChange="paisOnChange(this)">
+                            <option value="Argentina" selected>Argentina</option>
+                            <option value="Otro">Otro</option>
+                        </select>
                     </label>
-                    <label for="provincia" class="margin-right">
+                    <label for="provincia" class="margin-right" id="prov" style="display:;">
                         <span>Provincia:</span>
                         <select name="provincia" id="provincia" class="common-input" >
                             <option value="" selected disabled hidden></option>
@@ -70,7 +75,7 @@
                         });
                         </script>
                     </label>
-                    <label for="localidad">
+                    <label for="localidad" class="margin-right" id="loc" style="display:;">
                         <span>Localidad:</span>
                         <select name="localidad" id="localidad" class="common-input" >
                             <option value="" selected disabled hidden></option>
@@ -88,9 +93,14 @@
                         });
                         </script>
                     </label>
-                    <label for="cp" >
+                    <label for="cp" id="cod" style="display:;">
                         <span>Codigo postal: </span>
                         <input type="text" value="{{old('cp')}}" name="cp" id="cp" class="common-input-cp">
+                    </label>
+                    <label for="otroPais" id="otro" style="display:none;">
+                        <span>Especifique: </span>
+                        <input type="text" value="{{old('otroPais')}}" name="otroPais" id="otroPais"
+                            class="common-input">
                     </label>
                     <label for="domicilio">
                         <span>Domicilio: </span>

@@ -5,6 +5,8 @@
 <head>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/common-forms.css') }}">
     <script type="text/javascript" src="{{ asset('js/select-localidad.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/select-pais.js') }}"></script>
+
 </head>
 
 <body>
@@ -51,15 +53,22 @@
                         });
                         </script>
                     </label>
-                    <label for="cp">
-                        <span>Codigo postal: </span>
-                        <input type="text" name="cp" id="cp" class="common-input-cp" value="{{$titular->cp}}">
-                    </label>
                     <label for="pais" class="margin-right">
                         <span>Pais: </span>
-                        <input type="text" name="pais" id="pais" class="common-input" value="{{$titular->pais}}">
+                        <select name="pais" id="pais" class="common-input" onChange="paisOnChange(this)">
+                            @if($titular->pais == "Argentina")
+                            <option value="Argentina" selected>Argentina</option>
+                            <option value="Otro">Otro</option>
+                            @elseif($titular->pais != "Argentina" && $titular->pais != NULL)
+                            <option value="Argentina">Argentina</option>
+                            <option value="Otro" selected>Otro</option>
+                            @else
+                            <option value="Argentina">Argentina</option>
+                            <option value="Otro">Otro</option>
+                            @endif
+                        </select>
                     </label>
-                    <label for="provincia" class="margin-right">
+                    <label for="provincia" class="margin-right" id="prov" style="display:;">
                         <span>Provincia:</span>
                         <select name="provincia" id="provincia" class="common-input" >
                             <option value="" selected disabled hidden></option>
@@ -80,7 +89,7 @@
                         });
                         </script>
                     </label>
-                    <label for="localidad" class="margin-right">
+                    <label for="localidad" class="margin-right" id="loc" style="display:;">
                         <span>Localidad:</span>
                         <select name="localidad" id="localidad" class="common-input" >
                             <option value="" selected disabled hidden></option>
@@ -100,6 +109,15 @@
                             allowClear: true
                         });
                         </script>
+                    </label>
+                    <label for="cp" id="cod" style="display:;">
+                        <span>Codigo postal: </span>
+                        <input type="text" name="cp" id="cp" class="common-input-cp" value="{{$titular->cp}}">
+                    </label>
+                    <label for="otroPais" id="otro" style="display:none;">
+                        <span>Especifique: </span>
+                        <input type="text" value="{{$titular->pais}}" name="otroPais" id="otroPais"
+                            class="common-input">
                     </label>
                     <label for="domicilio">
                         <span>Domicilio: </span>
