@@ -6,11 +6,14 @@
     <!-- <link rel="stylesheet" type="text/css" href="{{ asset('css/forms.css') }}"> -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/common-forms.css') }}">
     <script type="text/javascript" src="{{ asset('js/select-localidad.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/select-pais.js') }}"></script>
+
 </head>
 
 <body>
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><a href="{{ action('TitularController@index') }}">Titulares carta porte</a> /
+        <label class="title col-md-8 col-form-label"><a href="{{ action('TitularController@index') }}">Titulares carta
+                porte</a> /
             Añadir titular</label>
     </div>
     <div class="container">
@@ -21,18 +24,19 @@
                     <p class="form-title"><strong>Datos del titular</strong></p>
                     <label for="nombre">
                         <span>Nombre y apellido:*</span>
-                        <input type="text" value="{{old('nombre')}}" name="nombre" id="nombre" class="common-input" required>
+                        <input type="text" value="{{old('nombre')}}" name="nombre" id="nombre" class="common-input"
+                            required>
                     </label>
-                    <label for="cuit" >
+                    <label for="cuit">
                         <span>CUIT:*</span>
                         <input type="text" value="{{old('cuit')}}" name="cuit" id="cuit" class="common-input" min="0"
                             max="999999999999999" required>
                     </label>
-                    <label for="dgr" >
+                    <label for="dgr">
                         <span>DGR: </span>
                         <input type="text" value="{{old('dgr')}}" name="dgr" id="dgr" class="common-input">
                     </label>
-                    <label for="iva" >
+                    <label for="iva">
                         <span>IVA:*</span>
                         <select name="iva" id="iva" class="common-input" required>
                             <option value="" selected disabled hidden></option>
@@ -52,11 +56,14 @@
                     </label>
                     <label for="pais">
                         <span>Pais: </span>
-                        <input type="text" value="Argentina" name="pais" id="pais" class="common-input">
+                        <select name="pais" id="pais" class="common-input" onChange="paisOnChange(this)">
+                            <option value="Argentina" selected>Argentina</option>
+                            <option value="Otro">Otro</option>
+                        </select>
                     </label>
-                    <label for="provincia" class="margin-right">
+                    <label for="provincia" class="margin-right" id="prov" style="display:;">
                         <span>Provincia:</span>
-                        <select name="provincia" id="provincia" class="common-input" >
+                        <select name="provincia" id="provincia" class="common-input">
                             <option value="" selected disabled hidden></option>
                             @foreach ($provincias as $provincia)
                             <option value="{{ $provincia->id }}" {{old('provincia') == $provincia->id ? 'selected':''}}>
@@ -72,7 +79,7 @@
                         });
                         </script>
                     </label>
-                    <label for="localidad" class="margin-right">
+                    <label for="localidad" class="margin-right" id="loc" style="display:;">
                         <span>Localidad:</span>
                         <select name="localidad" id="localidad" class="common-input"></select>
                         <script>
@@ -84,16 +91,23 @@
                         });
                         </script>
                     </label>
-                    <label for="cp" >
+                    <label for="cp" id="cod" style="display:;">
                         <span>Codigo postal: </span>
                         <input type="text" value="{{old('cp')}}" name="cp" id="cp" class="common-input-cp">
                     </label>
+                    <label for="otroPais" id="otro" style="display:none;">
+                        <span>Especifique: </span>
+                        <input type="text" value="{{old('otroPais')}}" name="otroPais" id="otroPais"
+                            class="common-input">
+                    </label>
                     <label for="domicilio">
                         <span>Domicilio: </span>
-                        <input type="text" value="{{old('domicilio')}}" name="domicilio" id="domicilio" class="common-input-address">
+                        <input type="text" value="{{old('domicilio')}}" name="domicilio" id="domicilio"
+                            class="common-input-address">
                     </label>
                     <hr>
-                    <div class="center-of-page"> <button type="submit" class="save-button"><i class="fa fa-check"></i> Guardar</button> </div>
+                    <div class="center-of-page"> <button type="submit" class="save-button"><i class="fa fa-check"></i>
+                            Guardar</button> </div>
                 </form>
             </div>
         </div>
