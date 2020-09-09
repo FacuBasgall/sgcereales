@@ -13,7 +13,7 @@
     <div class="card-header">
         <label class="title col-md-8 col-form-label"><a href="{{ action('TitularController@index') }}">Titulares</a> /
             <a href="{{ action('TitularController@show', $titular->cuit) }}">Detalle del titular</a> / Editar
-            Titular</label>
+            titular</label>
     </div>
     <div class="container">
         <div class="card">
@@ -23,7 +23,7 @@
                     {{ csrf_field() }}
                     <p class="form-title"><strong>Datos del titular</strong></p>
                     <label for="nombre">
-                        <span>Nombre y apellido:*</span>
+                        <span>Nombre y apellido*:</span>
                         <input type="text" name="nombre" id="nombre" class="common-input" value="{{$titular->nombre}}"
                             required>
                     </label>
@@ -36,7 +36,7 @@
                         <input type="text" name="dgr" id="dgr" class="common-input" value="{{$titular->dgr}}">
                     </label>
                     <label for="iva" class="margin-right">
-                        <span>IVA:*</span>
+                        <span>IVA*:</span>
                         <select name="iva" id="iva" class="common-input" required>
                             @foreach ($iva as $condicion)
                             @if($condicion->idCondIva == $titular->condIva)
@@ -54,7 +54,7 @@
                         </script>
                     </label>
                     <label for="pais" class="margin-right">
-                        <span>Pais: </span>
+                        <span>País: </span>
                         <select name="pais" id="pais" class="common-input" onChange="paisOnChange(this)">
                             @if($titular->pais == "Argentina")
                             <option value="Argentina" selected>Argentina</option>
@@ -111,7 +111,7 @@
                         </script>
                     </label>
                     <label for="cp" id="cod" style="display:;">
-                        <span>Codigo postal: </span>
+                        <span>Código postal: </span>
                         <input type="text" name="cp" id="cp" class="common-input-cp" value="{{$titular->cp}}">
                     </label>
                     <label for="otroPais" id="otro" style="display:none;">

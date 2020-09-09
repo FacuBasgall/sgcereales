@@ -30,7 +30,7 @@
                     @else
                     <strong>Intermediario: </strong>-<br>
                     @endif
-                    <strong>Remitente Comercial: </strong>{{$remitente->nombre}}<br>
+                    <strong>Remitente comercial: </strong>{{$remitente->nombre}}<br>
                     <strong>Lugar de procedencia: </strong>{{$localidad->nombre}}, {{$provincia->nombre}}<br>
                     <strong>Corredor: </strong>{{$corredor->nombre}}<br>
                     <strong>Destinatario: </strong>{{$destino->nombre}}<br>
@@ -43,18 +43,18 @@
                     <br><br>
                     <hr style="width: 420px;">
                     <h2>Información de la carga</h2>
-                    <strong>Fecha de la Carga: </strong>{{date("d/m/Y", strtotime($carga->fecha))}}<br>
+                    <strong>Fecha de la carga: </strong>{{date("d/m/Y", strtotime($carga->fecha))}}<br>
                     @if (isset($carga->nroCartaPorte))
-                    <strong>Numero de carta porte: </strong>{{$carga->nroCartaPorte}}<br>
+                    <strong>Número de carta porte: </strong>{{$carga->nroCartaPorte}}<br>
                     @else
-                    <strong>Numero de carta porte: </strong>-<br>
+                    <strong>Número de carta porte: </strong>-<br>
                     @endif
                     @if (isset($carga->matriculaCamion))
-                    <strong>Matricula del camion: </strong>{{$carga->matriculaCamion}}<br>
+                    <strong>Matrícula del camión: </strong>{{$carga->matriculaCamion}}<br>
                     @else
-                    <strong>Matricula del camion: </strong>-<br>
+                    <strong>Matrícula del camión: </strong>-<br>
                     @endif
-                    <strong>Kilos Cargados: </strong>{{$carga->kilos}}<br>
+                    <strong>Kg cargados: </strong>{{$carga->kilos}}<br>
                     <br>
                     <hr style="width: 420px;">
 
@@ -62,21 +62,21 @@
                     @if ($descarga->idCarga == $carga->idCarga)
                     @php $control = true @endphp
                     <h2>Información de la descarga</h2>
-                    <strong>Fecha de la Descarga: </strong>{{date("d/m/Y", strtotime($descarga->fecha))}}<br>
-                    <strong>Brutos (KG): </strong>{{$descarga->bruto}}<br>
-                    <strong>Tara (KG): </strong>{{$descarga->tara}}<br>
-                    <strong>Neto (KG): </strong>{{$descarga->bruto - $descarga->tara}}<br>
+                    <strong>Fecha de la descarga: </strong>{{date("d/m/Y", strtotime($descarga->fecha))}}<br>
+                    <strong>Brutos (Kg): </strong>{{$descarga->bruto}}<br>
+                    <strong>Tara (Kg): </strong>{{$descarga->tara}}<br>
+                    <strong>Neto (Kg): </strong>{{$descarga->bruto - $descarga->tara}}<br>
                     <strong>Humedad: </strong>{{$descarga->humedad}}<br>
                     @if (isset($descarga->merma))
                     <strong>Merma (%): </strong>{{$descarga->merma}}<br>
                     @else
                     <strong>Merma (%): </strong>No posee<br>
                     @endif
-                    <strong>Merma (KG):
+                    <strong>Merma (Kg):
                     </strong>{{round(($descarga->bruto - $descarga->tara) * ($descarga->merma / 100))}}<br>
-                    <strong>Neto Final (KG):
+                    <strong>Neto Final (Kg):
                     </strong>{{round(($descarga->bruto - $descarga->tara) - (($descarga->bruto - $descarga->tara) * ($descarga->merma / 100)))}}<br>
-                    <strong>Diferencia (KG):
+                    <strong>Diferencia (Kg):
                     </strong>{{round((($descarga->bruto - $descarga->tara) - (($descarga->bruto - $descarga->tara) * ($descarga->merma / 100))) - $carga->kilos)}}<br>
                     @if (isset($descarga->ph))
                     <strong>PH: </strong>{{$descarga->ph}}<br>
@@ -84,9 +84,9 @@
                     <strong>PH: </strong>-<br>
                     @endif
                     @if (isset($descarga->proteina))
-                    <strong>Proteina: </strong>{{$descarga->proteina}}<br>
+                    <strong>Proteína: </strong>{{$descarga->proteina}}<br>
                     @else
-                    <strong>Proteina: </strong>-<br>
+                    <strong>Proteína: </strong>-<br>
                     @endif
                     @if (isset($descarga->calidad))
                     <strong>Calidad: </strong>{{$descarga->calidad}}<br>

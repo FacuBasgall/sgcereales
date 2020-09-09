@@ -20,7 +20,7 @@
                     {{ csrf_field() }}
                     <p class="form-title"><strong>Intermitentes</strong></p>
                     <label for="titular" class="margin-right">
-                        <span>Titular:*</span>
+                        <span>Titular*:</span>
                         <select name="titular" id="labeltitular" class="common-input" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($titulares as $titular)
@@ -56,7 +56,7 @@
                         </script>
                     </label>
                     <label for="remitente" class="margin-right">
-                        <span>Remitente Comercial:*</span>
+                        <span>Remitente comercial*:</span>
                         <select name="remitente" id="labelremitente" class="common-input" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($remitentes as $remitente)
@@ -73,7 +73,7 @@
                         </script>
                     </label>
                     <label for="corredor" class="margin-right">
-                        <span>Corredor:*</span>
+                        <span>Corredor*:</span>
                         <select name="corredor" id="labelcorredor" class="common-input" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($corredores as $corredor)
@@ -90,7 +90,7 @@
                         </script>
                     </label>
                     <label for="destinatario" class="margin-right">
-                        <span>Destinatario:*</span>
+                        <span>Destinatario*:</span>
                         <select name="destinatario" id="labeldestinatario" class="common-input" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($destinatarios as $destinatario)
@@ -108,7 +108,7 @@
                         </script>
                     </label>
                     <label for="lugarDescarga" >
-                        <span>Destino:*</span>
+                        <span>Destino*:</span>
                         <input type="text" value="{{old('lugarDescarga')}}" name="lugarDescarga" id="lugarDescarga"
                             class="common-input" required>
                     </label>
@@ -123,7 +123,7 @@
                 <!-- aca iba la columna1  -->
                 <p class="form-title"><strong>Granos/Especie</strong></p>
                 <label for="producto" class="margin-right">
-                    <span>Producto:*</span>
+                    <span>Producto*:</span>
                     <select name="producto" class="common-input" id="labelproducto" required>
                         <option value="" selected disabled hidden></option>
                         @foreach ($productos as $producto)
@@ -140,11 +140,11 @@
                     </script>
                 </label>
                 <label for="tipo" >
-                    <span>Tipo de Producto:</span>
+                    <span>Tipo de producto:</span>
                     <input type="text" value="{{old('tipo')}}" name="tipo" id="tipo" class="common-input">
                 </label>
                 <label for="cosecha" >
-                    <span>Cosecha:* </span>
+                    <span>Cosecha*: </span>
                     20 <input type="number" value="{{old('cosecha1')}}" name="cosecha1" id="cosecha1" class="year-input"
                         min="10" max="99" required>
                     /20 <input type="number" value="{{old('cosecha2')}}" name="cosecha2" id="cosecha2"
@@ -153,7 +153,7 @@
                 <hr>
                 <p class="form-title"><strong>Procedencia de la mercaderia</strong></p>
                 <label for="provincia" class="margin-right">
-                    <span>Provincia:*</span>
+                    <span>Provincia*:</span>
                     <select name="provincia" id="provincia" class="common-input" required>
                         <option value="" selected disabled hidden></option>
                         @foreach ($provincias as $provincia)
@@ -171,7 +171,7 @@
                     </script>
                 </label>
                 <label for="localidad" class="margin-right">
-                    <span>Localidad:*</span>
+                    <span>Localidad*:</span>
                     <select name="localidad" id="localidad" class="common-input" required>
                         <option value="" selected disabled hidden></option>
                         @foreach ($localidades as $localidad)

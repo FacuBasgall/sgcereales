@@ -24,7 +24,7 @@
                     {{ method_field('PUT') }}
                     {{ csrf_field() }}
                     <label for="nombre">
-                        <span>Nombre y apellido:*</span>
+                        <span>Nombre y apellido*:</span>
                         <input type="text" name="nombre" id="nombre" class="input" value="{{$corredor->nombre}}"
                             required>
                     </label>
@@ -37,7 +37,7 @@
                         <input type="text" name="dgr" id="dgr" class="input" value="{{$corredor->dgr}}">
                     </label>
                     <label for="iva">
-                        <span>IVA:*</span>
+                        <span>IVA*:</span>
                         <select name="iva" id="iva" class="input" required>
                             @foreach ($iva as $condicion)
                             @if($condicion->idCondIva == $corredor->condIva)
@@ -55,7 +55,7 @@
                         </script>
                     </label>
                     <label for="pais">
-                        <span>Pais: </span>
+                        <span>País: </span>
                         <select name="pais" id="pais" class="common-input" onChange="paisOnChange(this)">
                             @if($corredor->pais == "Argentina")
                             <option value="Argentina" selected>Argentina</option>
@@ -112,7 +112,7 @@
                         </script>
                     </label>
                     <label for="cp" id="cod" style="display:;">
-                        <span>Codigo postal: </span>
+                        <span>Código postal: </span>
                         <input type="text" name="cp" id="cp" class="input" value="{{$corredor->cp}}">
                     </label>
                     <label for="otroPais" id="otro" style="display:none;">

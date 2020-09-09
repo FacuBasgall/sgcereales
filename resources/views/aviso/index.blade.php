@@ -31,7 +31,7 @@
                             <th>Procedencia</th>
                             <th>Destinatario</th>
                             <th>Destino</th>
-                            <th>Fecha de Creacion</th>
+                            <th>Fecha de creación</th>
                             <th>Estado</th>
                             <th>Acciones</th>
 

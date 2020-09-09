@@ -11,15 +11,15 @@
         <form action="{{action('ReporteController@index')}}" method="GET">
             {{ csrf_field() }}
             <label for="fechaDesde">
-                <span>Fecha desde:*</span>
+                <span>Fecha desde*:</span>
                 <input type="date" value="{{$filtros['fechaDesde']}}" name="fechaDesde" id="fechaDesde" class="input" required>
             </label>
             <label for="fechaHasta">
-                <span>Fecha hasta:*</span>
+                <span>Fecha hasta*:</span>
                 <input type="date" value="{{$filtros['fechaHasta']}}" name="fechaHasta" id="fechaHasta" class="input" required>
             </label>
             <label for="titular">
-                <span>Titular Carta Porte:</span>
+                <span>Titular carta porte:</span>
                 <select name="titular" id="labeltitular" class="input">
                     <option value=""></option>
                     @foreach ($titulares as $titular)
@@ -56,7 +56,7 @@
                 </script>
             </label>
             <label for="remitente">
-                <span>Remitente Comercial:</span>
+                <span>Remitente comercial:</span>
                 <select name="remitente" id="labelremitente" class="input">
                     <option value=""></option>
                     @foreach ($remitentes as $remitente)

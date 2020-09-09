@@ -16,7 +16,7 @@
     </div>
     <div class="container">
         <div class="card">
-            <h2>Informacion de Contacto</h2>
+            <h2>Información de contacto</h2>
             <div class="box" style="text-align:left; margin-left:60px;">
                 @if (!$titularContacto->isEmpty())
                 @foreach ($tipoContacto as $tipo)
