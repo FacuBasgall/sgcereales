@@ -18,7 +18,6 @@
     </div>
     <div class="container">
         <div class="card">
-            <div class="box">
                 <form action="{{action('TitularController@store')}}" method="POST">
                     {{ csrf_field() }}
                     <p class="form-title"><strong>Datos del titular</strong></p>
@@ -54,7 +53,7 @@
                         });
                         </script>
                     </label>
-                    <label for="pais" class="margin-right">
+                    <label for="pais">
                         <span>Pais: </span>
                         <select name="pais" id="pais" class="common-input" onChange="paisOnChange(this)">
                             <option value="Argentina" selected>Argentina</option>
@@ -110,7 +109,6 @@
                             Guardar</button> </div>
                 </form>
             </div>
-        </div>
     </div>
     @include('sweet::alert')
 </body>

@@ -20,7 +20,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/i18n/es.js"></script>
-
+    
+    <!-- Header de camino de hormiga-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/header.css') }}">
+    
     <!-- config app -->
     <meta charset="utf-8">
     <title>Sistema Gestor de Cereales</title>

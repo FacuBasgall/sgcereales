@@ -53,8 +53,8 @@
                         });
                         </script>
                     </label>
-                    <label for="pais" class="margin-right">
-                        <span>Pais: </span>
+                    <label for="pais">
+                        <span>País: </span>
                         <select name="pais" id="pais" class="common-input" onChange="paisOnChange(this)">
                             @if($titular->pais == "Argentina")
                             <option value="Argentina" selected>Argentina</option>
@@ -111,7 +111,7 @@
                         </script>
                     </label>
                     <label for="cp" id="cod" style="display:;">
-                        <span>Codigo postal: </span>
+                        <span>Código postal: </span>
                         <input type="text" name="cp" id="cp" class="common-input-cp" value="{{$titular->cp}}">
                     </label>
                     <label for="otroPais" id="otro" style="display:none;">
