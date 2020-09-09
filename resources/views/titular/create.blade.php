@@ -18,7 +18,6 @@
     </div>
     <div class="container">
         <div class="card">
-            <div class="box">
                 <form action="{{action('TitularController@store')}}" method="POST">
                     {{ csrf_field() }}
                     <p class="form-title"><strong>Datos del titular</strong></p>
@@ -110,7 +109,6 @@
                             Guardar</button> </div>
                 </form>
             </div>
-        </div>
     </div>
     @include('sweet::alert')
 </body>

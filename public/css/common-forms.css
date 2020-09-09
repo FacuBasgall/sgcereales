@@ -10,13 +10,12 @@ body {
   }
 
   .card {
-    margin: 20px 0px 20px 0px;
+    margin: 20px 0px 0px 0px;
     width: auto;
     height: auto;
     background:#fff;
     border-radius:10px;
     transition:0.5s;
-    border: 1px solid red;
     padding: 30px;;
   }
 
@@ -90,12 +89,4 @@ input::-webkit-inner-spin-button {
 .center-of-page {
     display: flex; 
     justify-content: center;
-}
-
-.card-header {
-    background-color: white;
-}
-
-.title {
-    font-size: 19px;
 }

@@ -4,146 +4,142 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/header.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/show.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/prueba-show.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/common-buttons.css') }}">
 </head>
 
-<body style="background:url(/image/field.jpg) no-repeat center center fixed">
+<body>
     <div class="card-header">
         <label class="title col-md-8 col-form-label"><a href="{{ action('AvisoController@index') }}">Avisos</a> /
             Detalle del aviso</label>
     </div>
     <div class="container">
-        <div class="card" style="width:530px;">
+        <div class="card">
             <div class="box">
-                <div class="header">
-                    <h2>Nro Aviso: {{$aviso->nroAviso}}</h2>
-                    @if(isset($aviso->entregador))
-                    <strong>Entregador: </strong>{{$aviso->entregador}}<br>
-                    @else
-                    <strong>Entregador: </strong>{{$entregador->nombre}}<br>
-                    @endif
-                    <strong>Producto: </strong>{{$producto->nombre}}<br>
-                    <strong>Titular: </strong>{{$titular->nombre}}<br>
-                    @if (isset($intermediario->nombre))
-                    <strong>Intermediario: </strong>{{$intermediario->nombre}}<br>
-                    @else
-                    <strong>Intermediario: </strong>-<br>
-                    @endif
-                    <strong>Remitente comercial: </strong>{{$remitente->nombre}}<br>
-                    <strong>Lugar de procedencia: </strong>{{$localidad->nombre}}, {{$provincia->nombre}}<br>
-                    <strong>Corredor: </strong>{{$corredor->nombre}}<br>
-                    <strong>Destinatario: </strong>{{$destino->nombre}}<br>
-                    <strong>Destino: </strong>{{$aviso->lugarDescarga}}<br>
-                    <a href="{{ action('AvisoController@edit', $aviso->idAviso) }}"><button class="edit-button"
-                            title="Editar" style="margin:5px"><i class="fa fa-pencil"></i> Editar</button></a>
+                <div class="header-title"><strong>
+                        <div>Nro Aviso: {{$aviso->nroAviso}}</div>
+                    </strong></div>
+                <hr>
+                <div class="form-title">Datos del aviso <a href="{{ action('AvisoController@edit', $aviso->idAviso) }}"><button class="small-edit-button" title="Editar datos del aviso"><i class="fa fa-pencil"></i></button></a></div>
+                @if(isset($aviso->entregador))
+                <label class="labels"><strong>Entregador: </strong>{{$aviso->entregador}}</label>
+                @else
+                <label class="labels"><strong>Entregador: </strong>{{$entregador->nombre}}</label>
+                @endif
+                <label class="labels"><strong>Producto: </strong>{{$producto->nombre}}</label>
+                <label class="labels"><strong>Titular: </strong>{{$titular->nombre}}</label>
+                @if (isset($intermediario->nombre))
+                <label class="labels"><strong>Intermediario: </strong>{{$intermediario->nombre}}</label>
+                @else
+                <label class="labels"><strong>Intermediario: </strong>-</label>
+                @endif
+                <label class="labels"><strong>Remitente Comercial: </strong>{{$remitente->nombre}}</label>
+                <label class="labels"><strong>Lugar de procedencia: </strong>{{$localidad->nombre}}, {{$provincia->nombre}}</label>
+                <label class="labels"><strong>Corredor: </strong>{{$corredor->nombre}}</label>
+                <label class="labels"><strong>Destinatario: </strong>{{$destino->nombre}}</label>
+                <label class="labels"><strong>Destino: </strong>{{$aviso->lugarDescarga}}</label>
 
-                    @foreach ($cargas as $carga)
-                    @php $control = false @endphp
-                    <br><br>
-                    <hr style="width: 420px;">
-                    <h2>Información de la carga</h2>
-                    <strong>Fecha de la carga: </strong>{{date("d/m/Y", strtotime($carga->fecha))}}<br>
-                    @if (isset($carga->nroCartaPorte))
-                    <strong>Número de carta porte: </strong>{{$carga->nroCartaPorte}}<br>
-                    @else
-                    <strong>Número de carta porte: </strong>-<br>
-                    @endif
-                    @if (isset($carga->matriculaCamion))
-                    <strong>Matrícula del camión: </strong>{{$carga->matriculaCamion}}<br>
-                    @else
-                    <strong>Matrícula del camión: </strong>-<br>
-                    @endif
-                    <strong>Kg cargados: </strong>{{$carga->kilos}}<br>
-                    <br>
-                    <hr style="width: 420px;">
+                <hr>
+                @foreach ($cargas as $carga)
+                @php $control = false @endphp
+                <div class="flex-container">
+                    <div class="flex-child left-bar">
+                        <div class="form-title">Carga</div>
+                        <label class="labels"><strong>Fecha: </strong>{{date("d/m/Y", strtotime($carga->fecha))}}</label>
+                        @if (isset($carga->nroCartaPorte))
+                        <label class="labels"><strong>Número de carta porte: </strong>{{$carga->nroCartaPorte}}</label>
+                        @else
+                        <label class="labels"><strong>Número de carta porte: </strong>-</label>
+                        @endif
+                        @if (isset($carga->matriculaCamion))
+                        <label class="labels"><strong>Matricula del camión: </strong>{{$carga->matriculaCamion}}</label>
+                        @else
+                        <label class="labels"><strong>Matricula del camión: </strong>-</label>
+                        @endif
+                        <label class="labels"><strong>Kilos Cargados: </strong>{{$carga->kilos}}</label>
+                    </div>
+                @foreach ($descargas as $descarga)
+                @if ($descarga->idCarga == $carga->idCarga)
+                @php $control = true @endphp
+                    <div class="flex-child left-bar">
+                        <div class="form-title">Descarga <a href="{{ action('DescargaController@create', $carga->idCarga) }}"><button class="small-plus-button" title="Añadir descarga"><i class="fa fa-plus"></i></button></a></div>
+                        <label class="labels"><strong>Fecha: </strong>{{date("d/m/Y", strtotime($descarga->fecha))}}</label>
+                        <label class="labels"><strong>Brutos (KG): </strong>{{$descarga->bruto}}</label>
+                        <label class="labels"><strong>Tara (KG): </strong>{{$descarga->tara}}</label>
+                        <label class="labels"><strong>Neto (KG): </strong>{{$descarga->bruto - $descarga->tara}}</label>
+                        <label class="labels"><strong>Humedad: </strong>{{$descarga->humedad}}</label>
+                        @if (isset($descarga->merma))
+                        <label class="labels"><strong>Merma (%): </strong>{{$descarga->merma}}</label>
+                        @else
+                        <label class="labels"><strong>Merma (%): </strong>No posee</label>
+                        @endif
+                        <label class="labels"><strong>Merma (KG):
+                            </strong>{{round(($descarga->bruto - $descarga->tara) * ($descarga->merma / 100))}}</label>
+                        <label class="labels"><strong>Neto Final (KG):
+                            </strong>{{round(($descarga->bruto - $descarga->tara) - (($descarga->bruto - $descarga->tara) * ($descarga->merma / 100)))}}</label>
+                        <label class="labels"><strong>Diferencia (KG):
+                            </strong>{{round((($descarga->bruto - $descarga->tara) - (($descarga->bruto - $descarga->tara) * ($descarga->merma / 100))) - $carga->kilos)}}</label>
+                        @if (isset($descarga->ph))
+                        <label class="labels"><strong>PH: </strong>{{$descarga->ph}}</label>
+                        @else
+                        <label class="labels"><strong>PH: </strong>-</label>
+                        @endif
+                        @if (isset($descarga->proteina))
+                        <label class="labels"><strong>Proteina: </strong>{{$descarga->proteina}}</label>
+                        @else
+                        <label class="labels"><strong>Proteina: </strong>-</label>
+                        @endif
+                        @if (isset($descarga->calidad))
+                        <label class="labels"><strong>Calidad: </strong>{{$descarga->calidad}}</label>
+                        @else
+                        <label class="labels"><strong>Calidad: </strong>-</label>
+                        @endif
+                        @endif
+                        @endforeach
+                        <div><a href="{{ action('CargaController@edit', $carga->idCarga) }}"><button class="small-edit-button" title="Editar"><i class="fa fa-pencil"></i></button></a> </div>
+                        </div>
+                        </div>
+                        <hr>
+                        @endforeach
+                        @if ($control == false)
+                        <div class="form-title">Descarga <a href="{{ action('DescargaController@create', $carga->idCarga) }}"><button class="small-plus-button" title="Añadir descarga"><i class="fa fa-plus"></i></button></a></div>
+                        <span>No existe una descarga asociada</span>
+                        @endif
+                    
+            </div>
+            @if (isset($aviso->observacion))
+            <div class="form-title">Observación </div>
+            <label class="labels">{{$aviso->observacion}} </label>
+            @else
+            <div class="form-title">Observación</div>
+            <label class="labels">Sin observaciones</label>
+            @endif
+            <hr>
+            @php
+            $estado = "";
+            @endphp
 
-                    @foreach ($descargas as $descarga)
-                    @if ($descarga->idCarga == $carga->idCarga)
-                    @php $control = true @endphp
-                    <h2>Información de la descarga</h2>
-                    <strong>Fecha de la descarga: </strong>{{date("d/m/Y", strtotime($descarga->fecha))}}<br>
-                    <strong>Brutos (Kg): </strong>{{$descarga->bruto}}<br>
-                    <strong>Tara (Kg): </strong>{{$descarga->tara}}<br>
-                    <strong>Neto (Kg): </strong>{{$descarga->bruto - $descarga->tara}}<br>
-                    <strong>Humedad: </strong>{{$descarga->humedad}}<br>
-                    @if (isset($descarga->merma))
-                    <strong>Merma (%): </strong>{{$descarga->merma}}<br>
-                    @else
-                    <strong>Merma (%): </strong>No posee<br>
-                    @endif
-                    <strong>Merma (Kg):
-                    </strong>{{round(($descarga->bruto - $descarga->tara) * ($descarga->merma / 100))}}<br>
-                    <strong>Neto Final (Kg):
-                    </strong>{{round(($descarga->bruto - $descarga->tara) - (($descarga->bruto - $descarga->tara) * ($descarga->merma / 100)))}}<br>
-                    <strong>Diferencia (Kg):
-                    </strong>{{round((($descarga->bruto - $descarga->tara) - (($descarga->bruto - $descarga->tara) * ($descarga->merma / 100))) - $carga->kilos)}}<br>
-                    @if (isset($descarga->ph))
-                    <strong>PH: </strong>{{$descarga->ph}}<br>
-                    @else
-                    <strong>PH: </strong>-<br>
-                    @endif
-                    @if (isset($descarga->proteina))
-                    <strong>Proteína: </strong>{{$descarga->proteina}}<br>
-                    @else
-                    <strong>Proteína: </strong>-<br>
-                    @endif
-                    @if (isset($descarga->calidad))
-                    <strong>Calidad: </strong>{{$descarga->calidad}}<br>
-                    @else
-                    <strong>Calidad: </strong>-<br>
-                    @endif
-                    @endif
-                    @endforeach
-                    @if ($control == false)
-                    <h2>Información de la descarga</h2><br>
-                    No existe una descarga asociada<br>
-                    <a href="{{ action('DescargaController@create', $carga->idCarga) }}"><button
-                            class="show-plus-button" title="Añadir descarga" style="margin:5px"><i
-                                class="fa fa-plus"></i> Añadir descarga</button></a>
-                    @endif
-                    <a href="{{ action('CargaController@edit', $carga->idCarga) }}"><button class="edit-button"
-                            title="Editar" style="margin:5px"><i class="fa fa-pencil"></i> Editar</button></a>
-                    @endforeach
-                    <br>
-                    <hr style="width: 420px;">
-                    @if (isset($aviso->observacion))
-                    <h2>Observación</h2>{{$aviso->observacion}}<br>
-                    @else
-                    <h2>Observación</h2>Sin observaciones<br>
-                    @endif
-                    <br>
-                    <hr style="width: 420px;">
 
-                    @php
-                    $estado = "";
-                    @endphp
-
-
-                    <h2 style="display:inline;">Estado: @if($aviso->estado == true) <span class="finished">
-                            {{$estado = "Terminado"}} </span> @else <span class="pending"> {{$estado = "Pendiente"}}
-                        </span>@endif</h2>
-                    <a href="{{ action('AvisoController@change_status', $aviso->idAviso) }}"><button type="button"
-                            class="change-state-button" title="Cambiar estado" style="margin-left:90px"><i
-                                class="fa fa-exchange"></i> Cambiar estado</button></a>
-                    <hr style="width: 420px;">
-                    <a onclick="warning( '{{$aviso->idAviso}}' , 'aviso');"><button class="delete-button"
-                            title="Eliminar" style="margin:5px"><i class="fa fa-trash"></i> Eliminar</button></a>
-                    <a href="{{ action('CargaController@create', $aviso->idAviso) }}"><button class="show-plus-button"
-                            title="Añadir carga" style="margin:5px"><i class="fa fa-plus"></i> Añadir carga</button></a>
-                    <hr style="width: 420px;">
-                    <a href="{{ action('AvisoController@export_excel', $aviso->idAviso) }}"><button
-                            class="export-button"><i class="fa fa-file-excel-o"></i> Exportar
-                            Excel</button></a>
-                    <a href="{{ action('AvisoController@export_pdf', $aviso->idAviso) }}"><button
-                            class="export-button"><i class="fa fa-file-pdf-o"></i> Exportar
-                            PDF</button></a>
-                    <a onclick="warningSendEmails( '{{$aviso->idAviso}}');"><button class="export-button"><i
-                                class="fa fa-share"></i> Enviar correos</button></a>
-                    <br><br>
-                </div>
+            <div class="form-title">Estado: @if($aviso->estado == true) <label style="color:green;">
+                    {{$estado = "Terminado"}} </label> @else <label style="color:red;"> {{$estado = "Pendiente"}}
+                </label>@endif
+                <a href="{{ action('AvisoController@change_status', $aviso->idAviso) }}"><button type="button" class="change-state-button" title="Cambiar estado"><i class="fa fa-exchange"></i> Cambiar estado</button></a></div>
+            <hr>
+            <div class="center-of-page">
+                <a onclick="warning( '{{$aviso->idAviso}}' , 'aviso');"><button class="delete-button" title="Eliminar" style="margin:5px"><i class="fa fa-trash"></i> Eliminar</button></a>
+                <a href="{{ action('CargaController@create', $aviso->idAviso) }}"><button class="show-plus-button" title="Añadir carga" style="margin:5px"><i class="fa fa-plus"></i> Añadir carga</button></a>
+            </div>
+            <hr>
+            <div class="center-of-page">
+                <a href="{{ action('AvisoController@export_excel', $aviso->idAviso) }}"><button class="export-button"><i class="fa fa-file-excel-o"></i> Exportar
+                        Excel</button></a>
+                <a href="{{ action('AvisoController@export_pdf', $aviso->idAviso) }}"><button class="export-button"><i class="fa fa-file-pdf-o"></i> Exportar
+                        PDF</button></a>
+                <a onclick="warningSendEmails( '{{$aviso->idAviso}}');"><button class="export-button"><i class="fa fa-share"></i> Enviar correos</button></a>
             </div>
         </div>
-        @include('sweet::alert')
+    </div>
+    </div>
+    @include('sweet::alert')
 </body>
 @endsection

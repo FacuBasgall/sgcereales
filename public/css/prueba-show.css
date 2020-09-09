@@ -37,3 +37,20 @@ body {
     display: flex;
     justify-content: center;
 }
+
+.flex-container {
+    display: flex;
+}
+
+.flex-child {
+    flex: 1;
+    flex-basis: 33%;
+}  
+
+.flex-child:first-child {
+    margin-right: 20px;
+}  
+
+.left-bar {
+    border-right: 1px solid rgba(0,0,0,.1);;
+}
