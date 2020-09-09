@@ -91,7 +91,7 @@
                         </script>
                     </label>
                     <label for="cp" id="cod" style="display:;">
-                        <span>Codigo postal: </span>
+                        <span>Código postal: </span>
                         <input type="text" value="{{old('cp')}}" name="cp" id="cp" class="common-input-cp">
                     </label>
                     <label for="otroPais" id="otro" style="display:none;">

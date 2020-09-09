@@ -57,7 +57,7 @@
                         </script>
                     </label>
                     <label for="pais">
-                        <span>Pais: </span>
+                        <span>País: </span>
                         <select name="pais" id="pais" class="common-input" onChange="paisOnChange(this)">
                             @if($intermediario->pais == "Argentina")
                             <option value="Argentina" selected>Argentina</option>
@@ -114,7 +114,7 @@
                         </script>
                     </label>
                     <label for="cp" id="cod" style="display:;">
-                        <span>Codigo postal: </span>
+                        <span>Código postal: </span>
                         <input type="text" name="cp" id="cp" class="input" value="{{$intermediario->cp}}">
                     </label>
                     <label for="otroPais" id="otro" style="display:none;">

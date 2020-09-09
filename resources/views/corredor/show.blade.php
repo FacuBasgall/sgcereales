@@ -37,7 +37,7 @@
                 @if (isset($corredor->cp))
                 <p><strong>CP: </strong>{{$corredor->cp}}</p>
                 @else
-                <p><strong>CP: </strong>Codigo Postal no definido</p>
+                <p><strong>CP: </strong>Código Postal no definido</p>
                 @endif
 
                 @if (isset($corredor->domicilio))

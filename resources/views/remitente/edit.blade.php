@@ -111,7 +111,7 @@
                         </script>
                     </label>
                     <label for="cp" id="cod" style="display:;">
-                        <span>Codigo postal: </span>
+                        <span>Código postal: </span>
                         <input type="text" name="cp" id="cp" class="input" value="{{$remitente->cp}}">
                     </label>
                     <label for="otroPais" id="otro" style="display:none;">
