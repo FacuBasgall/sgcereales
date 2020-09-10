@@ -166,7 +166,62 @@ class AvisoController extends Controller
         $localidad = Localidad::where('id', $aviso->localidadProcedencia)->first();
         $provincia = Provincia::where('id', $aviso->provinciaProcedencia)->first();
 
-        return view('aviso.show', compact(['aviso', 'cargas', 'descargas', 'destino', 'titular',
+        $arrayCarga = array();
+        $arrayDescarga = array();
+        if(!empty($cargas) && $cargas->count()){
+            foreach($cargas as $carga){
+                $control = false;
+                $arrayCarga[] = $carga;
+                foreach($descargas as $descarga){
+                    if($descarga->idCarga == $carga->idCarga){
+                        $control = true;
+                        $arrayDescarga[] = $descarga;
+                    }
+                }
+                if($control == false){
+                    $descargaVacia = new Descarga;
+                    $descargaVacia->idDescarga = "-";
+                    $descargaVacia->idCarga = $carga->idCarga;
+                    $descargaVacia->fecha = "-";
+                    $descargaVacia->bruto = "-";
+                    $descargaVacia->tara = "-";
+                    $descargaVacia->humedad = "-";
+                    $descargaVacia->ph = "-";
+                    $descargaVacia->proteina = "-";
+                    $descargaVacia->calidad = "-";
+                    $descargaVacia->merma = "-";
+
+                    $arrayDescarga[] = $descargaVacia;
+                }
+            }
+        }/*else{
+            $cargaVacia = new Carga;
+            $cargaVacia->idAviso = $idAviso;
+            $cargaVacia->idCarga = "-";
+            $cargaVacia->matriculaCamion = "-";
+            $cargaVacia->nroCartaPorte = "-";
+            $cargaVacia->fecha = "-";
+            $cargaVacia->kilos = "-";
+
+            $arrayCarga[] = $cargaVacia;
+
+            $descargaVacia = new Descarga;
+            $descargaVacia->idDescarga = "-";
+            $descargaVacia->idCarga = "-";
+            $descargaVacia->fecha = "-";
+            $descargaVacia->bruto = "-";
+            $descargaVacia->tara = "-";
+            $descargaVacia->humedad = "-";
+            $descargaVacia->ph = "-";
+            $descargaVacia->proteina = "-";
+            $descargaVacia->calidad = "-";
+
+            $arrayDescarga[] = $descargaVacia;
+        }*/
+
+
+        //return dd($arrayCarga, $arrayDescarga);
+        return view('aviso.show', compact(['aviso', 'arrayCarga', 'arrayDescarga', 'destino', 'titular',
             'intermediario', 'remitente', 'corredor', 'producto', 'aviso_producto', 'aviso_entregador',
             'entregador', 'localidad', 'provincia']));
     }
@@ -281,7 +336,7 @@ class AvisoController extends Controller
         }
         $aviso->save();
         alert()->success("El estado del aviso fue cambiado con exito", 'Estado cambiado');
-        return back();
+        return redirect()->action('AvisoController@show', $idAviso);
     }
 
     private function generate_key($idEntregador){

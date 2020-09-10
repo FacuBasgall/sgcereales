@@ -87,7 +87,7 @@
                             @endforeach
                             <td><div class="cortar">{{$aviso->lugarDescarga}}</div></td>
 
-                            <td>{{date("d/m/Y", strtotime($aviso_entregador->fecha))}}</td>
+                            <td>{{$aviso_entregador->fecha}}</td>
 
                             @if ($aviso->estado == true)
                             <td style="color: green;">Terminado</td>

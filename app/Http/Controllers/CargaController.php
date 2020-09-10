@@ -47,20 +47,31 @@ class CargaController extends Controller
         $hoy = date("Y-m-d");
 
         if($request->fecha <= $hoy){
-            $carga = new Carga;
-            $carga->idAviso = $request->idAviso;
-            $carga->matriculaCamion = $request->matricula;
-            $carga->nroCartaPorte = $request->cartaPorte;
-            $carga->fecha = $request->fecha;
-            $carga->kilos = $request->kilos;
-            $carga->borrado = false;
-            $carga->save();
+            $existe = Carga::where('nroCartaPorte', $request->cartaPorte)->exists();
+            if(!$existe){
+                $carga = new Carga;
+                $carga->idAviso = $request->idAviso;
+                $carga->matriculaCamion = $request->matricula;
+                $carga->nroCartaPorte = $request->cartaPorte;
+                $carga->fecha = $request->fecha;
+                $carga->kilos = $request->kilos;
+                $carga->borrado = false;
+                $carga->save();
 
-            alert()->success("La carga fue creada con exito", 'Carga guardada');
-            if(isset($request->check)){
-                return redirect()->action('DescargaController@create', $carga->idCarga);
+                alert()->success("La carga fue creada con exito", 'Carga guardada');
+                if(isset($request->check)){
+                    return redirect()->action('DescargaController@create', $carga->idCarga);
+                }else{
+                    $aviso = Aviso::where('idAviso', $carga->idAviso)->first();
+                    if($aviso->estado){
+                        return redirect()->action('AvisoController@change_status', $carga->idAviso);
+                    }else{
+                        return redirect()->action('AvisoController@show', $carga->idAviso);
+                    }
+                }
             }else{
-                return redirect()->action('AvisoController@index');
+                alert()->error("El Nro de carta porte ya existe", 'Ha ocurrido un error')->persistent('Cerrar');
+                return back()->withInput();
             }
         }else{
             alert()->error("La fecha no puede ser mayor al dia de hoy", 'Ha ocurrido un error')->persistent('Cerrar');
