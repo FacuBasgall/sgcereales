@@ -11,8 +11,10 @@
 
 <body style="background:url(/image/silo.jpg) no-repeat center center fixed">
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><a href="{{ action('AvisoController@index')}}">Avisos</a> / <a
-                href="{{ action('AvisoController@show', $carga->idAviso)}}">Detalle del aviso</a> / Añadir
+        <label class="title col-md-8 col-form-label"><a href="{{ action('AvisoController@index')}}">Avisos</a> <i
+                class="fa fa-chevron-right"></i> <a
+                href="{{ action('AvisoController@show', $carga->idAviso)}}">Detalle del aviso</a> <i
+                class="fa fa-chevron-right"></i> Añadir
             descarga</label>
     </div>
     <div class="container">

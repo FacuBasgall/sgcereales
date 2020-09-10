@@ -11,7 +11,8 @@
     <div class="card-header">
         <label class="title col-md-8 col-form-label"><a href="{{ action('TitularController@index') }}">Titulares carta
                 porte</a> /
-            <a href="{{ action('TitularController@show', $titular->cuit) }}">Detalle del titular</a> / Información de
+            <a href="{{ action('TitularController@show', $titular->cuit) }}">Detalle del titular</a> <i
+                class="fa fa-chevron-right"></i> Información de
             contacto</label>
     </div>
     <div class="container">

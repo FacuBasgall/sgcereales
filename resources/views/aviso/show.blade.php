@@ -10,8 +10,8 @@
 
 <body>
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><a href="{{ action('AvisoController@index') }}">Avisos</a> /
-            Detalle del aviso</label>
+        <label class="title col-md-8 col-form-label"><a href="{{ action('AvisoController@index') }}">Avisos</a> <i
+                class="fa fa-chevron-right"></i> Detalle del aviso</label>
     </div>
     <div class="container">
         <div class="card">
@@ -85,7 +85,7 @@
                         <label class="labels"><strong>Calidad: </strong>
                             @if ($descarga->calidad != NULL) {{$descarga->calidad}} @else - @endif </label>
                         @else
-                        No existe una descarga asociada
+                        <label class="labels">No existe una descarga asociada</label>
                         <div><a href="{{ action('DescargaController@create', $carga->idCarga) }}"><button
                                     class="show-plus-button" title="Añadir descarga" style="margin:5px"><i
                                         class="fa fa-plus"></i></button></a>

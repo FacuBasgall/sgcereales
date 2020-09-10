@@ -6,13 +6,14 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/common-forms.css') }}">
     <script type="text/javascript" src="{{ asset('js/select-localidad.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/select-pais.js') }}"></script>
-
 </head>
 
 <body>
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><a href="{{ action('TitularController@index') }}">Titulares</a> /
-            <a href="{{ action('TitularController@show', $titular->cuit) }}">Detalle del titular</a> / Editar
+        <label class="title col-md-8 col-form-label"><a href="{{ action('TitularController@index') }}">Titulares carta porte</a> <i
+                class="fa fa-chevron-right"></i>
+            <a href="{{ action('TitularController@show', $titular->cuit) }}">Detalle del titular</a> <i
+                class="fa fa-chevron-right"></i> Editar
             titular</label>
     </div>
     <div class="container">
@@ -29,7 +30,8 @@
                     </label>
                     <label for="cuit">
                         <span>CUIT: </span>
-                        <input type="text" name="cuit" id="cuit" class="common-input" value="{{$titular->cuit}}" readonly>
+                        <input type="text" name="cuit" id="cuit" class="common-input" value="{{$titular->cuit}}"
+                            readonly>
                     </label>
                     <label for="dgr">
                         <span>DGR: </span>
@@ -70,7 +72,7 @@
                     </label>
                     <label for="provincia" class="margin-right" id="prov" style="display:;">
                         <span>Provincia:</span>
-                        <select name="provincia" id="provincia" class="common-input" >
+                        <select name="provincia" id="provincia" class="common-input">
                             <option value="" selected disabled hidden></option>
                             @foreach ($provincias as $provincia)
                             @if($provincia->id == $titular->provincia)
@@ -91,7 +93,7 @@
                     </label>
                     <label for="localidad" class="margin-right" id="loc" style="display:;">
                         <span>Localidad:</span>
-                        <select name="localidad" id="localidad" class="common-input" >
+                        <select name="localidad" id="localidad" class="common-input">
                             <option value="" selected disabled hidden></option>
                             @foreach ($localidades as $localidad)
                             @if($localidad->id == $titular->localidad)
@@ -125,7 +127,8 @@
                             value="{{$titular->domicilio}}">
                     </label>
                     <hr>
-                    <div class="center-of-page"><button type="submit" class="save-button"><i class="fa fa-check"></i> Guardar</button></div>
+                    <div class="center-of-page"><button type="submit" class="save-button"><i class="fa fa-check"></i>
+                            Guardar</button></div>
                 </form>
             </div>
         </div>

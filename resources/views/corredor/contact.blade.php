@@ -10,7 +10,8 @@
 <body style="background-image:url(/image/corredor.jpg); no-repeat center center fixed">
     <div class="card-header">
         <label class="title col-md-8 col-form-label"><a href="{{ action('CorredorController@index') }}">Corredores</a> /
-            <a href="{{ action('CorredorController@show', $corredor->cuit) }}">Detalle del corredor</a> / Información de
+            <a href="{{ action('CorredorController@show', $corredor->cuit) }}">Detalle del corredor</a> <i
+                class="fa fa-chevron-right"></i> Información de
             contacto</label>
     </div>
     <div class="container">

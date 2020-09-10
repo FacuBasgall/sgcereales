@@ -3,44 +3,43 @@
 @parent
 
 <head>
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/header.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/forms.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/common-forms.css') }}">
     <script type="text/javascript" src="{{ asset('js/select-localidad.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/select-pais.js') }}"></script>
-
 </head>
 
-<body style="background:url(/image/cargador-camion.jpg) no-repeat center center fixed">
+<body>
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><a
-                href="{{ action('IntermediarioController@index') }}">Intermediarios</a> / <a
-                href="{{ action('IntermediarioController@show', $intermediario->cuit) }}">Detalle del intermediario</a>
-            / Editar intermediario</label>
+        <label class="title col-md-8 col-form-label"><a href="{{ action('IntermediarioController@index') }}">Intermediarios</a> <i
+                class="fa fa-chevron-right"></i>
+            <a href="{{ action('IntermediarioController@show', $intermediario->cuit) }}">Detalle del intermediario</a> <i
+                class="fa fa-chevron-right"></i> Editar
+            intermediario</label>
     </div>
     <div class="container">
-        <div class="card" style="height:800px;width:450px;">
+        <div class="card">
             <div class="box">
                 <form action="{{action('IntermediarioController@update', $intermediario->cuit)}}" method="POST">
                     {{ method_field('PUT') }}
                     {{ csrf_field() }}
+                    <p class="form-title"><strong>Datos del intermediario</strong></p>
                     <label for="nombre">
                         <span>Nombre y apellido*:</span>
-                        <input type="text" name="nombre" id="nombre" class="input" value="{{$intermediario->nombre}}"
+                        <input type="text" name="nombre" id="nombre" class="common-input" value="{{$intermediario->nombre}}"
                             required>
                     </label>
                     <label for="cuit">
                         <span>CUIT: </span>
-                        <input type="text" name="cuit" id="cuit" class="input" value="{{$intermediario->cuit}}"
+                        <input type="text" name="cuit" id="cuit" class="common-input" value="{{$intermediario->cuit}}"
                             readonly>
                     </label>
                     <label for="dgr">
                         <span>DGR: </span>
-                        <input type="text" name="dgr" id="dgr" class="input" value="{{$intermediario->dgr}}">
+                        <input type="text" name="dgr" id="dgr" class="common-input" value="{{$intermediario->dgr}}">
                     </label>
-                    <label for="iva">
+                    <label for="iva" class="margin-right">
                         <span>IVA*:</span>
-                        <select name="iva" id="iva" class="input" required>
+                        <select name="iva" id="iva" class="common-input" required>
                             @foreach ($iva as $condicion)
                             @if($condicion->idCondIva == $intermediario->condIva)
                             <option value="{{$condicion->idCondIva}}" selected>{{ $condicion->descripcion }}</option>
@@ -56,7 +55,7 @@
                         });
                         </script>
                     </label>
-                    <label for="pais">
+                    <label for="pais" class="margin-right">
                         <span>País: </span>
                         <select name="pais" id="pais" class="common-input" onChange="paisOnChange(this)">
                             @if($intermediario->pais == "Argentina")
@@ -73,7 +72,7 @@
                     </label>
                     <label for="provincia" class="margin-right" id="prov" style="display:;">
                         <span>Provincia:</span>
-                        <select name="provincia" id="provincia" class="input" >
+                        <select name="provincia" id="provincia" class="common-input">
                             <option value="" selected disabled hidden></option>
                             @foreach ($provincias as $provincia)
                             @if($provincia->id == $intermediario->provincia)
@@ -94,7 +93,7 @@
                     </label>
                     <label for="localidad" class="margin-right" id="loc" style="display:;">
                         <span>Localidad:</span>
-                        <select name="localidad" id="localidad" class="input" >
+                        <select name="localidad" id="localidad" class="common-input">
                             <option value="" selected disabled hidden></option>
                             @foreach ($localidades as $localidad)
                             @if($localidad->id == $intermediario->localidad)
@@ -115,7 +114,7 @@
                     </label>
                     <label for="cp" id="cod" style="display:;">
                         <span>Código postal: </span>
-                        <input type="text" name="cp" id="cp" class="input" value="{{$intermediario->cp}}">
+                        <input type="text" name="cp" id="cp" class="common-input-cp" value="{{$intermediario->cp}}">
                     </label>
                     <label for="otroPais" id="otro" style="display:none;">
                         <span>Especifique: </span>
@@ -124,10 +123,12 @@
                     </label>
                     <label for="domicilio">
                         <span>Domicilio: </span>
-                        <input type="text" name="domicilio" id="domicilio" class="input"
+                        <input type="text" name="domicilio" id="domicilio" class="common-input-address"
                             value="{{$intermediario->domicilio}}">
                     </label>
-                    <button type="submit" class="save-button"><i class="fa fa-check"></i> Guardar</button>
+                    <hr>
+                    <div class="center-of-page"><button type="submit" class="save-button"><i class="fa fa-check"></i>
+                            Guardar</button></div>
                 </form>
             </div>
         </div>

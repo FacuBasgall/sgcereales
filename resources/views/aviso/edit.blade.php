@@ -12,8 +12,10 @@
 
 <body style="background:url(/image/silo.jpg) no-repeat center center fixed">
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><a href="{{ action('AvisoController@index') }}">Avisos</a> / <a
-                href="{{ action('AvisoController@show', $aviso->idAviso) }}">Detalle del aviso</a> / Editar aviso
+        <label class="title col-md-8 col-form-label"><a href="{{ action('AvisoController@index') }}">Avisos</a> <i
+                class="fa fa-chevron-right"></i> <a
+                href="{{ action('AvisoController@show', $aviso->idAviso) }}">Detalle del aviso</a> <i
+                class="fa fa-chevron-right"></i> Editar aviso
             {{$aviso->nroAviso}}</label>
     </div>
     <div class="container">
@@ -25,7 +27,7 @@
                     <p>Intermitentes</p>
                     <label for="titular">
                         <span>Titular*:</span>
-                        <select name="titular" class="input" id="titular" required>
+                        <select name="titular" class="input" id="labeltitular" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($titulares as $titular)
                             @if($titular->cuit == $aviso->idTitularCartaPorte)
@@ -37,7 +39,7 @@
                         </select>
                         <script>
                         $.fn.select2.defaults.set('language', 'es');
-                        $("#titular").select2({
+                        $("#labeltitular").select2({
                             placeholder: 'Seleccione',
                             dropdownAutoWidth: true,
                         });
@@ -45,7 +47,7 @@
                     </label>
                     <label for="intermediario">
                         <span>Intermediario:</span>
-                        <select name="intermediario" id="intermediario" class="input">
+                        <select name="intermediario" id="labelintermediario" class="input">
                             <option value="" selected></option>
                             @foreach ($intermediarios as $intermediario)
                             @if($intermediario->cuit == $aviso->idIntermediario)
@@ -57,7 +59,7 @@
                         </select>
                         <script>
                         $.fn.select2.defaults.set('language', 'es');
-                        $("#intermediario").select2({
+                        $("#labelintermediario").select2({
                             placeholder: 'Seleccione',
                             dropdownAutoWidth: true,
                         });
@@ -65,7 +67,7 @@
                     </label>
                     <label for="remitente">
                         <span>Remitente comercial*:</span>
-                        <select name="remitente" class="input" id="remitente" required>
+                        <select name="remitente" class="input" id="labelremitente" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($remitentes as $remitente)
                             @if($remitente->cuit == $aviso->idRemitenteComercial)
@@ -77,7 +79,7 @@
                         </select>
                         <script>
                         $.fn.select2.defaults.set('language', 'es');
-                        $("#remitente").select2({
+                        $("#labelremitente").select2({
                             placeholder: 'Seleccione',
                             dropdownAutoWidth: true,
                         });
@@ -85,7 +87,7 @@
                     </label>
                     <label for="corredor">
                         <span>Corredor*:</span>
-                        <select name="corredor" class="input" id="corredor" required>
+                        <select name="corredor" class="input" id="labelcorredor" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($corredores as $corredor)
                             @if($corredor->cuit == $aviso->idCorredor)
@@ -97,7 +99,7 @@
                         </select>
                         <script>
                         $.fn.select2.defaults.set('language', 'es');
-                        $("#corredor").select2({
+                        $("#labelcorredor").select2({
                             placeholder: 'Seleccione',
                             dropdownAutoWidth: true,
                         });
@@ -105,7 +107,7 @@
                     </label>
                     <label for="destinatario">
                         <span>Destinatario*:</span>
-                        <select name="destinatario" class="input" id="destinatario" required>
+                        <select name="destinatario" class="input" id="labeldestinatario" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($destinatarios as $destinatario)
                             @if($destinatario->cuit == $aviso->idDestinatario)
@@ -117,7 +119,7 @@
                         </select>
                         <script>
                         $.fn.select2.defaults.set('language', 'es');
-                        $("#destinatario").select2({
+                        $("#labeldestinatario").select2({
                             placeholder: 'Seleccione',
                             dropdownAutoWidth: true,
                         });
@@ -133,7 +135,7 @@
                     <p>Granos/Especie</p>
                     <label for="producto">
                         <span>Producto*:</span>
-                        <select name="producto" class="input" id="producto" required>
+                        <select name="producto" class="input" id="labelproducto" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($productos as $producto)
                             @if($producto->idProducto == $aviso->idProducto)
@@ -145,7 +147,7 @@
                         </select>
                         <script>
                         $.fn.select2.defaults.set('language', 'es');
-                        $("#producto").select2({
+                        $("#labelproducto").select2({
                             placeholder: 'Seleccione',
                             dropdownAutoWidth: true,
                         });

@@ -9,18 +9,21 @@
 
 <body>
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><a href="{{ action('TitularController@index') }}">Titulares</a> 
-        <i class="fa fa-chevron-right"></i> Detalle del titular</label>
+        <label class="title col-md-8 col-form-label"><a href="{{ action('TitularController@index') }}">Titulares</a>
+            <i class="fa fa-chevron-right"></i> Detalle del titular</label>
     </div>
     <div class="container">
         <div class="card">
             <div class="box">
                 <div class="header-title">
-                    <strong><div>{{$titular->nombre}}</div></strong>
+                    <strong>
+                        <div>{{$titular->nombre}}</div>
+                    </strong>
                 </div>
                 <hr>
-                <div class="form-title">Datos del titular <a href="{{ action('TitularController@edit', $titular->cuit)}}"><button class="small-edit-button"
-                        title="Editar"><i class="fa fa-pencil"></i></button></a></div>
+                <div class="form-title">Datos del titular <a
+                        href="{{ action('TitularController@edit', $titular->cuit)}}"><button class="small-edit-button"
+                            title="Editar"><i class="fa fa-pencil"></i></button></a></div>
                 <label class="labels"><strong>CUIT: </strong>{{$titular->cuit}}</label>
                 @foreach ($iva as $condicion)
                 @if($condicion->idCondIva == $titular->condIva)
@@ -63,9 +66,10 @@
                 <label class="labels"><strong>Dirección: </strong>Dirección no definida</label>
                 @endif
                 <hr>
-                    <div class="form-title">Contactos <a href="{{ action('TitularController@contact', $titular->cuit) }}"><button
-                                class="small-edit-button" title="Gestionar contactos"><i
-                                    class="fa fa-pencil"></i></button></a></div>
+                <div class="form-title">Contactos <a
+                        href="{{ action('TitularController@contact', $titular->cuit) }}"><button
+                            class="small-edit-button" title="Gestionar contactos"><i
+                                class="fa fa-pencil"></i></button></a></div>
                 @if (!$contacto->isEmpty())
                 @foreach ($tipoContacto as $tipo)
                 @foreach ($contacto as $numero)
@@ -78,10 +82,11 @@
                 <label class="labels">No se encontró información</label>
                 @endif
                 <hr>
-                <div class="center-of-page"><a onclick="warning( '{{$titular->cuit}}' , 'titular');"><button class="delete-button" title="Eliminar"><i class="fa fa-trash"></i>
-                        Eliminar</button></a>
+                <div class="center-of-page"><a onclick="warning( '{{$titular->cuit}}' , 'titular');"><button
+                            class="delete-button" title="Eliminar"><i class="fa fa-trash"></i>
+                            Eliminar</button></a>
+                </div>
             </div>
-        </div>
-        @include('sweet::alert')
+            @include('sweet::alert')
 </body>
 @endsection

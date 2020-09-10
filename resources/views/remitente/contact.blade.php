@@ -11,7 +11,8 @@
     <div class="card-header">
         <label class="title col-md-8 col-form-label"><a href="{{ action('RemitenteController@index') }}">Remitentes
                 Comercial</a> /
-            <a href="{{ action('RemitenteController@show', $remitente->cuit) }}">Detalle del remitente</a> / Información
+            <a href="{{ action('RemitenteController@show', $remitente->cuit) }}">Detalle del remitente</a> <i
+                class="fa fa-chevron-right"></i> Información
             de
             contacto</label>
     </div>

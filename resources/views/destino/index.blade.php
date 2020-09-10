@@ -3,8 +3,8 @@
 @parent
 
 <head>
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/showProduct.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/header.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/show-cards.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/cortar-card.css') }}">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -13,26 +13,26 @@
 
 <body>
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><b>Destinatario</b></label>
+        <a class="title">Destinatario</a>
+        <div class="search-bar">
+            <form class="{{action('DestinoController@index')}}" method="GET">
+                {{ csrf_field() }}
+                <input class="searchTerm" type="search" placeholder="Buscar..." name="search" id="search">
+                <button class="searchButton" type="submit"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
         <a href="{{ action('DestinoController@create') }}"><button class="plus-button" title="Añadir destinatario"><i
                     class="fa fa-plus"></i> Añadir</button></a>
     </div>
-    <form class="{{action('DestinoController@index')}}" method="GET">
-        {{ csrf_field() }}
-        <input type="search" placeholder="Buscar..." name="search" id="search">
-        <button type="submit"><i class="fa fa-search"></i></button>
-    </form>
     <div class="container">
         @if(!empty($arrayDestino) && $arrayDestino->count())
         @foreach( $arrayDestino as $key)
         <div class="card">
             <div class="box">
-                <div class="img">
-                    <img src="{{ URL::to('/image/silo-icon.jpg') }}">
-                </div>
-                <h2><div class="cortar">{{$key->nombre}}</div></h2>
+                <a class="title">
+                    <div class="cortar">{{$key->nombre}}</div>
+                </a>
                 <p>CUIT: {{$key->cuit}}</p>
-
                 <hr>
                 </hr>
                 <a href="{{ action('DestinoController@show', $key->cuit) }}"><button class="show-button"

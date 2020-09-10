@@ -29,7 +29,9 @@
         @foreach( $arrayTitular as $key)
         <div class="card">
             <div class="box">
-                <a class="title"><div class="cortar">{{$key->nombre}}</div></a>
+                <a class="title">
+                    <div class="cortar">{{$key->nombre}}</div>
+                </a>
                 <p>CUIT: {{$key->cuit}}</p>
                 <hr>
                 </hr>
