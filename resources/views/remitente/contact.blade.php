@@ -10,7 +10,7 @@
 <body style="background-image:url(/image/corredor.jpg); no-repeat center center fixed">
     <div class="card-header">
         <label class="title col-md-8 col-form-label"><a href="{{ action('RemitenteController@index') }}">Remitentes
-                Comercial</a> /
+                Comercial</a> <i class="fa fa-chevron-right"></i>
             <a href="{{ action('RemitenteController@show', $remitente->cuit) }}">Detalle del remitente</a> <i
                 class="fa fa-chevron-right"></i> Información
             de
