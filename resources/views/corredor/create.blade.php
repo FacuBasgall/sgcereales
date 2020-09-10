@@ -20,11 +20,11 @@
                 <form action="{{action('CorredorController@store')}}" method="POST">
                     {{ csrf_field() }}
                     <label for="nombre">
-                        <span>Nombre y apellido:*</span>
+                        <span>Nombre y apellido*:</span>
                         <input type="text" value="{{old('nombre')}}" name="nombre" id="nombre" class="input" required>
                     </label>
                     <label for="cuit">
-                        <span>CUIT:*</span>
+                        <span>CUIT*:</span>
                         <input type="text" value="{{old('cuit')}}" name="cuit" id="cuit" class="input" min="0"
                             max="999999999999999" required>
                     </label>
@@ -33,7 +33,7 @@
                         <input type="text" value="{{old('dgr')}}" name="dgr" id="dgr" class="input">
                     </label>
                     <label for="iva">
-                        <span>IVA:*</span>
+                        <span>IVA*:</span>
                         <select name="iva" id="iva" class="input" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($iva as $condicion)

@@ -24,7 +24,7 @@
                     {{ method_field('PUT') }}
                     {{ csrf_field() }}
                     <label for="nombre">
-                        <span>Nombre y apellido:*</span>
+                        <span>Nombre y apellido*:</span>
                         <input type="text" name="nombre" id="nombre" class="input" value="{{$corredor->nombre}}"
                             required>
                     </label>
@@ -37,7 +37,7 @@
                         <input type="text" name="dgr" id="dgr" class="input" value="{{$corredor->dgr}}">
                     </label>
                     <label for="iva">
-                        <span>IVA:*</span>
+                        <span>IVA*:</span>
                         <select name="iva" id="iva" class="input" required>
                             @foreach ($iva as $condicion)
                             @if($condicion->idCondIva == $corredor->condIva)

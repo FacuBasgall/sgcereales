@@ -21,22 +21,22 @@
                 <form action="{{action('DescargaController@store')}}" method="POST">
                     {{ csrf_field() }}
                     <label for="fecha">
-                        <span>Fecha de la Descarga:*</span>
+                        <span>Fecha de la descarga*:</span>
                         <input type="date" value="{{old('fecha')}}" name="fecha" id="fecha" class="input"
                             style="margin: 10px 20px;" required>
                     </label>
                     <label for="bruto">
-                        <span>Kilos Brutos:*</span>
+                        <span>Kg brutos*:</span>
                         <input type="number" value="{{$carga->kilos}}" min="0" name="bruto" id="bruto" class="input"
                             style="margin: 10px 20px;" required>
                     </label>
                     <label for="tara">
-                        <span>Tara Kg:*</span>
+                        <span>Tara Kg*:</span>
                         <input type="number" value="{{old('tara')}}" min="0" name="tara" id="tara" class="input"
                             style="margin: 10px 20px;" required>
                     </label>
                     <label for="humedad">
-                        <span>Humedad (%):*</span>
+                        <span>Humedad (%)*:</span>
                         <input type="number" value="{{old('humedad')}}" step=".1" min="0" name="humedad" id="humedad"
                             class="input" style="margin: 10px 20px;" required>
                     </label>
@@ -46,7 +46,7 @@
                             style="margin: 10px 20px;">
                     </label>
                     <label for="proteina">
-                        <span>Proteina: </span>
+                        <span>Proteína: </span>
                         <input type="number" value="{{old('proteina')}}" step=".1" min="0" name="proteina" id="proteina"
                             class="input" style="margin: 10px 20px;">
                     </label>

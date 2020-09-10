@@ -24,7 +24,7 @@
                 </hr>
                 @foreach ($iva as $condicion)
                 @if($condicion->idCondIva == $corredor->condIva)
-                <p><strong>Condicion de IVA: </strong>{{$condicion->descripcion}}</p>
+                <p><strong>Condición de IVA: </strong>{{$condicion->descripcion}}</p>
                 @endif
                 @endforeach
                 @if (isset($corredor->dgr))

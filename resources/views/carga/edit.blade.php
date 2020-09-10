@@ -23,22 +23,22 @@
                     {{ method_field('PUT') }}
                     {{ csrf_field() }}
                     <label for="cartaPorte">
-                        <span>Número de Carta Porte: </span>
+                        <span>Número de carta porte: </span>
                         <input type="text" name="cartaPorte" id="cartaPorte" value="{{$carga->nroCartaPorte}}"
                             class="edit-aviso-input">
                     </label>
                     <label for="fecha">
-                        <span>Fecha de Carga:*</span>
+                        <span>Fecha de carga*:</span>
                         <input type="date" name="fecha" id="fecha" value="{{$carga->fecha}}" class="edit-aviso-input"
                             required>
                     </label>
                     <label for="matricula">
-                        <span>Matricula del Camión: </span>
+                        <span>Matricula del camión: </span>
                         <input type="text" name="matricula" id="matricula" value="{{$carga->matriculaCamion}}"
                             class="edit-aviso-input">
                     </label>
                     <label for="kilos">
-                        <span>Kilos Cargados:*</span>
+                        <span>Kilos cargados*:</span>
                         <input type="number" min="0" name="kilos" id="kilos" value="{{$carga->kilos}}"
                             class="edit-aviso-input" required>
                     </label>
@@ -51,22 +51,22 @@
             <div class="column2">
                 <span>Datos de la descarga</span>
                 <label for="fechaDescarga">
-                    <span>Fecha de la Descarga:*</span>
+                    <span>Fecha de la descarga*:</span>
                     <input type="date" name="fechaDescarga" id="fechaDescarga" value="{{$descarga->fecha}}" class="edit-aviso-input"
                         required>
                 </label>
                 <label for="bruto">
-                    <span>Kilos Brutos:*</span>
+                    <span>Kilos brutos*:</span>
                     <input type="number" min="0" name="bruto" id="bruto" value="{{$descarga->bruto}}"
                         class="edit-aviso-input" required>
                 </label>
                 <label for="tara">
-                    <span>Tara Kg:*</span>
+                    <span>Tara Kg*:</span>
                     <input type="number" min="0" name="tara" id="tara" value="{{$descarga->tara}}"
                         class="edit-aviso-input" required>
                 </label>
                 <label for="humedad">
-                    <span>Humedad (%):*</span>
+                    <span>Humedad (%)*:</span>
                     <input type="number" step=".1" min="0" name="humedad" id="humedad" value="{{$descarga->humedad}}"
                         class="edit-aviso-input" required>
                 </label>
@@ -76,7 +76,7 @@
                         class="edit-aviso-input">
                 </label>
                 <label for="proteina">
-                    <span>Proteina: </span>
+                    <span>Proteína: </span>
                     <input type="number" step=".1" min="0" name="proteina" id="proteina" value="{{$descarga->proteina}}"
                         class="edit-aviso-input">
                 </label>

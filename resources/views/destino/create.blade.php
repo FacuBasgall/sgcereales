@@ -22,12 +22,12 @@
                 <form action="{{action('DestinoController@store')}}" method="POST">
                     {{ csrf_field() }}
                     <label for="nombre">
-                        <span>Nombre y apellido:*</span>
+                        <span>Nombre y apellido*:</span>
                         <input type="text" value="{{old('nombre')}}" name="nombre" id="nombre" class="input"
                             style="margin: 10px 20px;" required>
                     </label>
                     <label for="cuit">
-                        <span>CUIT:*</span>
+                        <span>CUIT*:</span>
                         <input type="number" value="{{old('cuit')}}" name="cuit" id="cuit" class="input"
                             style="margin: 10px 20px;" min="0" max="99999999999" required>
                     </label>
@@ -37,7 +37,7 @@
                             style="margin: 10px 20px;">
                     </label>
                     <label for="iva">
-                        <span>IVA:*</span>
+                        <span>IVA*:</span>
                         <select name="iva" id="iva" class="input" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($iva as $condicion)

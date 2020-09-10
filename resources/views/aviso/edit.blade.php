@@ -24,7 +24,7 @@
                     {{ csrf_field() }}
                     <p>Intermitentes</p>
                     <label for="titular">
-                        <span>Titular:*</span>
+                        <span>Titular*:</span>
                         <select name="titular" class="input" id="titular" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($titulares as $titular)
@@ -64,7 +64,7 @@
                         </script>
                     </label>
                     <label for="remitente">
-                        <span>Remitente Comercial:*</span>
+                        <span>Remitente comercial*:</span>
                         <select name="remitente" class="input" id="remitente" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($remitentes as $remitente)
@@ -84,7 +84,7 @@
                         </script>
                     </label>
                     <label for="corredor">
-                        <span>Corredor:*</span>
+                        <span>Corredor*:</span>
                         <select name="corredor" class="input" id="corredor" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($corredores as $corredor)
@@ -104,7 +104,7 @@
                         </script>
                     </label>
                     <label for="destinatario">
-                        <span>Destinatario:*</span>
+                        <span>Destinatario*:</span>
                         <select name="destinatario" class="input" id="destinatario" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($destinatarios as $destinatario)
@@ -124,7 +124,7 @@
                         </script>
                     </label>
                     <label for="lugarDescarga">
-                        <span>Destino:*</span>
+                        <span>Destino*:</span>
                         <input type="text" value="{{$aviso->lugarDescarga}}" name="lugarDescarga" id="lugarDescarga"
                             class="input" required>
                     </label>
@@ -132,7 +132,7 @@
                     <hr>
                     <p>Granos/Especie</p>
                     <label for="producto">
-                        <span>Producto:*</span>
+                        <span>Producto*:</span>
                         <select name="producto" class="input" id="producto" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($productos as $producto)
@@ -152,14 +152,14 @@
                         </script>
                     </label>
                     <label for="tipo">
-                        <span>Tipo de Producto:</span>
+                        <span>Tipo de producto:</span>
                         <input type="text" value="{{$aviso_producto->tipo}}" name="tipo" id="tipo" class="input">
                     </label>
                     <label for="cosecha">
                         @php $año1 = substr($aviso_producto->cosecha, 2, 2);
                         $año2 = substr($aviso_producto->cosecha, -2, 2);
                         @endphp
-                        <span>Cosecha:*</span>
+                        <span>Cosecha*:</span>
                         20 <input type="number" value="{{$año1}}" name="cosecha1" id="cosecha1" class="input-year"
                             min="10" max="99" required>
                         /20 <input type="number" value="{{$año2}}" name="cosecha2" id="cosecha2" class="input-year"
@@ -209,7 +209,7 @@
                     </label>
                     <hr>
                     <label for="obs">
-                        <p>Observaciónes</p>
+                        <p>Observaciones</p>
                         <textarea name="obs" id="obs" value="{{$aviso->observacion}}" class="observation-box" rows="10"
                             cols="40"></textarea>
                     </label>

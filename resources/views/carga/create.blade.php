@@ -21,22 +21,22 @@
                 <form action="{{action('CargaController@store')}}" method="POST">
                     {{ csrf_field() }}
                     <label for="cartaPorte">
-                        <span>N° Carta Porte:</span>
+                        <span>Número carta porte:</span>
                         <input type="number" value="{{old('cartaPorte')}}" name="cartaPorte" id="cartaPorte"
                             class="input" style="margin: 10px 20px;">
                     </label>
                     <label for="fecha">
-                        <span>Fecha de Carga:*</span>
+                        <span>Fecha de carga*:</span>
                         <input type="date" value="{{old('fecha')}}" name="fecha" id="fecha" class="input"
                             style="margin: 10px 20px;" required>
                     </label>
                     <label for="matricula">
-                        <span>Matricula del Camión:</span>
+                        <span>Matrícula del camión:</span>
                         <input type="text" value="{{old('matricula')}}" name="matricula" id="matricula" class="input"
                             style="margin: 10px 20px;">
                     </label>
                     <label for="kilos">
-                        <span>Kilos Cargados:*</span>
+                        <span>Kilos cargados*:</span>
                         <input type="number" value="{{old('kilos')}}" min="0" name="kilos" id="kilos" class="input"
                             style="margin: 10px 20px;" required>
                     </label>
