@@ -59,7 +59,7 @@
                     </div>
                     @foreach ($arrayDescarga as $descarga)
                     @if($descarga->idCarga == $carga->idCarga)
-                    <div class="flex-child left-bar">
+                    <div class="flex-child">
                         <div class="form-title">Descarga</div>
                         @if($descarga->fecha != "-")
                         <label class="labels"><strong>Fecha:
