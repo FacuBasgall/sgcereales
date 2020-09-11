@@ -3,7 +3,7 @@
 @parent
 
 <head>
-    <script type="text/javascript" src="{{ asset('js/select-localidad.js') }}"></script>
+
 </head>
 
 <body>
@@ -163,7 +163,7 @@
                     <td>{{$aviso->nroAviso}}</td>
                     @foreach ($avisos_entregadores as $aviso_entregador)
                         @if($aviso_entregador->idAviso == $aviso->idAviso)
-                            <td>{{$aviso_entregador->fecha}}</td>
+                            <td>{{date("d/m/Y", strtotime($aviso_entregador->fecha))}}</td>
                         @endif
                     @endforeach
                     @foreach ($titulares as $titular)
