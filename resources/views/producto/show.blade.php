@@ -10,7 +10,8 @@
 
 <body style="background:url(/image/silo.jpg) no-repeat center center fixed">
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><a href="{{ action('ProductoController@index') }}">Productos</a> /
+        <label class="title col-md-8 col-form-label"><a href="{{ action('ProductoController@index') }}">Productos</a> <i
+                class="fa fa-chevron-right"></i>
             Detalle del producto</label>
     </div>
     <div class="container">

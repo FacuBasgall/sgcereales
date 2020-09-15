@@ -3,31 +3,27 @@
 @parent
 
 <head>
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/common-buttons.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/header.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/forms.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script type="text/javascript" src="{{ asset('js/select-localidad.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/common-forms.css') }}">
 </head>
 
-<body style="background:url(/image/silo.jpg) no-repeat center center fixed">
+<body>
     <div class="card-header">
         <label class="title col-md-8 col-form-label"><a href="{{ action('AvisoController@index') }}">Avisos</a> <i
-                class="fa fa-chevron-right"></i> <a
-                href="{{ action('AvisoController@show', $aviso->idAviso) }}">Detalle del aviso</a> <i
-                class="fa fa-chevron-right"></i> Editar aviso
+                class="fa fa-chevron-right"></i> <a href="{{ action('AvisoController@show', $aviso->idAviso) }}">Detalle
+                del aviso</a> <i class="fa fa-chevron-right"></i> Editar aviso
             {{$aviso->nroAviso}}</label>
     </div>
     <div class="container">
-        <div class="card" style="height:1500px;width:450px;">
+        <div class="card">
             <div class="box">
                 <form action="{{action('AvisoController@update', $aviso->idAviso)}}" method="POST">
                     {{ method_field('PUT') }}
                     {{ csrf_field() }}
-                    <p>Intermitentes</p>
-                    <label for="titular">
+                    <p class="form-title"><strong>Intermitentes</strong></p>
+                    <label for="titular" class="margin-right">
                         <span>Titular*:</span>
-                        <select name="titular" class="input" id="labeltitular" required>
+                        <select name="titular" class="common-input" id="labeltitular" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($titulares as $titular)
                             @if($titular->cuit == $aviso->idTitularCartaPorte)
@@ -45,9 +41,9 @@
                         });
                         </script>
                     </label>
-                    <label for="intermediario">
+                    <label for="intermediario" class="margin-right">
                         <span>Intermediario:</span>
-                        <select name="intermediario" id="labelintermediario" class="input">
+                        <select name="intermediario" id="labelintermediario" class="common-input">
                             <option value="" selected></option>
                             @foreach ($intermediarios as $intermediario)
                             @if($intermediario->cuit == $aviso->idIntermediario)
@@ -65,9 +61,9 @@
                         });
                         </script>
                     </label>
-                    <label for="remitente">
+                    <label for="remitente" class="margin-right">
                         <span>Remitente comercial*:</span>
-                        <select name="remitente" class="input" id="labelremitente" required>
+                        <select name="remitente" class="common-input" id="labelremitente" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($remitentes as $remitente)
                             @if($remitente->cuit == $aviso->idRemitenteComercial)
@@ -85,9 +81,9 @@
                         });
                         </script>
                     </label>
-                    <label for="corredor">
+                    <label for="corredor" class="margin-right">
                         <span>Corredor*:</span>
-                        <select name="corredor" class="input" id="labelcorredor" required>
+                        <select name="corredor" class="common-input" id="labelcorredor" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($corredores as $corredor)
                             @if($corredor->cuit == $aviso->idCorredor)
@@ -105,9 +101,9 @@
                         });
                         </script>
                     </label>
-                    <label for="destinatario">
+                    <label for="destinatario" class="margin-right">
                         <span>Destinatario*:</span>
-                        <select name="destinatario" class="input" id="labeldestinatario" required>
+                        <select name="destinatario" class="common-input" id="labeldestinatario" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($destinatarios as $destinatario)
                             @if($destinatario->cuit == $aviso->idDestinatario)
@@ -128,95 +124,103 @@
                     <label for="lugarDescarga">
                         <span>Destino*:</span>
                         <input type="text" value="{{$aviso->lugarDescarga}}" name="lugarDescarga" id="lugarDescarga"
-                            class="input" required>
+                            class="common-input" required>
                     </label>
                     <!-- EL ENTREGADOR ES EL USUARIO QUE ESTA AUTENTICADO EN EL MOMENTO -->
-                    <hr>
-                    <p>Granos/Especie</p>
-                    <label for="producto">
-                        <span>Producto*:</span>
-                        <select name="producto" class="input" id="labelproducto" required>
-                            <option value="" selected disabled hidden></option>
-                            @foreach ($productos as $producto)
-                            @if($producto->idProducto == $aviso->idProducto)
-                            <option value="{{ $producto->idProducto }}" selected>{{ $producto->nombre }}</option>
-                            @else
-                            <option value="{{ $producto->idProducto }}">{{$producto->nombre}}</option>
-                            @endif
-                            @endforeach
-                        </select>
-                        <script>
-                        $.fn.select2.defaults.set('language', 'es');
-                        $("#labelproducto").select2({
-                            placeholder: 'Seleccione',
-                            dropdownAutoWidth: true,
-                        });
-                        </script>
-                    </label>
-                    <label for="tipo">
-                        <span>Tipo de producto:</span>
-                        <input type="text" value="{{$aviso_producto->tipo}}" name="tipo" id="tipo" class="input">
-                    </label>
-                    <label for="cosecha">
-                        @php $año1 = substr($aviso_producto->cosecha, 2, 2);
-                        $año2 = substr($aviso_producto->cosecha, -2, 2);
-                        @endphp
-                        <span>Cosecha*:</span>
-                        20 <input type="number" value="{{$año1}}" name="cosecha1" id="cosecha1" class="input-year"
-                            min="10" max="99" required>
-                        /20 <input type="number" value="{{$año2}}" name="cosecha2" id="cosecha2" class="input-year"
-                            min="10" max="99" required>
+                    <label for="entregador">
+                        <span>Entregador:</span>
+                        <input type="text" value="{{$aviso->entregador}}" name="entregador" id="entregador"
+                            class="common-input">
                     </label>
                     <hr>
-                    <p>Procedencia de la mercaderia</p>
-                    <label for="provincia">
-                        <span>Provincia:</span>
-                        <select name="provincia" id="provincia" class="input" >
-                            <option value="" selected disabled hidden></option>
-                            @foreach ($provincias as $provincia)
-                            @if($provincia->id == $aviso->provinciaProcedencia)
-                            <option value="{{ $provincia->id }}" selected>{{ $provincia->nombre }}</option>
-                            @else
-                            <option value="{{ $provincia->id }}">{{$provincia->nombre}}</option>
-                            @endif
-                            @endforeach
-                        </select>
-                        <script>
-                        $.fn.select2.defaults.set('language', 'es');
-                        $("#provincia").select2({
-                            placeholder: 'Seleccione',
-                            dropdownAutoWidth: true,
-                        });
-                        </script>
-                    </label>
-                    <label for="localidad">
-                        <span>Localidad:</span>
-                        <select name="localidad" id="localidad" class="input" >
-                            <option value="" selected disabled hidden></option>
-                            @foreach ($localidades as $localidad)
-                            @if($localidad->id == $aviso->localidadProcedencia)
-                            <option value="{{ $localidad->id }}" selected>{{ $localidad->nombre }}</option>
-                            @else
-                            <option value="{{ $localidad->id }}">{{$localidad->nombre}}</option>
-                            @endif
-                            @endforeach
-                        </select>
-                        <script>
-                        $.fn.select2.defaults.set('language', 'es');
-                        $("#localidad").select2({
-                            placeholder: 'Seleccione',
-                            dropdownAutoWidth: true,
-                        });
-                        </script>
-                    </label>
-                    <hr>
-                    <label for="obs">
-                        <p>Observaciones</p>
-                        <textarea name="obs" id="obs" value="{{$aviso->observacion}}" class="observation-box" rows="10"
-                            cols="40"></textarea>
-                    </label>
-                    <hr style="width: 420px;">
-                    <button type="submit" class="save-button"><i class="fa fa-check"></i> Guardar</button>
+            </div>
+            <div>
+                <p class="form-title"><strong>Granos/Especie</strong></p>
+                <label for="producto" class="margin-right">
+                    <span>Producto*:</span>
+                    <select name="producto" class="common-input" id="labelproducto" required>
+                        <option value="" selected disabled hidden></option>
+                        @foreach ($productos as $producto)
+                        @if($producto->idProducto == $aviso->idProducto)
+                        <option value="{{ $producto->idProducto }}" selected>{{ $producto->nombre }}</option>
+                        @else
+                        <option value="{{ $producto->idProducto }}">{{$producto->nombre}}</option>
+                        @endif
+                        @endforeach
+                    </select>
+                    <script>
+                    $.fn.select2.defaults.set('language', 'es');
+                    $("#labelproducto").select2({
+                        placeholder: 'Seleccione',
+                        dropdownAutoWidth: true,
+                    });
+                    </script>
+                </label>
+                <label for="tipo">
+                    <span>Tipo de producto:</span>
+                    <input type="text" value="{{$aviso_producto->tipo}}" name="tipo" id="tipo" class="common-input">
+                </label>
+                <label for="cosecha">
+                    @php $año1 = substr($aviso_producto->cosecha, 2, 2);
+                    $año2 = substr($aviso_producto->cosecha, -2, 2);
+                    @endphp
+                    <span>Cosecha*:</span>
+                    20 <input type="number" value="{{$año1}}" name="cosecha1" id="cosecha1" class="year-input" min="10"
+                        max="99" required>
+                    /20 <input type="number" value="{{$año2}}" name="cosecha2" id="cosecha2" class="year-input" min="10"
+                        max="99" required>
+                </label>
+                <hr>
+                <p class="form-title"><strong>Procedencia de la mercaderia</strong></p>
+                <label for="provincia" class="margin-right">
+                    <span>Provincia*:</span>
+                    <select name="provincia" id="provincia" class="common-input">
+                        <option value="" selected disabled hidden></option>
+                        @foreach ($provincias as $provincia)
+                        @if($provincia->id == $aviso->provinciaProcedencia)
+                        <option value="{{ $provincia->id }}" selected>{{ $provincia->nombre }}</option>
+                        @else
+                        <option value="{{ $provincia->id }}">{{$provincia->nombre}}</option>
+                        @endif
+                        @endforeach
+                    </select>
+                    <script>
+                    $.fn.select2.defaults.set('language', 'es');
+                    $("#provincia").select2({
+                        placeholder: 'Seleccione',
+                        dropdownAutoWidth: true,
+                    });
+                    </script>
+                </label>
+                <label for="localidad" class="margin-right">
+                    <span>Localidad*:</span>
+                    <select name="localidad" id="localidad" class="common-input">
+                        <option value="" selected disabled hidden></option>
+                        @foreach ($localidades as $localidad)
+                        @if($localidad->id == $aviso->localidadProcedencia)
+                        <option value="{{ $localidad->id }}" selected>{{ $localidad->nombre }}</option>
+                        @else
+                        <option value="{{ $localidad->id }}">{{$localidad->nombre}}</option>
+                        @endif
+                        @endforeach
+                    </select>
+                    <script>
+                    $.fn.select2.defaults.set('language', 'es');
+                    $("#localidad").select2({
+                        placeholder: 'Seleccione',
+                        dropdownAutoWidth: true,
+                    });
+                    </script>
+                </label>
+                <hr>
+                <label for="obs">
+                    <p class="form-title"><strong>Observaciones</strong></p>
+                    <textarea name="obs" id="obs" value="{{$aviso->observacion}}" class="observation-box"
+                        style="height:80px;" placeholder="Ingrese una observación" cols="150"></textarea>
+                </label>
+                <hr>
+                <div class="center-of-page"><button type="submit" class="save-button"><i class="fa fa-check"></i>
+                        Guardar</button></div>
                 </form>
             </div>
         </div>

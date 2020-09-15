@@ -16,7 +16,6 @@
     <div class="container">
         <div class="card">
             <div class="box">
-                <!-- aca iba la columna1  -->
                 <form action="{{action('AvisoController@store')}}" method="POST">
                     {{ csrf_field() }}
                     <p class="form-title"><strong>Intermitentes</strong></p>
@@ -121,7 +120,6 @@
                     <hr>
             </div>
             <div>
-                <!-- aca iba la columna1  -->
                 <p class="form-title"><strong>Granos/Especie</strong></p>
                 <label for="producto" class="margin-right">
                     <span>Producto*:</span>
