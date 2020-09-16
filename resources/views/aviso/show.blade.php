@@ -10,8 +10,7 @@
 
 <body>
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><a href="{{ action('AvisoController@index') }}">Avisos</a> <i
-                class="fa fa-chevron-right"></i> Detalle del aviso</label>
+        <label class="title col-md-8 col-form-label"><a href="{{ action('AvisoController@index') }}">Avisos</a> <i class="fa fa-chevron-right"></i> Detalle del aviso</label>
     </div>
     <div class="container">
         <div class="card">
@@ -20,9 +19,7 @@
                         <div>Nro Aviso: {{$aviso->nroAviso}}</div>
                     </strong></div>
                 <hr>
-                <div class="form-title">Datos del aviso <a
-                        href="{{ action('AvisoController@edit', $aviso->idAviso) }}"><button class="small-edit-button"
-                            title="Editar datos del aviso"><i class="fa fa-pencil"></i></button></a></div>
+                <div class="form-title"><strong>Datos del aviso</strong><a href="{{ action('AvisoController@edit', $aviso->idAviso) }}"><button class="small-edit-button" title="Editar datos del aviso"><i class="fa fa-pencil"></i></button></a></div>
                 @if(isset($aviso->entregador))
                 <label class="labels"><strong>Entregador: </strong>{{$aviso->entregador}}</label>
                 @else
@@ -42,8 +39,11 @@
                 <label class="labels"><strong>Destinatario: </strong>{{$destino->nombre}}</label>
                 <label class="labels"><strong>Destino: </strong>{{$aviso->lugarDescarga}}</label>
                 <hr>
+                <div class="form-title"><strong>Cargas/Descargas</strong> <a href="{{ action('CargaController@create', $aviso->idAviso) }}"><button class="show-plus-button" title="Añadir carga"><i class="fa fa-plus"></i> Añadir carga</button></a></div>
                 @if(!empty($arrayCarga))
+                @php $cant= 1 @endphp
                 @foreach ($arrayCarga as $carga)
+                <div class="form-title">N° {{$cant}} carga/descarga <a href="{{ action('CargaController@edit', $carga->idCarga) }}"><button class="small-edit-button" title="Editar"><i class="fa fa-pencil"></i></button></a></div>
                 <div class="flex-container">
                     <div class="flex-child left-bar">
                         <div class="form-title">Carga</div>
@@ -60,8 +60,8 @@
                     @foreach ($arrayDescarga as $descarga)
                     @if($descarga->idCarga == $carga->idCarga)
                     <div class="flex-child">
-                        <div class="form-title">Descarga</div>
                         @if($descarga->fecha != "-")
+                        <div class="form-title">Descarga</div>
                         <label class="labels"><strong>Fecha:
                             </strong>{{date("d/m/Y", strtotime($descarga->fecha))}}</label>
                         <label class="labels"><strong>Brutos (KG): </strong>{{$descarga->bruto}}</label>
@@ -85,28 +85,25 @@
                         <label class="labels"><strong>Calidad: </strong>
                             @if ($descarga->calidad != NULL) {{$descarga->calidad}} @else - @endif </label>
                         @else
-                        <label class="labels">No existe una descarga asociada</label>
-                        <div><a href="{{ action('DescargaController@create', $carga->idCarga) }}"><button
-                                    class="show-plus-button" title="Añadir descarga" style="margin:5px"><i
-                                        class="fa fa-plus"></i></button></a>
-                        </div>
+                        <div class="form-title">Descarga <a href="{{ action('DescargaController@create', $carga->idCarga) }}"><button class="small-plus-button" style="padding:6px; font-size:14px;" title="Añadir descarga"><i class="fa fa-plus"></i></button></a></div>
+                        <label class="labels info-text"><i class="fa fa-exclamation-circle"></i> No existe una descarga asociada</label>
                         @endif
                         @endif
                         @endforeach
-                        <div><a href="{{ action('CargaController@edit', $carga->idCarga) }}"><button
-                                    class="small-edit-button" title="Editar"><i class="fa fa-pencil"></i></button></a>
-                        </div>
                     </div>
                 </div>
+                <hr>
+                @php $cant++ @endphp
                 @endforeach
+                @else
                 <hr>
                 @endif
                 @if (isset($aviso->observacion))
-                <div class="form-title">Observación </div>
+                <div class="form-title"><strong>Observación</strong></div>
                 <label class="labels">{{$aviso->observacion}} </label>
                 @else
                 <div class="form-title">Observación</div>
-                <label class="labels">Sin observaciones</label>
+                <label class="labels info-text"><i class="fa fa-exclamation-circle"></i> Sin observaciones</label>
                 @endif
                 <hr>
                 @php
@@ -114,30 +111,22 @@
                 @endphp
 
 
-                <div class="form-title">Estado: @if($aviso->estado == true) <label style="color:green;">
-                        {{$estado = "Terminado"}} </label> @else <label style="color:red;"> {{$estado = "Pendiente"}}
-                    </label>@endif
-                    <a href="{{ action('AvisoController@change_status', $aviso->idAviso) }}"><button type="button"
-                            class="change-state-button" title="Cambiar estado"><i class="fa fa-exchange"></i> Cambiar
-                            estado</button></a>
+                <div class="form-title"><strong>Estado: @if($aviso->estado == true) <label style="color:green;">
+                            {{$estado = "Terminado"}} </label> @else <label style="color:red;"> {{$estado = "Pendiente"}}
+                        </label>@endif</strong>
+                    <a class="change-state-button" href="{{ action('AvisoController@change_status', $aviso->idAviso) }}"><i class="fa fa-refresh"></i></a>
                 </div>
                 <hr>
                 <div class="center-of-page">
-                    <a onclick="warning( '{{$aviso->idAviso}}' , 'aviso');"><button class="delete-button"
-                            title="Eliminar" style="margin:5px"><i class="fa fa-trash"></i> Eliminar</button></a>
-                    <a href="{{ action('CargaController@create', $aviso->idAviso) }}"><button class="show-plus-button"
-                            title="Añadir carga" style="margin:5px"><i class="fa fa-plus"></i> Añadir carga</button></a>
-                </div>
-                <hr>
-                <div class="center-of-page">
-                    <a href="{{ action('AvisoController@export_excel', $aviso->idAviso) }}"><button
-                            class="export-button"><i class="fa fa-file-excel-o"></i> Exportar
+                    <a href="{{ action('AvisoController@export_excel', $aviso->idAviso) }}"><button class="export-button"><i class="fa fa-file-excel-o"></i> Exportar
                             Excel</button></a>
-                    <a href="{{ action('AvisoController@export_pdf', $aviso->idAviso) }}"><button
-                            class="export-button"><i class="fa fa-file-pdf-o"></i> Exportar
+                    <a href="{{ action('AvisoController@export_pdf', $aviso->idAviso) }}"><button class="export-button"><i class="fa fa-file-pdf-o"></i> Exportar
                             PDF</button></a>
-                    <a onclick="warningSendEmails( '{{$aviso->idAviso}}');"><button class="export-button"><i
-                                class="fa fa-share"></i> Enviar correos</button></a>
+                    <a onclick="warningSendEmails( '{{$aviso->idAviso}}');"><button class="export-button"><i class="fa fa-envelope"></i> Enviar</button></a>
+                </div>
+                <hr>
+                <div class="center-of-page">
+                    <a onclick="warning( '{{$aviso->idAviso}}' , 'aviso');"><button class="delete-button" title="Eliminar"><i class="fa fa-trash"></i> Eliminar</button></a>
                 </div>
             </div>
         </div>
