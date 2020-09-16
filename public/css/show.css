@@ -37,3 +37,8 @@ body {
     display: flex;
     justify-content: center;
 }
+
+.info-text {
+    color: grey;
+    font-size: 16px;
+}

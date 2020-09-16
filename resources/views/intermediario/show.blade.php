@@ -33,37 +33,37 @@
                 @if (isset($intermediario->dgr))
                 <label class="labels"><strong>DGR: </strong>{{$intermediario->dgr}}</label>
                 @else
-                <label class="labels"><strong>DGR: </strong>No ingresado </label>
+                <label class="labels"><strong>DGR: </strong><label class="info-text">-</label> </label>
                 @endif
                 <br>
                 @if (isset($intermediario->pais))
                 <label class="labels"><strong>País: </strong>{{$intermediario->pais}}</label>
                 @else
-                <label class="labels"><strong>País: </strong>País no definido</label>
+                <label class="labels"><strong>País: </strong><label class="info-text">-</label></label>
                 @endif
 
                 @if (isset($intermediario->provincia))
                 <label class="labels"><strong>Provincia: </strong>{{$provincia->nombre}}</label>
                 @else
-                <label class="labels"><strong>Provincia: </strong>Provincia no definida</label>
+                <label class="labels"><strong>Provincia: </strong><label class="info-text">-</label></label>
                 @endif
 
                 @if (isset($intermediario->localidad))
                 <label class="labels"><strong>Ciudad: </strong>{{$localidad->nombre}}</label>
                 @else
-                <label class="labels"><strong>Ciudad: </strong>Ciudad no definida</label>
+                <label class="labels"><strong>Ciudad: </strong><label class="info-text">-</label></label>
                 @endif
 
                 @if (isset($intermediario->cp))
                 <label class="labels"><strong>CP: </strong>{{$intermediario->cp}}</label>
                 @else
-                <label class="labels"><strong>CP: </strong>Código Postal no definido</label>
+                <label class="labels"><strong>CP: </strong><label class="info-text">-</label></label>
                 @endif
 
                 @if (isset($intermediario->domicilio))
                 <label class="labels"><strong>Dirección: </strong>{{$intermediario->domicilio}}</label>
                 @else
-                <label class="labels"><strong>Dirección: </strong>Dirección no definida</label>
+                <label class="labels"><strong>Dirección: </strong><label class="info-text">-</label></label>
                 @endif
                 <hr>
                 <div class="form-title">Contactos <a
@@ -79,7 +79,7 @@
                 @endforeach
                 @endforeach
                 @else
-                <label class="labels">No se encontró información</label>
+                <label class="labels info-text"><i class="fa fa-exclamation-circle"></i> No se encontraron contactos</label>
                 @endif
                 <hr>
                 <div class="center-of-page"><a onclick="warning( '{{$intermediario->cuit}}' , 'intermediario');"><button
