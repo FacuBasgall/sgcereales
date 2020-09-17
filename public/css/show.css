@@ -37,3 +37,34 @@ body {
     display: flex;
     justify-content: center;
 }
+
+.end-of-the-page {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.flex-container {
+    display: flex;
+}
+
+.flex-child {
+    flex: 1;
+    flex-basis: 33%;
+}  
+
+.flex-child:first-child {
+    margin-right: 20px;
+}  
+
+.left-bar {
+    border-right: 1px solid rgba(0,0,0,.1);
+}
+
+.info-text {
+    color: grey; 
+    font-size: 16px;
+}
+
+.info-margin{
+    margin-left: 3%;
+}

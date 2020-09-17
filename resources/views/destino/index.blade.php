@@ -4,7 +4,7 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/header.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/show-cards.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/index-cards.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/cortar-card.css') }}">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
