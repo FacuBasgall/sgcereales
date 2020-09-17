@@ -68,3 +68,27 @@ body {
 .info-margin{
     margin-left: 3%;
 }
+
+table {
+    margin-left: 25px;
+    margin-top: 10px;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 25%;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+
+  #div1 {
+    overflow:scroll;
+    height: 350px;
+    overflow-x: hidden;
+  }
