@@ -20,10 +20,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/i18n/es.js"></script>
-    
+
     <!-- Header de camino de hormiga-->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/header.css') }}">
-    
+
     <!-- config app -->
     <meta charset="utf-8">
     <title>Sistema Gestor de Cereales</title>
@@ -99,10 +99,10 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#" title="Cerrar sesión">
+          <a class="nav-link" href="{{url('logout')}}" title="Cerrar sesión">
             <i class="fa fa-power-off">
             </i>
-            Cerrar Sesión
+            Cerrar Sesión {{auth()->user()->username}}
           </a>
         </li>
       </ul>
@@ -110,7 +110,7 @@
   </nav>
   <div id="loader" class="center"></div>
   @yield('content')
-  <script> 
+  <script>
         $(document).ready(function () {
     var loc = window.location.href; // grabbing the url
     var str = loc.split("/")[3]; // splitting the url and taking the third string
@@ -120,5 +120,5 @@
       $("#" + str).addClass("active");
 });
 
-    </script> 
+    </script>
 </body>

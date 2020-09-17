@@ -36,6 +36,11 @@ use SweetAlert;
 
 class ReporteController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(Request $request)
     {
         $resultado = NULL;
@@ -51,15 +56,16 @@ class ReporteController extends Controller
             "producto" => $request->producto,
         );
         $control = false;
+        $idEntregador = auth()->user()->idUser;
         if(isset($request->fechaDesde) && isset($request->fechaHasta)){
             if($request->fechaDesde <= $request->fechaHasta){
-                $existe = Aviso_Entregador::whereBetween('fecha', [$request->fechaDesde, $request->fechaHasta])->where('idEntregador', 1)->exists();
+                $existe = Aviso_Entregador::whereBetween('fecha', [$request->fechaDesde, $request->fechaHasta])->where('idEntregador', $idEntregador)->exists();
                 if($existe){
                     $control = true;
                     $resultado = DB::table('aviso')
                                 ->join('aviso_entregador', 'aviso.idAviso', '=', 'aviso_entregador.idAviso')
                                 ->whereBetween('aviso_entregador.fecha', [$request->fechaDesde, $request->fechaHasta])
-                                ->where('aviso_entregador.idEntregador', '=', 1)
+                                ->where('aviso_entregador.idEntregador', '=', $idEntregador)
                                 ->select('aviso.*')
                                 ->get();
                 }
@@ -92,7 +98,6 @@ class ReporteController extends Controller
             }
         }
 
-        $entregadorAutenticado = 1;
         $cargas = Carga::where('borrado', false)->get();
         $descargas = Descarga::where('borrado', false)->get();
         $destinatarios = Destino::where('borrado', false)->get();
@@ -100,10 +105,10 @@ class ReporteController extends Controller
         $intermediarios = Intermediario::where('borrado', false)->get();
         $remitentes = Remitente_Comercial::where('borrado', false)->get();
         $corredores = Corredor::where('borrado', false)->get();
-        $entregador = User::where('idUser', $entregadorAutenticado)->first(); //Solo Usuario Entregador Autenticado
+        $entregador = User::where('idUser', $idEntregador)->first(); //Solo Usuario Entregador Autenticado
         $productos = Producto::where('borrado', false)->get();
         $avisos_productos = Aviso_Producto::all();
-        $avisos_entregadores = Aviso_Entregador::where('idEntregador', $entregadorAutenticado)->get();
+        $avisos_entregadores = Aviso_Entregador::where('idEntregador', $idEntregador)->get();
         $localidades = Localidad::all();
         $provincias = Provincia::all();
 

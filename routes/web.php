@@ -17,11 +17,11 @@ Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/login', 'Auth\LoginController@login')->name('login');
-Route::post('/login', 'Auth\LoginController@authenticate');
+Route::post('/login/auth', 'Auth\LoginController@authenticate');
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::post('/register', 'Auth\RegisterController@register');
-Route::get('/register', 'Auth\RegisterController@store');
+Route::post('/register/store', 'Auth\RegisterController@store');
 
 Route::post('/password/email','Auth\ForgotPasswordController@sendResetLinkEmail');
 Route::get('/password/reset','Auth\ForgotPasswordController@showLinkRequestForm');
@@ -149,13 +149,3 @@ Route::get('/reporte/export_excel/{id}', 'ReporteController@export_excel');
 Route::get('/reporte/export_pdf/{id}', 'ReporteController@export_pdf');
 Route::get('/reporte/send_email/{id}', 'ReporteController@send_email');
 Route::get('/reporte/getLocalidades', 'ReporteController@getLocalidades');
-
-/* ASI VAN LOS FILTROS
-* Route::group(['middleware'=>'auth'],function(){
-    Route::get('catalogo', 'CatalogoController@index');
-    Route::get('catalogo/show/{id}', 'CatalogoController@show');
-    Route::get('catalogo/create', 'CatalogoController@create');
-    Route::get('catalogo/edit/{id}', 'CatalogoController@edit');
-    Route::get('catalogo/save', 'CatalogoController@save');
-    Route::get('catalogo/update/{id}', 'CatalogoController@update');
-  });*/

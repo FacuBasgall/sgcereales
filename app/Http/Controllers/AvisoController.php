@@ -41,9 +41,15 @@ class AvisoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        $entregadorAutenticado = 1;
+        $entregadorAutenticado = auth()->user()->idUser;
         $avisos = Aviso::where('borrado', false)->get();
         $cargas = Carga::where('borrado', false)->get();
         $descargas = Descarga::where('borrado', false)->get();
@@ -52,7 +58,6 @@ class AvisoController extends Controller
         $intermediarios = Intermediario::where('borrado', false)->get();
         $remitentes = Remitente_Comercial::where('borrado', false)->get();
         $corredores = Corredor::where('borrado', false)->get();
-        $entregador = User::where('idUser', $entregadorAutenticado)->first(); //Solo Usuario Entregador Autenticado
         $productos = Producto::where('borrado', false)->get();
         $avisos_productos = Aviso_Producto::all();
         $avisos_entregadores = Aviso_Entregador::where('idEntregador', $entregadorAutenticado)->get();
@@ -60,7 +65,7 @@ class AvisoController extends Controller
         $provincias = Provincia::all();
 
         return view('aviso.index', compact(['avisos', 'cargas', 'descargas', 'destinatarios', 'titulares',
-            'intermediarios', 'remitentes', 'corredores', 'entregador', 'productos', 'avisos_productos',
+            'intermediarios', 'remitentes', 'corredores', 'productos', 'avisos_productos',
             'avisos_entregadores', 'localidades', 'provincias']));
 
     }
@@ -76,14 +81,13 @@ class AvisoController extends Controller
         $intermediarios = Intermediario::where('borrado', false)->orderBy('nombre')->get();
         $remitentes = Remitente_Comercial::where('borrado', false)->orderBy('nombre')->get();
         $corredores = Corredor::where('borrado', false)->orderBy('nombre')->get();
-        $entregadores = User::where('tipoUser', 'E')->get(); //Solo Usuarios Entregadores
         $destinatarios = Destino::where('borrado', false)->orderBy('nombre')->get();
         $productos = Producto::where('borrado', false)->orderBy('nombre')->get();
         $localidades = Localidad::all();
         $provincias = Provincia::all();
 
         return view('aviso.create', compact(['titulares', 'intermediarios', 'remitentes', 'corredores',
-            'entregadores', 'destinatarios', 'productos', 'localidades', 'provincias']));
+            'destinatarios', 'productos', 'localidades', 'provincias']));
 
     }
 
@@ -106,7 +110,7 @@ class AvisoController extends Controller
 
         $cosecha = $fecha1 . "/" . $fecha2;
 
-        $idEntregador = 1;
+        $idEntregador = auth()->user()->idUser;
 
         $aviso = new Aviso;
         $keyAviso = $this->generate_key($idEntregador);
@@ -194,33 +198,7 @@ class AvisoController extends Controller
                     $arrayDescarga[] = $descargaVacia;
                 }
             }
-        }/*else{
-            $cargaVacia = new Carga;
-            $cargaVacia->idAviso = $idAviso;
-            $cargaVacia->idCarga = "-";
-            $cargaVacia->matriculaCamion = "-";
-            $cargaVacia->nroCartaPorte = "-";
-            $cargaVacia->fecha = "-";
-            $cargaVacia->kilos = "-";
-
-            $arrayCarga[] = $cargaVacia;
-
-            $descargaVacia = new Descarga;
-            $descargaVacia->idDescarga = "-";
-            $descargaVacia->idCarga = "-";
-            $descargaVacia->fecha = "-";
-            $descargaVacia->bruto = "-";
-            $descargaVacia->tara = "-";
-            $descargaVacia->humedad = "-";
-            $descargaVacia->ph = "-";
-            $descargaVacia->proteina = "-";
-            $descargaVacia->calidad = "-";
-
-            $arrayDescarga[] = $descargaVacia;
-        }*/
-
-
-        //return dd($arrayCarga, $arrayDescarga);
+        }
         return view('aviso.show', compact(['aviso', 'arrayCarga', 'arrayDescarga', 'destino', 'titular',
             'intermediario', 'remitente', 'corredor', 'producto', 'aviso_producto', 'aviso_entregador',
             'entregador', 'localidad', 'provincia']));
@@ -239,7 +217,6 @@ class AvisoController extends Controller
         $intermediarios = Intermediario::where('borrado', false)->orderBy('nombre')->get();
         $remitentes = Remitente_Comercial::where('borrado', false)->orderBy('nombre')->get();
         $corredores = Corredor::where('borrado', false)->orderBy('nombre')->get();
-        $entregadores = User::where('tipoUser', 'E')->get(); //Solo Usuarios Entregadores
         $destinatarios = Destino::where('borrado', false)->orderBy('nombre')->get();
         $productos = Producto::where('borrado', false)->orderBy('nombre')->get();
         $aviso_producto = Aviso_Producto::where('idAviso', $idAviso)->first();
@@ -247,7 +224,7 @@ class AvisoController extends Controller
         $provincias = Provincia::all();
 
         return view('aviso.edit', compact(['aviso', 'titulares', 'intermediarios', 'remitentes', 'corredores',
-            'entregadores', 'destinatarios', 'productos', 'aviso_producto', 'localidades', 'provincias']));
+            'destinatarios', 'productos', 'aviso_producto', 'localidades', 'provincias']));
     }
 
     /**

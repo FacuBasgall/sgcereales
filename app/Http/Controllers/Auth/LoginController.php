@@ -48,44 +48,22 @@ class LoginController extends Controller
 
     public function authenticate(Request $request)
     {
-        $input = $request->all();
 
-        $this->validate($request, [
+        request()->validate([
             'username' => 'required',
             'password' => 'required',
-        ]);
-
-        //$fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-        if(auth()->attempt(array('username' => $input['username'], 'password' => $input['password'])))
-        {
-            return redirect()->route('home');
-        }else{
-            return redirect()->route('login')
-                ->with('error','Email-Address And Password Are Wrong.');
-        }
-    }
-
-   /* public function authenticate(Request $request)
-    {
-        $request->validate([
-            'username' => 'required|string',
-            'password' => 'required|string',
-        ]);
-
+            ]);
         $credentials = $request->only('username', 'password');
-
-        dd(Auth::attempt($credentials));
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('/home');
+            // Authentication passed...
+            return redirect()->action('HomeController@index');
         }
-
-        return redirect('/login')->with('error', 'Oppes! You have entered invalid credentials');
-    }*/
+        return redirect('login');
+    }
 
     public function logout()
     {
         Auth::logout();
-
-        return redirect('/login');
+        return redirect('login');
     }
 }

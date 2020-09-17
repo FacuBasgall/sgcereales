@@ -37,7 +37,7 @@ class ReporteExport implements FromView, ShouldAutoSize
 
     public function view(): View
     {
-        $entregadorAutenticado = 1;
+        $entregadorAutenticado = auth()->user()->idUser;
         $cargas = Carga::where('borrado', false)->get();
         $descargas = Descarga::where('borrado', false)->get();
         $destinatarios = Destino::where('borrado', false)->get();

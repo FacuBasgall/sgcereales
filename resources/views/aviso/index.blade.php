@@ -47,7 +47,7 @@
                             @if (isset($aviso->entregador))
                             <td><div class="cortar">{{$aviso->entregador}}</div></td>
                             @else
-                            <td><div class="cortar">{{$entregador->nombre}}</div></td>
+                            <td><div class="cortar">{{auth()->user()->nombre}}</div></td>
                             @endif
 
                             @foreach ($productos as $producto)

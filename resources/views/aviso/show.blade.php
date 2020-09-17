@@ -23,7 +23,7 @@
                 @if(isset($aviso->entregador))
                 <label class="labels"><strong>Entregador: </strong>{{$aviso->entregador}}</label>
                 @else
-                <label class="labels"><strong>Entregador: </strong>{{$entregador->nombre}}</label>
+                <label class="labels"><strong>Entregador: </strong>{{auth()->user()->nombre}}</label>
                 @endif
                 <label class="labels"><strong>Producto: </strong>{{$producto->nombre}}</label>
                 <label class="labels"><strong>Titular: </strong>{{$titular->nombre}}</label>

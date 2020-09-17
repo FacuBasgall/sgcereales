@@ -47,7 +47,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $entregadorAutenticado = 1;
+        $entregadorAutenticado = auth()->user()->idUser;
         $avisos = Aviso::where('borrado', false)->where('estado', 0)->get(); //false, pendiente
         $cargas = Carga::where('borrado', false)->get();
         $descargas = Descarga::where('borrado', false)->get();
@@ -56,7 +56,6 @@ class HomeController extends Controller
         $intermediarios = Intermediario::where('borrado', false)->get();
         $remitentes = Remitente_Comercial::where('borrado', false)->get();
         $corredores = Corredor::where('borrado', false)->get();
-        $entregador = User::where('idUser', $entregadorAutenticado)->first(); //Solo Usuario Entregador Autenticado
         $productos = Producto::where('borrado', false)->get();
         $avisos_productos = Aviso_Producto::all();
         $avisos_entregadores = Aviso_Entregador::where('idEntregador', $entregadorAutenticado)->get();
@@ -64,7 +63,7 @@ class HomeController extends Controller
         $provincias = Provincia::all();
 
         return view('home', compact(['avisos', 'cargas', 'descargas', 'destinatarios', 'titulares',
-            'intermediarios', 'remitentes', 'corredores', 'entregador', 'productos', 'avisos_productos',
+            'intermediarios', 'remitentes', 'corredores', 'productos', 'avisos_productos',
             'avisos_entregadores', 'localidades', 'provincias']));
     }
 }

@@ -14,7 +14,7 @@
     <div class="cuadro">
         <div class="card">
             <div class="card-header">
-                <label class="title col-md-8 col-form-label"><b>Listado de Avisos Pendientes</b></label>
+                <label class="title col-md-8 col-form-label"><b>Listado de Avisos Pendientes {{auth()->user()->username}}</b></label>
                 <a href="{{ action('AvisoController@create') }}"><button class="plus-button" title="Crear Aviso"><i
                             class="fa fa-plus"></i> Crear Aviso</button></a>
             </div>
@@ -43,9 +43,13 @@
                             <td>{{ $aviso->nroAviso }}</td>
 
                             @if (isset($aviso->entregador))
-                            <td><div class="cortar">{{$aviso->entregador}}</div></td>
+                            <td>
+                                <div class="cortar">{{$aviso->entregador}}</div>
+                            </td>
                             @else
-                            <td><div class="cortar">{{$entregador->nombre}}</div></td>
+                            <td>
+                                <div class="cortar">{{auth()->user()->nombre}}</div>
+                            </td>
                             @endif
 
                             @foreach ($productos as $producto)
@@ -56,36 +60,48 @@
 
                             @foreach ($titulares as $titular)
                             @if ($titular->cuit == $aviso->idTitularCartaPorte)
-                            <td><div class="cortar">{{ $titular->nombre }}</div></td>
+                            <td>
+                                <div class="cortar">{{ $titular->nombre }}</div>
+                            </td>
                             @endif
                             @endforeach
                             @foreach ($remitentes as $remitente)
                             @if ($remitente->cuit == $aviso->idRemitenteComercial)
-                            <td><div class="cortar">{{ $remitente->nombre }}</div></td>
+                            <td>
+                                <div class="cortar">{{ $remitente->nombre }}</div>
+                            </td>
                             @endif
                             @endforeach
                             @foreach ($corredores as $corredor)
                             @if ($corredor->cuit == $aviso->idCorredor)
-                            <td><div class="cortar">{{ $corredor->nombre }}</div></td>
+                            <td>
+                                <div class="cortar">{{ $corredor->nombre }}</div>
+                            </td>
                             @endif
                             @endforeach
                             @foreach ($provincias as $provincia)
                             @if ($provincia->id == $aviso->provinciaProcedencia)
                             @foreach ($localidades as $localidad)
                             @if ($localidad->id == $aviso->localidadProcedencia)
-                            <td><div class="cortar">{{$localidad->nombre}} ({{$provincia->abreviatura}})</div></td>
+                            <td>
+                                <div class="cortar">{{$localidad->nombre}} ({{$provincia->abreviatura}})</div>
+                            </td>
                             @endif
                             @endforeach
                             @endif
                             @endforeach
                             @foreach ($destinatarios as $destinatario)
                             @if ($destinatario->cuit == $aviso->idDestinatario)
-                            <td><div class="cortar">{{ $destinatario->nombre }}</div></td>
+                            <td>
+                                <div class="cortar">{{ $destinatario->nombre }}</div>
+                            </td>
                             @endif
                             @endforeach
-                            <td><div class="cortar">{{$aviso->lugarDescarga}}</div></td>
+                            <td>
+                                <div class="cortar">{{$aviso->lugarDescarga}}</div>
+                            </td>
 
-                            <td>{{date("d/m/Y", strtotime($aviso_entregador->fecha))}}</td>
+                            <td>{{$aviso_entregador->fecha}}</td>
 
 
                             <td>
