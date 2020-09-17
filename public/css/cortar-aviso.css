@@ -1,0 +1,13 @@
+.cortar {
+    width: 85px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.cortar:hover {
+    width: auto;
+    white-space: initial;
+    overflow: visible;
+    cursor: pointer;
+}

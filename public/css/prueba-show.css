@@ -1,0 +1,61 @@
+body {
+    font-family: sans-serif;
+    background-color: rgb(230 225 225);
+}
+
+.container {
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.card {
+    margin: 20px 0px 20px 0px;
+    width: auto;
+    height: auto;
+    background: #fff;
+    border-radius: 10px;
+    transition: 0.5s;
+    padding: 30px;
+}
+
+.labels {
+    margin-right: 30px;
+}
+
+.header-title {
+    font-size: 20px;
+    color:black;
+}
+
+.form-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.center-of-page {
+    display: flex;
+    justify-content: center;
+}
+
+.flex-container {
+    display: flex;
+}
+
+.flex-child {
+    flex: 1;
+    flex-basis: 33%;
+}  
+
+.flex-child:first-child {
+    margin-right: 20px;
+}  
+
+.left-bar {
+    border-right: 1px solid rgba(0,0,0,.1);
+}
+
+.info-text {
+    color: grey; 
+    font-size: 16px;
+}

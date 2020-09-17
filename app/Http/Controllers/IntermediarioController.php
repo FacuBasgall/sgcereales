@@ -7,6 +7,8 @@ use App\Intermediario;
 use App\Intermediario_Contacto;
 use App\Tipo_Contacto;
 use App\Condicion_IVA;
+use App\Localidad;
+use App\Provincia;
 
 use DB;
 use SweetAlert;
@@ -18,10 +20,22 @@ class IntermediarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $arrayIntermediario = DB::table('intermediario')->where('borrado', false)->orderBy('nombre')->get();
-        return view('intermediario.index', array('arrayIntermediario'=>$arrayIntermediario));
+        $query = $request->search;
+        if($request->search == ''){
+            $arrayIntermediario = Intermediario::where('borrado', false)->orderBy('nombre')->paginate(10);
+        }else{
+            $intermediario =  Intermediario::where('borrado', false)->where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->exists();
+            if($intermediario){
+                $arrayIntermediario = Intermediario::where('borrado', false)->where('nombre', 'LIKE', "%$query%")
+                    ->orWhere('cuit', 'LIKE', "%$query%")->orderBy('nombre')->paginate(10);
+            }else{
+                $arrayIntermediario = Intermediario::where('borrado', false)->orderBy('nombre')->paginate(10);
+                alert()->warning("No se encontraron resultados para: $query", 'No se encontraron resultados')->persistent('Cerrar');
+            }
+        }
+        return view('intermediario.index', compact('arrayIntermediario'));
     }
 
     /**
@@ -32,7 +46,10 @@ class IntermediarioController extends Controller
     public function create()
     {
         $iva = Condicion_IVA::orderBy('descripcion')->get();
-        return view('intermediario.create', array('iva'=>$iva));    }
+        $localidades = Localidad::all();
+        $provincias = Provincia::all();
+        return view('intermediario.create', compact(['iva', 'localidades', 'provincias']));
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -56,12 +73,17 @@ class IntermediarioController extends Controller
         }
         $nuevo->nombre = $request->nombre;
         $nuevo->dgr = $request->dgr;
-        $nuevo->cp = $request->cp;
         $nuevo->condIva = $request->iva;
+        if($request->pais == "Argentina"){
+            $nuevo->pais = $request->pais;
+            $nuevo->cp = $request->cp;
+            $nuevo->localidad = $request->localidad;
+            $nuevo->provincia = $request->provincia;
+        }else{
+            $nuevo->pais = $request->otroPais;
+        }
         $nuevo->domicilio = $request->domicilio;
-        $nuevo->localidad = $request->localidad;
-        $nuevo->provincia = $request->provincia;
-        $nuevo->pais = $request->pais;        $nuevo->borrado = false;
+        $nuevo->borrado = false;
         $nuevo->save();
         alert()->success("El intermediario $nuevo->nombre fue creado con exito", 'Creado con exito');
         return redirect()->action('IntermediarioController@contact', $request->cuit);
@@ -79,7 +101,10 @@ class IntermediarioController extends Controller
         $contacto = Intermediario_Contacto::where('cuit', $cuit)->get();
         $tipoContacto = Tipo_Contacto::all();
         $iva = Condicion_IVA::all();
-        return view('intermediario.show', compact(['intermediario', 'contacto', 'tipoContacto', 'iva']));
+        $localidad = Localidad::where('id', $intermediario->localidad)->first();
+        $provincia = Provincia::where('id', $intermediario->provincia)->first();
+        return view('intermediario.show', compact(['intermediario', 'contacto', 'tipoContacto', 'iva',
+            'localidad', 'provincia']));
     }
 
     /**
@@ -92,7 +117,9 @@ class IntermediarioController extends Controller
     {
         $intermediario = Intermediario::findOrFail($cuit);
         $iva = Condicion_IVA::all();
-        return view('intermediario.edit', compact(['intermediario', 'iva']));
+        $localidades = Localidad::all();
+        $provincias = Provincia::all();
+        return view('intermediario.edit', compact(['intermediario', 'iva', 'localidades', 'provincias']));
     }
 
     /**
@@ -107,12 +134,16 @@ class IntermediarioController extends Controller
         $nuevo = Intermediario::findOrFail($cuit);
         $nuevo->nombre = $request->nombre;
         $nuevo->dgr = $request->dgr;
-        $nuevo->cp = $request->cp;
         $nuevo->condIva = $request->iva;
+        if($request->pais == "Argentina"){
+            $nuevo->pais = $request->pais;
+            $nuevo->cp = $request->cp;
+            $nuevo->localidad = $request->localidad;
+            $nuevo->provincia = $request->provincia;
+        }else{
+            $nuevo->pais = $request->otroPais;
+        }
         $nuevo->domicilio = $request->domicilio;
-        $nuevo->localidad = $request->localidad;
-        $nuevo->provincia = $request->provincia;
-        $nuevo->pais = $request->pais;
         $nuevo->save();
         alert()->success("El intermediario $nuevo->nombre fue editado con exito", 'Editado con exito');
         return redirect()->action('IntermediarioController@show', $cuit);
@@ -201,5 +232,16 @@ class IntermediarioController extends Controller
         $delete->delete();
         alert()->success("El contacto fue eliminado con exito", 'Contacto eliminado');
         return back();
+    }
+
+    public function getLocalidades(Request $request)
+    {
+        if($request->ajax()){
+            $localidades = Localidad::where('idProvincia', $request->provincia_id)->get();
+            foreach($localidades as $localidad){
+                $localidadesArray[$localidad->id] = $localidad->nombre;
+            }
+            return response()->json($localidadesArray);
+        }
     }
 }

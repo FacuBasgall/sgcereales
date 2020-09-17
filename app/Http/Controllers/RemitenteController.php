@@ -7,6 +7,8 @@ use App\Remitente_Comercial;
 use App\Remitente_Contacto;
 use App\Tipo_Contacto;
 use App\Condicion_IVA;
+use App\Localidad;
+use App\Provincia;
 
 use DB;
 use SweetAlert;
@@ -18,10 +20,22 @@ class RemitenteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $arrayRemitente = DB::table('remitente')->where('borrado', false)->orderBy('nombre')->get();
-        return view('remitente.index', array('arrayRemitente'=>$arrayRemitente));
+        $query = $request->search;
+        if($request->search == ''){
+            $arrayRemitente = Remitente_Comercial::where('borrado', false)->orderBy('nombre')->paginate(10);
+        }else{
+            $remitente =  Remitente_Comercial::where('borrado', false)->where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->exists();
+            if($remitente){
+                $arrayRemitente = Remitente_Comercial::where('borrado', false)->where('nombre', 'LIKE', "%$query%")
+                    ->orWhere('cuit', 'LIKE', "%$query%")->orderBy('nombre')->paginate(10);
+            }else{
+                $arrayRemitente = Remitente_Comercial::where('borrado', false)->orderBy('nombre')->paginate(10);
+                alert()->warning("No se encontraron resultados para: $query", 'No se encontraron resultados')->persistent('Cerrar');
+            }
+        }
+        return view('remitente.index', compact('arrayRemitente'));
     }
 
     /**
@@ -32,7 +46,9 @@ class RemitenteController extends Controller
     public function create()
     {
         $iva = Condicion_IVA::orderBy('descripcion')->get();
-        return view('remitente.create', array('iva'=>$iva));
+        $localidades = Localidad::all();
+        $provincias = Provincia::all();
+        return view('remitente.create', compact(['iva', 'localidades', 'provincias']));
     }
 
     /**
@@ -57,12 +73,16 @@ class RemitenteController extends Controller
         }
         $nuevo->nombre = $request->nombre;
         $nuevo->dgr = $request->dgr;
-        $nuevo->cp = $request->cp;
         $nuevo->condIva = $request->iva;
+        if($request->pais == "Argentina"){
+            $nuevo->pais = $request->pais;
+            $nuevo->cp = $request->cp;
+            $nuevo->localidad = $request->localidad;
+            $nuevo->provincia = $request->provincia;
+        }else{
+            $nuevo->pais = $request->otroPais;
+        }
         $nuevo->domicilio = $request->domicilio;
-        $nuevo->localidad = $request->localidad;
-        $nuevo->provincia = $request->provincia;
-        $nuevo->pais = $request->pais;
         $nuevo->borrado = false;
         $nuevo->save();
         alert()->success("El remitente $nuevo->nombre fue creado con exito", 'Creado con exito');
@@ -81,7 +101,10 @@ class RemitenteController extends Controller
         $contacto = Remitente_Contacto::where('cuit', $cuit)->get();
         $tipoContacto = Tipo_Contacto::all();
         $iva = Condicion_IVA::all();
-        return view('remitente.show', compact(['remitente', 'contacto', 'tipoContacto', 'iva']));
+        $localidad = Localidad::where('id', $remitente->localidad)->first();
+        $provincia = Provincia::where('id', $remitente->provincia)->first();
+        return view('remitente.show', compact(['remitente', 'contacto', 'tipoContacto', 'iva',
+            'localidad', 'provincia']));
     }
 
     /**
@@ -94,7 +117,9 @@ class RemitenteController extends Controller
     {
         $remitente = Remitente_Comercial::findOrFail($cuit);
         $iva = Condicion_IVA::all();
-        return view('remitente.edit', compact(['remitente', 'iva']));
+        $localidades = Localidad::all();
+        $provincias = Provincia::all();
+        return view('remitente.edit', compact(['remitente', 'iva', 'localidades', 'provincias']));
     }
 
     /**
@@ -109,12 +134,16 @@ class RemitenteController extends Controller
         $nuevo = Remitente_Comercial::findOrFail($cuit);
         $nuevo->nombre = $request->nombre;
         $nuevo->dgr = $request->dgr;
-        $nuevo->cp = $request->cp;
         $nuevo->condIva = $request->iva;
+        if($request->pais == "Argentina"){
+            $nuevo->pais = $request->pais;
+            $nuevo->cp = $request->cp;
+            $nuevo->localidad = $request->localidad;
+            $nuevo->provincia = $request->provincia;
+        }else{
+            $nuevo->pais = $request->otroPais;
+        }
         $nuevo->domicilio = $request->domicilio;
-        $nuevo->localidad = $request->localidad;
-        $nuevo->provincia = $request->provincia;
-        $nuevo->pais = $request->pais;
         $nuevo->save();
         alert()->success("El remitente $nuevo->nombre fue editado con exito", 'Editado con exito');
         return redirect()->action('RemitenteController@show', $cuit);
@@ -203,5 +232,16 @@ class RemitenteController extends Controller
         $delete->delete();
         alert()->success("El contacto fue eliminado con exito", 'Contacto eliminado');
         return back();
+    }
+
+    public function getLocalidades(Request $request)
+    {
+        if($request->ajax()){
+            $localidades = Localidad::where('idProvincia', $request->provincia_id)->get();
+            foreach($localidades as $localidad){
+                $localidadesArray[$localidad->id] = $localidad->nombre;
+            }
+            return response()->json($localidadesArray);
+        }
     }
 }

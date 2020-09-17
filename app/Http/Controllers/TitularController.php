@@ -7,6 +7,9 @@ use App\Titular;
 use App\Titular_Contacto;
 use App\Condicion_IVA;
 use App\Tipo_Contacto;
+use App\Localidad;
+use App\Provincia;
+
 use DB;
 use SweetAlert;
 
@@ -17,10 +20,22 @@ class TitularController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $arrayTitular = DB::table('titular')->where('borrado', false)->orderBy('nombre')->get();
-        return view('titular.index', array('arrayTitular'=>$arrayTitular));
+        $query = $request->search;
+        if($request->search == ''){
+            $arrayTitular = Titular::where('borrado', false)->orderBy('nombre')->paginate(10);
+        }else{
+            $titular =  Titular::where('borrado', false)->where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->exists();
+            if($titular){
+                $arrayTitular = Titular::where('borrado', false)->where('nombre', 'LIKE', "%$query%")
+                    ->orWhere('cuit', 'LIKE', "%$query%")->orderBy('nombre')->paginate(10);
+            }else{
+                $arrayTitular = Titular::where('borrado', false)->orderBy('nombre')->paginate(10);
+                alert()->warning("No se encontraron resultados para: $query", 'No se encontraron resultados')->persistent('Cerrar');
+            }
+        }
+        return view('titular.index', compact('arrayTitular'));
     }
 
     /**
@@ -31,7 +46,9 @@ class TitularController extends Controller
     public function create()
     {
         $iva = Condicion_IVA::orderBy('descripcion')->get();
-        return view('titular.create', array('iva'=>$iva));
+        $localidades = Localidad::all();
+        $provincias = Provincia::all();
+        return view('titular.create', compact(['iva', 'localidades', 'provincias']));
     }
 
     /**
@@ -56,12 +73,16 @@ class TitularController extends Controller
         }
         $nuevo->nombre = $request->nombre;
         $nuevo->dgr = $request->dgr;
-        $nuevo->cp = $request->cp;
         $nuevo->condIva = $request->iva;
+        if($request->pais == "Argentina"){
+            $nuevo->pais = $request->pais;
+            $nuevo->cp = $request->cp;
+            $nuevo->localidad = $request->localidad;
+            $nuevo->provincia = $request->provincia;
+        }else{
+            $nuevo->pais = $request->otroPais;
+        }
         $nuevo->domicilio = $request->domicilio;
-        $nuevo->localidad = $request->localidad;
-        $nuevo->provincia = $request->provincia;
-        $nuevo->pais = $request->pais;
         $nuevo->borrado = false;
         $nuevo->save();
         alert()->success("El titular $nuevo->nombre fue creado con exito", 'Creado con exito');
@@ -80,7 +101,10 @@ class TitularController extends Controller
         $contacto = Titular_Contacto::where('cuit', $cuit)->get();
         $tipoContacto = Tipo_Contacto::all();
         $iva = Condicion_IVA::all();
-        return view('titular.show',  compact(['titular', 'contacto', 'tipoContacto', 'iva']));
+        $localidad = Localidad::where('id', $titular->localidad)->first();
+        $provincia = Provincia::where('id', $titular->provincia)->first();
+        return view('titular.show',  compact(['titular', 'contacto', 'tipoContacto', 'iva',
+            'localidad', 'provincia']));
     }
 
     /**
@@ -93,7 +117,9 @@ class TitularController extends Controller
     {
         $titular = Titular::findOrFail($cuit);
         $iva = Condicion_IVA::orderBy('descripcion')->get();
-        return view('titular.edit', compact(['titular', 'iva']));
+        $localidades = Localidad::all();
+        $provincias = Provincia::all();
+        return view('titular.edit', compact(['titular', 'iva', 'localidades', 'provincias']));
     }
 
     /**
@@ -108,12 +134,16 @@ class TitularController extends Controller
         $nuevo = Titular::findOrFail($cuit);
         $nuevo->nombre = $request->nombre;
         $nuevo->dgr = $request->dgr;
-        $nuevo->cp = $request->cp;
         $nuevo->condIva = $request->iva;
+        if($request->pais == "Argentina"){
+            $nuevo->pais = $request->pais;
+            $nuevo->cp = $request->cp;
+            $nuevo->localidad = $request->localidad;
+            $nuevo->provincia = $request->provincia;
+        }else{
+            $nuevo->pais = $request->otroPais;
+        }
         $nuevo->domicilio = $request->domicilio;
-        $nuevo->localidad = $request->localidad;
-        $nuevo->provincia = $request->provincia;
-        $nuevo->pais = $request->pais;
         $nuevo->save();
         alert()->success("El titular $nuevo->nombre fue editado con exito", 'Editado con exito');
         return redirect()->action('TitularController@show', $cuit);
@@ -202,5 +232,16 @@ class TitularController extends Controller
         $delete->delete();
         alert()->success("El contacto fue eliminado con exito", 'Contacto eliminado');
         return back();
+    }
+
+    public function getLocalidades(Request $request)
+    {
+        if($request->ajax()){
+            $localidades = Localidad::where('idProvincia', $request->provincia_id)->get();
+            foreach($localidades as $localidad){
+                $localidadesArray[$localidad->id] = $localidad->nombre;
+            }
+            return response()->json($localidadesArray);
+        }
     }
 }

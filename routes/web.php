@@ -12,9 +12,7 @@
 
 Auth::routes();
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', 'HomeController@index');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -47,6 +45,7 @@ Route::put('/usuario/update/{id}', 'UsuarioController@update');
 Route::get('/usuario/contact/{id}', 'UsuarioController@contact');
 Route::get('/usuario/add_contact/{id}', 'UsuarioController@add_contact');
 Route::get('/usuario/delete_contact/{id}', 'UsuarioController@delete_contact');
+Route::get('/usuario/getLocalidades', 'UsuarioController@getLocalidades');
 
 Route::get('/titular', 'TitularController@index');
 Route::get('/titular/create', 'TitularController@create');
@@ -58,6 +57,7 @@ Route::get('/titular/destroy/{id}', 'TitularController@destroy');
 Route::get('/titular/contact/{id}', 'TitularController@contact');
 Route::get('/titular/add_contact/{id}', 'TitularController@add_contact');
 Route::get('/titular/delete_contact/{id}', 'TitularController@delete_contact');
+Route::get('/titular/getLocalidades', 'TitularController@getLocalidades');
 
 Route::get('/intermediario', 'IntermediarioController@index');
 Route::get('/intermediario/create', 'IntermediarioController@create');
@@ -69,6 +69,7 @@ Route::get('/intermediario/destroy/{id}', 'IntermediarioController@destroy');
 Route::get('/intermediario/contact/{id}', 'IntermediarioController@contact');
 Route::get('/intermediario/add_contact/{id}', 'IntermediarioController@add_contact');
 Route::get('/intermediario/delete_contact/{id}', 'IntermediarioController@delete_contact');
+Route::get('/intermediario/getLocalidades', 'IntermediarioController@getLocalidades');
 
 Route::get('/remitente', 'RemitenteController@index');
 Route::get('/remitente/create', 'RemitenteController@create');
@@ -80,6 +81,7 @@ Route::get('/remitente/destroy/{id}', 'RemitenteController@destroy');
 Route::get('/remitente/contact/{id}', 'RemitenteController@contact');
 Route::get('/remitente/add_contact/{id}', 'RemitenteController@add_contact');
 Route::get('/remitente/delete_contact/{id}', 'RemitenteController@delete_contact');
+Route::get('/remitente/getLocalidades', 'RemitenteController@getLocalidades');
 
 Route::get('/destino', 'DestinoController@index');
 Route::get('/destino/create', 'DestinoController@create');
@@ -91,6 +93,7 @@ Route::get('/destino/destroy/{id}', 'DestinoController@destroy');
 Route::get('/destino/contact/{id}', 'DestinoController@contact');
 Route::get('/destino/add_contact/{id}', 'DestinoController@add_contact');
 Route::get('/destino/delete_contact/{id}', 'DestinoController@delete_contact');
+Route::get('/destino/getLocalidades', 'DestinoController@getLocalidades');
 
 Route::get('/corredor', 'CorredorController@index');
 Route::get('/corredor/create', 'CorredorController@create');
@@ -102,13 +105,14 @@ Route::get('/corredor/destroy/{id}', 'CorredorController@destroy');
 Route::get('/corredor/contact/{id}', 'CorredorController@contact');
 Route::get('/corredor/add_contact/{id}', 'CorredorController@add_contact');
 Route::get('/corredor/delete_contact/{id}', 'CorredorController@delete_contact');
+Route::get('/corredor/getLocalidades', 'CorredorController@getLocalidades');
 
 //Route::get('/carga', 'CargaController@index');
 Route::get('/carga/create/{id}', 'CargaController@create');
 Route::post('/carga/store', 'CargaController@store');
 //Route::get('/carga/show/{id}', 'CargaController@show');
 Route::get('/carga/edit/{id}', 'CargaController@edit');
-Route::put('/carga/update/{id}', 'CargaController@update');
+Route::put('/carga/update/', 'CargaController@update');
 //Route::get('/carga/destroy/{id}', 'CargaController@destroy');
 
 //Route::get('/descarga', 'DescargaController@index');
@@ -116,7 +120,7 @@ Route::get('/descarga/create/{id}', 'DescargaController@create');
 Route::post('/descarga/store', 'DescargaController@store');
 //Route::get('/descarga/show/{id}', 'DescargaController@show');
 //Route::get('/descarga/edit/{id}', 'DescargaController@edit');
-Route::put('/descarga/update/{id}', 'DescargaController@update');
+//Route::put('/descarga/update/{id}', 'DescargaController@update');
 //Route::get('/descarga/destroy/{id}', 'DescargaController@destroy');
 
 Route::get('/producto', 'ProductoController@index');
@@ -138,6 +142,13 @@ Route::get('/aviso/change_status/{id}', 'AvisoController@change_status');
 Route::get('/aviso/export_excel/{id}', 'AvisoController@export_excel');
 Route::get('/aviso/export_pdf/{id}', 'AvisoController@export_pdf');
 Route::get('/aviso/send_email/{id}', 'AvisoController@send_email');
+Route::get('/aviso/getLocalidades', 'AvisoController@getLocalidades');
+
+Route::get('/reporte', 'ReporteController@index');
+Route::get('/reporte/export_excel/{id}', 'ReporteController@export_excel');
+Route::get('/reporte/export_pdf/{id}', 'ReporteController@export_pdf');
+Route::get('/reporte/send_email/{id}', 'ReporteController@send_email');
+Route::get('/reporte/getLocalidades', 'ReporteController@getLocalidades');
 
 /* ASI VAN LOS FILTROS
 * Route::group(['middleware'=>'auth'],function(){

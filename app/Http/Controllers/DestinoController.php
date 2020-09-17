@@ -7,6 +7,9 @@ use App\Destino;
 use App\Destino_Contacto;
 use App\Condicion_IVA;
 use App\Tipo_Contacto;
+use App\Localidad;
+use App\Provincia;
+
 use DB;
 use SweetAlert;
 
@@ -17,10 +20,22 @@ class DestinoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $arrayDestino = DB::table('destinatario')->where('borrado', false)->orderBy('nombre')->get();
-        return view('destino.index', array('arrayDestino'=>$arrayDestino));
+        $query = $request->search;
+        if($request->search == ''){
+            $arrayDestino = Destino::where('borrado', false)->orderBy('nombre')->paginate(10);
+        }else{
+            $destinatario =  Destino::where('borrado', false)->where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->exists();
+            if($destinatario){
+                $arrayDestino = Destino::where('borrado', false)->where('nombre', 'LIKE', "%$query%")
+                    ->orWhere('cuit', 'LIKE', "%$query%")->orderBy('nombre')->paginate(10);
+            }else{
+                $arrayDestino = Destino::where('borrado', false)->orderBy('nombre')->paginate(10);
+                alert()->warning("No se encontraron resultados para: $query", 'No se encontraron resultados')->persistent('Cerrar');
+            }
+        }
+        return view('destino.index', compact('arrayDestino'));
     }
 
     /**
@@ -31,7 +46,10 @@ class DestinoController extends Controller
     public function create()
     {
         $iva = Condicion_IVA::orderBy('descripcion')->get();
-        return view('destino.create', array('iva'=>$iva));    }
+        $localidades = Localidad::all();
+        $provincias = Provincia::all();
+        return view('destino.create', compact(['iva', 'localidades', 'provincias']));
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -55,12 +73,16 @@ class DestinoController extends Controller
         }
         $nuevo->nombre = $request->nombre;
         $nuevo->dgr = $request->dgr;
-        $nuevo->cp = $request->cp;
         $nuevo->condIva = $request->iva;
+        if($request->pais == "Argentina"){
+            $nuevo->pais = $request->pais;
+            $nuevo->cp = $request->cp;
+            $nuevo->localidad = $request->localidad;
+            $nuevo->provincia = $request->provincia;
+        }else{
+            $nuevo->pais = $request->otroPais;
+        }
         $nuevo->domicilio = $request->domicilio;
-        $nuevo->localidad = $request->localidad;
-        $nuevo->provincia = $request->provincia;
-        $nuevo->pais = $request->pais;
         $nuevo->borrado = false;
         $nuevo->save();
         alert()->success("El destinatario $nuevo->nombre fue creado con exito", 'Creado con exito');
@@ -79,7 +101,10 @@ class DestinoController extends Controller
         $contacto = Destino_Contacto::where('cuit', $cuit)->get();
         $tipoContacto = Tipo_Contacto::all();
         $iva = Condicion_IVA::all();
-        return view('destino.show', compact(['destino', 'contacto', 'tipoContacto', 'iva']));
+        $localidad = Localidad::where('id', $destino->localidad)->first();
+        $provincia = Provincia::where('id', $destino->provincia)->first();
+        return view('destino.show', compact(['destino', 'contacto', 'tipoContacto', 'iva',
+            'localidad', 'provincia']));
     }
 
     /**
@@ -91,9 +116,11 @@ class DestinoController extends Controller
     public function edit($cuit)
     {
         $destino = Destino::findOrFail($cuit);
-        $contacto = Destino_Contacto::where('cuit', $cuit)->get();
         $iva = Condicion_IVA::orderBy('descripcion')->get();
-        return view('destino.edit', compact(['destino', 'contacto', 'iva']));
+        $localidades = Localidad::all();
+        $provincias = Provincia::all();
+        return view('destino.edit', compact(['destino', 'contacto', 'iva',
+            'localidades', 'provincias']));
     }
 
     /**
@@ -108,12 +135,16 @@ class DestinoController extends Controller
         $nuevo = Destino::findOrFail($cuit);
         $nuevo->nombre = $request->nombre;
         $nuevo->dgr = $request->dgr;
-        $nuevo->cp = $request->cp;
         $nuevo->condIva = $request->iva;
+        if($request->pais == "Argentina"){
+            $nuevo->pais = $request->pais;
+            $nuevo->cp = $request->cp;
+            $nuevo->localidad = $request->localidad;
+            $nuevo->provincia = $request->provincia;
+        }else{
+            $nuevo->pais = $request->otroPais;
+        }
         $nuevo->domicilio = $request->domicilio;
-        $nuevo->localidad = $request->localidad;
-        $nuevo->provincia = $request->provincia;
-        $nuevo->pais = $request->pais;
         $nuevo->save();
         alert()->success("El destinatario $nuevo->nombre fue editado con exito", 'Editado con exito');
         return redirect()->action('DestinoController@show', $cuit);
@@ -202,5 +233,16 @@ class DestinoController extends Controller
         $delete->delete();
         alert()->success("El contacto fue eliminado con exito", 'Contacto eliminado');
         return back();
+    }
+
+    public function getLocalidades(Request $request)
+    {
+        if($request->ajax()){
+            $localidades = Localidad::where('idProvincia', $request->provincia_id)->get();
+            foreach($localidades as $localidad){
+                $localidadesArray[$localidad->id] = $localidad->nombre;
+            }
+            return response()->json($localidadesArray);
+        }
     }
 }

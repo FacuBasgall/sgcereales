@@ -28,6 +28,8 @@ use App\Aviso_Entregador;
 use App\Entregador_Contacto;
 use App\Entregador_Domicilio;
 use App\Corredor_Contacto;
+use App\Localidad;
+use App\Provincia;
 
 class RomaneoSendMail extends Mailable
 {
@@ -66,8 +68,12 @@ class RomaneoSendMail extends Mailable
         $entregador = User::where('idUser', $aviso_entregador->idEntregador)->first();
         $entregador_contacto = Entregador_Contacto::where('idUser', $entregador->idUser)->get();
         $entregador_domicilio = Entregador_Domicilio::where('idUser', $entregador->idUser)->get();
+        $localidad = Localidad::where('id', $aviso->localidadProcedencia)->first();
+        $provincia = Provincia::where('id', $aviso->provinciaProcedencia)->first();
 
-        $pdf = PDF::loadView('exports.pdf', compact(['aviso', 'titular', 'cargas', 'descargas', 'corredor', 'destinatario', 'intermediario', 'producto', 'remitente', 'aviso_producto', 'aviso_entregador', 'entregador', 'entregador_contacto', 'entregador_domicilio']));
+        $pdf = PDF::loadView('exports.pdf', compact(['aviso', 'titular', 'cargas', 'descargas', 'corredor',
+            'destinatario', 'intermediario', 'producto', 'remitente', 'aviso_producto', 'aviso_entregador',
+            'entregador', 'entregador_contacto', 'entregador_domicilio', 'localidad', 'provincia']));
         $pdf->setPaper('a4', 'landscape');
 
         $filenameExcel = $aviso->nroAviso . " " . $titular->nombre . ".xlsx";

@@ -6,6 +6,8 @@
     <!-- Links de dataTable -->
     <link rel="stylesheet" type="text/css" href="{{ asset('dataTable/jquery.dataTables.min.css') }}">
     <script type="text/javascript" src="/dataTable/jquery.dataTables.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/cortar-aviso.css') }}">
 </head>
 
 <body>
@@ -29,7 +31,7 @@
                             <th>Procedencia</th>
                             <th>Destinatario</th>
                             <th>Destino</th>
-                            <th>Fecha de Creacion</th>
+                            <th>Fecha de creación</th>
                             <th>Estado</th>
                             <th>Acciones</th>
 
@@ -43,9 +45,9 @@
                             <td>{{ $aviso->nroAviso }}</td>
 
                             @if (isset($aviso->entregador))
-                            <td>{{$aviso->entregador}}</td>
+                            <td><div class="cortar">{{$aviso->entregador}}</div></td>
                             @else
-                            <td>{{$entregador->nombre}}</td>
+                            <td><div class="cortar">{{$entregador->nombre}}</div></td>
                             @endif
 
                             @foreach ($productos as $producto)
@@ -56,28 +58,36 @@
 
                             @foreach ($titulares as $titular)
                             @if ($titular->cuit == $aviso->idTitularCartaPorte)
-                            <td>{{ $titular->nombre }}</td>
+                            <td><div class="cortar">{{ $titular->nombre }}</div></td>
                             @endif
                             @endforeach
                             @foreach ($remitentes as $remitente)
                             @if ($remitente->cuit == $aviso->idRemitenteComercial)
-                            <td>{{ $remitente->nombre }}</td>
+                            <td><div class="cortar">{{ $remitente->nombre }}</div></td>
                             @endif
                             @endforeach
                             @foreach ($corredores as $corredor)
                             @if ($corredor->cuit == $aviso->idCorredor)
-                            <td>{{ $corredor->nombre }}</td>
+                            <td><div class="cortar">{{ $corredor->nombre }}</div></td>
                             @endif
                             @endforeach
-                            <td>{{$aviso->localidadProcedencia}} ({{$aviso->provinciaProcedencia}})</td>
+                            @foreach ($provincias as $provincia)
+                            @if ($provincia->id == $aviso->provinciaProcedencia)
+                            @foreach ($localidades as $localidad)
+                            @if ($localidad->id == $aviso->localidadProcedencia)
+                            <td><div class="cortar">{{$localidad->nombre}} ({{$provincia->abreviatura}})</div></td>
+                            @endif
+                            @endforeach
+                            @endif
+                            @endforeach
                             @foreach ($destinatarios as $destinatario)
                             @if ($destinatario->cuit == $aviso->idDestinatario)
-                            <td>{{ $destinatario->nombre }}</td>
+                            <td><div class="cortar">{{ $destinatario->nombre }}</div></td>
                             @endif
                             @endforeach
-                            <td>{{$aviso->lugarDescarga}}</td>
+                            <td><div class="cortar">{{$aviso->lugarDescarga}}</div></td>
 
-                            <td>{{date("d/m/Y", strtotime($aviso_entregador->fecha))}}</td>
+                            <td>{{$aviso_entregador->fecha}}</td>
 
                             @if ($aviso->estado == true)
                             <td style="color: green;">Terminado</td>
@@ -104,7 +114,8 @@
 $(document).ready(function() {
     $('#idDataTable').DataTable({
         "order": [
-            [9, "desc"]
+            [9, "desc"],
+            [0, "desc"]
         ],
         "language": {
             "sProcessing": "Procesando...",

@@ -10,13 +10,11 @@
 
 <body style="background:url(/image/silo.jpg) no-repeat center center fixed">
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><b>Detalle de producto</b></label>
+        <label class="title col-md-8 col-form-label"><a href="{{ action('ProductoController@index') }}">Productos</a> <i
+                class="fa fa-chevron-right"></i>
+            Detalle del producto</label>
     </div>
-    <a href="{{ action('ProductoController@index') }}"><button type="button"
-                            class="back-button" title="Volver"><i
-                                class="fa fa-arrow-left"></i> Volver</button></a>
-    <div class="container" >
-
+    <div class="container">
         <div class="card">
             <div class="box">
                 <div class="header">
