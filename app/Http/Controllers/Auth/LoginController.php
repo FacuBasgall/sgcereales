@@ -49,15 +49,15 @@ class LoginController extends Controller
     public function authenticate(Request $request)
     {
 
-        request()->validate([
+        $request->validate([
             'username' => 'required',
             'password' => 'required',
-            ]);
+        ]);
         $credentials = $request->only('username', 'password');
         if (Auth::attempt($credentials)) {
-            // Authentication passed...
             return redirect()->action('HomeController@index');
         }
+        //Error
         return redirect('login');
     }
 

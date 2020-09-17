@@ -57,11 +57,23 @@ class RegisterController extends Controller
 
     protected function store(Request $request)
     {
-        $request->validate([
-            'username' => 'required|string|max:255',
+
+        $rules = [
+            'username' => 'required|string|max:255|unique:usuario',
             'password' => 'required|string|min:8|confirmed',
             'password_confirmation' => 'required',
-        ]);
+        ];
+
+        $messages = [
+            'username.required' => 'Agrega un nombre de usuario.',
+            'username.max' =>'El nombre de usuario no puede ser mayor a :max caracteres.',
+            'username.unique' => 'El nombre de usuario ya está en uso.',
+            'password.required' => 'Agrega una contraseña.',
+            'password.min' => 'La contraseña debe ser mayor a :min caracteres.',
+            'password.confirmed' => 'Las contraseñas no coinciden.'
+        ];
+
+        $this->validate($request, $rules, $messages);
 
         User::create([
             'username' => $request->username,
