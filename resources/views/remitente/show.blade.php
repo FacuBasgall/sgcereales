@@ -33,37 +33,37 @@
                 @if (isset($remitente->dgr))
                 <label class="labels"><strong>DGR: </strong>{{$remitente->dgr}}</label>
                 @else
-                <label class="labels"><strong>DGR: </strong>No ingresado </label>
+                <label class="labels"><strong>DGR: </strong><label class="info-text">-</label> </label>
                 @endif
                 <br>
                 @if (isset($remitente->pais))
                 <label class="labels"><strong>País: </strong>{{$remitente->pais}}</label>
                 @else
-                <label class="labels"><strong>País: </strong>País no definido</label>
+                <label class="labels"><strong>País: </strong><label class="info-text">-</label></label>
                 @endif
 
                 @if (isset($remitente->provincia))
                 <label class="labels"><strong>Provincia: </strong>{{$provincia->nombre}}</label>
                 @else
-                <label class="labels"><strong>Provincia: </strong>Provincia no definida</label>
+                <label class="labels"><strong>Provincia: </strong><label class="info-text">-</label></label>
                 @endif
 
                 @if (isset($remitente->localidad))
                 <label class="labels"><strong>Ciudad: </strong>{{$localidad->nombre}}</label>
                 @else
-                <label class="labels"><strong>Ciudad: </strong>Ciudad no definida</label>
+                <label class="labels"><strong>Ciudad: </strong><label class="info-text">-</label></label>
                 @endif
 
                 @if (isset($remitente->cp))
                 <label class="labels"><strong>CP: </strong>{{$remitente->cp}}</label>
                 @else
-                <label class="labels"><strong>CP: </strong>Código Postal no definido</label>
+                <label class="labels"><strong>CP: </strong><label class="info-text">-</label></label>
                 @endif
 
                 @if (isset($remitente->domicilio))
                 <label class="labels"><strong>Dirección: </strong>{{$remitente->domicilio}}</label>
                 @else
-                <label class="labels"><strong>Dirección: </strong>Dirección no definida</label>
+                <label class="labels"><strong>Dirección: </strong><label class="info-text">-</label></label>
                 @endif
                 <hr>
                 <div class="form-title">Contactos <a
@@ -79,7 +79,7 @@
                 @endforeach
                 @endforeach
                 @else
-                <label class="labels">No se encontró información</label>
+                <label class="labels info-text"><i class="fa fa-exclamation-circle"></i> No se encontraron contactos</label>
                 @endif
                 <hr>
                 <div class="center-of-page"><a onclick="warning( '{{$remitente->cuit}}' , 'remitente');"><button
