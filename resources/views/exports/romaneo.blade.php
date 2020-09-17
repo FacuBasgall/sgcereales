@@ -26,7 +26,7 @@
             <th><strong>Titular de C.P.</strong></th>
             <td>{{ $titular->nombre }}</td>
             <th><strong>Procedencia</strong></th>
-            <td>{{$aviso->localidadProcedencia}} ({{$aviso->provinciaProcedencia}})</td>
+            <td>{{$localidad->nombre}} ({{$provincia->nombre}})</td>
         </tr>
         <tr>
             <th><strong>Remitente Comercial</strong></th>

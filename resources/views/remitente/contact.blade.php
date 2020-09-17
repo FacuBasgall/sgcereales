@@ -9,11 +9,16 @@
 
 <body style="background-image:url(/image/corredor.jpg); no-repeat center center fixed">
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><b>Editar contactos de remitente {{$remitente->nombre}}</b></label>
+        <label class="title col-md-8 col-form-label"><a href="{{ action('RemitenteController@index') }}">Remitentes
+                Comercial</a> <i class="fa fa-chevron-right"></i>
+            <a href="{{ action('RemitenteController@show', $remitente->cuit) }}">Detalle del remitente</a> <i
+                class="fa fa-chevron-right"></i> Información
+            de
+            contacto</label>
     </div>
     <div class="container">
         <div class="card">
-            <h2>Informacion de Contacto</h2>
+            <h2>Información de contacto</h2>
             <div class="box" style="text-align:left; margin-left:60px;">
                 @if (!$remitenteContacto->isEmpty())
                 @foreach ($tipoContacto as $tipo)
@@ -21,7 +26,8 @@
                 @if ($tipo->idTipoContacto == $contacto->tipo)
                 <p><strong>{{$tipo->descripcion}}: </strong>{{$contacto->contacto}}
                     <a onclick="warningContact('{{$contacto->id}}', 'remitente');"><button class="small-delete-button"
-                            title="Eliminar"><i class="fa fa-trash"></i></button></a></p>
+                            title="Eliminar"><i class="fa fa-trash"></i></button></a>
+                </p>
                 @endif
                 @endforeach
                 @endforeach
@@ -46,11 +52,13 @@
                         <input type="text" value="{{old('contacto')}}" name="contacto" id="contacto" class="input"
                             required>
                     </label>
-                    <button type="submit" class="save-button" style="position:relative; left:110px; top:42px;"><i class="fa fa-check"></i>
+                    <button type="submit" class="save-button" style="position:relative; left:110px; top:42px;"><i
+                            class="fa fa-check"></i>
                         Guardar</button>
                 </form>
                 <a href="{{ action('RemitenteController@show', $remitente->cuit)}}"><button class="back-button"
-                        title="Volver" style="position:relative; right:110px; bottom:25px;"><i class="fa fa-arrow-left"></i>
+                        title="Volver" style="position:relative; right:110px; bottom:25px;"><i
+                            class="fa fa-arrow-left"></i>
                         Salir</button></a>
             </div>
         </div>

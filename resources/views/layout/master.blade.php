@@ -1,20 +1,36 @@
 
 <head>
+    <!-- Navbar menu -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="{{ asset('css/Navbar/bootstrap-home.min.css') }}" rel="stylesheet">
+    <!-- sweet alert -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <link href="{{ asset('css/bootstrap-home.min.css') }}" rel="stylesheet">
     <script type="text/javascript" src="{{ asset('js/sweetAlert.js') }}"></script>
+    <!-- Loading animation -->
     <script type="text/javascript" src="{{ asset('js/loading.js') }}"></script>
+    <!-- common buttons in the app -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/common-buttons.css') }}" >
-    <meta charset="utf-8">
 
+    <!-- lib jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- select2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/i18n/es.js"></script>
+    
+    <!-- Header de camino de hormiga-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/header.css') }}">
+    
+    <!-- config app -->
+    <meta charset="utf-8">
     <title>Sistema Gestor de Cereales</title>
   <!------ Include the above in your HEAD tag ---------->
 </head>
 <body>
-  <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark" style="font-family:sans-serif;">
     <a class="navbar-brand" href="{{action('HomeController@index')}}">
       <div class="img">
           <img src="{{ URL::to('/image/SGC.jpg') }}">
@@ -51,7 +67,7 @@
         </li>
         <li class="nav-item" id="remitente">
           <a class="nav-link" href="{{ action('RemitenteController@index') }}">
-            <i class="fa fa-user-o"></i>
+            <i class="fa fa-user"></i>
             Remitente
           </a>
         </li>
@@ -67,21 +83,26 @@
             Corredores
           </a>
         </li>
-
+        <li class="nav-item" id=reporte>
+          <a class="nav-link" href="{{ action('ReporteController@index') }}">
+          <i class="fa fa-bar-chart"></i>
+            Reportes generales
+          </a>
+        </li>
       </ul>
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link" href="#" title="Manual de usuario">
             <i class="fa fa-book">
             </i>
-            Manual de Usuario
+            Manual de <br>usuario
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#" title="Cerrar sesión">
             <i class="fa fa-power-off">
             </i>
-            Cerrar sesión
+            Cerrar Sesión
           </a>
         </li>
       </ul>
@@ -98,5 +119,6 @@
     else
       $("#" + str).addClass("active");
 });
+
     </script> 
 </body>

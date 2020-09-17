@@ -7,6 +7,8 @@ use App\Corredor;
 use App\Corredor_Contacto;
 use App\Tipo_Contacto;
 use App\Condicion_IVA;
+use App\Localidad;
+use App\Provincia;
 
 use DB;
 use SweetAlert;
@@ -18,10 +20,22 @@ class CorredorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $arrayCorredor = DB::table('corredor')->where('borrado', false)->orderBy('nombre')->get();
-        return view('corredor.index', array('arrayCorredor'=>$arrayCorredor));
+        $query = $request->search;
+        if($request->search == ''){
+            $arrayCorredor = Corredor::where('borrado', false)->orderBy('nombre')->paginate(10);
+        }else{
+            $corredor =  Corredor::where('borrado', false)->where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->exists();
+            if($corredor){
+                $arrayCorredor = Corredor::where('borrado', false)->where('nombre', 'LIKE', "%$query%")
+                    ->orWhere('cuit', 'LIKE', "%$query%")->orderBy('nombre')->paginate(10);
+            }else{
+                $arrayCorredor = Corredor::where('borrado', false)->orderBy('nombre')->paginate(10);
+                alert()->warning("No se encontraron resultados para: $query", 'No se encontraron resultados')->persistent('Cerrar');
+            }
+        }
+        return view('corredor.index', compact('arrayCorredor'));
     }
 
     /**
@@ -32,7 +46,10 @@ class CorredorController extends Controller
     public function create()
     {
         $iva = Condicion_IVA::orderBy('descripcion')->get();
-        return view('corredor.create', array('iva'=>$iva));    }
+        $localidades = Localidad::all();
+        $provincias = Provincia::all();
+        return view('corredor.create', compact(['iva', 'localidades', 'provincias']));
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -46,7 +63,7 @@ class CorredorController extends Controller
         if($existe){
             $nuevo = Corredor::where('cuit', $request->cuit)->first();
             if(!$nuevo->borrado){
-                alert()->error("El corredor $request->nombre ya existe", 'Ha surgido un error');
+                alert()->error("El corredor $request->nombre ya existe", 'Ha surgido un error')->persistent('Cerrar');
                 return back()->withInput();
             }
         }
@@ -56,12 +73,17 @@ class CorredorController extends Controller
         }
         $nuevo->nombre = $request->nombre;
         $nuevo->dgr = $request->dgr;
-        $nuevo->cp = $request->cp;
         $nuevo->condIva = $request->iva;
+        if($request->pais == "Argentina"){
+            $nuevo->pais = $request->pais;
+            $nuevo->cp = $request->cp;
+            $nuevo->localidad = $request->localidad;
+            $nuevo->provincia = $request->provincia;
+        }else{
+            $nuevo->pais = $request->otroPais;
+        }
         $nuevo->domicilio = $request->domicilio;
-        $nuevo->localidad = $request->localidad;
-        $nuevo->provincia = $request->provincia;
-        $nuevo->pais = $request->pais;        $nuevo->borrado = false;
+        $nuevo->borrado = false;
         $nuevo->save();
         alert()->success("El corredor $nuevo->nombre fue creado con exito", 'Creado con exito');
         return redirect()->action('CorredorController@contact', $request->cuit);
@@ -79,7 +101,10 @@ class CorredorController extends Controller
         $contacto = Corredor_Contacto::where('cuit', $cuit)->get();
         $tipoContacto = Tipo_Contacto::all();
         $iva = Condicion_IVA::all();
-        return view('corredor.show', compact(['corredor', 'contacto', 'tipoContacto', 'iva']));
+        $localidad = Localidad::where('id', $corredor->localidad)->first();
+        $provincia = Provincia::where('id', $corredor->provincia)->first();
+        return view('corredor.show', compact(['corredor', 'contacto', 'tipoContacto',
+            'iva', 'localidad', 'provincia']));
     }
 
     /**
@@ -92,7 +117,9 @@ class CorredorController extends Controller
     {
         $corredor = Corredor::findOrFail($cuit);
         $iva = Condicion_IVA::all();
-        return view('corredor.edit', compact(['corredor', 'iva']));
+        $localidades = Localidad::all();
+        $provincias = Provincia::all();
+        return view('corredor.edit', compact(['corredor', 'iva', 'localidades', 'provincias']));
     }
 
     /**
@@ -107,12 +134,16 @@ class CorredorController extends Controller
         $nuevo = Corredor::findOrFail($cuit);
         $nuevo->nombre = $request->nombre;
         $nuevo->dgr = $request->dgr;
-        $nuevo->cp = $request->cp;
         $nuevo->condIva = $request->iva;
+        if($request->pais == "Argentina"){
+            $nuevo->pais = $request->pais;
+            $nuevo->cp = $request->cp;
+            $nuevo->localidad = $request->localidad;
+            $nuevo->provincia = $request->provincia;
+        }else{
+            $nuevo->pais = $request->otroPais;
+        }
         $nuevo->domicilio = $request->domicilio;
-        $nuevo->localidad = $request->localidad;
-        $nuevo->provincia = $request->provincia;
-        $nuevo->pais = $request->pais;
         $nuevo->save();
         alert()->success("El corredor $nuevo->nombre fue editado con exito", 'Editado con exito');
         return redirect()->action('CorredorController@show', $cuit);
@@ -144,7 +175,7 @@ class CorredorController extends Controller
     {
         $existe = Corredor_Contacto::where('cuit', $cuit)->where('contacto', $request->contacto)->exists();
         if($existe){
-            alert()->error("El contacto ya existe para este corredor", "Ha ocurrido un error");
+            alert()->error("El contacto ya existe para este corredor", "Ha ocurrido un error")->persistent('Cerrar');
             return back()->withInput();
         }
         else{
@@ -189,7 +220,7 @@ class CorredorController extends Controller
                 alert()->success("El contacto fue agregado con exito", 'Contacto agregado');
                 return back();
             }else{
-                alert()->error($error, "Ha ocurrido un error");
+                alert()->error($error, "Ha ocurrido un error")->persistent('Cerrar');
                 return back()->withInput();
             }
         }
@@ -201,5 +232,16 @@ class CorredorController extends Controller
         $delete->delete();
         alert()->success("El contacto fue eliminado con exito", 'Contacto eliminado');
         return back();
+    }
+
+    public function getLocalidades(Request $request)
+    {
+        if($request->ajax()){
+            $localidades = Localidad::where('idProvincia', $request->provincia_id)->get();
+            foreach($localidades as $localidad){
+                $localidadesArray[$localidad->id] = $localidad->nombre;
+            }
+            return response()->json($localidadesArray);
+        }
     }
 }

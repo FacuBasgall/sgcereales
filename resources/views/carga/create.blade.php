@@ -3,51 +3,50 @@
 @parent
 
 <head>
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/common-buttons.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/forms.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/header.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/common-forms.css') }}">
 </head>
 
-<body style="background:url(/image/silo.jpg) no-repeat center center fixed">
+<body>
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><b>Crear aviso / Datos de carga</b></label>
+        <label class="title col-md-8 col-form-label"><a href="{{ action('AvisoController@index')}}">Avisos</a> <i
+                class="fa fa-chevron-right"></i> <a href="{{ action('AvisoController@show', $aviso->idAviso)}}">Detalle
+                del aviso</a> <i class="fa fa-chevron-right"></i> Añadir
+            carga</label>
     </div>
     <div class="container">
-        <div class="card" style="min-height:470px; width:460px;">
+        <div class="card">
             <div class="box">
                 <form action="{{action('CargaController@store')}}" method="POST">
                     {{ csrf_field() }}
+                    <p class="form-title"><strong>Datos de la carga</strong></p>
                     <label for="cartaPorte">
-                        <span>N° Carta Porte:</span>
+                        <span>Número carta porte*:</span>
                         <input type="number" value="{{old('cartaPorte')}}" name="cartaPorte" id="cartaPorte"
-                            class="input" style="margin: 10px 20px;">
+                            class="common-input" required>
                     </label>
                     <label for="fecha">
-                        <span>Fecha de Carga:*</span>
-                        <input type="date" value="{{old('fecha')}}" name="fecha" id="fecha" class="input"
-                            style="margin: 10px 20px;" required>
+                        <span>Fecha de carga*:</span>
+                        <input type="date" value="{{old('fecha')}}" name="fecha" id="fecha" class="common-input"
+                            required>
                     </label>
                     <label for="matricula">
-                        <span>Matricula del Camión:</span>
-                        <input type="text" value="{{old('matricula')}}" name="matricula" id="matricula" class="input"
-                            style="margin: 10px 20px;">
+                        <span>Matrícula del camión:</span>
+                        <input type="text" value="{{old('matricula')}}" name="matricula" id="matricula"
+                            class="common-input">
                     </label>
                     <label for="kilos">
-                        <span>Kilos Cargados:*</span>
-                        <input type="number" value="{{old('kilos')}}" min="0" name="kilos" id="kilos" class="input"
-                            style="margin: 10px 20px;" required>
+                        <span>Cargado (Kg)*:</span>
+                        <input type="number" value="{{old('kilos')}}" min="0" name="kilos" id="kilos"
+                            class="common-input" required>
                     </label>
+                    <hr>
                     <label for="check">
                         <input type="checkbox" name="check" id="check" value="Descarga" checked> Deseo ingresar la
                         descarga ahora
                     </label>
                     <input type="hidden" name="idAviso" id="idAviso" value="{{$aviso->idAviso}}">
-                    <button type="submit" class="save-button" style="position:relative; left:30%;"><i
-                            class="fa fa-check"></i> Guardar</button>
-                    <a href="{{ action('AvisoController@index') }}"><button type="button" class="back-button"
-                            title="Volver" style="position: relative; right: 30%;"><i class="fa fa-arrow-left"></i>
-                            Salir</button></a>
+                    <div class="center-of-page"><button type="submit" class="save-button"><i class="fa fa-check"></i>
+                            Guardar</button></div>
                 </form>
             </div>
         </div>

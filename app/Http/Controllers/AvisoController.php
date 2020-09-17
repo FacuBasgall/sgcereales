@@ -16,6 +16,8 @@ use App\Producto;
 use App\Destino;
 use App\Titular;
 use App\Titular_Contacto;
+use App\Remitente_Contacto;
+use App\Corredor_Contacto;
 use App\Intermediario;
 use App\Remitente_Comercial;
 use App\User;
@@ -23,10 +25,13 @@ use App\Aviso_Producto;
 use App\Aviso_Entregador;
 use App\Entregador_Contacto;
 use App\Entregador_Domicilio;
+use App\Localidad;
+use App\Provincia;
 
 use Datatables;
 use DB;
 use Mail;
+use MultiMail;
 use SweetAlert;
 
 class AvisoController extends Controller
@@ -51,8 +56,12 @@ class AvisoController extends Controller
         $productos = Producto::where('borrado', false)->get();
         $avisos_productos = Aviso_Producto::all();
         $avisos_entregadores = Aviso_Entregador::where('idEntregador', $entregadorAutenticado)->get();
+        $localidades = Localidad::all();
+        $provincias = Provincia::all();
 
-        return view('aviso.index', compact(['avisos', 'cargas', 'descargas', 'destinatarios', 'titulares', 'intermediarios', 'remitentes', 'corredores', 'entregador', 'productos', 'avisos_productos', 'avisos_entregadores']));
+        return view('aviso.index', compact(['avisos', 'cargas', 'descargas', 'destinatarios', 'titulares',
+            'intermediarios', 'remitentes', 'corredores', 'entregador', 'productos', 'avisos_productos',
+            'avisos_entregadores', 'localidades', 'provincias']));
 
     }
 
@@ -70,8 +79,11 @@ class AvisoController extends Controller
         $entregadores = User::where('tipoUser', 'E')->get(); //Solo Usuarios Entregadores
         $destinatarios = Destino::where('borrado', false)->orderBy('nombre')->get();
         $productos = Producto::where('borrado', false)->orderBy('nombre')->get();
+        $localidades = Localidad::all();
+        $provincias = Provincia::all();
 
-        return view('aviso.create', compact(['titulares', 'intermediarios', 'remitentes', 'corredores', 'entregadores', 'destinatarios', 'productos']));
+        return view('aviso.create', compact(['titulares', 'intermediarios', 'remitentes', 'corredores',
+            'entregadores', 'destinatarios', 'productos', 'localidades', 'provincias']));
 
     }
 
@@ -88,7 +100,7 @@ class AvisoController extends Controller
         $dif = intval($fecha2) - intval($fecha1);
 
         if($dif != 1){
-            alert()->error("Verifique las fechas ingresadas", 'Ha ocurrido un error');
+            alert()->error("Verifique las fechas ingresadas", 'Ha ocurrido un error')->persistent('Cerrar');
             return back()->withInput();
         }
 
@@ -127,8 +139,8 @@ class AvisoController extends Controller
         $aviso_entregador->fecha = date("Y-m-d");
         $aviso_entregador->save();
 
-        alert()->success("El aviso fue creado con exito", 'Aviso guardado');
-        return redirect()->action('CargaController@create', $aviso->idAviso);
+        alert()->success("El aviso fue creado con exito", 'Aviso creado');
+        return redirect()->action('AvisoController@show', $aviso->idAviso);
     }
 
     /**
@@ -151,8 +163,67 @@ class AvisoController extends Controller
         $aviso_producto = Aviso_Producto::where('idAviso', $idAviso)->get();
         $aviso_entregador = Aviso_Entregador::where('idAviso', $idAviso)->first();
         $entregador = User::where('idUser', $aviso_entregador->idEntregador)->first();
+        $localidad = Localidad::where('id', $aviso->localidadProcedencia)->first();
+        $provincia = Provincia::where('id', $aviso->provinciaProcedencia)->first();
 
-        return view('aviso.show', compact(['aviso', 'cargas', 'descargas', 'destino', 'titular', 'intermediario', 'remitente', 'corredor', 'producto', 'aviso_producto', 'aviso_entregador', 'entregador']));
+        $arrayCarga = array();
+        $arrayDescarga = array();
+        if(!empty($cargas) && $cargas->count()){
+            foreach($cargas as $carga){
+                $control = false;
+                $arrayCarga[] = $carga;
+                foreach($descargas as $descarga){
+                    if($descarga->idCarga == $carga->idCarga){
+                        $control = true;
+                        $arrayDescarga[] = $descarga;
+                    }
+                }
+                if($control == false){
+                    $descargaVacia = new Descarga;
+                    $descargaVacia->idDescarga = "-";
+                    $descargaVacia->idCarga = $carga->idCarga;
+                    $descargaVacia->fecha = "-";
+                    $descargaVacia->bruto = "-";
+                    $descargaVacia->tara = "-";
+                    $descargaVacia->humedad = "-";
+                    $descargaVacia->ph = "-";
+                    $descargaVacia->proteina = "-";
+                    $descargaVacia->calidad = "-";
+                    $descargaVacia->merma = "-";
+
+                    $arrayDescarga[] = $descargaVacia;
+                }
+            }
+        }/*else{
+            $cargaVacia = new Carga;
+            $cargaVacia->idAviso = $idAviso;
+            $cargaVacia->idCarga = "-";
+            $cargaVacia->matriculaCamion = "-";
+            $cargaVacia->nroCartaPorte = "-";
+            $cargaVacia->fecha = "-";
+            $cargaVacia->kilos = "-";
+
+            $arrayCarga[] = $cargaVacia;
+
+            $descargaVacia = new Descarga;
+            $descargaVacia->idDescarga = "-";
+            $descargaVacia->idCarga = "-";
+            $descargaVacia->fecha = "-";
+            $descargaVacia->bruto = "-";
+            $descargaVacia->tara = "-";
+            $descargaVacia->humedad = "-";
+            $descargaVacia->ph = "-";
+            $descargaVacia->proteina = "-";
+            $descargaVacia->calidad = "-";
+
+            $arrayDescarga[] = $descargaVacia;
+        }*/
+
+
+        //return dd($arrayCarga, $arrayDescarga);
+        return view('aviso.show', compact(['aviso', 'arrayCarga', 'arrayDescarga', 'destino', 'titular',
+            'intermediario', 'remitente', 'corredor', 'producto', 'aviso_producto', 'aviso_entregador',
+            'entregador', 'localidad', 'provincia']));
     }
 
     /**
@@ -172,8 +243,11 @@ class AvisoController extends Controller
         $destinatarios = Destino::where('borrado', false)->orderBy('nombre')->get();
         $productos = Producto::where('borrado', false)->orderBy('nombre')->get();
         $aviso_producto = Aviso_Producto::where('idAviso', $idAviso)->first();
+        $localidades = Localidad::all();
+        $provincias = Provincia::all();
 
-        return view('aviso.edit', compact(['aviso', 'titulares', 'intermediarios', 'remitentes', 'corredores', 'entregadores', 'destinatarios', 'productos', 'aviso_producto']));
+        return view('aviso.edit', compact(['aviso', 'titulares', 'intermediarios', 'remitentes', 'corredores',
+            'entregadores', 'destinatarios', 'productos', 'aviso_producto', 'localidades', 'provincias']));
     }
 
     /**
@@ -190,7 +264,7 @@ class AvisoController extends Controller
         $dif = intval($fecha2) - intval($fecha1);
 
         if($dif != 1){
-            alert()->error("Verifique las fechas ingresadas", 'Ha ocurrido un error');
+            alert()->error("Verifique las fechas ingresadas", 'Ha ocurrido un error')->persistent('Cerrar');
             return back();
         }
 
@@ -215,14 +289,8 @@ class AvisoController extends Controller
         $aviso_producto->tipo = $request->tipo;
         $aviso_producto->save();
 
-        $existeCarga = Carga::where('idAviso', $idAviso)->exists();
         alert()->success("El aviso fue editado con exito", 'Aviso guardado');
-        if($existeCarga){
-            return redirect()->action('CargaController@edit', $aviso->idAviso);
-        }else{
-            return redirect()->action('AvisoController@show', $aviso->idAviso);
-        }
-
+        return redirect()->action('AvisoController@show', $aviso->idAviso);
     }
 
     /**
@@ -246,7 +314,7 @@ class AvisoController extends Controller
         $aviso_entregador->delete();
         $aviso_producto->delete();
         $aviso->delete();
-        alert()->success("El aviso fue eliminado con exito", 'Eliminado con exito');
+        alert()->success("El aviso fue eliminado con exito", 'Aviso eliminado');
         return redirect('/aviso');
     }
 
@@ -258,7 +326,7 @@ class AvisoController extends Controller
                 $descarga = Descarga::where('idCarga', $carga->idCarga)->exists();
                 if(!$descarga){
                     //DEVOLVER ERROR -> PARA QUE PUEDA ESTAR TERMINADO DEBE TENER TODAS LAS DESCARGAS
-                    alert()->error("Se debe completar el aviso para poder cambiar su estado", 'Ha ocurrido un error');
+                    alert()->error("Se debe completar el aviso para poder cambiar su estado", 'Ha ocurrido un error')->persistent('Cerrar');
                     return back();
                 }
             }
@@ -268,7 +336,7 @@ class AvisoController extends Controller
         }
         $aviso->save();
         alert()->success("El estado del aviso fue cambiado con exito", 'Estado cambiado');
-        return back();
+        return redirect()->action('AvisoController@show', $idAviso);
     }
 
     private function generate_key($idEntregador){
@@ -277,7 +345,7 @@ class AvisoController extends Controller
         if(!$existe){
             $key = "SGC-0000000001";
         }else{
-            $ultAviso = Aviso_Entregador::orderBy('idAviso', 'desc')->first();
+            $ultAviso = Aviso_Entregador::where('idEntregador', $idEntregador)->orderBy('idAviso', 'desc')->first();
             $ultimo = Aviso::where('idAviso', $ultAviso->idAviso)->first();
             $array = explode("-", $ultimo->nroAviso);
             $array[1] = intval($array[1]+1);
@@ -296,7 +364,7 @@ class AvisoController extends Controller
             $filename = $aviso->nroAviso . " " . $titular->nombre . ".xlsx";
             return Excel::download(new RomaneoExport($idAviso), $filename);
         }else{
-            alert()->error("El aviso debe estar terminado para exportalo", 'No se puede ejecutar la acción');
+            alert()->error("El aviso debe estar terminado para exportalo", 'No se puede ejecutar la acción')->persistent('Cerrar');
             return back();
         }
 
@@ -320,15 +388,19 @@ class AvisoController extends Controller
             $entregador = User::where('idUser', $aviso_entregador->idEntregador)->first();
             $entregador_contacto = Entregador_Contacto::where('idUser', $entregador->idUser)->get();
             $entregador_domicilio = Entregador_Domicilio::where('idUser', $entregador->idUser)->get();
+            $localidad = Localidad::where('id', $aviso->localidadProcedencia)->first();
+            $provincia = Provincia::where('id', $aviso->provinciaProcedencia)->first();
 
             $filename = $aviso->nroAviso . " " . $titular->nombre . ".pdf";
 
-            //return view('exports.pdf', compact(['aviso', 'cargas', 'descargas', 'corredor', 'destinatario', 'intermediario', 'producto', 'remitente', 'titular', 'aviso_producto', 'aviso_entregador', 'entregador', 'entregador_contacto', 'entregador_domicilio']));
-            $pdf = PDF::loadView('exports.pdf', compact(['aviso', 'cargas', 'descargas', 'corredor', 'destinatario', 'intermediario', 'producto', 'remitente', 'titular', 'aviso_producto', 'aviso_entregador', 'entregador', 'entregador_contacto', 'entregador_domicilio']));
+            $pdf = PDF::loadView('exports.pdf', compact(['aviso', 'cargas', 'descargas', 'corredor',
+                'destinatario', 'intermediario', 'producto', 'remitente', 'titular', 'aviso_producto',
+                'aviso_entregador', 'entregador', 'entregador_contacto', 'entregador_domicilio',
+                'localidad', 'provincia']));
             $pdf->setPaper('a4', 'landscape');
             return $pdf->download($filename);
         }else{
-            alert()->error("El aviso debe estar terminado para exportalo", 'No se puede ejecutar la acción');
+            alert()->error("El aviso debe estar terminado para exportalo", 'No se puede ejecutar la acción')->persistent('Cerrar');
             return back();
         }
     }
@@ -337,19 +409,40 @@ class AvisoController extends Controller
     {
         $aviso = Aviso::where('idAviso', $idAviso)->first();
         $titular = Titular::where('cuit', $aviso->idTitularCartaPorte)->first();
+        $corredor = Corredor::where('cuit', $aviso->idCorredor)->first();
+        $remitente = Remitente_Comercial::where('cuit', $aviso->idRemitenteComercial)->first();
 
         if($aviso->estado){
-            $existe = Titular_Contacto::where('cuit', $aviso->idTitularCartaPorte)->where('tipo', 3)->exists();
-            if($existe){
-                $correos = Titular_Contacto::where('cuit', $aviso->idTitularCartaPorte)->where('tipo', 3)->pluck('contacto'); //Tipo = 3 = Emails / funcion pluck('contacto') solo selecciona del array los contactos
-                Mail::to($correos)->send(new RomaneoSendMail($idAviso));
-                alert()->success("El aviso ha sido enviado con exito", 'Correo enviado');
+            $existeTitular = Titular_Contacto::where('cuit', $aviso->idTitularCartaPorte)->where('tipo', 3)->exists();
+            $existeCorredor = Corredor_Contacto::where('cuit', $aviso->idCorredor)->where('tipo', 3)->exists();
+            $existeRemitente = Remitente_Contacto::where('cuit', $aviso->idRemitenteComercial)->where('tipo', 3)->exists();
+            if(!$existeTitular){
+                alert()->error("El titular: $titular->nombre no posee dirección de correo", 'No se puede ejecutar la acción')->persistent('Cerrar');
+            }elseif(!$existeCorredor){
+                alert()->error("El corredor: $corredor->nombre no posee dirección de correo", 'No se puede ejecutar la acción')->persistent('Cerrar');
+            }elseif(!$existeRemitente){
+                alert()->error("El remitente: $remitente->nombre no posee dirección de correo", 'No se puede ejecutar la acción')->persistent('Cerrar');
             }else{
-                alert()->error("El titular: $titular->nombre no posee dirección de correo", 'No se puede ejecutar la acción');
+                $correosTitular = Titular_Contacto::where('cuit', $aviso->idTitularCartaPorte)->where('tipo', 3)->pluck('contacto'); //Tipo = 3 = Emails / funcion pluck('contacto') solo selecciona del array los contactos
+                $correosRemitente = Remitente_Contacto::where('cuit', $aviso->idRemitenteComercial)->where('tipo', 3)->pluck('contacto');
+                //$correosCorredor se agregar en el RomaneoSendMail
+                \MultiMail::to($correosTitular)->cc($correosRemitente)->send(new RomaneoSendMail($idAviso));
+                alert()->success("El aviso ha sido enviado con exito", 'Correo enviado');
             }
         }else{
-            alert()->error("El aviso debe estar terminado para poder enviarlo", 'No se puede ejecutar la acción');
+            alert()->error("El aviso debe estar terminado para poder enviarlo", 'No se puede ejecutar la acción')->persistent('Cerrar');
         }
         return back();
+    }
+
+    public function getLocalidades(Request $request)
+    {
+        if($request->ajax()){
+            $localidades = Localidad::where('idProvincia', $request->provincia_id)->get();
+            foreach($localidades as $localidad){
+                $localidadesArray[$localidad->id] = $localidad->nombre;
+            }
+            return response()->json($localidadesArray);
+        }
     }
 }

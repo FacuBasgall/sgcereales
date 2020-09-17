@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Carga;
 use App\Aviso;
 use App\Descarga;
+use App\Producto;
+use App\Merma;
+
 use DB;
 use SweetAlert;
 
@@ -44,23 +47,34 @@ class CargaController extends Controller
         $hoy = date("Y-m-d");
 
         if($request->fecha <= $hoy){
-            $carga = new Carga;
-            $carga->idAviso = $request->idAviso;
-            $carga->matriculaCamion = $request->matricula;
-            $carga->nroCartaPorte = $request->cartaPorte;
-            $carga->fecha = $request->fecha;
-            $carga->kilos = $request->kilos;
-            $carga->borrado = false;
-            $carga->save();
+            $existe = Carga::where('nroCartaPorte', $request->cartaPorte)->exists();
+            if(!$existe){
+                $carga = new Carga;
+                $carga->idAviso = $request->idAviso;
+                $carga->matriculaCamion = $request->matricula;
+                $carga->nroCartaPorte = $request->cartaPorte;
+                $carga->fecha = $request->fecha;
+                $carga->kilos = $request->kilos;
+                $carga->borrado = false;
+                $carga->save();
 
-            alert()->success("La carga fue creada con exito", 'Carga guardada');
-            if(isset($request->check)){
-                return redirect()->action('DescargaController@create', $carga->idCarga);
+                alert()->success("La carga fue creada con exito", 'Carga guardada');
+                if(isset($request->check)){
+                    return redirect()->action('DescargaController@create', $carga->idCarga);
+                }else{
+                    $aviso = Aviso::where('idAviso', $carga->idAviso)->first();
+                    if($aviso->estado){
+                        return redirect()->action('AvisoController@change_status', $carga->idAviso);
+                    }else{
+                        return redirect()->action('AvisoController@show', $carga->idAviso);
+                    }
+                }
             }else{
-                return redirect()->action('AvisoController@index');
+                alert()->error("El Nro de carta porte ya existe", 'Ha ocurrido un error')->persistent('Cerrar');
+                return back()->withInput();
             }
         }else{
-            alert()->error("La fecha no puede ser mayor al dia de hoy", 'Ha ocurrido un error');
+            alert()->error("La fecha no puede ser mayor al dia de hoy", 'Ha ocurrido un error')->persistent('Cerrar');
             return back()->withInput();
         }
     }
@@ -82,11 +96,11 @@ class CargaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($idAviso)
+    public function edit($idCarga)
     {
-        $cargas = Carga::where('idAviso', $idAviso)->get();
-        $descargas = Descarga::where('borrado', false)->get();
-        return view('carga.edit', compact(['cargas', 'descargas']));
+        $carga = Carga::where('idCarga', $idCarga)->first();
+        $descarga = Descarga::where('idCarga', $idCarga)->first();
+        return view('carga.edit', compact(['carga', 'descarga']));
     }
 
     /**
@@ -96,22 +110,55 @@ class CargaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $idCarga)
+    public function update(Request $request)
     {
         $hoy = date("Y-m-d");
 
         if($request->fecha <= $hoy){
-            $carga = Carga::findOrfail($idCarga);
+            $carga = Carga::findOrfail($request->idCarga);
             $carga->matriculaCamion = $request->matricula;
             $carga->nroCartaPorte = $request->cartaPorte;
             $carga->fecha = $request->fecha;
             $carga->kilos = $request->kilos;
             $carga->save();
+            if(Descarga::where('idCarga', $carga->idCarga)->exists()){
+                $descarga = Descarga::where('idCarga', $carga->idCarga)->first();
+                if($request->fechaDescarga >= $carga->fecha && $request->fechaDescarga <= $hoy){
+                    $descarga->fecha = $request->fechaDescarga;
+                    $descarga->bruto = $request->bruto;
+                    $descarga->tara = $request->tara;
+                    $descarga->humedad = $request->humedad;
+                    $descarga->ph = $request->ph;
+                    $descarga->proteina = $request->proteina;
+                    $descarga->calidad = $request->calidad;
 
-            alert()->success("La carga fue editada con exito", 'Carga guardada');
-            return back();
+                    $aviso = Aviso::where('idAviso', $carga->idAviso)->first();
+                    $producto = Producto::where('idProducto', $aviso->idProducto)->first();
+                    $merma = Merma::where('idProducto', $producto->idProducto)->where('humedad', $request->humedad)->exists();
+                    if ($merma){
+                        $merma = Merma::where('idProducto', $producto->idProducto)->where('humedad', $descarga->humedad)->first();
+                        $mermaManipuleo = $producto->mermaManipuleo;
+                        $mermaSecado = $merma->merma;
+                        $descarga->merma = $mermaManipuleo + $mermaSecado;
+                    }else{
+                        $descarga->merma = NULL;
+                    }
+                    $descarga->save();
+                    alert()->success("La carga y descarga fueron editadas con exito", 'Carga y descarga guardada');
+                    return redirect()->action('AvisoController@show', $carga->idAviso);
+                }elseif($request->fechaDescarga > $hoy){
+                    alert()->error("La fecha de la descarga no puede ser mayor al dia de hoy", 'Ha ocurrido un error')->persistent('Cerrar');
+                    return back()->withInput();
+                }else{
+                    alert()->error("La fecha de la descarga no puede ser menor a la fecha de carga", 'Ha ocurrido un error')->persistent('Cerrar');
+                    return back()->withInput();
+                }
+            }else{
+                alert()->success("La carga fue editada con exito", 'Carga guardada');
+                return redirect()->action('AvisoController@show', $carga->idAviso);
+            }
         }else{
-            alert()->error("La fecha no puede ser mayor al dia de hoy", 'Ha ocurrido un error');
+            alert()->error("La fecha de la carga no puede ser mayor al dia de hoy", 'Ha ocurrido un error')->persistent('Cerrar');
             return back();
         }
     }

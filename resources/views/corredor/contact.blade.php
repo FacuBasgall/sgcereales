@@ -9,11 +9,14 @@
 
 <body style="background-image:url(/image/corredor.jpg); no-repeat center center fixed">
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><b>Editar contactos de corredor {{$corredor->nombre}}</b></label>
+        <label class="title col-md-8 col-form-label"><a href="{{ action('CorredorController@index') }}">Corredores</a> <i class="fa fa-chevron-right"></i>
+            <a href="{{ action('CorredorController@show', $corredor->cuit) }}">Detalle del corredor</a> <i
+                class="fa fa-chevron-right"></i> Información de
+            contacto</label>
     </div>
     <div class="container">
         <div class="card">
-            <h2>Informacion de Contacto</h2>
+            <h2>Información de contacto</h2>
             <div class="box" style="text-align:left; margin-left:60px;">
                 @if (!$corredorContacto->isEmpty())
                 @foreach ($tipoContacto as $tipo)
@@ -22,7 +25,8 @@
                 <p><strong>{{$tipo->descripcion}}: </strong>{{$contacto->contacto}}
                     <a onclick="warningContact('{{$contacto->id}}', 'corredor');"><button class="small-delete-button"
                             title="Eliminar"><i class="fa fa-trash"></i>
-                            </button></a></p>
+                        </button></a>
+                </p>
                 @endif
                 @endforeach
                 @endforeach
@@ -51,7 +55,8 @@
                             class="fa fa-check"></i> Guardar</button>
                 </form>
                 <a href="{{ action('CorredorController@show', $corredor->cuit)}}"><button class="back-button"
-                        title="Volver"  style="position:relative; right:110px; bottom:25px;"><i class="fa fa-arrow-left"></i>
+                        title="Volver" style="position:relative; right:110px; bottom:25px;"><i
+                            class="fa fa-arrow-left"></i>
                         Salir</button></a>
             </div>
         </div>

@@ -1,0 +1,92 @@
+body {
+    font-family:sans-serif;
+    background-color: rgb(230 225 225);
+}
+
+.container {
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .card {
+    margin: 20px 0px 20px 0px;
+    width: auto;
+    height: auto;
+    background:#fff;
+    border-radius:10px;
+    transition:0.5s;
+    padding: 30px;;
+  }
+
+.common-input {
+    margin-top: 15px;
+    width: 170px;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    margin-right: 25px;
+}
+
+.margin-right {
+    margin-right: 25px;
+}
+
+.common-input-cp {
+    margin-top: 15px;
+    width: 60px;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    margin-right: 25px;
+}
+
+.common-input-address {
+    margin-top: 15px;
+    width: 240px;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    margin-right: 25px;
+}
+
+textarea {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+
+.common-input:focus, textarea:focus, .common-input:active, textarea:active{
+    outline: auto;
+    outline-color: #a8a3a3;
+}
+
+.year-input, input:focus{
+    outline: none;
+}
+
+.year-input {
+    width: 25px;
+    border:none;
+    border-bottom:1px solid #757575;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.form-title {
+    font-size: 17px;
+}
+
+.center-of-page {
+    display: flex; 
+    justify-content: center;
+}

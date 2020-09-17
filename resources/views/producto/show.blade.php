@@ -8,25 +8,25 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/header.css') }}">
 </head>
 
-<body style="background:url(/image/silo.jpg) no-repeat center center fixed">
+<body>
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><b>Detalle de producto</b></label>
+        <label class="title col-md-8 col-form-label"><a href="{{ action('ProductoController@index') }}">Productos</a> <i
+                class="fa fa-chevron-right"></i>
+            Detalle del producto</label>
     </div>
-    <a href="{{ action('ProductoController@index') }}"><button type="button"
-                            class="back-button" title="Volver"><i
-                                class="fa fa-arrow-left"></i> Volver</button></a>
-    <div class="container" >
-
+    <div class="container center-of-page">
         <div class="card">
             <div class="box">
                 <div class="header">
-                    <h1>{{$producto->nombre}}</h1>
+                    <span style="font-size: 24px;" class="header-title"><strong>{{$producto->nombre}}</strong></span>
                     <hr>
                     </hr>
                 </div>
-                <p><strong>Merma por manipuleo: </strong>{{$producto->mermaManipuleo}}</p>
-                <p><strong>Tabla de merma por secado: </strong></p>
-                <table style="width:15%">
+                <labels><strong>Merma por manipuleo: </strong>{{$producto->mermaManipuleo}}</labels>
+                <br>
+                <labels><strong>Tabla de merma por secado: </strong></labels>
+            <div id="div1">
+                <table>
                     <tr>
                         <th>Humedad</th>
                         <th>Merma</th>
@@ -38,6 +38,7 @@
                     </tr>
                     @endforeach
                 </table>
+            </div>
             </div>
         </div>
     </div>

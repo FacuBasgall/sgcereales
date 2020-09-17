@@ -74,10 +74,10 @@ class DescargaController extends Controller
             alert()->success("La descarga fue creada con exito", 'Descarga guardada');
             return redirect()->action('AvisoController@show', $carga->idAviso);
         }elseif($request->fecha > $hoy){
-            alert()->error("La fecha no puede ser mayor al dia de hoy", 'Ha ocurrido un error');
+            alert()->error("La fecha no puede ser mayor al dia de hoy", 'Ha ocurrido un error')->persistent('Cerrar');
             return back()->withInput();
         }else{
-            alert()->error("La fecha no puede ser menor a la fecha de carga", 'Ha ocurrido un error');
+            alert()->error("La fecha no puede ser menor a la fecha de carga", 'Ha ocurrido un error')->persistent('Cerrar');
             return back()->withInput();
         }
 
@@ -120,24 +120,25 @@ class DescargaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $idDescarga)
+    public function update($dataDescarga)
     {
-        $carga = Carga::where('idCarga', $request->carga)->first();
+        /*
+        $carga = Carga::where('idCarga', $dataDescarga->idCarga)->first();
         $hoy = date("Y-m-d");
 
-        if($request->fecha >= $carga->fecha && $request->fecha <= $hoy){
-            $descarga = Descarga::findOrfail($idDescarga);
-            $descarga->fecha = $request->fecha;
-            $descarga->bruto = $request->bruto;
-            $descarga->tara = $request->tara;
-            $descarga->humedad = $request->humedad;
-            $descarga->ph = $request->ph;
-            $descarga->proteina = $request->proteina;
-            $descarga->calidad = $request->calidad;
+        if($dataDescarga->fecha >= $carga->fecha && $dataDescarga->fecha <= $hoy){
+            $descarga = Descarga::where('idCarga', $dataDescarga->idCarga)->first();
+            $descarga->fecha = $dataDescarga->fecha;
+            $descarga->bruto = $dataDescarga->bruto;
+            $descarga->tara = $dataDescarga->tara;
+            $descarga->humedad = $dataDescarga->humedad;
+            $descarga->ph = $dataDescarga->ph;
+            $descarga->proteina = $dataDescarga->proteina;
+            $descarga->calidad = $dataDescarga->calidad;
 
             $aviso = Aviso::where('idAviso', $carga->idAviso)->first();
             $producto = Producto::where('idProducto', $aviso->idProducto)->first();
-            $merma = Merma::where('idProducto', $producto->idProducto)->where('humedad', $request->humedad)->exists();
+            $merma = Merma::where('idProducto', $producto->idProducto)->where('humedad', $dataDescarga->humedad)->exists();
             if ($merma){
                 $merma = Merma::where('idProducto', $producto->idProducto)->where('humedad', $descarga->humedad)->first();
                 $mermaManipuleo = $producto->mermaManipuleo;
@@ -147,15 +148,16 @@ class DescargaController extends Controller
                 $descarga->merma = NULL;
             }
             $descarga->save();
-            alert()->success("La descarga fue editada con exito", 'Descarga guardada');
-            return back();
+            alert()->success("La carga y descarga fueron editadas con exito", 'Carga y descarga guardada');
+            return redirect()->action('AvisoController@show', $carga->idAviso);
         }elseif($request->fecha > $hoy){
-            alert()->error("La fecha no puede ser mayor al dia de hoy", 'Ha ocurrido un error');
+            alert()->error("La fecha no puede ser mayor al dia de hoy", 'Ha ocurrido un error')->persistent('Cerrar');
             return back()->withInput();
         }else{
-            alert()->error("La fecha no puede ser menor a la fecha de carga", 'Ha ocurrido un error');
+            alert()->error("La fecha no puede ser menor a la fecha de carga", 'Ha ocurrido un error')->persistent('Cerrar');
             return back()->withInput();
         }
+        */
     }
 
     /**

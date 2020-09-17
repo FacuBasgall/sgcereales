@@ -3,93 +3,90 @@
 @parent
 
 <head>
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/header.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/show.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
-<body style="background:url(/image/cargador-camion.jpg) no-repeat center center fixed">
+<body>
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><b>Detalle de titular</b></label>
+        <label class="title col-md-8 col-form-label"><a href="{{ action('TitularController@index') }}">Titulares</a>
+            <i class="fa fa-chevron-right"></i> Detalle del titular</label>
     </div>
     <div class="container">
         <div class="card">
             <div class="box">
-                <div class="header">
-                    <h1>{{$titular->nombre}}</h1>
-                    <h2>CUIT: {{$titular->cuit}}</h2>
+                <div class="header-title">
+                    <strong>
+                        <div>{{$titular->nombre}}</div>
+                    </strong>
                 </div>
                 <hr>
-                </hr>
+                <div class="form-title">Datos del titular <a
+                        href="{{ action('TitularController@edit', $titular->cuit)}}"><button class="small-edit-button"
+                            title="Editar"><i class="fa fa-pencil"></i></button></a></div>
+                <label class="labels"><strong>CUIT: </strong>{{$titular->cuit}}</label>
                 @foreach ($iva as $condicion)
                 @if($condicion->idCondIva == $titular->condIva)
-                <p><strong>Condicion de IVA: </strong>{{$condicion->descripcion}}</p>
+                <label class="labels"><strong>Condición de IVA: </strong>{{$condicion->descripcion}}</label>
                 @endif
                 @endforeach
                 @if (isset($titular->dgr))
-                <p><strong>DGR: </strong>{{$titular->dgr}}</p>
+                <label class="labels"><strong>DGR: </strong>{{$titular->dgr}}</label>
                 @else
-                <p><strong>DGR: </strong>No ingresado </p>
+                <label class="labels"><strong>DGR: </strong><label class="info-text">-</label></label>
                 @endif
-                <hr>
-                <h2>Domicilio</h2>
-                @if (isset($titular->cp))
-                <p><strong>CP: </strong>{{$titular->cp}}</p>
+                <br>
+                @if (isset($titular->pais))
+                <label class="labels"><strong>País: </strong>{{$titular->pais}}</label>
                 @else
-                <p><strong>CP: </strong>Codigo Postal no definido</p>
-                @endif
-
-                @if (isset($titular->domicilio))
-                <p><strong>Dirección: </strong>{{$titular->domicilio}}</p>
-                @else
-                <p><strong>Dirección: </strong>Dirección no definida</p>
-                @endif
-
-                @if (isset($titular->localidad))
-                <p><strong>Cuidad: </strong>{{$titular->localidad}}</p>
-                @else
-                <p><strong>Cuidad: </strong>Cuidad no definida</p>
+                <label class="labels"><strong>País: </strong><label class="info-text">-</label></label>
                 @endif
 
                 @if (isset($titular->provincia))
-                <p><strong>Provincia: </strong>{{$titular->provincia}}</p>
+                <label class="labels"><strong>Provincia: </strong>{{$provincia->nombre}}</label>
                 @else
-                <p><strong>Provincia: </strong>Provincia no definida</p>
+                <label class="labels"><strong>Provincia: </strong><label class="info-text">-</label></label>
                 @endif
 
-                @if (isset($titular->pais))
-                <p><strong>País: </strong>{{$titular->pais}}</p>
+                @if (isset($titular->localidad))
+                <label class="labels"><strong>Ciudad: </strong>{{$localidad->nombre}}</label>
                 @else
-                <p><strong>País: </strong>País no definido</p>
+                <label class="labels"><strong>Ciudad: </strong><label class="info-text">-</label></label>
+                @endif
+
+                @if (isset($titular->cp))
+                <label class="labels"><strong>CP: </strong>{{$titular->cp}}</label>
+                @else
+                <label class="labels"><strong>CP: </strong><label class="info-text">-</label></label>
+                @endif
+
+                @if (isset($titular->domicilio))
+                <label class="labels"><strong>Dirección: </strong>{{$titular->domicilio}}</label>
+                @else
+                <label class="labels"><strong>Dirección: </strong><label class="info-text">-</label></label>
                 @endif
                 <hr>
-                <strong>
-                    <h2>Contactos <a href="{{ action('TitularController@contact', $titular->cuit) }}"><button
-                                class="small-edit-button" title="Gestionar contactos"><i
-                                    class="fa fa-pencil"></i></button></a></h2>
-                </strong>
+                <div class="form-title">Contactos <a
+                        href="{{ action('TitularController@contact', $titular->cuit) }}"><button
+                            class="small-edit-button" title="Gestionar contactos"><i
+                                class="fa fa-pencil"></i></button></a></div>
                 @if (!$contacto->isEmpty())
                 @foreach ($tipoContacto as $tipo)
                 @foreach ($contacto as $numero)
                 @if ($tipo->idTipoContacto == $numero->tipo)
-                <p><strong>{{$tipo->descripcion}}: </strong>{{$numero->contacto}}</p>
+                <label class="labels"><strong>{{$tipo->descripcion}}: </strong>{{$numero->contacto}}</label>
                 @endif
                 @endforeach
                 @endforeach
                 @else
-                <p>No se encontró información</p>
+                <label class="labels info-text"><i class="fa fa-exclamation-circle"></i> No se encontraron contactos</label>
                 @endif
                 <hr>
-                <a href="{{ action('TitularController@index') }}"><button class="back-button" title="Volver"
-                        style="position: relative;"><i class="fa fa-arrow-left"></i> Volver</button></a>
-                <a onclick="warning( '{{$titular->cuit}}' , 'titular');"><button class="delete-button" title="Eliminar"
-                        style="position: relative; top: 10%; left: 20%;"><i class="fa fa-trash"></i>
-                        Eliminar</button></a>
-                <a href="{{ action('TitularController@edit', $titular->cuit)}}"><button class="edit-button"
-                        title="Editar" style="position: relative; top: 10%; left: 20%;"><i class="fa fa-pencil"></i>
-                        Editar</button></a>
+                <div class="center-of-page"><a onclick="warning( '{{$titular->cuit}}' , 'titular');"><button
+                            class="delete-button" title="Eliminar"><i class="fa fa-trash"></i>
+                            Eliminar</button></a>
+                </div>
             </div>
-        </div>
-        @include('sweet::alert')
+            @include('sweet::alert')
 </body>
 @endsection
