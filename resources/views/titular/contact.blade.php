@@ -11,7 +11,8 @@
     <div class="card-header">
         <label class="title col-md-8 col-form-label"><a href="{{ action('TitularController@index') }}">Titulares carta
                 porte</a> <i class="fa fa-chevron-right"></i>
-            <a href="{{ action('TitularController@show', $titular->cuit) }}">Detalle del titular</a> <i class="fa fa-chevron-right"></i> Gestión de contactos</label>
+            <a href="{{ action('TitularController@show', $titular->cuit) }}">Detalle del titular</a> <i
+                class="fa fa-chevron-right"></i> Gestión de contactos</label>
     </div>
     <div class="container">
         <div class="form-card">
@@ -22,14 +23,17 @@
                     <select name="tipo" class="common-input" required>
                         <option value="" selected hidden>Seleccione un tipo</option>
                         @foreach ($tipoContacto as $tipo)
-                        <option value="{{$tipo->idTipoContacto}}" {{old('tipo') == $tipo->idTipoContacto ? 'selected':''}}>
+                        <option value="{{$tipo->idTipoContacto}}"
+                            {{old('tipo') == $tipo->idTipoContacto ? 'selected':''}}>
                             {{$tipo->descripcion}}</option>
                         @endforeach
                 </label>
                 <label for="contacto">
-                    <input type="text" placeholder="Ingrese el contacto" value="{{old('contacto')}}" name="contacto" id="contacto" class="common-input" required>
+                    <input type="text" placeholder="Ingrese el contacto" value="{{old('contacto')}}" name="contacto"
+                        id="contacto" class="common-input" required>
                 </label>
-                <button type="submit" class="save-button" style="padding:4px 12px;"><i class="fa fa-plus"></i> Añadir</button>
+                <button type="submit" class="save-button" style="padding:4px 12px;"><i class="fa fa-plus"></i>
+                    Añadir</button>
             </form>
         </div>
         <div class="contacts-card">
@@ -39,7 +43,9 @@
                 @foreach ($tipoContacto as $tipo)
                 @foreach ($titularContacto as $contacto)
                 @if ($tipo->idTipoContacto == $contacto->tipo)
-                <div class="margin-right"><strong>{{$tipo->descripcion}}: </strong>{{$contacto->contacto}} <a onclick="warningContact('{{$contacto->id}}', 'titular');"><button class="small-delete-button" title="Eliminar"><i class="fa fa-trash"></i></button></a>
+                <div class="margin-right"><strong>{{$tipo->descripcion}}: </strong>{{$contacto->contacto}} <a
+                        onclick="warningContact('{{$contacto->id}}', 'titular');"><button class="small-delete-button"
+                            title="Eliminar"><i class="fa fa-trash"></i></button></a>
                 </div>
                 @endif
                 @endforeach
