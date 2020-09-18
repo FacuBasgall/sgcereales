@@ -4,7 +4,7 @@ function warning(key, redirect) {
         title: "¿Está seguro?",
         text: "Una vez borrado, no podrá recuperarlo",
         icon: "warning",
-        buttons: ["Cancelar", true],
+        buttons: ["Cancelar", "Aceptar"],
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
@@ -17,7 +17,7 @@ function warningContact(key, redirect) {
         title: "¿Está seguro?",
         text: "Una vez borrado, no podrá recuperarlo",
         icon: "warning",
-        buttons: ["Cancelar", true],
+        buttons: ["Cancelar", "Aceptar"],
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
@@ -30,7 +30,7 @@ function warningSendEmails(key) {
         title: "¿Está seguro?",
         text: "El Romaneo procedera a enviarse",
         icon: "warning",
-        buttons: ["Cancelar", true],
+        buttons: ["Cancelar", "Aceptar"],
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {

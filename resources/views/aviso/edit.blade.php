@@ -124,13 +124,13 @@
                     <label for="lugarDescarga">
                         <span>Destino*:</span>
                         <input type="text" value="{{$aviso->lugarDescarga}}" name="lugarDescarga" id="lugarDescarga"
-                            class="common-input" required>
+                            class="common-input" maxlength="100" required>
                     </label>
                     <!-- EL ENTREGADOR ES EL USUARIO QUE ESTA AUTENTICADO EN EL MOMENTO -->
                     <label for="entregador">
                         <span>Entregador:</span>
                         <input type="text" value="{{$aviso->entregador}}" name="entregador" id="entregador"
-                            class="common-input">
+                            class="common-input" maxlength="50">
                     </label>
                     <hr>
             </div>
@@ -158,7 +158,7 @@
                 </label>
                 <label for="tipo">
                     <span>Tipo de producto:</span>
-                    <input type="text" value="{{$aviso_producto->tipo}}" name="tipo" id="tipo" class="common-input">
+                    <input type="text" value="{{$aviso_producto->tipo}}" name="tipo" id="tipo" class="common-input" maxlength="150">
                 </label>
                 <label for="cosecha">
                     @php $año1 = substr($aviso_producto->cosecha, 2, 2);

@@ -71,7 +71,7 @@ class DescargaController extends Controller
             }
             $descarga->save();
 
-            alert()->success("La descarga fue creada con exito", 'Descarga guardada');
+            alert()->success("La descarga fue creada con éxito", 'Descarga guardada');
             return redirect()->action('AvisoController@show', $carga->idAviso);
         }elseif($request->fecha > $hoy){
             alert()->error("La fecha no puede ser mayor al dia de hoy", 'Ha ocurrido un error')->persistent('Cerrar');
@@ -148,7 +148,7 @@ class DescargaController extends Controller
                 $descarga->merma = NULL;
             }
             $descarga->save();
-            alert()->success("La carga y descarga fueron editadas con exito", 'Carga y descarga guardada');
+            alert()->success("La carga y descarga fueron editadas con éxito", 'Carga y descarga guardada');
             return redirect()->action('AvisoController@show', $carga->idAviso);
         }elseif($request->fecha > $hoy){
             alert()->error("La fecha no puede ser mayor al dia de hoy", 'Ha ocurrido un error')->persistent('Cerrar');

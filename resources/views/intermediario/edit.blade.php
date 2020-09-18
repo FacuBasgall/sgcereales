@@ -10,10 +10,11 @@
 
 <body>
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><a href="{{ action('IntermediarioController@index') }}">Intermediarios</a> <i
+        <label class="title col-md-8 col-form-label"><a
+                href="{{ action('IntermediarioController@index') }}">Intermediarios</a> <i
                 class="fa fa-chevron-right"></i>
-            <a href="{{ action('IntermediarioController@show', $intermediario->cuit) }}">Detalle del intermediario</a> <i
-                class="fa fa-chevron-right"></i> Editar
+            <a href="{{ action('IntermediarioController@show', $intermediario->cuit) }}">Detalle del intermediario</a>
+            <i class="fa fa-chevron-right"></i> Editar
             intermediario</label>
     </div>
     <div class="container">
@@ -25,17 +26,18 @@
                     <p class="form-title"><strong>Datos del intermediario</strong></p>
                     <label for="nombre">
                         <span>Nombre y apellido*:</span>
-                        <input type="text" name="nombre" id="nombre" class="common-input" value="{{$intermediario->nombre}}"
-                            required>
+                        <input type="text" name="nombre" id="nombre" class="common-input"
+                            value="{{$intermediario->nombre}}" maxlength="200" required>
                     </label>
                     <label for="cuit">
                         <span>CUIT: </span>
-                        <input type="text" name="cuit" id="cuit" class="common-input" value="{{$intermediario->cuit}}"
+                        <input type="number" name="cuit" id="cuit" class="common-input" value="{{$intermediario->cuit}}"
                             readonly>
                     </label>
                     <label for="dgr">
                         <span>DGR: </span>
-                        <input type="text" name="dgr" id="dgr" class="common-input" value="{{$intermediario->dgr}}">
+                        <input type="text" name="dgr" id="dgr" class="common-input" value="{{$intermediario->dgr}}"
+                            maxlength="20">
                     </label>
                     <label for="iva" class="margin-right">
                         <span>IVA*:</span>
@@ -114,17 +116,18 @@
                     </label>
                     <label for="cp" id="cod" style="display:;">
                         <span>Código postal: </span>
-                        <input type="text" name="cp" id="cp" class="common-input-cp" value="{{$intermediario->cp}}">
+                        <input type="number" name="cp" id="cp" max="9999" min="0" class="common-input-cp"
+                            value="{{$intermediario->cp}}">
                     </label>
                     <label for="otroPais" id="otro" style="display:none;">
                         <span>Especifique: </span>
                         <input type="text" value="{{$intermediario->pais}}" name="otroPais" id="otroPais"
-                            class="common-input">
+                            class="common-input" maxlength="100">
                     </label>
                     <label for="domicilio">
                         <span>Domicilio: </span>
                         <input type="text" name="domicilio" id="domicilio" class="common-input-address"
-                            value="{{$intermediario->domicilio}}">
+                            value="{{$intermediario->domicilio}}" maxlength="250">
                     </label>
                     <hr>
                     <div class="center-of-page"><button type="submit" class="save-button"><i class="fa fa-check"></i>

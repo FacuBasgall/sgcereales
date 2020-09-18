@@ -85,7 +85,7 @@ class TitularController extends Controller
         $nuevo->domicilio = $request->domicilio;
         $nuevo->borrado = false;
         $nuevo->save();
-        alert()->success("El titular $nuevo->nombre fue creado con exito", 'Creado con exito');
+        alert()->success("El titular $nuevo->nombre fue creado con éxito", 'Creado con éxito');
         return redirect()->action('TitularController@contact', $request->cuit);
     }
 
@@ -145,7 +145,7 @@ class TitularController extends Controller
         }
         $nuevo->domicilio = $request->domicilio;
         $nuevo->save();
-        alert()->success("El titular $nuevo->nombre fue editado con exito", 'Editado con exito');
+        alert()->success("El titular $nuevo->nombre fue editado con éxito", 'Editado con éxito');
         return redirect()->action('TitularController@show', $cuit);
     }
 
@@ -160,7 +160,7 @@ class TitularController extends Controller
         $titular = Titular::findOrFail($cuit);
         $titular->borrado = true;
         $titular->save();
-        alert()->success("El titular de carta porte fue eliminado con exito", 'Eliminado con exito');
+        alert()->success("El titular de carta porte fue eliminado con éxito", 'Eliminado con éxito');
         return redirect('/titular');
     }
 
@@ -217,7 +217,7 @@ class TitularController extends Controller
                 $nuevo->contacto = $request->contacto;
                 $nuevo->tipo = $request->tipo;
                 $nuevo->save();
-                alert()->success("El contacto fue agregado con exito", 'Contacto agregado');
+                alert()->success("El contacto fue agregado con éxito", 'Contacto agregado');
                 return back();
             }else{
                 alert()->error($error, "Ha ocurrido un error")->persistent('Cerrar');
@@ -230,7 +230,7 @@ class TitularController extends Controller
     {
         $delete = Titular_Contacto::where('id', $id)->first();
         $delete->delete();
-        alert()->success("El contacto fue eliminado con exito", 'Contacto eliminado');
+        alert()->success("El contacto fue eliminado con éxito", 'Contacto eliminado');
         return back();
     }
 

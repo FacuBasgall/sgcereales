@@ -23,7 +23,7 @@
                     <label for="cartaPorte">
                         <span>Número carta porte*:</span>
                         <input type="text" name="cartaPorte" id="cartaPorte" value="{{$carga->nroCartaPorte}}"
-                            class="common-input" required>
+                            class="common-input" max="99999999999999999999" min="0" required>
                     </label>
                     <label for="fecha">
                         <span>Fecha de carga*:</span>
@@ -33,7 +33,7 @@
                     <label for="matricula">
                         <span>Matrícula del camión: </span>
                         <input type="text" name="matricula" id="matricula" value="{{$carga->matriculaCamion}}"
-                            class="common-input">
+                            class="common-input" maxlength="7">
                     </label>
                     <label for="kilos">
                         <span>Cargado (Kg)*:</span>
@@ -63,7 +63,7 @@
                 </label>
                 <label for="humedad">
                     <span>Humedad (%)*:</span>
-                    <input type="number" step=".1" min="0" name="humedad" id="humedad" value="{{$descarga->humedad}}"
+                    <input type="number" step=".1" min="0" max="30" name="humedad" id="humedad" value="{{$descarga->humedad}}"
                         class="common-input-cp" required>
                 </label>
                 <label for="ph">
@@ -78,7 +78,7 @@
                 </label>
                 <label for="calidad">
                     <span>Calidad: </span>
-                    <input type="text" name="calidad" id="calidad" value="{{$descarga->calidad}}" class="common-input">
+                    <input type="text" name="calidad" id="calidad" value="{{$descarga->calidad}}" class="common-input" maxlength="150">
                 </label>
             </div>
             @else
