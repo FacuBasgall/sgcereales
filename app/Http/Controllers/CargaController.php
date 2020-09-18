@@ -58,7 +58,7 @@ class CargaController extends Controller
                 $carga->borrado = false;
                 $carga->save();
 
-                alert()->success("La carga fue creada con exito", 'Carga guardada');
+                alert()->success("La carga fue creada con éxito", 'Carga guardada');
                 if(isset($request->check)){
                     return redirect()->action('DescargaController@create', $carga->idCarga);
                 }else{
@@ -144,7 +144,7 @@ class CargaController extends Controller
                         $descarga->merma = NULL;
                     }
                     $descarga->save();
-                    alert()->success("La carga y descarga fueron editadas con exito", 'Carga y descarga guardada');
+                    alert()->success("La carga y descarga fueron editadas con éxito", 'Carga y descarga guardada');
                     return redirect()->action('AvisoController@show', $carga->idAviso);
                 }elseif($request->fechaDescarga > $hoy){
                     alert()->error("La fecha de la descarga no puede ser mayor al dia de hoy", 'Ha ocurrido un error')->persistent('Cerrar');
@@ -154,7 +154,7 @@ class CargaController extends Controller
                     return back()->withInput();
                 }
             }else{
-                alert()->success("La carga fue editada con exito", 'Carga guardada');
+                alert()->success("La carga fue editada con éxito", 'Carga guardada');
                 return redirect()->action('AvisoController@show', $carga->idAviso);
             }
         }else{

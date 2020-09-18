@@ -182,7 +182,7 @@ class ReporteController extends Controller
                 $correosRemitente = Remitente_Contacto::where('cuit', $aviso->idRemitenteComercial)->where('tipo', 3)->pluck('contacto');
                 //$correosCorredor se agregar en el RomaneoSendMail
                 \MultiMail::to($correosTitular)->cc($correosRemitente)->send(new RomaneoSendMail($idAviso));
-                alert()->success("El aviso ha sido enviado con exito", 'Correo enviado');
+                alert()->success("El aviso ha sido enviado con éxito", 'Correo enviado');
             }
         }else{
             alert()->error("El aviso debe estar terminado para poder enviarlo", 'No se puede ejecutar la acción')->persistent('Cerrar');
