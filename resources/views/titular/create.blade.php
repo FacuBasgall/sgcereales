@@ -21,16 +21,16 @@
                 <label for="nombre">
                     <span>Nombre y apellido*:</span>
                     <input type="text" value="{{old('nombre')}}" name="nombre" id="nombre" class="common-input"
-                        required>
+                        maxlength="200" required>
                 </label>
                 <label for="cuit">
                     <span>CUIT*:</span>
-                    <input type="text" value="{{old('cuit')}}" name="cuit" id="cuit" class="common-input" min="0"
+                    <input type="number" value="{{old('cuit')}}" name="cuit" id="cuit" class="common-input" min="0"
                         max="999999999999999" required>
                 </label>
                 <label for="dgr">
                     <span>DGR: </span>
-                    <input type="text" value="{{old('dgr')}}" name="dgr" id="dgr" class="common-input">
+                    <input type="text" value="{{old('dgr')}}" name="dgr" id="dgr" class="common-input" maxlength="20">
                 </label>
                 <label for="iva" class="margin-right">
                     <span>IVA*:</span>
@@ -89,16 +89,16 @@
                 </label>
                 <label for="cp" id="cod" style="display:;">
                     <span>Código postal: </span>
-                    <input type="text" value="{{old('cp')}}" name="cp" id="cp" class="common-input-cp">
+                    <input type="number" value="{{old('cp')}}" name="cp" id="cp" max="9999" min="0" class="common-input-cp">
                 </label>
                 <label for="otroPais" id="otro" style="display:none;">
                     <span>Especifique: </span>
-                    <input type="text" value="{{old('otroPais')}}" name="otroPais" id="otroPais" class="common-input">
+                    <input type="text" value="{{old('otroPais')}}" name="otroPais" id="otroPais" class="common-input" maxlength="100">
                 </label>
                 <label for="domicilio">
                     <span>Domicilio: </span>
                     <input type="text" value="{{old('domicilio')}}" name="domicilio" id="domicilio"
-                        class="common-input-address">
+                        class="common-input-address" maxlength="250">
                 </label>
                 <hr>
                 <div class="center-of-page"> <button type="submit" class="save-button"><i class="fa fa-check"></i>

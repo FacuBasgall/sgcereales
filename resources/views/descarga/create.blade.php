@@ -36,7 +36,7 @@
                     </label>
                     <label for="humedad">
                         <span>Humedad (%)*:</span>
-                        <input type="number" value="{{old('humedad')}}" step=".1" min="0" name="humedad" id="humedad"
+                        <input type="number" value="{{old('humedad')}}" step=".1" min="0" max="30" name="humedad" id="humedad"
                             class="common-input-cp" required>
                     </label>
                     <label for="ph">
@@ -51,7 +51,7 @@
                     </label>
                     <label for="calidad">
                         <span>Calidad: </span>
-                        <input type="text" value="{{old('calidad')}}" name="calidad" id="calidad" class="common-input">
+                        <input type="text" value="{{old('calidad')}}" name="calidad" id="calidad" class="common-input" maxlength="150">
                     </label>
                     <hr>
                     <input id="carga" name="carga" type="hidden" value="{{$carga->idCarga}}">
