@@ -22,7 +22,7 @@
                     <label for="cartaPorte">
                         <span>Número carta porte*:</span>
                         <input type="number" value="{{old('cartaPorte')}}" name="cartaPorte" id="cartaPorte"
-                            class="common-input" required>
+                            class="common-input" max="99999999999999999999" min="0" required>
                     </label>
                     <label for="fecha">
                         <span>Fecha de carga*:</span>
@@ -32,7 +32,7 @@
                     <label for="matricula">
                         <span>Matrícula del camión:</span>
                         <input type="text" value="{{old('matricula')}}" name="matricula" id="matricula"
-                            class="common-input">
+                            class="common-input" maxlength="7">
                     </label>
                     <label for="kilos">
                         <span>Cargado (Kg)*:</span>

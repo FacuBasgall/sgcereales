@@ -143,7 +143,7 @@ class AvisoController extends Controller
         $aviso_entregador->fecha = date("Y-m-d");
         $aviso_entregador->save();
 
-        alert()->success("El aviso fue creado con exito", 'Aviso creado');
+        alert()->success("El aviso fue creado con éxito", 'Aviso creado');
         return redirect()->action('AvisoController@show', $aviso->idAviso);
     }
 
@@ -266,7 +266,7 @@ class AvisoController extends Controller
         $aviso_producto->tipo = $request->tipo;
         $aviso_producto->save();
 
-        alert()->success("El aviso fue editado con exito", 'Aviso guardado');
+        alert()->success("El aviso fue editado con éxito", 'Aviso guardado');
         return redirect()->action('AvisoController@show', $aviso->idAviso);
     }
 
@@ -291,7 +291,7 @@ class AvisoController extends Controller
         $aviso_entregador->delete();
         $aviso_producto->delete();
         $aviso->delete();
-        alert()->success("El aviso fue eliminado con exito", 'Aviso eliminado');
+        alert()->success("El aviso fue eliminado con éxito", 'Aviso eliminado');
         return redirect('/aviso');
     }
 
@@ -312,7 +312,7 @@ class AvisoController extends Controller
             $aviso->estado = false;
         }
         $aviso->save();
-        alert()->success("El estado del aviso fue cambiado con exito", 'Estado cambiado');
+        alert()->success("El estado del aviso fue cambiado con éxito", 'Estado cambiado');
         return redirect()->action('AvisoController@show', $idAviso);
     }
 
@@ -404,7 +404,7 @@ class AvisoController extends Controller
                 $correosRemitente = Remitente_Contacto::where('cuit', $aviso->idRemitenteComercial)->where('tipo', 3)->pluck('contacto');
                 //$correosCorredor se agregar en el RomaneoSendMail
                 \MultiMail::to($correosTitular)->cc($correosRemitente)->send(new RomaneoSendMail($idAviso));
-                alert()->success("El aviso ha sido enviado con exito", 'Correo enviado');
+                alert()->success("El aviso ha sido enviado con éxito", 'Correo enviado');
             }
         }else{
             alert()->error("El aviso debe estar terminado para poder enviarlo", 'No se puede ejecutar la acción')->persistent('Cerrar');

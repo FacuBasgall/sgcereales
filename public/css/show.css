@@ -38,7 +38,57 @@ body {
     justify-content: center;
 }
 
+.end-of-the-page {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.flex-container {
+    display: flex;
+}
+
+.flex-child {
+    flex: 1;
+    flex-basis: 33%;
+}  
+
+.flex-child:first-child {
+    margin-right: 20px;
+}  
+
+.left-bar {
+    border-right: 1px solid rgba(0,0,0,.1);
+}
+
 .info-text {
-    color: grey;
+    color: grey; 
     font-size: 16px;
 }
+
+.info-margin{
+    margin-left: 3%;
+}
+
+table {
+    margin-left: 25px;
+    margin-top: 10px;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 25%;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+
+  #div1 {
+    overflow:scroll;
+    height: 350px;
+    overflow-x: hidden;
+  }

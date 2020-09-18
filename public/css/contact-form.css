@@ -1,44 +1,62 @@
 body {
     font-family:sans-serif;
-    background-size: cover;
+    background:#f0efef;
 }
 
 .container {
+    display: flex; /* or inline-flex */
+    flex-wrap: wrap;
     justify-content:center;
     align-items: center;
+    text-align:center;
+  }
+  
+  .form-card{
+    margin: 20px 0px 20px 0px;
+    width: 800px;
+    height: auto;
+    background: #fff;
+    border-radius: 10px;
+    transition: 0.5s;
+    padding: 25px 30px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.contacts-card{
+    margin: 20px 0px 20px 0px;
+    width: 1000px;
+    height: auto;
+    background: #fff;
+    border-radius: 10px;
+    transition: 0.5s;
+    padding: 30px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.flex-elements{
     display: flex;
     flex-wrap: wrap;
-    text-align:center;
-    margin-top: 20px;
-  }
-
-  .card {
-    width:435px;
-    min-height:400px;
-    background:#fff;
-    border-radius:10px;
-    transition:0.5s;
-    text-align:center;
-    margin-bottom: 20px;
 }
 
-.card .box {
-    text-align:center;
-    padding:15px;
-    box-sizing:border-box;
-}
-
-.card h2 {
-    font-size:20px;
-    color:#262626;
-    margin:20px 0;
-}
-
-.input{
-    width: 55%;
-    padding: 10px 15px;
-    margin: 10px 0px;
+  .common-input {
+    margin-top: 15px;
+    width: 170px;
+    height: 30px;
     border: 1px solid #ccc;
     border-radius: 6px;
     box-sizing: border-box;
+    margin-right: 25px;
 }
+
+.form-title {
+    font-size: 17px;
+    margin-bottom: 20px;
+}
+
+.margin-right {
+    margin-right: 80px;
+}
+
+strong{
+    font-weight:bold;
+   }

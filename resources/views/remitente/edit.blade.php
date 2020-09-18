@@ -10,8 +10,8 @@
 
 <body>
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><a href="{{ action('RemitenteController@index') }}">Remitentes comercial</a> <i
-                class="fa fa-chevron-right"></i>
+        <label class="title col-md-8 col-form-label"><a href="{{ action('RemitenteController@index') }}">Remitentes
+                comercial</a> <i class="fa fa-chevron-right"></i>
             <a href="{{ action('RemitenteController@show', $remitente->cuit) }}">Detalle del remitente</a> <i
                 class="fa fa-chevron-right"></i> Editar
             remitente</label>
@@ -26,16 +26,16 @@
                     <label for="nombre">
                         <span>Nombre y apellido*:</span>
                         <input type="text" name="nombre" id="nombre" class="common-input" value="{{$remitente->nombre}}"
-                            required>
+                            maxlength="200" required>
                     </label>
                     <label for="cuit">
                         <span>CUIT: </span>
-                        <input type="text" name="cuit" id="cuit" class="common-input" value="{{$remitente->cuit}}"
+                        <input type="number" name="cuit" id="cuit" class="common-input" value="{{$remitente->cuit}}"
                             readonly>
                     </label>
                     <label for="dgr">
                         <span>DGR: </span>
-                        <input type="text" name="dgr" id="dgr" class="common-input" value="{{$remitente->dgr}}">
+                        <input type="text" name="dgr" id="dgr" class="common-input" value="{{$remitente->dgr}}" maxlength="20">
                     </label>
                     <label for="iva" class="margin-right">
                         <span>IVA*:</span>
@@ -114,17 +114,17 @@
                     </label>
                     <label for="cp" id="cod" style="display:;">
                         <span>Código postal: </span>
-                        <input type="text" name="cp" id="cp" class="common-input-cp" value="{{$remitente->cp}}">
+                        <input type="number" name="cp" id="cp" max="9999" min="0" class="common-input-cp" value="{{$remitente->cp}}">
                     </label>
                     <label for="otroPais" id="otro" style="display:none;">
                         <span>Especifique: </span>
                         <input type="text" value="{{$remitente->pais}}" name="otroPais" id="otroPais"
-                            class="common-input">
+                            class="common-input"  maxlength="100">
                     </label>
                     <label for="domicilio">
                         <span>Domicilio: </span>
                         <input type="text" name="domicilio" id="domicilio" class="common-input-address"
-                            value="{{$remitente->domicilio}}">
+                            value="{{$remitente->domicilio}}" maxlength="250">
                     </label>
                     <hr>
                     <div class="center-of-page"><button type="submit" class="save-button"><i class="fa fa-check"></i>

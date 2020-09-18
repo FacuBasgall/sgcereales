@@ -91,7 +91,7 @@ class IntermediarioController extends Controller
         $nuevo->domicilio = $request->domicilio;
         $nuevo->borrado = false;
         $nuevo->save();
-        alert()->success("El intermediario $nuevo->nombre fue creado con exito", 'Creado con exito');
+        alert()->success("El intermediario $nuevo->nombre fue creado con éxito", 'Creado con éxito');
         return redirect()->action('IntermediarioController@contact', $request->cuit);
     }
 
@@ -151,7 +151,7 @@ class IntermediarioController extends Controller
         }
         $nuevo->domicilio = $request->domicilio;
         $nuevo->save();
-        alert()->success("El intermediario $nuevo->nombre fue editado con exito", 'Editado con exito');
+        alert()->success("El intermediario $nuevo->nombre fue editado con éxito", 'Editado con éxito');
         return redirect()->action('IntermediarioController@show', $cuit);
     }
 
@@ -166,7 +166,7 @@ class IntermediarioController extends Controller
         $intermediario = Intermediario::findOrFail($cuit);
         $intermediario->borrado = true;
         $intermediario->save();
-        alert()->success("El intermediario fue eliminado con exito", 'Eliminado con exito');
+        alert()->success("El intermediario fue eliminado con éxito", 'Eliminado con éxito');
         return redirect('/intermediario');
     }
 
@@ -223,7 +223,7 @@ class IntermediarioController extends Controller
                 $nuevo->contacto = $request->contacto;
                 $nuevo->tipo = $request->tipo;
                 $nuevo->save();
-                alert()->success("El contacto fue agregado con exito", 'Contacto agregado');
+                alert()->success("El contacto fue agregado con éxito", 'Contacto agregado');
                 return back();
             }else{
                 alert()->error($error, "Ha ocurrido un error")->persistent('Cerrar');
@@ -236,7 +236,7 @@ class IntermediarioController extends Controller
     {
         $delete = Intermediario_Contacto::where('id', $id)->first();
         $delete->delete();
-        alert()->success("El contacto fue eliminado con exito", 'Contacto eliminado');
+        alert()->success("El contacto fue eliminado con éxito", 'Contacto eliminado');
         return back();
     }
 

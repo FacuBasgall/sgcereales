@@ -83,10 +83,10 @@
             Corredores
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" id=reporte>
           <a class="nav-link" href="{{ action('ReporteController@index') }}">
           <i class="fa fa-bar-chart"></i>
-            Reportes Generales
+            Reportes generales
           </a>
         </li>
       </ul>
@@ -95,7 +95,7 @@
           <a class="nav-link" href="#" title="Manual de usuario">
             <i class="fa fa-book">
             </i>
-            Manual de Usuario
+            Manual de <br>usuario
           </a>
         </li>
         <li class="nav-item">

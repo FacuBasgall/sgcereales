@@ -1,0 +1,107 @@
+body {
+    font-family:sans-serif;
+    background:#f0efef;
+}
+
+.container {
+    display: flex; /* or inline-flex */
+    flex-wrap: wrap;
+    justify-content:center;
+    align-items: center;
+    text-align:start;
+}
+
+.header-card{
+    margin: 20px 0px 20px 0px;
+    width: auto;
+    height: auto;
+    background: #fff;
+    border-radius: 10px;
+    transition: 0.5s;
+    padding: 25px 30px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    border-style: solid;
+    border-color: #00B4CC;
+    border-width: 2px;
+}
+
+.results-card{
+    margin: 20px 0px 20px 0px;
+    width: 1200px;
+    height: auto;
+    background: #fff;
+    border-radius: 10px;
+    transition: 0.5s;
+    padding: 30px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.labels {
+    margin-right: 30px;
+}
+
+.header-title {
+    font-size: 20px;
+    color:black;
+    margin-bottom: 15px;
+}
+
+.common-input {
+    width: 170px;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    margin-right: 25px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.center-of-page {
+    display: flex; 
+    justify-content: center;
+}
+
+.margin-right {
+    margin-right: 25px;
+}
+
+.no-results {
+    color: grey;
+    font-size: 17px;
+}
+
+.find-button {
+    background-color: #00B4CC;
+    border: none;
+    color: white;
+    padding: 3px 30px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4%;
+    font-family: sans-serif;
+    margin-right: 10px;
+}
+
+.find-button:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+  }
+
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+
