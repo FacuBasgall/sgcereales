@@ -31,7 +31,6 @@ class RomaneoExport implements FromView, ShouldAutoSize
     public function __construct($idAviso)
     {
         $this->idAviso = $idAviso;
-        $sheet->setAutoSize(true);
     }
 
     public function view(): View
