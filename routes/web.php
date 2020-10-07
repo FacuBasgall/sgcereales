@@ -30,14 +30,17 @@ Route::post('/password/reset','Auth\ResetPasswordController@reset');
 Route::get('/password/reset/{token}','Auth\ResetPasswordController@showResetForm');
 
 Route::get('/backup', function(){
+    //if(auth()->user()->tipoUser == 'A') EN CASO DE QUE SOLO SE QUIERA QUE EL ADMIN PUEDE EJECUTAR BKS!
     $cmd = shell_exec("cd .. & php artisan backup:clean");
     $cmd = shell_exec("cd .. & php artisan backup:run --only-db");
     if(stristr($cmd, "Backup completed") === false){
-        dd("Ha ocurrido un error");
+        alert()->error("No se ha completado el proceso de backup", 'Ha ocurrido un error')->persistent('Cerrar');
+        return back();
     }else{
-        dd("Backup completo");
+        alert()->success("El proceso de backup se realizó correctamente", 'Backup completo')->persistent('Cerrar');
+        return back();
     }
-});
+})->middleware('auth');
 
 Route::get('/usuario/show/{id}', 'UsuarioController@show');
 Route::get('/usuario/edit/{id}', 'UsuarioController@edit');

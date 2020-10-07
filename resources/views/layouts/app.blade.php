@@ -24,7 +24,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand">
                     Sistema Gestor de Cereales
                 </a>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -71,5 +71,3 @@
 </body>
 
 </html>
-
-
