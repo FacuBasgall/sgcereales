@@ -28,4 +28,8 @@ class Remitente_Comercial extends Model
     public function aviso(){
         return $this->hasMany('App\Aviso', 'idRemitenteComercial', 'cuit');
     }
+
+    public function filtro(){
+        return $this->belongsTo('App\Filtro', 'idRemitente', 'cuit');
+    }
 }

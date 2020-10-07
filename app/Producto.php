@@ -23,4 +23,7 @@ class Producto extends Model
         return $this->hasMany('App\Merma', 'idProducto', 'idProducto');
     }
 
+    public function filtro(){
+        return $this->belongsTo('App\Filtro', 'idProducto', 'cuit');
+    }
 }

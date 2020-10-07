@@ -35,6 +35,10 @@ class Aviso extends Model
         return $this->belongsTo('App\Destino', 'idDestinatario', 'idAviso');
     }
 
+    public function reporte(){
+        return $this->belongsTo('App\Reporte', 'idAviso', 'idAviso');
+    }
+
     public function aviso_producto(){
         return $this->hasOne('App\Aviso_Producto', 'idAviso', 'idAviso');
     }

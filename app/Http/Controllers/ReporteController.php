@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Exports\RomaneoExport;
+use App\Exports\ReporteExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade as PDF;
 use App\Mail\RomaneoSendMail;
 
+use App\Reporte;
+use App\Filtro;
 use App\Aviso;
 use App\Descarga;
 use App\Carga;
@@ -51,6 +53,17 @@ class ReporteController extends Controller
             "producto" => $request->producto,
         );
         $control = false;
+
+        $reportesBD = Reporte::all();
+        foreach($reportesBD as $report){
+            $report->delete(); //vaciar la tabla reportes-temp
+        }
+
+        $filtrosBD = Filtro::all();
+        foreach($filtrosBD as $filt){
+            $filt->delete(); //vaciar la tabla filtro-reporte-temp
+        }
+
         if(isset($request->fechaDesde) && isset($request->fechaHasta)){
             if($request->fechaDesde <= $request->fechaHasta){
                 $existe = Aviso_Entregador::whereBetween('fecha', [$request->fechaDesde, $request->fechaHasta])->where('idEntregador', 1)->exists();
@@ -63,6 +76,17 @@ class ReporteController extends Controller
                                 ->select('aviso.*')
                                 ->get();
                 }
+                $nuevoFiltro = new Filtro;
+                $nuevoFiltro->fechaDesde = $filtros["fechaDesde"];
+                $nuevoFiltro->fechaHasta = $filtros["fechaHasta"];
+                $nuevoFiltro->idTitular = $filtros["titular"];
+                $nuevoFiltro->idIntermediario = $filtros["intermediario"];
+                $nuevoFiltro->idRemitente = $filtros["remitente"];
+                $nuevoFiltro->idCorredor = $filtros["corredor"];
+                $nuevoFiltro->idDestinatario = $filtros["destinatario"];
+                $nuevoFiltro->entregador = $filtros["entregador"];
+                $nuevoFiltro->idProducto = $filtros["producto"];
+                $nuevoFiltro->save();
             }else{
                 alert()->warning("La fecha desde debe ser menor a la fecha hasta", 'Ha ocurrido un error')->persistent('Cerrar');
                 return back()->withInput();
@@ -90,8 +114,13 @@ class ReporteController extends Controller
             if(isset($request->producto)){
                 $resultado = $resultado->where('idProducto', $request->producto);
             }
+            foreach($resultado as $result){
+                $nuevoReporte = new Reporte;
+                $nuevoReporte->idAviso = $result->idAviso;
+                $nuevoReporte->idFiltro = $nuevoFiltro->idFiltro;
+                $nuevoReporte->save();
+            }
         }
-
         $entregadorAutenticado = 1;
         $cargas = Carga::where('borrado', false)->get();
         $descargas = Descarga::where('borrado', false)->get();
@@ -112,17 +141,11 @@ class ReporteController extends Controller
             'avisos_entregadores', 'localidades', 'provincias', 'resultado', 'filtros']));
     }
 
-    public function export_excel($filtros, $resultados)
+    public function export_excel()
     {
-        if($resultados->count() > 0){
-            $hoy = date("Y-m-d");
-            $filename = "Reporte general " . $hoy . ".xlsx";
-            return Excel::download(new RomaneoExport($filtros, $resultados), $filename);
-        }else{
-            alert()->error("No se encontraron resultados", 'No se puede ejecutar la acción')->persistent('Cerrar');
-            return back()->withInput();
-        }
-
+        $hoy = date("Y-m-d");
+        $filename = "Reporte general " . $hoy . ".xlsx";
+        return Excel::download(new ReporteExport(), $filename);
     }
 /*
     public function export_pdf($idAviso)

@@ -4,6 +4,10 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/general-reports.css') }}">
+    <!-- <link rel="stylesheet" type="text/css" href="{{ asset('dataTable/jquery.dataTables.min.css') }}">
+    <script type="text/javascript" src="/dataTable/jquery.dataTables.min.js"></script> -->
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/cortar-aviso.css') }}">
 </head>
 
 <body>
@@ -135,23 +139,23 @@
             </form>
         </div>
         <div class="results-card">
-            <table>
+            <table>  <!--   <table id="idDataTable" class="table table-striped"> para datatable-->
                 @if(!empty($resultado) && $resultado->count())
-                <h4>Datos encontrados:</h4>
+                <div class="header-title">Datos encontrados:</div>
                 <thead>
                     <tr>
-                        <th><strong>Nro de aviso</strong></th>
-                        <th><strong>Fecha de creación</strong></th>
-                        <th><strong>Titular carta porte</strong></th>
+                        <th><strong>Número</strong></th>
+                        <th><strong>Fecha</strong></th>
+                        <th><strong>Titular</strong></th>
                         <th><strong>Intermediario</strong></th>
-                        <th><strong>Remitente comercial</strong></th>
+                        <th><strong>Remitente</strong></th>
                         <th><strong>Corredor</strong></th>
                         <th><strong>Destinatario</strong></th>
                         <th><strong>Producto</strong></th>
                         <th><strong>Procedencia</strong></th>
                         <th><strong>Destino</strong></th>
-                        <th><strong>Neto descargado (Kg)</strong></th>
-                        <th><strong>Neto con merma (Kg)</strong></th>
+                        <th><strong>Neto (Kg)</strong></th>
+                        <th><strong>Neto merma (Kg)</strong></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -166,44 +170,44 @@
                         @endforeach
                         @foreach ($titulares as $titular)
                         @if($titular->cuit == $aviso->idTitularCartaPorte)
-                        <td>{{$titular->nombre}}</td>
+                        <td><div class="cortar">{{$titular->nombre}}</div></td>
                         @endif
                         @endforeach
                         @foreach ($intermediarios as $intermediario)
                         @if($intermediario->cuit == $aviso->idIntermediario)
-                        <td>{{$intermediario->nombre}}</td>
+                        <td><div class="cortar">{{$intermediario->nombre}}</div></td>
                         @endif
                         @endforeach
                         @foreach ($remitentes as $remitente)
                         @if($remitente->cuit == $aviso->idRemitenteComercial)
-                        <td>{{$remitente->nombre}}</td>
+                        <td><div class="cortar">{{$remitente->nombre}}</div></td>
                         @endif
                         @endforeach
                         @foreach ($corredores as $corredor)
                         @if($corredor->cuit == $aviso->idCorredor)
-                        <td>{{$corredor->nombre}}</td>
+                        <td><div class="cortar">{{$corredor->nombre}}</div></td>
                         @endif
                         @endforeach
                         @foreach ($destinatarios as $destinatario)
                         @if($destinatario->cuit == $aviso->idDestinatario)
-                        <td>{{$destinatario->nombre}}</td>
+                        <td><div class="cortar">{{$destinatario->nombre}}</div></td>
                         @endif
                         @endforeach
                         @foreach ($productos as $producto)
                         @if($producto->idProducto == $aviso->idProducto)
-                        <td>{{$producto->nombre}}</td>
+                        <td><div class="cortar">{{$producto->nombre}}</div></td>
                         @endif
                         @endforeach
                         @foreach ($provincias as $provincia)
                         @if ($provincia->id == $aviso->provinciaProcedencia)
                         @foreach ($localidades as $localidad)
                         @if ($localidad->id == $aviso->localidadProcedencia)
-                        <td>{{$localidad->nombre}} ({{$provincia->abreviatura}})</td>
+                        <td><div class="cortar">{{$localidad->nombre}} ({{$provincia->abreviatura}})</div></td>
                         @endif
                         @endforeach
                         @endif
                         @endforeach
-                        <td>{{$aviso->lugarDescarga}}</td>
+                        <td><div class="cortar">{{$aviso->lugarDescarga}}</div></td>
                         @php $descargado = 0; $merma = 0 @endphp
                         @foreach ($cargas as $carga)
                         @if($carga->idAviso == $aviso->idAviso)
@@ -222,21 +226,73 @@
                         @php $total += $descargado; $totalMerma += ($descargado - $merma); @endphp
                     </tr>
                     @endforeach
-                    <tr>
+                    <!-- <tr>
                         <th><strong>Total descargado (Kg):</strong></th>
                         <td>{{$total}}</td>
                     </tr>
                     <tr>
                         <th><strong>Total descargado con merma (Kg):</strong></th>
                         <td>{{$totalMerma}}</td>
-                    </tr>
+                    </tr> -->
                 </tbody>
+                </table>
+                <br>
+                <strong>Total descargado (Kg):</strong> {{$total}}
+                <strong>Total descargado con merma (Kg):</strong> {{$totalMerma}}
+                <hr>
+                <div class="center-of-page">
+                    <a href="{{action('ReporteController@export_excel')}}"><button class="export-button"><i class="fa fa-file-excel-o"></i> Exportar
+                            Excel</button></a>
+                    <a href="#"><button class="export-button"><i class="fa fa-file-pdf-o"></i> Exportar
+                            PDF</button></a>
+                    <a onclick="#"><button class="export-button"><i class="fa fa-envelope"></i> Enviar</button></a>
+                </div>
+                @elseif ($filtros['fechaDesde']>'1970-01-01')
+                <label class="no-results">No se han encontrado resultados</label>
                 @else
                 <label class="no-results">Realice una búsqueda para obtener resultados</label>
                 @endif
-            </table>
+            <!-- </table> -->
         </div>
     </div>
     @include('sweet::alert')
 </body>
+<!-- <script>
+$(document).ready(function() {
+    $('#idDataTable').DataTable({
+        "order": [
+            [0, "desc"]
+        ],
+        "language": {
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ avisos",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sInfo": "Mostrando avisos del _START_ al _END_ de un total de _TOTAL_ avisos",
+            "sInfoEmpty": "Mostrando avisos del 0 al 0 de un total de 0 avisos",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ avisos)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            },
+            "buttons": {
+                "copy": "Copiar",
+                "colvis": "Visibilidad"
+            }
+        }
+    });
+});
+</script> -->
+
 @endsection

@@ -28,4 +28,8 @@ class Destino extends Model
     public function aviso(){
         return $this->hasMany('App\Aviso', 'idDestinatario', 'cuit');
     }
+
+    public function filtro(){
+        return $this->belongsTo('App\Filtro', 'idDestinatario', 'cuit');
+    }
 }
