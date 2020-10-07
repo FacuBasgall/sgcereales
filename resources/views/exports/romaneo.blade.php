@@ -2,15 +2,24 @@
     <thead>
         <tr>
             <th rowspan="6" colspan="6" valign="middle"><b>
-                {{$entregador->nombre}}<br>
-                {{$entregador->descripcion}}<br>
-                @foreach ($entregador_domicilio as $domicilio)
-                {{$domicilio->domicilio}}, {{$domicilio->localidad}} ({{$domicilio->provincia}} - {{$domicilio->cp}})<br>
-                @endforeach
-                @foreach ($entregador_contacto as $contacto)
-                | {{$contacto->contacto}} |
-                @endforeach
-            </b></th>
+                    {{$entregador->nombre}}<br>
+                    {{$entregador->descripcion}}<br>
+                    @foreach ($entregador_domicilio as $domicilio)
+                    @foreach($provincias as $provincia)
+                    @if($provincia->id == $domicilio->provincia)
+                    @foreach($localidades as $localidad)
+                    @if($localidad->id == $domicilio->localidad)
+                    {{$domicilio->domicilio}}, {{$localidad->nombre}} ({{$provincia->abreviatura}} -
+                    {{$domicilio->cp}})<br>
+                    @endif
+                    @endforeach
+                    @endif
+                    @endforeach
+                    @endforeach
+                    @foreach ($entregador_contacto as $contacto)
+                    | {{$contacto->contacto}} |
+                    @endforeach
+                </b></th>
             <th><b>Nro Aviso:</b></th>
             <td>{{ $aviso->nroAviso }}</td>
             <th><b>Fecha:</b></th>
@@ -26,7 +35,15 @@
             <th style="font-weight:bold">Titular de C.P:</th>
             <td>{{ $titular->nombre }}</td>
             <th><b>Procedencia:</b></th>
-            <td>{{$localidad->nombre}} ({{$provincia->nombre}})</td>
+            @foreach($provincias as $provincia)
+            @if($provincia->id == $aviso->provinciaProcedencia)
+            @foreach($localidades as $localidad)
+            @if($localidad->id == $aviso->localidadProcedencia)
+            <td>{{$localidad->nombre}} ({{$provincia->abreviatura}})</td>
+            @endif
+            @endforeach
+            @endif
+            @endforeach
         </tr>
         <tr>
             <th style="font-weight:bold">Remitente Comercial:</th>
