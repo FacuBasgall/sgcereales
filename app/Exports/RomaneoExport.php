@@ -31,6 +31,7 @@ class RomaneoExport implements FromView, ShouldAutoSize
     public function __construct($idAviso)
     {
         $this->idAviso = $idAviso;
+        $sheet->setAutoSize(true);
     }
 
     public function view(): View
@@ -49,11 +50,11 @@ class RomaneoExport implements FromView, ShouldAutoSize
         $entregador = User::where('idUser', $aviso_entregador->idEntregador)->first();
         $entregador_contacto = Entregador_Contacto::where('idUser', $entregador->idUser)->get();
         $entregador_domicilio = Entregador_Domicilio::where('idUser', $entregador->idUser)->get();
-        $localidad = Localidad::where('id', $aviso->localidadProcedencia)->first();
-        $provincia = Provincia::where('id', $aviso->provinciaProcedencia)->first();
+        $localidades = Localidad::all();
+        $provincias = Provincia::all();
 
         return view('exports.romaneo', compact(['aviso', 'cargas', 'descargas', 'corredor', 'destinatario',
             'intermediario', 'producto', 'remitente', 'titular', 'aviso_producto', 'aviso_entregador',
-            'entregador', 'entregador_contacto', 'entregador_domicilio', 'localidad', 'provincia']));
+            'entregador', 'entregador_contacto', 'entregador_domicilio', 'localidades', 'provincias']));
     }
 }

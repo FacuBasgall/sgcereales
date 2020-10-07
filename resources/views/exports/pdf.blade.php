@@ -42,11 +42,11 @@
         height: 40px;
     }
 
-    .fecha{
+    .fecha {
         text-align: left;
     }
 
-    .pagina{
+    .pagina {
         text-align: right;
     }
     </style>
@@ -61,8 +61,16 @@
                     {{$entregador->nombre}}<br>
                     {{$entregador->descripcion}}<br>
                     @foreach ($entregador_domicilio as $domicilio)
-                    {{$domicilio->domicilio}}, {{$domicilio->localidad}} ({{$domicilio->provincia}} -
+                    @foreach($provincias as $provincia)
+                    @if($provincia->id == $domicilio->provincia)
+                    @foreach($localidades as $localidad)
+                    @if($localidad->id == $domicilio->localidad)
+                    {{$domicilio->domicilio}}, {{$localidad->nombre}} ({{$provincia->abreviatura}} -
                     {{$domicilio->cp}})<br>
+                    @endif
+                    @endforeach
+                    @endif
+                    @endforeach
                     @endforeach
                     @foreach ($entregador_contacto as $contacto)
                     | {{$contacto->contacto}} |
@@ -83,7 +91,15 @@
                 <th><strong>Titular de C.P:</strong></th>
                 <td>{{ $titular->nombre }}</td>
                 <th><strong>Procedencia:</strong></th>
-                <td>{{$localidad->nombre}} ({{$provincia->nombre}})</td>
+                @foreach($provincias as $provincia)
+                @if($provincia->id == $aviso->provinciaProcedencia)
+                @foreach($localidades as $localidad)
+                @if($localidad->id == $aviso->localidadProcedencia)
+                <td>{{$localidad->nombre}} ({{$provincia->abreviatura}})</td>
+                @endif
+                @endforeach
+                @endif
+                @endforeach
             </tr>
             <tr>
                 <th><strong>Remitente Comercial:</strong></th>

@@ -16,7 +16,7 @@
     <div class="container">
         <div class="card">
             <div class="box">
-                <form action="{{action('DescargaController@store')}}" method="POST">
+                <form action="{{action('DescargaController@store')}}" method="POST" autocomplete="off">
                     {{ csrf_field() }}
                     <p class="form-title"><strong>Datos de la descarga</strong></p>
                     <label for="fecha">

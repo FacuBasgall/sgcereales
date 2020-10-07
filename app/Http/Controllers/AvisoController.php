@@ -365,15 +365,15 @@ class AvisoController extends Controller
             $entregador = User::where('idUser', $aviso_entregador->idEntregador)->first();
             $entregador_contacto = Entregador_Contacto::where('idUser', $entregador->idUser)->get();
             $entregador_domicilio = Entregador_Domicilio::where('idUser', $entregador->idUser)->get();
-            $localidad = Localidad::where('id', $aviso->localidadProcedencia)->first();
-            $provincia = Provincia::where('id', $aviso->provinciaProcedencia)->first();
+            $localidades = Localidad::all();
+            $provincias = Provincia::all();
 
             $filename = $aviso->nroAviso . " " . $titular->nombre . ".pdf";
 
             $pdf = PDF::loadView('exports.pdf', compact(['aviso', 'cargas', 'descargas', 'corredor',
                 'destinatario', 'intermediario', 'producto', 'remitente', 'titular', 'aviso_producto',
                 'aviso_entregador', 'entregador', 'entregador_contacto', 'entregador_domicilio',
-                'localidad', 'provincia']));
+                'localidades', 'provincias']));
             $pdf->setPaper('a4', 'landscape');
             return $pdf->download($filename);
         }else{
