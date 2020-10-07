@@ -19,7 +19,7 @@
     <div class="container">
         <div class="card">
             <div class="box">
-                <form action="{{action('RemitenteController@update', $remitente->cuit)}}" method="POST">
+                <form action="{{action('RemitenteController@update', $remitente->cuit)}}" method="POST" autocomplete="off">
                     {{ method_field('PUT') }}
                     {{ csrf_field() }}
                     <p class="form-title"><strong>Datos del remitente</strong></p>

@@ -19,7 +19,7 @@
     <div class="container">
         <div class="card">
             <div class="box">
-                <form action="{{action('CorredorController@update', $corredor->cuit)}}" method="POST">
+                <form action="{{action('CorredorController@update', $corredor->cuit)}}" method="POST" autocomplete="off">
                     {{ method_field('PUT') }}
                     {{ csrf_field() }}
                     <p class="form-title"><strong>Datos del corredor</strong></p>

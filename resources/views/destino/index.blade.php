@@ -49,7 +49,9 @@
         </tr>
         @endif
     </div>
+    <div class="center-of-page">
     {!! $arrayDestino->appends(Request::all())->links() !!}
+    </div>
     @include('sweet::alert')
 </body>
 @endsection

@@ -15,7 +15,7 @@
     </div>
     <div class="container">
         <div class="card">
-            <form action="{{action('DestinoController@store')}}" method="POST">
+            <form action="{{action('DestinoController@store')}}" method="POST" autocomplete="off">
                 {{ csrf_field() }}
                 <p class="form-title"><strong>Datos del destinatario</strong></p>
                 <label for="nombre">

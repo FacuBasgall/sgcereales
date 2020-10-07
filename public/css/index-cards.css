@@ -42,7 +42,7 @@ body {
     font-weight: normal;
 }
 
-.search-bar { 
+.search-bar {
     float: right;
 }
 
@@ -64,4 +64,10 @@ body {
   height: 35px;
   border-radius: 5px;
   color: #4c5853;
+}
+
+.center-of-page {
+    display: flex;
+    margin-top: 20px;
+    justify-content: center;
 }

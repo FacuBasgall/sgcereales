@@ -18,7 +18,7 @@
     <div class="container">
         <div class="form-card">
             <span class="form-title"><strong>Añadir infomación de contacto</strong></span><br>
-            <form action="{{action('IntermediarioController@add_contact', $intermediario->cuit)}}" method="GET">
+            <form action="{{action('IntermediarioController@add_contact', $intermediario->cuit)}}" method="GET" autocomplete="off">
                 {{ csrf_field() }}
                 <label for="tipo">
                     <select name="tipo" class="common-input" required>
