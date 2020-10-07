@@ -29,4 +29,8 @@ class Titular extends Model
     public function aviso(){
         return $this->hasMany('App\Aviso', 'idTitularCartaPorte', 'cuit');
     }
+
+    public function filtro(){
+        return $this->belongsTo('App\Filtro', 'idTitular', 'cuit');
+    }
 }

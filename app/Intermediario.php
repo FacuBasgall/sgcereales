@@ -28,4 +28,8 @@ class Intermediario extends Model
     public function aviso(){
         return $this->hasMany('App\Aviso', 'idIntermediario', 'cuit');
     }
+
+    public function filtro(){
+        return $this->belongsTo('App\Filtro', 'idIntermediario', 'cuit');
+    }
 }

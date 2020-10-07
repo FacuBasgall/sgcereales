@@ -23,37 +23,52 @@ use App\Entregador_Contacto;
 use App\Entregador_Domicilio;
 use App\Localidad;
 use App\Provincia;
+use App\Filtro;
+use App\Reporte;
+
+use DB;
 
 class ReporteExport implements FromView, ShouldAutoSize
 {
-    protected $filtros;
-    protected $resultados;
-
-    public function __construct($filtros, $resultados)
+    public function __construct()
     {
-        $this->filtros = $filtros;
-        $this->resultados = $resultados;
+
     }
 
     public function view(): View
     {
-        $entregadorAutenticado = 1;
+       /*
+        $reporte = Reporte::all();
+        $avisos = DB::table('aviso')
+                    ->join('reporte-temp', 'aviso.idAviso', '=', 'reporte-temp.idAviso')
+                    ->select('aviso.*')
+                    ->get();
         $cargas = Carga::where('borrado', false)->get();
         $descargas = Descarga::where('borrado', false)->get();
-        $destinatarios = Destino::where('borrado', false)->get();
+        */
+        $entregadorAutenticado = 1;
+        $filtros = Filtro::first();
+        $resultados = DB::table('reporte-temp')
+                        ->join('aviso', 'reporte-temp.idAviso', '=', 'aviso.idAviso')
+                        ->join('carga', 'aviso.idAviso', '=', 'carga.idAviso')
+                        ->join('descarga', 'carga.idCarga', '=', 'descarga.idCarga')
+                        ->join('aviso_entregador',  'aviso.idAviso', '=', 'aviso_entregador.idAviso')
+                        ->join('aviso_producto', 'aviso.idAviso', '=', 'aviso_producto.idAviso')
+                        ->where('aviso_entregador.idEntregador', '=', 1)
+                        ->select('reporte-temp.*', 'aviso.*', 'carga.*', 'descarga.*', 'aviso_producto.*')
+                        ->get();
+
         $titulares = Titular::where('borrado', false)->get();
+        $destinatarios = Destino::where('borrado', false)->get();
         $intermediarios = Intermediario::where('borrado', false)->get();
         $remitentes = Remitente_Comercial::where('borrado', false)->get();
         $corredores = Corredor::where('borrado', false)->get();
-        $entregador = User::where('idUser', $entregadorAutenticado)->first(); //Solo Usuario Entregador Autenticado
         $productos = Producto::where('borrado', false)->get();
-        $avisos_productos = Aviso_Producto::all();
-        $avisos_entregadores = Aviso_Entregador::where('idEntregador', $entregadorAutenticado)->get();
+        $entregador = User::where('idUser', $entregadorAutenticado)->first(); //Solo Usuario Entregador Autenticado
         $localidades = Localidad::all();
         $provincias = Provincia::all();
 
-        return view('exports.reporte', compact(['cargas', 'descargas', 'destinatarios', 'titulares',
-            'intermediarios', 'remitentes', 'corredores', 'entregador', 'productos', 'avisos_productos',
-            'avisos_entregadores', 'localidades', 'provincias', 'resultados', 'filtros']));
+        return view('exports.reporte', compact(['resultados', 'filtros', 'destinatarios', 'titulares',
+            'intermediarios', 'remitentes', 'corredores', 'entregador', 'productos', 'localidades', 'provincias']));
     }
 }
