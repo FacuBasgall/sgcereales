@@ -38,40 +38,32 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-       // $this->middleware('guest')->except('logout');
-    }
-
-    public function username()
-    {
-        //return 'username';
+        $this->middleware('guest')->except('logout');
     }
 
     public function login()
     {
-       // return view('auth.login');
+        return view('auth.login');
     }
 
     public function authenticate(Request $request)
     {
-       /* $request->validate([
-            'username' => 'required|string',
-            'password' => 'required|string',
+
+        $request->validate([
+            'username' => 'required',
+            'password' => 'required',
         ]);
-
         $credentials = $request->only('username', 'password');
-
-        dd(Auth::attempt($credentials));
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('/home');
+            return redirect()->action('HomeController@index');
         }
-
-        return redirect('/login')->with('error', 'Oppes! You have entered invalid credentials');*/
+        //Error
+        return redirect('login');
     }
 
     public function logout()
     {
-       /* Auth::logout();
-
-        return redirect('/login');*/
+        Auth::logout();
+        return redirect('login');
     }
 }

@@ -22,24 +22,23 @@
                 <div class="form-title"><strong>Datos del aviso</strong> <a href="{{ action('AvisoController@edit', $aviso->idAviso) }}"><button class="small-edit-button" title="Editar datos del aviso"><i class="fa fa-pencil"></i></button></a></div>
                 <div class="info-margin">
                 @if(isset($aviso->entregador))
-                    <label class="labels"><strong>Entregador: </strong>{{$aviso->entregador}}</label>
-                    @else
-                    <label class="labels"><strong>Entregador: </strong>{{$entregador->nombre}}</label>
-                    @endif
-                    <label class="labels"><strong>Producto: </strong>{{$producto->nombre}}</label>
-                    <label class="labels"><strong>Titular: </strong>{{$titular->nombre}}</label>
-                    @if (isset($intermediario->nombre))
-                    <label class="labels"><strong>Intermediario: </strong>{{$intermediario->nombre}}</label>
-                    @else
-                    <label class="labels"><strong>Intermediario: </strong>-</label>
-                    @endif
-                    <label class="labels"><strong>Remitente Comercial: </strong>{{$remitente->nombre}}</label>
-                    <label class="labels"><strong>Lugar de procedencia: </strong>{{$localidad->nombre}},
-                        {{$provincia->nombre}}</label>
-                    <label class="labels"><strong>Corredor: </strong>{{$corredor->nombre}}</label>
-                    <label class="labels"><strong>Destinatario: </strong>{{$destino->nombre}}</label>
-                    <label class="labels"><strong>Destino: </strong>{{$aviso->lugarDescarga}}</label>
-                </div>
+                <label class="labels"><strong>Entregador: </strong>{{$aviso->entregador}}</label>
+                @else
+                <label class="labels"><strong>Entregador: </strong>{{auth()->user()->nombre}}</label>
+                @endif
+                <label class="labels"><strong>Producto: </strong>{{$producto->nombre}}</label>
+                <label class="labels"><strong>Titular: </strong>{{$titular->nombre}}</label>
+                @if (isset($intermediario->nombre))
+                <label class="labels"><strong>Intermediario: </strong>{{$intermediario->nombre}}</label>
+                @else
+                <label class="labels"><strong>Intermediario: </strong>-</label>
+                @endif
+                <label class="labels"><strong>Remitente Comercial: </strong>{{$remitente->nombre}}</label>
+                <label class="labels"><strong>Lugar de procedencia: </strong>{{$localidad->nombre}},
+                    {{$provincia->nombre}}</label>
+                <label class="labels"><strong>Corredor: </strong>{{$corredor->nombre}}</label>
+                <label class="labels"><strong>Destinatario: </strong>{{$destino->nombre}}</label>
+                <label class="labels"><strong>Destino: </strong>{{$aviso->lugarDescarga}}</label>
                 <hr>
                 <div class="form-title"><strong>Cargas/Descargas</strong> <a href="{{ action('CargaController@create', $aviso->idAviso) }}"><button style="padding:9px 10px" class="small-plus-button" title="Añadir carga"><i class="fa fa-plus"></i></button></a></div>
                 @if(!empty($arrayCarga))
