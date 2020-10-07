@@ -56,9 +56,11 @@ class LoginController extends Controller
         $credentials = $request->only('username', 'password');
         if (Auth::attempt($credentials)) {
             return redirect()->action('HomeController@index');
+        }else{
+            //Error
+            return redirect('login')->withErrors("El nombre de usuario o contraseña son incorrectos");
         }
-        //Error
-        return redirect('login');
+
     }
 
     public function logout()
