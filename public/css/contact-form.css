@@ -11,9 +11,9 @@ body {
     text-align:center;
   }
   
-  .form-card{
+.form-card{
     margin: 20px 0px 20px 0px;
-    width: 800px;
+    width: 1000px;
     height: auto;
     background: #fff;
     border-radius: 10px;
@@ -40,7 +40,7 @@ body {
 
   .common-input {
     margin-top: 15px;
-    width: 170px;
+    width: 200px;
     height: 30px;
     border: 1px solid #ccc;
     border-radius: 6px;
@@ -59,4 +59,4 @@ body {
 
 strong{
     font-weight:bold;
-   }
+}
