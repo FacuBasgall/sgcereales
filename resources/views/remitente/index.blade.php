@@ -14,7 +14,7 @@
     <div class="card-header">
         <a class="title">Remitentes comercial</a>
         <div class="search-bar">
-            <form class="{{action('RemitenteController@index')}}" method="GET">
+            <form class="{{action('RemitenteController@index')}}" method="GET" autocomplete="off">
                 {{ csrf_field() }}
                 <input class="searchTerm" type="search" placeholder="Buscar..." name="search" id="search">
                 <button class="searchButton" type="submit"><i class="fa fa-search"></i></button>

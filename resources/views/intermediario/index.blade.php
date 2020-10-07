@@ -15,7 +15,7 @@
     <div class="card-header">
         <label class="title"><b>Intermediarios</b></label>
         <div class="search-bar ">
-            <form class="{{action('IntermediarioController@index')}}" method="GET">
+            <form class="{{action('IntermediarioController@index')}}" method="GET" autocomplete="off">
                 {{ csrf_field() }}
                 <input class="searchTerm" type="search" placeholder="Buscar..." name="search" id="search">
                 <button class="searchButton" type="submit"><i class="fa fa-search"></i></button>

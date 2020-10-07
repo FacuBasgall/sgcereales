@@ -15,7 +15,7 @@
     <div class="card-header">
         <a class="title">Corredores</a>
         <div class="search-bar">
-            <form class="{{action('CorredorController@index')}}" method="GET">
+            <form class="{{action('CorredorController@index')}}" method="GET" autocomplete="off">
                 {{ csrf_field() }}
                 <input class="searchTerm" type="search" placeholder="Buscar..." name="search" id="search">
                 <button class="searchButton" type="submit"><i class="fa fa-search"></i></button>
