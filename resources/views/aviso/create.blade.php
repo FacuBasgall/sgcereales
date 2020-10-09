@@ -16,7 +16,7 @@
     <div class="container">
         <div class="card">
             <div class="box">
-                <form action="{{action('AvisoController@store')}}" method="POST">
+                <form action="{{action('AvisoController@store')}}" method="POST" autocomplete="off">
                     {{ csrf_field() }}
                     <p class="form-title"><strong>Intermitentes</strong></p>
                     <label for="titular" class="margin-right">
@@ -107,10 +107,15 @@
                         });
                         </script>
                     </label>
-                    <label for="lugarDescarga" >
+                    <label for="lugarDescarga">
                         <span>Destino*:</span>
-                        <input type="text" value="{{old('lugarDescarga')}}" name="lugarDescarga" id="lugarDescarga"
-                            class="common-input" maxlength="100" required>
+                        <input type="text" value="{{old('lugarDescarga')}}" name="lugarDescarga" class="common-input"
+                            list="lugarDescarga" maxlength="100" required>
+                        <datalist id="lugarDescarga">
+                            @foreach ((array)$lugarDescarga as $destino)
+                            <option value="{{$destino->lugarDescarga}}"></option>
+                            @endforeach
+                        </datalist>
                     </label>
                     <label for="entregador">
                         <span>Entregador:</span>
@@ -138,11 +143,17 @@
                     });
                     </script>
                 </label>
-                <label for="tipo" >
+                <label for="tipo">
                     <span>Tipo de producto:</span>
-                    <input type="text" value="{{old('tipo')}}" name="tipo" id="tipo" class="common-input" maxlength="150">
+                    <input type="text" value="{{old('tipo')}}" name="tipo" class="common-input" maxlength="150"
+                        list="tipo">
+                    <datalist id="tipo">
+                        @foreach ((array)$tipoProducto as $tipo)
+                        <option value="{{$tipo->tipo}}"></option>
+                        @endforeach
+                    </datalist>
                 </label>
-                <label for="cosecha" >
+                <label for="cosecha">
                     <span>Cosecha*: </span>
                     20 <input type="number" value="{{old('cosecha1')}}" name="cosecha1" id="cosecha1" class="year-input"
                         min="10" max="99" required>
@@ -187,13 +198,14 @@
                     </script>
                 </label>
                 <hr>
-                    <label for="obs">
-                        <p class="form-title"><strong>Observaciones</strong></p>
-                        <textarea name="obs" id="obs" class="observation-box" style="height:80px;"
-                            placeholder="Ingrese una observación" cols="150"></textarea>
-                    </label>
-                    <hr>
-                    <div class="center-of-page"> <button type="submit" class="save-button"><i class="fa fa-check"></i> Guardar</button></div>
+                <label for="obs">
+                    <p class="form-title"><strong>Observaciones</strong></p>
+                    <textarea name="obs" id="obs" class="observation-box" style="height:80px;"
+                        placeholder="Ingrese una observación" cols="150"></textarea>
+                </label>
+                <hr>
+                <div class="center-of-page"> <button type="submit" class="save-button"><i class="fa fa-check"></i>
+                        Guardar</button></div>
                 </form>
             </div>
         </div>

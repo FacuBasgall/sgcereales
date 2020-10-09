@@ -17,7 +17,7 @@
     <div class="container">
         <div class="card">
             <div class="box">
-                <form action="{{action('AvisoController@update', $aviso->idAviso)}}" method="POST">
+                <form action="{{action('AvisoController@update', $aviso->idAviso)}}" method="POST" autocomplete="off">
                     {{ method_field('PUT') }}
                     {{ csrf_field() }}
                     <p class="form-title"><strong>Intermitentes</strong></p>
@@ -123,8 +123,13 @@
                     </label>
                     <label for="lugarDescarga">
                         <span>Destino*:</span>
-                        <input type="text" value="{{$aviso->lugarDescarga}}" name="lugarDescarga" id="lugarDescarga"
-                            class="common-input" maxlength="100" required>
+                        <input type="text" value="{{$aviso->lugarDescarga}}" name="lugarDescarga" class="common-input"
+                            list="lugarDescarga" maxlength="100" required>
+                        <datalist id="lugarDescarga">
+                            @foreach ((array)$lugarDescarga as $destino)
+                            <option value="{{$destino->lugarDescarga}}"></option>
+                            @endforeach
+                        </datalist>
                     </label>
                     <!-- EL ENTREGADOR ES EL USUARIO QUE ESTA AUTENTICADO EN EL MOMENTO -->
                     <label for="entregador">
@@ -158,7 +163,13 @@
                 </label>
                 <label for="tipo">
                     <span>Tipo de producto:</span>
-                    <input type="text" value="{{$aviso_producto->tipo}}" name="tipo" id="tipo" class="common-input" maxlength="150">
+                    <input type="text" value="{{$aviso_producto->tipo}}" name="tipo" class="common-input"
+                        maxlength="150" list="tipo">
+                    <datalist id="tipo">
+                        @foreach ((array)$tipoProducto as $tipo)
+                        <option value="{{$tipo->tipo}}"></option>
+                        @endforeach
+                    </datalist>
                 </label>
                 <label for="cosecha">
                     @php $año1 = substr($aviso_producto->cosecha, 2, 2);

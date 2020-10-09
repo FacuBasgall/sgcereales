@@ -77,6 +77,24 @@ class AvisoController extends Controller
      */
     public function create()
     {
+        $lugarDescargaDB = DB::table('aviso')
+                        ->distinct()
+                        ->select('aviso.lugarDescarga')
+                        ->get();
+        $lugarDescarga = array();
+        foreach($lugarDescargaDB as $lugar){
+            $lugarDescarga[] = $lugar;
+        }
+
+        $tipoProductoDB = DB::table('aviso_producto')
+                        ->distinct()
+                        ->select('aviso_producto.tipo')
+                        ->get();
+        $tipoProducto = array();
+        foreach($tipoProductoDB as $tipo){
+            $tipoProducto[] = $tipo;
+        }
+
         $titulares = Titular::where('borrado', false)->orderBy('nombre')->get();
         $intermediarios = Intermediario::where('borrado', false)->orderBy('nombre')->get();
         $remitentes = Remitente_Comercial::where('borrado', false)->orderBy('nombre')->get();
@@ -86,9 +104,8 @@ class AvisoController extends Controller
         $localidades = Localidad::all();
         $provincias = Provincia::all();
 
-        return view('aviso.create', compact(['titulares', 'intermediarios', 'remitentes', 'corredores',
+        return view('aviso.create', compact(['lugarDescarga', 'tipoProducto', 'titulares', 'intermediarios', 'remitentes', 'corredores',
             'destinatarios', 'productos', 'localidades', 'provincias']));
-
     }
 
     /**
@@ -212,6 +229,24 @@ class AvisoController extends Controller
      */
     public function edit($idAviso)
     {
+        $lugarDescargaDB = DB::table('aviso')
+                        ->distinct()
+                        ->select('aviso.lugarDescarga')
+                        ->get();
+        $lugarDescarga = array();
+        foreach($lugarDescargaDB as $lugar){
+            $lugarDescarga[] = $lugar;
+        }
+
+        $tipoProductoDB = DB::table('aviso_producto')
+                        ->distinct()
+                        ->select('aviso_producto.tipo')
+                        ->get();
+        $tipoProducto = array();
+        foreach($tipoProductoDB as $tipo){
+            $tipoProducto[] = $tipo;
+        }
+
         $aviso = Aviso::findOrFail($idAviso);
         $titulares = Titular::where('borrado', false)->orderBy('nombre')->get();
         $intermediarios = Intermediario::where('borrado', false)->orderBy('nombre')->get();
@@ -223,7 +258,7 @@ class AvisoController extends Controller
         $localidades = Localidad::all();
         $provincias = Provincia::all();
 
-        return view('aviso.edit', compact(['aviso', 'titulares', 'intermediarios', 'remitentes', 'corredores',
+        return view('aviso.edit', compact(['lugarDescarga', 'tipoProducto', 'aviso', 'titulares', 'intermediarios', 'remitentes', 'corredores',
             'destinatarios', 'productos', 'aviso_producto', 'localidades', 'provincias']));
     }
 
