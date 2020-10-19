@@ -26,4 +26,8 @@ class ResetPasswordController extends Controller
      * @var string
      */
     protected $redirectTo = '/home';
+
+
+    //reset
+    //showResetForm (token)
 }

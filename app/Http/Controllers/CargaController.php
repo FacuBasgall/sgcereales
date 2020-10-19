@@ -106,7 +106,15 @@ class CargaController extends Controller
     {
         $carga = Carga::where('idCarga', $idCarga)->first();
         $descarga = Descarga::where('idCarga', $idCarga)->first();
-        return view('carga.edit', compact(['carga', 'descarga']));
+        $calidadDB = DB::table('descarga')
+                        ->distinct()
+                        ->select('descarga.calidad')
+                        ->get();
+        $calidad = array();
+        foreach($calidadDB as $c){
+            $calidad[] = $c;
+        }
+        return view('carga.edit', compact(['carga', 'descarga', 'calidad']));
     }
 
     /**

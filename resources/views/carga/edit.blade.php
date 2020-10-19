@@ -4,6 +4,8 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/common-forms.css') }}">
+    <script type="text/javascript" src="{{ asset('js/noComa.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/show.css') }}">
 </head>
 
 <body>
@@ -37,8 +39,8 @@
                     </label>
                     <label for="kilos">
                         <span>Cargado (Kg)*:</span>
-                        <input type="number" min="0" name="kilos" id="kilos" value="{{$carga->kilos}}"
-                            class="common-input" required>
+                        <input type="number" min="0" step="0.1" name="kilos" id="kilos" value="{{$carga->kilos}}"
+                            class="common-input" onkeydown="noComa(event)" required>
                     </label>
                     <input type="hidden" name="idCarga" id="idCarga" value="{{$carga->idCarga}}">
                     <hr>
@@ -53,38 +55,43 @@
                 </label>
                 <label for="bruto">
                     <span>Bruto (Kg)*:</span>
-                    <input type="number" min="0" name="bruto" id="bruto" value="{{$descarga->bruto}}"
-                        class="common-input" required>
+                    <input type="number" min="0" name="bruto" step="0.1" id="bruto" value="{{$descarga->bruto}}"
+                        class="common-input" onkeydown="noComa(event)" required>
                 </label>
                 <label for="tara">
                     <span>Tara (Kg)*:</span>
-                    <input type="number" min="0" name="tara" id="tara" value="{{$descarga->tara}}" class="common-input"
-                        required>
+                    <input type="number" min="0" step="0.1" name="tara" id="tara" value="{{$descarga->tara}}"
+                        class="common-input" onkeydown="noComa(event)" required>
                 </label>
                 <label for="humedad">
                     <span>Humedad (%)*:</span>
-                    <input type="number" step=".1" min="0" max="30" name="humedad" id="humedad" value="{{$descarga->humedad}}"
-                        class="common-input-cp" required>
+                    <input type="number" step="0.1" min="0" max="30" name="humedad" id="humedad"
+                        value="{{$descarga->humedad}}" class="common-input-cp" onkeydown="noComa(event)" required>
                 </label>
                 <label for="ph">
                     <span>Ph: </span>
-                    <input type="number" step=".1" min="0" name="ph" id="ph" value="{{$descarga->ph}}"
-                        class="common-input-cp">
+                    <input type="number" step="0.1" min="0" name="ph" id="ph" value="{{$descarga->ph}}"
+                        class="common-input-cp" onkeydown="noComa(event)">
                 </label>
                 <label for="proteina">
                     <span>Proteína: </span>
-                    <input type="number" step=".1" min="0" name="proteina" id="proteina" value="{{$descarga->proteina}}"
-                        class="common-input">
+                    <input type="number" step="0.1" min="0" name="proteina" id="proteina"
+                        value="{{$descarga->proteina}}" class="common-input" onkeydown="noComa(event)">
                 </label>
                 <label for="calidad">
                     <span>Calidad: </span>
-                    <input type="text" name="calidad" id="calidad" value="{{$descarga->calidad}}" class="common-input" maxlength="150">
+                    <input type="text" name="calidad" list="calidad" value="{{$descarga->calidad}}" class="common-input"
+                        maxlength="150">
+                    <datalist id="calidad">
+                        @foreach ((array)$calidad as $c)
+                        <option value="{{$c->calidad}}"></option>
+                        @endforeach
+                    </datalist>
                 </label>
             </div>
             @else
-            <div>
-                <p>No existe una descarga asociada</p>
-            </div>
+            <label class="labels info-text"><i class="fa fa-exclamation-circle"></i> No existe una
+                                descarga asociada</label>
             @endif
             <hr>
             <div class="center-of-page"><button type="submit" class="save-button"><i class="fa fa-check"></i>

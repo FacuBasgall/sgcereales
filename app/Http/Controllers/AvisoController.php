@@ -189,6 +189,7 @@ class AvisoController extends Controller
 
         $arrayCarga = array();
         $arrayDescarga = array();
+
         if(!empty($cargas) && $cargas->count()){
             foreach($cargas as $carga){
                 $control = false;
@@ -216,6 +217,15 @@ class AvisoController extends Controller
                 }
             }
         }
+
+        /**FORMULAS
+        *   NETO KG = BRUTO - TARA
+            MERMA % = MERMA HUMEDAD + MERMA MANIPULEO
+            MERMA KG = NETO KG x (MERMA % / 100)
+            NETO FINAL = NETO KG - MERMA KG
+            DIFERENCIA = NETO FINAL - KG CARGA
+        */
+
         return view('aviso.show', compact(['aviso', 'arrayCarga', 'arrayDescarga', 'destino', 'titular',
             'intermediario', 'remitente', 'corredor', 'producto', 'aviso_producto', 'aviso_entregador',
             'entregador', 'localidad', 'provincia']));

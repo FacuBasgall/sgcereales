@@ -4,6 +4,7 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/common-forms.css') }}">
+    <script type="text/javascript" src="{{ asset('js/noComa.js') }}"></script>
 </head>
 
 <body>
@@ -36,8 +37,8 @@
                     </label>
                     <label for="kilos">
                         <span>Cargado (Kg)*:</span>
-                        <input type="number" value="{{old('kilos')}}" min="0" name="kilos" id="kilos"
-                            class="common-input" required>
+                        <input type="number" value="{{old('kilos')}}" min="0" step="0.1" name="kilos" id="kilos"
+                            class="common-input"  onkeydown="noComa(event)" required>
                     </label>
                     <hr>
                     <label for="check">

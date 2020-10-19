@@ -19,4 +19,8 @@ class ForgotPasswordController extends Controller
     */
 
     use SendsPasswordResetEmails;
+
+
+    //sendResetLinkEmail -> ENVIAR CONTRASEÑA TEMPORAL AL CORREO
+    //showLinkRequestForm -> RECUPERAR CONTRASEÑA
 }

@@ -38,7 +38,15 @@ class DescargaController extends Controller
     public function create($idCarga)
     {
         $carga = Carga::where('idCarga', $idCarga)->first();
-        return view('descarga.create', array('carga'=>$carga));
+        $calidadDB = DB::table('descarga')
+                        ->distinct()
+                        ->select('descarga.calidad')
+                        ->get();
+        $calidad = array();
+        foreach($calidadDB as $c){
+            $calidad[] = $c;
+        }
+        return view('descarga.create', compact(['carga', 'calidad']));
     }
 
     /**
@@ -66,9 +74,9 @@ class DescargaController extends Controller
 
             $aviso = Aviso::where('idAviso', $carga->idAviso)->first();
             $producto = Producto::where('idProducto', $aviso->idProducto)->first();
-            $existe = Merma::where('idProducto', $producto->idProducto)->where('humedad', $descarga->humedad)->exists();
+            $existe = Merma::where('idProducto', $producto->idProducto)->where('humedad', $request->humedad)->exists();
             if ($existe){
-                $merma = Merma::where('idProducto', $producto->idProducto)->where('humedad', $descarga->humedad)->first();
+                $merma = Merma::where('idProducto', $producto->idProducto)->where('humedad', $request->humedad)->first();
                 $mermaManipuleo = $producto->mermaManipuleo;
                 $mermaSecado = $merma->merma;
                 $descarga->merma = $mermaManipuleo + $mermaSecado;
