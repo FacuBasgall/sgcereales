@@ -29,19 +29,6 @@ Route::get('/password/reset','Auth\ForgotPasswordController@showLinkRequestForm'
 Route::post('/password/reset','Auth\ResetPasswordController@reset');
 Route::get('/password/reset/{token}','Auth\ResetPasswordController@showResetForm');
 
-Route::get('/backup', function(){
-    //if(auth()->user()->tipoUser == 'A') EN CASO DE QUE SOLO SE QUIERA QUE EL ADMIN PUEDE EJECUTAR BKS!
-    $cmd = shell_exec("cd .. & php artisan backup:clean");
-    $cmd = shell_exec("cd .. & php artisan backup:run --only-db");
-    if(stristr($cmd, "Backup completed") === false){
-        alert()->error("No se ha completado el proceso de backup", 'Ha ocurrido un error')->persistent('Cerrar');
-        return back();
-    }else{
-        alert()->success("El proceso de backup se realizó correctamente", 'Backup completo')->persistent('Cerrar');
-        return back();
-    }
-})->middleware('auth');
-
 Route::get('/usuario/show/{id}', 'UsuarioController@show');
 Route::get('/usuario/edit/{id}', 'UsuarioController@edit');
 Route::put('/usuario/update/{id}', 'UsuarioController@update');
@@ -152,3 +139,9 @@ Route::get('/reporte/export_excel', 'ReporteController@export_excel');
 Route::get('/reporte/export_pdf', 'ReporteController@export_pdf');
 Route::get('/reporte/send_email/{id}', 'ReporteController@send_email');
 Route::get('/reporte/getLocalidades', 'ReporteController@getLocalidades');
+
+Route::get('/config', 'ConfigController@index');
+Route::get('/config/backup', 'ConfigController@show_backup');
+Route::get('/config/backup/run', 'ConfigController@run_backup');
+Route::get('/config/email', 'ConfigController@show_email');
+Route::get('/config/email/store', 'ConfigController@store_email');

@@ -37,7 +37,7 @@
 
     .footer {
         position: absolute;
-        bottom: 0;
+        bottom: -65px;
         width: 100%;
         height: 40px;
     }
@@ -199,9 +199,16 @@
         @php $fecha = date("d/m/Y"); @endphp
         <div>
             <p class="fecha">{{$fecha}}</p>
-            <p class="pagina">Pagina 1</p>
         </div>
     </footer>
+    <script type="text/php">
+        if ( isset($pdf) ) {
+            $pdf->page_script('
+                $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
+                $pdf->text(400, 570, "Página $PAGE_NUM de $PAGE_COUNT", $font, 10);
+            ');
+        }
+    </script>
 </body>
 
 </html>

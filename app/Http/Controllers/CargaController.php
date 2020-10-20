@@ -148,8 +148,8 @@ class CargaController extends Controller
 
                     $aviso = Aviso::where('idAviso', $carga->idAviso)->first();
                     $producto = Producto::where('idProducto', $aviso->idProducto)->first();
-                    $merma = Merma::where('idProducto', $producto->idProducto)->where('humedad', $request->humedad)->exists();
-                    if ($merma){
+                    $existe = Merma::where('idProducto', $producto->idProducto)->where('humedad', $request->humedad)->exists();
+                    if ($existe){
                         $merma = Merma::where('idProducto', $producto->idProducto)->where('humedad', $descarga->humedad)->first();
                         $mermaManipuleo = $producto->mermaManipuleo;
                         $mermaSecado = $merma->merma;
