@@ -65,9 +65,9 @@ class RomaneoSendMail extends Mailable
         $remitente = Remitente_Comercial::where('cuit', $aviso->idRemitenteComercial)->first();
         $aviso_producto = Aviso_Producto::where('idAviso', $aviso->idAviso)->first();
         $aviso_entregador = Aviso_Entregador::where('idAviso', $aviso->idAviso)->first();
-        $entregador = User::where('idUser', $aviso_entregador->idEntregador)->first();
-        $entregador_contacto = Entregador_Contacto::where('idUser', $entregador->idUser)->get();
-        $entregador_domicilio = Entregador_Domicilio::where('idUser', $entregador->idUser)->get();
+        $entregador = User::where('idUser', auth()->user()->idUser)->first();
+        $entregador_contacto = Entregador_Contacto::where('idUser', auth()->user()->idUser)->get();
+        $entregador_domicilio = Entregador_Domicilio::where('idUser',auth()->user()->idUser)->get();
         $localidad = Localidad::where('id', $aviso->localidadProcedencia)->first();
         $provincia = Provincia::where('id', $aviso->provinciaProcedencia)->first();
 

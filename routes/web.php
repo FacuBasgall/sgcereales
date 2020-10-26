@@ -29,13 +29,21 @@ Route::get('/password/reset','Auth\ForgotPasswordController@showLinkRequestForm'
 Route::post('/password/reset','Auth\ResetPasswordController@reset');
 Route::get('/password/reset/{token}','Auth\ResetPasswordController@showResetForm');
 
-Route::get('/usuario/show/{id}', 'UsuarioController@show');
-Route::get('/usuario/edit/{id}', 'UsuarioController@edit');
-Route::put('/usuario/update/{id}', 'UsuarioController@update');
-Route::get('/usuario/contact/{id}', 'UsuarioController@contact');
-Route::get('/usuario/add_contact/{id}', 'UsuarioController@add_contact');
+Route::get('/usuario/create', 'UsuarioController@create');
+Route::post('/usuario/store', 'UsuarioController@store');
+Route::get('/usuario/show', 'UsuarioController@show');
+Route::get('/usuario/edit', 'UsuarioController@edit');
+Route::put('/usuario/update', 'UsuarioController@update');
+Route::get('/usuario/contact', 'UsuarioController@contact');
+Route::get('/usuario/add_contact', 'UsuarioController@add_contact');
 Route::get('/usuario/delete_contact/{id}', 'UsuarioController@delete_contact');
+Route::get('/usuario/domicile', 'UsuarioController@domicile');
+Route::get('/usuario/add_domicile', 'UsuarioController@add_domicile');
+Route::get('/usuario/delete_domicile/{id}', 'UsuarioController@delete_domicile');
 Route::get('/usuario/getLocalidades', 'UsuarioController@getLocalidades');
+Route::get('/usuario/form_password', 'UsuarioController@form_password');
+Route::get('/usuario/change_password', 'UsuarioController@change_password');
+
 
 Route::get('/titular', 'TitularController@index');
 Route::get('/titular/create', 'TitularController@create');
@@ -97,29 +105,16 @@ Route::get('/corredor/add_contact/{id}', 'CorredorController@add_contact');
 Route::get('/corredor/delete_contact/{id}', 'CorredorController@delete_contact');
 Route::get('/corredor/getLocalidades', 'CorredorController@getLocalidades');
 
-//Route::get('/carga', 'CargaController@index');
 Route::get('/carga/create/{id}', 'CargaController@create');
 Route::post('/carga/store', 'CargaController@store');
-//Route::get('/carga/show/{id}', 'CargaController@show');
 Route::get('/carga/edit/{id}', 'CargaController@edit');
 Route::put('/carga/update/', 'CargaController@update');
-//Route::get('/carga/destroy/{id}', 'CargaController@destroy');
 
-//Route::get('/descarga', 'DescargaController@index');
 Route::get('/descarga/create/{id}', 'DescargaController@create');
 Route::post('/descarga/store', 'DescargaController@store');
-//Route::get('/descarga/show/{id}', 'DescargaController@show');
-//Route::get('/descarga/edit/{id}', 'DescargaController@edit');
-//Route::put('/descarga/update/{id}', 'DescargaController@update');
-//Route::get('/descarga/destroy/{id}', 'DescargaController@destroy');
 
 Route::get('/producto', 'ProductoController@index');
 Route::get('/producto/show/{id}', 'ProductoController@show');
-//Route::get('/producto/create', 'ProductoController@create');
-//Route::post('/producto/store', 'ProductoController@store');
-//Route::get('/producto/edit/{id}', 'ProductoController@edit');
-//Route::put('/producto/update/{id}', 'ProductoController@update');
-//Route::get('/producto/destroy/{id}', 'ProductoController@destroy');
 
 Route::get('/aviso', 'AvisoController@index');
 Route::get('/aviso/create', 'AvisoController@create');

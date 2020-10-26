@@ -76,7 +76,7 @@
                             <label class="labels"><strong>Brutos (KG): </strong>{{$descarga->bruto}}</label>
                             <label class="labels"><strong>Tara (KG): </strong>{{$descarga->tara}}</label>
                             <label class="labels"><strong>Neto (KG):
-                                </strong>{{$descarga->bruto - $descarga->tara}}</label>
+                                </strong>{{round(($descarga->bruto - $descarga->tara), 2)}}</label>
                             <label class="labels"><strong>Humedad: </strong>{{$descarga->humedad}}</label>
                             <label class="labels"><strong>Merma (%): </strong>
                                 @if ($descarga->merma != NULL) {{$descarga->merma}}

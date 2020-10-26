@@ -408,8 +408,8 @@ class AvisoController extends Controller
             $aviso_entregador = Aviso_Entregador::where('idAviso', $aviso->idAviso)->first();
             $titular = Titular::where('cuit', $aviso->idTitularCartaPorte)->first();
             $entregador = User::where('idUser', $aviso_entregador->idEntregador)->first();
-            $entregador_contacto = Entregador_Contacto::where('idUser', $entregador->idUser)->get();
-            $entregador_domicilio = Entregador_Domicilio::where('idUser', $entregador->idUser)->get();
+            $entregador_contacto = Entregador_Contacto::where('idUser', auth()->user()->idUser)->get();
+            $entregador_domicilio = Entregador_Domicilio::where('idUser', auth()->user()->idUser)->get();
             $localidades = Localidad::all();
             $provincias = Provincia::all();
 
