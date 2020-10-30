@@ -227,7 +227,7 @@
                 <label for="obs">
                     <p class="form-title"><strong>Observaciones</strong></p>
                     <textarea name="obs" id="obs" value="{{$aviso->observacion}}" class="observation-box"
-                        style="height:80px;" placeholder="Ingrese una observación" cols="150"></textarea>
+                        style="height:80px;" placeholder="Ingrese una observación" cols="150">{{$aviso->observacion}}</textarea>
                 </label>
                 <hr>
                 <div class="center-of-page"><button type="submit" class="save-button"><i class="fa fa-check"></i>

@@ -6,7 +6,8 @@
 <!------ Include the above in your HEAD tag ---------->
 
 <head>
-
+    <script type="text/javascript" src="{{ asset('js/select-localidad.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/select-pais.js') }}"></script>
 </head>
 
 <style>

@@ -9,9 +9,12 @@ use Illuminate\Support\Facades\Validator;
 use App\User;
 use App\Entregador_Contacto;
 use App\Entregador_Domicilio;
+use App\Tipo_Contacto;
 use App\Localidad;
 use App\Provincia;
 use DB;
+use SweetAlert;
+
 
 class UsuarioController extends Controller
 {
@@ -107,15 +110,13 @@ class UsuarioController extends Controller
      */
     public function show()
     {
-        /*NO TERMINADADO
         $idUser = auth()->user()->idUser;
         $entregadorContacto = Entregador_Contacto::where('idUser', $idUser)->get();
         $tipoContacto = Tipo_Contacto::all();
         $entregadorDomicilio = Entregador_Domicilio::where('idUser', $idUser)->get();
-        $localidades = Localidad::where('id', $titular->localidad)->first();
-        $provincias = Provincia::where('id', $titular->provincia)->first();
-        return view('usuario.show',  compact(['entregadorContacto', 'tipoContacto', 'localidades', 'provincias']));
-        */
+        $localidades = Localidad::all();
+        $provincias = Provincia::all();
+        return view('usuario.show',  compact(['entregadorContacto', 'tipoContacto', 'entregadorDomicilio', 'localidades', 'provincias']));
     }
 
     /**
@@ -126,7 +127,7 @@ class UsuarioController extends Controller
      */
     public function edit()
     {
-        //
+        return view('usuario.edit');
     }
 
     /**
@@ -138,15 +139,21 @@ class UsuarioController extends Controller
      */
     public function update(Request $request)
     {
-        //
+        $idUser = auth()->user()->idUser;
+        $entregador = User::where('idUser', $idUser)->first();
+        $entregador->nombre = $request->nombre;
+        $entregador->descripcion = $request->descripcion;
+        $entregador->save();
+        alert()->success("El usuario fue editado con éxito", 'Editado con éxito');
+        return redirect()->action('UsuarioController@show');
     }
 
-    public function contact(){
+    public function contact()
+    {
         $idUser = auth()->user()->idUser;
         $tipoContacto = Tipo_Contacto::orderBy('descripcion')->get();
-        $entregador = User::findOrFail($idUser);
         $entregadorContacto = Entregador_Contacto::where('idUser', $idUser)->get();
-        return view('usuario.contact', compact(['tipoContacto', 'entregadorContacto', 'entregador']));
+        return view('usuario.contact', compact(['tipoContacto', 'entregadorContacto']));
     }
 
     public function add_contact(Request $request)
@@ -217,9 +224,16 @@ class UsuarioController extends Controller
         $idUser = auth()->user()->idUser;
         $localidades = Localidad::all();
         $provincias = Provincia::all();
-        $entregador = User::findOrFail($idUser);
-        $entregadorDomicilio = Entregador_Domicilio::where('idUser', $idUser)->get();
-        return view('usuario.contact', compact(['localidades', 'provincias', 'entregadorDomicilio', 'entregador']));
+
+        $entregadorDomicilio = DB::table('entregador_domicilio')
+                            ->join('provincia', 'entregador_domicilio.provincia', '=', 'provincia.id')
+                            ->join('localidad', 'entregador_domicilio.localidad', '=', 'localidad.id')
+                            ->where('entregador_domicilio.idUser', '=', $idUser)
+                            ->select('entregador_domicilio.idDomicilio', 'entregador_domicilio.cp', 'entregador_domicilio.domicilio', 'entregador_domicilio.pais', 'localidad.nombre as localidad', 'provincia.nombre as provincia', 'provincia.abreviatura as abreviatura')
+                            ->get();
+
+
+        return view('usuario.domicile', compact(['localidades', 'provincias', 'entregadorDomicilio']));
     }
 
     public function add_domicile(Request $request)
@@ -246,7 +260,7 @@ class UsuarioController extends Controller
 
     public function delete_domicile($id)
     {
-        $delete = Entregador_Domicilio::where('id', $id)->first();
+        $delete = Entregador_Domicilio::where('idDomicilio', $id)->first();
         $delete->delete();
         alert()->success("El domicilio fue eliminado con éxito", 'Domicilio eliminado');
         return back();
