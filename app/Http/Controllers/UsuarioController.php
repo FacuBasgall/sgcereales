@@ -14,6 +14,7 @@ use App\Localidad;
 use App\Provincia;
 use DB;
 use SweetAlert;
+use \Auth;
 
 
 class UsuarioController extends Controller
@@ -285,7 +286,6 @@ class UsuarioController extends Controller
 
     public function change_password(Request $request)
     {
-       /* HAY UNA OPCION MEJOR
         $rules = [
             'passwordold' => 'required|string',
             'password' => 'required|string|min:8|confirmed',
@@ -300,16 +300,41 @@ class UsuarioController extends Controller
         ];
 
         $this->validate($request, $rules, $messages);
+        if (Hash::check($request->passwordold, Auth::user()->password))
+        {
+            $user = Auth::user();
+            $user->password = Hash::make($request->password);
+            $user->save();
 
-        $old_password = auth()->user()->password;
-
-        if(Hash::make($request->passwordold) === $old_password){
-            auth()->user()->password = Hash::make($request->password);
-            alert()->success("La contraseña ha sido cambiada correctamente. Se cerrará su sesión", 'Contraseña cambiada')->persistent('Cerrar');
-            return redirect()->action('Auth\LoginController@logout');
-        }else{
-            alert()->error("No se ha podido ejecutar la acción", 'Ha ocurrido un error')->persistent('Cerrar');
+            if($user->save()){
+                alert()->success("La contraseña ha sido cambiada correctamente", 'Contraseña cambiada')->persistent('Cerrar');
+                return redirect()->back();
+            }else
+            {
+                alert()->error("No se pudo guardar la contraseña", 'Ha ocurrido un error')->persistent('Cerrar');
+                return back();
+            }
+        }
+        else
+        {
+            alert()->error("La contraseña ingresada no es correcta", 'Ha ocurrido un error')->persistent('Cerrar');
             return back();
-        } */
+        }
+        /*$user = Auth::user();
+        $username = $user->username;
+        $old_password = $user->password;
+        $old_password_form = Hash::make($request->passwordold);
+        $new_password_form = Hash::make($request->password);
+
+        if (Hash::check($old_password, $old_password_form))
+        {
+            $user->password = $new_password_form;
+            $user->save();
+            alert()->success("La contraseña ha sido cambiada correctamente. Se cerrará su sesión", 'Contraseña cambiada')->persistent('Cerrar');
+            return redirect()->back();//action('Auth\LoginController@logout');
+        }else{
+            alert()->error("La contraseña ingresada no es correcta", 'Ha ocurrido un error')->persistent('Cerrar');
+            return back();
+        }*/
     }
 }

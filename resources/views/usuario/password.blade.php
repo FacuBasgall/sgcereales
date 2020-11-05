@@ -6,7 +6,7 @@
     <i class="fa fa-lock"></i> Cambiar contraseña
 </div>
 
-<form method="POST" action="{{ action('UsuarioController@store') }}" autocomplete="off">
+<form method="POST" action="{{ action('UsuarioController@change_password') }}" autocomplete="off">
     @csrf
     <div class="form-group row">
         <label for="passwordold" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña') }}</label>

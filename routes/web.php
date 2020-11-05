@@ -20,15 +20,6 @@ Route::get('/login', 'Auth\LoginController@login')->name('login');
 Route::post('/login/auth', 'Auth\LoginController@authenticate');
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 
-Route::post('/register', 'Auth\RegisterController@register');
-Route::post('/register/store', 'Auth\RegisterController@store');
-
-Route::post('/password/email','Auth\ForgotPasswordController@sendResetLinkEmail');
-Route::get('/password/reset','Auth\ForgotPasswordController@showLinkRequestForm');
-
-Route::post('/password/reset','Auth\ResetPasswordController@reset');
-Route::get('/password/reset/{token}','Auth\ResetPasswordController@showResetForm');
-
 Route::get('/usuario/create', 'UsuarioController@create');
 Route::post('/usuario/store', 'UsuarioController@store');
 Route::get('/usuario/show', 'UsuarioController@show');
@@ -42,7 +33,7 @@ Route::get('/usuario/add_domicile', 'UsuarioController@add_domicile');
 Route::get('/usuario/delete_domicile/{id}', 'UsuarioController@delete_domicile');
 Route::get('/usuario/getLocalidades', 'UsuarioController@getLocalidades');
 Route::get('/usuario/form_password', 'UsuarioController@form_password');
-Route::get('/usuario/change_password', 'UsuarioController@change_password');
+Route::post('/usuario/change_password', 'UsuarioController@change_password');
 
 
 Route::get('/titular', 'TitularController@index');
