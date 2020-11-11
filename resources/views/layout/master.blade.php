@@ -36,8 +36,7 @@
                 <img src="{{ URL::to('/image/SGC.jpg') }}">
             </div>
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -92,12 +91,19 @@
                 </li>
             </ul>
             <ul class="navbar-nav">
-                <li class="nav-item" id="config">
-                    <a class="nav-link" href="{{action('ConfigController@index')}}" title="Configuración Avanzada">
-                        <i class="fa fa-cog">
+                <li class="nav-item dropdown" id="config">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" title="Configuración">
+                        <i class="fa fa-cog ">
                         </i>
-                        Configuración <br>Avanzada
+                        Configuraciones
                     </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="{{action('UsuarioController@form_password')}}" class="dropdown-item">Cambiar contraseña</a></li>
+                        <li><a href="{{action('UsuarioController@show')}}" class="dropdown-item">Gestión de usuario</a></li>
+                        <li><a href="{{action('UsuarioController@create')}}" class="dropdown-item">Añadir usuario</a></li>
+                        <li><a href="" class="dropdown-item">Gestión de e-mail</a></li>
+                        <li><a href="{{action('ConfigController@show_backup')}}" class="dropdown-item">Copia de resguardo</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{url('logout')}}" title="Cerrar Sesión">
@@ -112,13 +118,27 @@
     <div id="loader" class="center"></div>
     @yield('content')
     <script>
-    $(document).ready(function() {
-        var loc = window.location.href; // grabbing the url
-        var str = loc.split("/")[3]; // splitting the url and taking the third string
-        if (str.localeCompare("") == 0)
-            $("#home").addClass("active");
-        else
-            $("#" + str).addClass("active");
-    });
+        $(document).ready(function() {
+            var loc = window.location.href; // grabbing the url
+            var str = loc.split("/")[3]; // splitting the url and taking the third string
+            if (str.localeCompare("") == 0)
+                $("#home").addClass("active");
+            else
+                $("#" + str).addClass("active");
+        });
+
+        $(function() {
+            $(".dropdown").hover(
+                function() {
+                    $('.dropdown-menu', this).stop(true, true).fadeIn("fast");
+                    $(this).toggleClass('open');
+                    $('b', this).toggleClass("caret caret-up");
+                },
+                function() {
+                    $('.dropdown-menu', this).stop(true, true).fadeOut("fast");
+                    $(this).toggleClass('open');
+                    $('b', this).toggleClass("caret caret-up");
+                });
+        });
     </script>
 </body>

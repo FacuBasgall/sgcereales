@@ -10,7 +10,7 @@
     <script type="text/javascript" src="{{ asset('js/select-pais.js') }}"></script>
 </head>
 
-<style>
+<!-- <style>
 @import 'https://fonts.googleapis.com/css?family=Raleway:300,400';
 
 
@@ -72,12 +72,12 @@ body {
                     <li><a href="{{action('ConfigController@show_backup')}}">Realizar copia de resguardo</a></li>
                 </ul>
             </div> <!-- /#admin-sidebar -->
-            <div id="admin-main-control" class="col-md-10 p-x-3 p-y-1">
+            <div id="admin-main-control">
                 @yield('option')
             </div> <!-- /#admin-main-control -->
         </div> <!-- /.row -->
     </div> <!-- /.container-fluid -->
     @include('sweet::alert')
 
-</body>
+</body> -->
 @endsection

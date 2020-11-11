@@ -1,0 +1,42 @@
+body {
+    font-family:sans-serif;
+    background-color: rgb(230 225 225);
+}
+
+.container {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+
+  .card {
+    margin: 20px 0px 20px 0px;
+    width: 700px;
+    height: auto;
+    background:#fff;
+    border-radius:10px;
+    transition:0.5s;
+    padding: 30px;
+  }
+
+  .common-input {
+    padding-left: 10px;
+    font-size: 20px;
+    width: 600px;
+    height: 45px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    margin-right: 25px;
+}
+
+
+.header-title {
+    font-size: 20px;
+    color:black;
+}
+
+.center-of-page {
+    display: flex;
+    justify-content: center;
+}

@@ -7978,7 +7978,7 @@
  .dropdown .dropdown-menu .dropdown-item:focus,
  .dropdown .dropdown-menu .dropdown-item:hover {
      color: #1d1e1f;
-     background-color: #f7f7f9
+     background-color: #343a40!important;
  }
  
  .navbar {
