@@ -20,13 +20,9 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 
-<body  style="background-image: url(/image/login.jpg)">
+<body  style="background-image: linear-gradient(to right, #1580a0, #7ca5bf);">
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand">
-                    Sistema Gestor de Cereales
-                </a>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
@@ -58,7 +54,6 @@
                     </ul>
                 </div>
             </div>
-        </nav>
 
         <main class="py-4">
             @yield('content')
