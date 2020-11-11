@@ -1,61 +1,67 @@
-@extends('config.index')
-@section('option')
+@extends('layout.master')
+@section('content')
+@parent
 <div class="content-title m-x-auto">
-    <i class="fa fa-address-card"></i> Datos personales
+    <i class="fa fa-address-card"></i> Gestión de usuario
 </div>
 <div class="container">
     <div class="card">
         <div class="box">
+            <div class="form-title">Contraseña <a href="{{ action('UsuarioController@form_password')}}"><button
+                        class="small-edit-button" title="Editar"><i class="fa fa-pencil"></i></button></a></div>
+            <label class="labels"><strong>Contraseña: </strong><i class="fa fa-asterisk"></i><i
+                    class="fa fa-asterisk"></i><i class="fa fa-asterisk"></i><i class="fa fa-asterisk"></i><i
+                    class="fa fa-asterisk"></i><i class="fa fa-asterisk"></i><i class="fa fa-asterisk"></i><i
+                    class="fa fa-asterisk"></i></label><br>
             <hr>
-            <div class="form-title">Datos del usuario <a
-                    href="{{ action('UsuarioController@edit')}}"><button class="small-edit-button"
-                        title="Editar"><i class="fa fa-pencil"></i></button></a></div>
+            <div class="form-title">Datos del usuario <a href="{{ action('UsuarioController@edit')}}"><button
+                        class="small-edit-button" title="Editar"><i class="fa fa-pencil"></i></button></a></div>
             <label class="labels"><strong>Nombre y Apellido: </strong>{{auth()->user()->nombre}}</label>
             <label class="labels"><strong>CUIT: </strong>{{auth()->user()->cuit}}</label>
             <br>
             <label class="labels"><strong>Descripción: </strong>{{auth()->user()->descripcion}}</label>
-            <br>
-            <div class="form-title">Domicilios <a
-                    href="{{action('UsuarioController@domicile')}}"><button class="small-edit-button"
-                        title="Gestionar direcciones"><i class="fa fa-pencil"></i></button></a></div>
+            <hr>
+            <div class="form-title">Domicilios <a href="{{action('UsuarioController@domicile')}}"><button
+                        class="small-edit-button" title="Gestionar direcciones"><i
+                            class="fa fa-pencil"></i></button></a></div>
             @foreach($entregadorDomicilio as $domicilio)
-                <label class="labels"><strong>País: </strong>{{$domicilio->pais}}</label>
+            <label class="labels"><strong>País: </strong>{{$domicilio->pais}}</label>
 
-                <label class="labels"><strong>Provincia: </strong>
+            <label class="labels"><strong>Provincia: </strong>
                 @if (isset($domicilio->provincia))
                 @foreach($provincias as $provincia)
                 @if($domicilio->provincia == $provincia->id)
-                    {{$provincia->nombre}}</label>
-                @endif
-                @endforeach
-                @else
-                    <label class="info-text">-</label></label>
-                @endif
+                {{$provincia->nombre}}</label>
+            @endif
+            @endforeach
+            @else
+            <label class="info-text">-</label></label>
+            @endif
 
-                <label class="labels"><strong>Ciudad: </strong>
+            <label class="labels"><strong>Ciudad: </strong>
                 @if (isset($domicilio->localidad))
                 @foreach($localidades as $localidad)
                 @if($domicilio->localidad == $localidad->id)
-                    {{$localidad->nombre}}</label>
-                @endif
-                @endforeach
-                @else
-                    <label class="info-text">-</label></label>
-                @endif
+                {{$localidad->nombre}}</label>
+            @endif
+            @endforeach
+            @else
+            <label class="info-text">-</label></label>
+            @endif
 
-                <label class="labels"><strong>CP: </strong>
+            <label class="labels"><strong>CP: </strong>
                 @if (isset($domicilio->cp))
-                    {{$domicilio->cp}}</label>
-                @else
-                <label class="info-text">-</label></label>
-                @endif
+                {{$domicilio->cp}}</label>
+            @else
+            <label class="info-text">-</label></label>
+            @endif
 
-                <label class="labels"><strong>Dirección: </strong>{{$domicilio->domicilio}}</label>
+            <label class="labels"><strong>Dirección: </strong>{{$domicilio->domicilio}}</label>
             @endforeach
             <hr>
-            <div class="form-title">Contactos <a
-                    href="{{ action('UsuarioController@contact') }}"><button class="small-edit-button"
-                        title="Gestionar contactos"><i class="fa fa-pencil"></i></button></a></div>
+            <div class="form-title">Contactos <a href="{{ action('UsuarioController@contact') }}"><button
+                        class="small-edit-button" title="Gestionar contactos"><i class="fa fa-pencil"></i></button></a>
+            </div>
             @if (!$entregadorContacto->isEmpty())
             @foreach ($tipoContacto as $tipo)
             @foreach ($entregadorContacto as $numero)
@@ -67,6 +73,12 @@
             @else
             <label class="labels info-text"><i class="fa fa-exclamation-circle"></i> No se encontraron contactos</label>
             @endif
+            <hr>
+            <div class="form-title">Preferencias de email <a href="#"><button class="small-edit-button"
+                        title="Editar"><i class="fa fa-pencil"></i></button></a></div>
+            <label class="labels"><strong>Correo por defecto: </strong>Correo aqui</label><br>
+            <label class="labels"><strong>Asunto del correo: </strong>Asunto aqui</label><br>
+            <label class="labels"><strong>Cuerpo del correo: </strong>Cuerpo aqui</label>
         </div>
     </div>
 </div>

@@ -1,5 +1,6 @@
-@extends('config.index')
-@section('option')
+@extends('layout.master')
+@section('content')
+@parent
 
 <head>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/header.css') }}">
@@ -9,8 +10,9 @@
 
 <body>
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><a>Configuraciones</a>
-            <i class="fa fa-chevron-right"></i> Cambiar contraseña</label>
+        <label class="title col-md-8 col-form-label">Configuraciones
+            <i class="fa fa-chevron-right"></i><a href="{{ action('UsuarioController@show')}}"> Gestión de usuario
+            </a><i class="fa fa-chevron-right"></i> Cambiar contraseña</label>
     </div>
     <div class="container">
         <div class="card">
@@ -20,7 +22,9 @@
                     <label for="passwordold">{{ __('Contraseña') }}</label>
 
                     <div>
-                        <input id="passwordold" type="password" class="form-control @error('passwordold') is-invalid @enderror common-input" name="passwordold" required>
+                        <input id="passwordold" type="password"
+                            class="form-control @error('passwordold') is-invalid @enderror common-input"
+                            name="passwordold" required>
 
                         @error('passwordold')
                         <span class="invalid-feedback" role="alert">
@@ -34,7 +38,9 @@
                     <label for="password">{{ __('Nueva contraseña') }}</label>
 
                     <div>
-                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror common-input" name="password" required autocomplete="new-password">
+                        <input id="password" type="password"
+                            class="form-control @error('password') is-invalid @enderror common-input" name="password"
+                            required autocomplete="new-password">
 
                         @error('password')
                         <span class="invalid-feedback" role="alert">
@@ -48,7 +54,8 @@
                     <label for="password-confirm">{{ __('Confirmar contraseña') }}</label>
 
                     <div>
-                        <input id="password-confirm" type="password" class="form-control common-input" name="password_confirmation" required autocomplete="new-password">
+                        <input id="password-confirm" type="password" class="form-control common-input"
+                            name="password_confirmation" required autocomplete="new-password">
                     </div>
                 </div>
 

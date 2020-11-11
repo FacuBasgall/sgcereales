@@ -320,21 +320,5 @@ class UsuarioController extends Controller
             alert()->error("La contraseña ingresada no es correcta", 'Ha ocurrido un error')->persistent('Cerrar');
             return back();
         }
-        /*$user = Auth::user();
-        $username = $user->username;
-        $old_password = $user->password;
-        $old_password_form = Hash::make($request->passwordold);
-        $new_password_form = Hash::make($request->password);
-
-        if (Hash::check($old_password, $old_password_form))
-        {
-            $user->password = $new_password_form;
-            $user->save();
-            alert()->success("La contraseña ha sido cambiada correctamente. Se cerrará su sesión", 'Contraseña cambiada')->persistent('Cerrar');
-            return redirect()->back();//action('Auth\LoginController@logout');
-        }else{
-            alert()->error("La contraseña ingresada no es correcta", 'Ha ocurrido un error')->persistent('Cerrar');
-            return back();
-        }*/
     }
 }

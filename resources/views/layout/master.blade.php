@@ -98,10 +98,8 @@
                         Configuraciones
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="{{action('UsuarioController@form_password')}}" class="dropdown-item">Cambiar contraseña</a></li>
                         <li><a href="{{action('UsuarioController@show')}}" class="dropdown-item">Gestión de usuario</a></li>
                         <li><a href="{{action('UsuarioController@create')}}" class="dropdown-item">Añadir usuario</a></li>
-                        <li><a href="" class="dropdown-item">Gestión de e-mail</a></li>
                         <li><a href="{{action('ConfigController@show_backup')}}" class="dropdown-item">Copia de resguardo</a></li>
                     </ul>
                 </li>

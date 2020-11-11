@@ -1,6 +1,6 @@
-@extends('config.index')
-
-@section('option')
+@extends('layout.master')
+@section('content')
+@parent
 <div class="content-title m-x-auto">
     <i class="fa fa-user-plus"></i> Crear usuario
 </div>

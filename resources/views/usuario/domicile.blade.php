@@ -1,5 +1,6 @@
-@extends('config.index')
-@section('option')
+@extends('layout.master')
+@section('content')
+@parent
 <div class="content-title m-x-auto">
     <i class="fa fa-address-card"></i> <a href="{{ action('UsuarioController@show') }}">Datos personales</a> <i
         class="fa fa-chevron-right"></i> Gestión de domicilios

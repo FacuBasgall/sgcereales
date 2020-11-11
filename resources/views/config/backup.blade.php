@@ -1,5 +1,5 @@
-@extends('config.index')
-@section('option')
+@extends('layout.master')
+@section('content')
 @parent
 
 <div class="content-title m-x-auto">

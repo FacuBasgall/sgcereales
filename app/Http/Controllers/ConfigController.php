@@ -36,18 +36,4 @@ class ConfigController extends Controller
             return back();
         }
     }
-
-    public function show_email()
-    {
-        //falta cargar los datos
-        return view('config.email');
-    }
-
-    public function store_email(Request $request)
-    {
-        //guardar opciones predeterminadas de los corrreos
-    }
-
-    //duda: la configuracion del mail aca o en el UsuarioController ¡VER!
-    //crear usuario, editar usuario actual
 }
