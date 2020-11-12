@@ -101,6 +101,7 @@
                         <li id="show"><a href="{{action('UsuarioController@show')}}" class="dropdown-item">Gestión de usuario</a></li>
                         <li id="create"><a href="{{action('UsuarioController@create')}}" class="dropdown-item">Añadir usuario</a></li>
                         <li id="backup"><a href="{{action('ConfigController@show_backup')}}" class="dropdown-item">Copia de resguardo</a></li>
+                        <li id="manual"><a href="#" class="dropdown-item">Manual de usuario</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">

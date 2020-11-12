@@ -4,6 +4,8 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/contact-form.css') }}">
+    <script type="text/javascript" src="{{ asset('js/select-localidad.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/select-pais.js') }}"></script>
 </head>
 
 <body>

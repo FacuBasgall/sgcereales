@@ -34,7 +34,8 @@ Route::get('/usuario/delete_domicile/{id}', 'UsuarioController@delete_domicile')
 Route::get('/usuario/getLocalidades', 'UsuarioController@getLocalidades');
 Route::get('/usuario/form_password', 'UsuarioController@form_password');
 Route::post('/usuario/change_password', 'UsuarioController@change_password');
-
+Route::get('/usuario/email_preferences', 'UsuarioController@edit_email_preferences');
+Route::put('/usuario/email_preferences/store', 'UsuarioController@store_email_preferences');
 
 Route::get('/titular', 'TitularController@index');
 Route::get('/titular/create', 'TitularController@create');

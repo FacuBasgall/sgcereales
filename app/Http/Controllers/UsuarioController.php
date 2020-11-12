@@ -12,6 +12,7 @@ use App\Entregador_Domicilio;
 use App\Tipo_Contacto;
 use App\Localidad;
 use App\Provincia;
+use App\Usuario_Preferencias_Correo;
 use DB;
 use SweetAlert;
 use \Auth;
@@ -99,6 +100,14 @@ class UsuarioController extends Controller
         $contacto->contacto = $request->email;
         $contacto->save();
 
+        $preferencia = new Usuario_Preferencias_Correo;
+        $preferencia->idUser = $nuevo->idUser;
+        $preferencia->email = $contacto->id;
+        $preferencia->asunto = "Envio del aviso nro: {{NRO_AVISO}}";
+        $preferencia->correo = "A continuación se adjuntan los romaneos correspondientes al aviso nro: {{NRO_AVISO}}.
+                                Por favor no responder este correo. Comunicarse con {{CORREO}}";
+        $preferencia->save();
+
         alert()->success("El usuario fue creado con éxito", 'Usuario creado');
         return redirect()->action('UsuarioController@create');
     }
@@ -117,7 +126,10 @@ class UsuarioController extends Controller
         $entregadorDomicilio = Entregador_Domicilio::where('idUser', $idUser)->get();
         $localidades = Localidad::all();
         $provincias = Provincia::all();
-        return view('usuario.show',  compact(['entregadorContacto', 'tipoContacto', 'entregadorDomicilio', 'localidades', 'provincias']));
+        $preferencia = Usuario_Preferencias_Correo::where('idUser', $idUser)->first();
+        $correo = Entregador_Contacto::where('idUser', $idUser)->where('tipo', 3)->where('id', $preferencia->email)->first();
+        return view('usuario.show',  compact(['entregadorContacto', 'tipoContacto', 'entregadorDomicilio',
+            'localidades', 'provincias', 'preferencia', 'correo']));
     }
 
     /**
@@ -320,5 +332,25 @@ class UsuarioController extends Controller
             alert()->error("La contraseña ingresada no es correcta", 'Ha ocurrido un error')->persistent('Cerrar');
             return back();
         }
+    }
+
+    public function edit_email_preferences()
+    {
+        $idUser = auth()->user()->idUser;
+        $preferencia = Usuario_Preferencias_Correo::where('idUser', $idUser)->first();
+        $entregadorContacto = Entregador_Contacto::where('idUser', $idUser)->where('tipo', 3)->get();
+        return view('usuario.email', compact(['preferencia', 'entregadorContacto']));
+    }
+
+    public function store_email_preferences(Request $request)
+    {
+        $idUser = auth()->user()->idUser;
+        $preferencia = Usuario_Preferencias_Correo::where('idUser', $idUser)->first();
+        $preferencia->email = $request->email;
+        $preferencia->asunto = $request->asunto;
+        $preferencia->cuerpo = $request->cuerpo;
+        $preferencia->save();
+        alert()->success("Las preferencias de correo fueron editadas con exito", 'Editado con éxito');
+        return redirect()->action('UsuarioController@show');
     }
 }
