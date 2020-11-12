@@ -60,3 +60,33 @@ body {
 strong{
     font-weight:bold;
 }
+
+.year-input, input:focus{
+    outline: none;
+}
+
+.year-input {
+    width: 25px;
+    border:none;
+    border-bottom:1px solid #757575;
+}
+
+.common-input-cp {
+    margin-top: 15px;
+    width: 60px;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    margin-right: 25px;
+}
+
+.common-input-address {
+    margin-top: 15px;
+    width: 240px;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    margin-right: 25px;
+}

@@ -91,16 +91,16 @@
                 </li>
             </ul>
             <ul class="navbar-nav">
-                <li class="nav-item dropdown" id="config">
+                <li class="nav-item dropdown" id="usuario">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" title="Configuración">
                         <i class="fa fa-cog ">
                         </i>
                         Configuraciones
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="{{action('UsuarioController@show')}}" class="dropdown-item">Gestión de usuario</a></li>
-                        <li><a href="{{action('UsuarioController@create')}}" class="dropdown-item">Añadir usuario</a></li>
-                        <li><a href="{{action('ConfigController@show_backup')}}" class="dropdown-item">Copia de resguardo</a></li>
+                        <li id="show"><a href="{{action('UsuarioController@show')}}" class="dropdown-item">Gestión de usuario</a></li>
+                        <li id="create"><a href="{{action('UsuarioController@create')}}" class="dropdown-item">Añadir usuario</a></li>
+                        <li id="backup"><a href="{{action('ConfigController@show_backup')}}" class="dropdown-item">Copia de resguardo</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">

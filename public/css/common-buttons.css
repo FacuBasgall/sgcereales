@@ -146,3 +146,21 @@
   .export-button:hover{
     background-color: rgb(32, 93, 207);
   }
+
+  .change-password {
+    background-color: rgb(46 119 255);
+    border: none;
+    color: white;
+    text-align: center;
+    padding: 8px 9px 8px 9px;
+    cursor: pointer;
+    margin: 3px 2px;
+    font-family: sans-serif;
+    font-size: 15px;
+    border-radius: 3%;
+  }
+
+  .change-password:hover{
+    color:white;
+    background-color:rgb(32, 93, 207);
+  }
