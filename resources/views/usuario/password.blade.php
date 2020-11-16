@@ -16,7 +16,7 @@
     <div class="container">
         <div class="card">
             <form method="POST" action="{{ action('UsuarioController@change_password') }}" autocomplete="off">
-                @csrf
+                {{ csrf_field() }}
                 <div class="form-group">
                     <label for="passwordold">{{ __('Contraseña') }}</label>
 

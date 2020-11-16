@@ -20,7 +20,7 @@
                     <div class="card-body">
                         <div>
                             <form method="POST" action="{{ action('Auth\LoginController@authenticate') }}">
-                                @csrf
+                                {{ csrf_field() }}
                                 @if ($errors->any())
                                 <p class="alert alert-danger">El nombre de usuario o contraseña son incorrectos</p>
                                 @endif

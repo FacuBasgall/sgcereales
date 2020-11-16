@@ -14,7 +14,7 @@
     <div class="container">
         <div class="card">
                 <form method="POST" action="{{ action('UsuarioController@store') }}" autocomplete="off">
-                    @csrf
+                    {{ csrf_field() }}
 
                     <div class="form-group row">
                         <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('Nombre de usuario') }}</label>
