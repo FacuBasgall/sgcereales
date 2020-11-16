@@ -23,6 +23,7 @@ use App\Titular_Contacto;
 use App\Intermediario;
 use App\Remitente_Comercial;
 use App\User;
+use App\Usuario_Preferencias_Correo;
 use App\Aviso_Producto;
 use App\Aviso_Entregador;
 use App\Entregador_Contacto;
@@ -54,6 +55,7 @@ class RomaneoSendMail extends Mailable
      */
     public function build()
     {
+        $idUser = auth()->user()->idUser;
         $aviso = Aviso::where('idAviso', $this->idAviso)->first();
         $titular = Titular::where('cuit', $aviso->idTitularCartaPorte)->first();
         $cargas = Carga::where('idAviso', $aviso->idAviso)->get();
@@ -65,24 +67,32 @@ class RomaneoSendMail extends Mailable
         $remitente = Remitente_Comercial::where('cuit', $aviso->idRemitenteComercial)->first();
         $aviso_producto = Aviso_Producto::where('idAviso', $aviso->idAviso)->first();
         $aviso_entregador = Aviso_Entregador::where('idAviso', $aviso->idAviso)->first();
-        $entregador = User::where('idUser', auth()->user()->idUser)->first();
-        $entregador_contacto = Entregador_Contacto::where('idUser', auth()->user()->idUser)->get();
-        $entregador_domicilio = Entregador_Domicilio::where('idUser',auth()->user()->idUser)->get();
-        $localidad = Localidad::where('id', $aviso->localidadProcedencia)->first();
-        $provincia = Provincia::where('id', $aviso->provinciaProcedencia)->first();
+        $entregador = User::where('idUser', $idUser)->first();
+        $entregador_contacto = Entregador_Contacto::where('idUser', $idUser)->get();
+        $entregador_domicilio = Entregador_Domicilio::where('idUser', $idUser)->get();
+        $localidades = Localidad::all();
+        $provincias = Provincia::all();
 
         $pdf = PDF::loadView('exports.pdf', compact(['aviso', 'titular', 'cargas', 'descargas', 'corredor',
             'destinatario', 'intermediario', 'producto', 'remitente', 'aviso_producto', 'aviso_entregador',
-            'entregador', 'entregador_contacto', 'entregador_domicilio', 'localidad', 'provincia']));
+            'entregador', 'entregador_contacto', 'entregador_domicilio', 'localidades', 'provincias']));
         $pdf->setPaper('a4', 'landscape');
+
+        $preferencias = Usuario_Preferencias_Correo::where('idUser', $idUser)->first();
+        $email = Entregador_Contacto::where('id', $preferencias->email)->first();
+        $asunto = str_replace('{{NRO_AVISO}}', $aviso->nroAviso, $preferencias->asunto);
+        $asunto = str_replace('{{CORREO}}', $email->contacto, $asunto);
+
+        $cuerpo = str_replace('{{NRO_AVISO}}', $aviso->nroAviso, $preferencias->cuerpo);
+        $cuerpo = str_replace('{{CORREO}}', $email->contacto, $cuerpo);
 
         $filenameExcel = $aviso->nroAviso . " " . $titular->nombre . ".xlsx";
         $filenamePdf = $aviso->nroAviso . " " . $titular->nombre . ".pdf";
-        $asunto = "Envio del aviso nro: " . $aviso->nroAviso;
+        //$asunto = "Envio del aviso nro: " . $aviso->nroAviso;
 
         $correosCorredor = Corredor_Contacto::where('cuit', $aviso->idCorredor)->where('tipo', 3)->pluck('contacto');
 
-        return $this->view('mails.romaneo_mail')
+        return $this->view('mails.romaneo_mail', compact(['cuerpo']))
             ->cc($correosCorredor)
             ->subject($asunto)
             ->attachData($pdf->output(), $filenamePdf)
