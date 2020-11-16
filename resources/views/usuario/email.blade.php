@@ -21,19 +21,19 @@
                 <form action="{{action('UsuarioController@store_email_preferences')}}" method="POST" autocomplete="off">
                     {{ method_field('PUT') }}
                     {{ csrf_field() }}
-                    <label for="correo">
+                    <label for="email">
                         <span>Correo*: </span>
-                        <select name="correo" id="correo" class="common-input-address" required>
+                        <select name="email" id="email" class="common-input-address" required>
                             <option value="" selected disabled hidden></option>
                             @foreach ($entregadorContacto as $correos)
-                            <option value="{{ $correos->contacto }}"
-                                {{old('correo') == $preferencia->email ? 'selected':''}}>{{ $correos->contacto }}
+                            <option value="{{ $correos->id }}"
+                                {{old('email') == $correos->contacto ? 'selected':''}}>{{ $correos->contacto }}
                             </option>
                             @endforeach
                         </select>
                         <script>
                         $.fn.select2.defaults.set('language', 'es');
-                        $("#correo").select2({
+                        $("#email").select2({
                             placeholder: 'Seleccione',
                             dropdownAutoWidth: true,
                         });
@@ -42,13 +42,13 @@
                     <br>
                     <label for="asunto">
                         <span>Asunto*: </span>
-                        <textarea name="nombre" id="nombre" class="textarea" value="{{$preferencia->asunto}}" maxlength="200" style="height:80px;"
+                        <textarea name="asunto" id="asunto" class="textarea" value="{{$preferencia->asunto}}" maxlength="200" style="height:80px;"
                             cols="150" required>{{$preferencia->asunto}}</textarea>
                     </label>
                     <br>
                     <label for="cuerpo">
                         <span>Cuerpo*: </span>
-                        <textarea name="nombre" id="nombre" class="textarea" value="{{$preferencia->cuerpo}}" maxlength="200" style="height:80px;"
+                        <textarea name="cuerpo" id="cuerpo" class="textarea" value="{{$preferencia->cuerpo}}" maxlength="200" style="height:80px;"
                             cols="150" required>{{$preferencia->cuerpo}}</textarea>
                     </label>
                     <div class="center-of-page"><button type="submit" class="save-button" style="margin-top:13px;"><i

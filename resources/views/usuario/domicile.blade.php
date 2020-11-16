@@ -88,8 +88,8 @@
                 @endif
             </div>
         </div>
-
     </div>
+    @include('sweet::alert')
 </body>
 
 @endsection
