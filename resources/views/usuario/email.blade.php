@@ -19,7 +19,7 @@
             <div class="box">
                 <div class="form-title" style="font-size:20px;"><b>Preferencias de email</b><i
                         class="fa fa-question-circle"
-                        title="Variable de entorno que serán reemplazadas"
+                        title="Valores a reemplazar NRO_AVISO y CORREO, debe expresarse entre llaves dobles"
                         style="left: 100px; position: relative;"></i></div>
                 <form action="{{action('UsuarioController@store_email_preferences')}}" method="POST" autocomplete="off">
                     {{ method_field('PUT') }}

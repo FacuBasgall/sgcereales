@@ -42,7 +42,6 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        //devolver view para crear
         return view('usuario.create');
     }
 

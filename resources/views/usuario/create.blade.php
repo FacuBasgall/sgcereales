@@ -13,113 +13,94 @@
     </div>
     <div class="container">
         <div class="card">
-                <form method="POST" action="{{ action('UsuarioController@store') }}" autocomplete="off">
-                    {{ csrf_field() }}
+            <form method="POST" action="{{ action('UsuarioController@store') }}" autocomplete="off">
+                {{ csrf_field() }}
+                <p class="form-title"><strong>Datos del usuario</strong></p>
+                <label for="username">
+                    <span>Nombre de usuario*:</span>
+                    <input id="username" type="text" class="common-input @error('username') is-invalid @enderror"
+                        name="username" value="{{ old('username') }}" required autofocus>
 
-                    <div class="form-group row">
-                        <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('Nombre de usuario') }}</label>
+                    @error('username')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </label>
+                <label for="email">
+                    <span>Correo electrónico*:</span>
+                    <input id="email" type="text" class="common-input-address @error('email') is-invalid @enderror"
+                        name="email" value="{{ old('email') }}" required autofocus>
 
-                        <div class="col-md-6">
-                            <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autofocus>
+                    @error('email')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </label>
+                <label for="password">
+                    <span>Contraseña*:</span>
+                    <input id="password" type="password" class="common-input @error('password') is-invalid @enderror"
+                        name="password" required autocomplete="new-password">
 
-                            @error('username')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                    </div>
+                    @error('password')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </label>
+                <label for="password-confirm">
+                    <span>Confirmar contraseña*:</span>
+                    <input id="password-confirm" type="password" class="common-input" name="password_confirmation"
+                        required autocomplete="new-password">
+                </label>
+                <hr>
+                <p class="form-title"><strong>Datos personales</strong></p>
+                <label for="cuit">
+                    <span>CUIT*:</span>
+                    <input id="cuit" type="number" min="0" max="999999999999999"
+                        class="common-input @error('cuit') is-invalid @enderror" name="cuit" value="{{ old('cuit') }}"
+                        required autofocus>
 
-                    <div class="form-group row">
-                        <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Correo electrónico') }}</label>
+                    @error('cuit')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </label>
+                <label for="nombre">
+                    <span>Nombre y Apellido*:</span>
+                    <input id="nombre" type="text" maxlength="200"
+                        class="common-input @error('nombre') is-invalid @enderror" name="nombre"
+                        value="{{ old('nombre') }}" required autofocus>
 
-                        <div class="col-md-6">
-                            <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autofocus>
+                    @error('nombre')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </label>
+                <br><br>
+                <label for="descripcion">
+                    <span>Descripcion*:</span>
+                    <textarea id="descripcion" maxlength="250"
+                        class="observation-box @error('descripcion') is-invalid @enderror" name="descripcion"
+                        value="{{ old('descripcion') }}" style="height:80px;" cols="150"
+                        placeholder="Entrega y Recibo de Cereales, Oleaginosas y Subproductos" required
+                        autofocus></textarea>
 
-                            @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña') }}</label>
-
-                        <div class="col-md-6">
-                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                            @error('password')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirmar contraseña') }}</label>
-
-                        <div class="col-md-6">
-                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                        </div>
-                    </div>
-
-                    <hr>
-                    <span>Datos personales: </span>
-                    <div class="form-group row">
-                        <label for="cuit" class="col-md-4 col-form-label text-md-right">{{ __('CUIT') }}</label>
-
-                        <div class="col-md-6">
-                            <input id="cuit" type="number" min="0" max="999999999999999" class="form-control @error('cuit') is-invalid @enderror" name="cuit" value="{{ old('cuit') }}" required autofocus>
-
-                            @error('cuit')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="nombre" class="col-md-4 col-form-label text-md-right">{{ __('Nombre y apellido') }}</label>
-
-                        <div class="col-md-6">
-                            <input id="cuit" type="text" maxlength="200" class="form-control @error('nombre') is-invalid @enderror" name="nombre" value="{{ old('nombre') }}" required autofocus>
-
-                            @error('nombre')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="descripcion" class="col-md-4 col-form-label text-md-right">{{ __('Descripción') }}</label>
-
-                        <div class="col-md-6">
-                            <input id="descripcion" type="text" maxlength="250" class="form-control @error('descripcion') is-invalid @enderror" name="descripcion" value="{{ old('nombre') }}" placeholder="Entrega y Recibo de Cereales, Oleaginosas y Subproductos" required autofocus>
-
-                            @error('descripcion')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="form-group row mb-0">
-                        <div class="col-md-6 offset-md-4">
-                            <button type="submit" class="btn btn-primary">
-                                {{ __('Guardar') }}
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+                    @error('descripcion')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </label>
+                <hr>
+                <div class="center-of-page"> <button type="submit" class="save-button"><i class="fa fa-check"></i>
+                        Guardar</button> </div>
+            </form>
         </div>
-        @include('sweet::alert')
+    </div>
+    @include('sweet::alert')
 </body>
 @endsection
