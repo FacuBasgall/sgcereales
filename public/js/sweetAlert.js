@@ -50,3 +50,16 @@ function warningDomicile(key, redirect) {
             window.location.href = '//127.0.0.1:8000/'+ redirect + '/delete_domicile/' + key;
       }});
 }
+
+function warningBackup() {
+    swal({
+        title: "¿Está seguro?",
+        text: "Esta acción podría demorar unos minutos",
+        icon: "warning",
+        buttons: ["Cancelar", "Aceptar"],
+        dangerMode: true,
+      }).then((willDelete) => {
+        if (willDelete) {
+            window.location.href = '//127.0.0.1:8000/config/backup';
+      }});
+}

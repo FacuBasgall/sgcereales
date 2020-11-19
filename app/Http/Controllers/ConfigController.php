@@ -14,16 +14,6 @@ class ConfigController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
-    {
-        return view('config.index');
-    }
-
-    public function show_backup()
-    {
-        return view('config.backup');
-    }
-
     public function run_backup()
     {
         $cmd = shell_exec("cd .. & php artisan backup:clean");
