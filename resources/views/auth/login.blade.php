@@ -40,9 +40,9 @@
                                     </div>
                                 </div>
                         </div>
-                        <span class="btn btn-link" style="display:flex; justify-content:center; align-items:center;" href="#">
+                        <a class="btn btn-link" style="display:flex; justify-content:center; align-items:center;" href="{{action ('Auth\ForgotPasswordController@showLinkRequestForm')}}">
                             {{ __('Forgot Your Password?') }}
-                        </span>
+                        </a>
                         <div>
                             <div style="display:flex; justify-content:center; align-items:center;">
                                 <button type="submit" class="btn btn-primary" style="margin-top:10px;">

@@ -20,6 +20,12 @@ Route::get('/login', 'Auth\LoginController@login')->name('login');
 Route::post('/login/auth', 'Auth\LoginController@authenticate');
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 
+Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm');
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+
 Route::get('/usuario/create', 'UsuarioController@create');
 Route::post('/usuario/store', 'UsuarioController@store');
 Route::get('/usuario/show', 'UsuarioController@show');
