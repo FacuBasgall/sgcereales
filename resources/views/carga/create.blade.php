@@ -41,6 +41,8 @@
                             class="common-input"  onkeydown="noComa(event)" required>
                     </label>
                     <hr>
+                    <div><label class="info-text-margin"><i class="fa fa-exclamation-circle"></i>
+                            Los campos con * son obligatorios</label></div>
                     <label for="check">
                         <input type="checkbox" name="check" id="check" value="Descarga" checked> Deseo ingresar la
                         descarga ahora

@@ -6,3 +6,8 @@
 .card-header {
     background-color: white;
 }
+
+.info-text-margin{
+    color: grey; 
+    font-size: 16px;
+}

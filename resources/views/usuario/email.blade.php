@@ -54,6 +54,8 @@
                         <textarea name="cuerpo" id="cuerpo" class="textarea" value="{{$preferencia->cuerpo}}"
                             maxlength="200" style="height:80px;" cols="150" required>{{$preferencia->cuerpo}}</textarea>
                     </label>
+                    <div><label class="info-text-margin"><i class="fa fa-exclamation-circle"></i>
+                            Los campos con * son obligatorios</label></div>
                     <div class="center-of-page"><button type="submit" class="save-button" style="margin-top:13px;"><i
                                 class="fa fa-check"></i>
                             Guardar</button></div>

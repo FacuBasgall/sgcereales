@@ -32,6 +32,8 @@
                         <p class="form-title">Descripción*:</p>
                         <textarea name="descripcion" id="descripcion" value="{{auth()->user()->descripcion}}" class="textarea" style="height:80px;" placeholder="Ingrese una descripcion" cols="150">{{auth()->user()->descripcion}}</textarea>
                     </label>
+                    <div><label class="info-text-margin"><i class="fa fa-exclamation-circle"></i>
+                            Los campos con * son obligatorios</label></div>
                     <div class="center-of-page"><button type="submit" class="save-button" style="margin-top:13px;"><i class="fa fa-check"></i>
                             Guardar</button></div>
                 </form>

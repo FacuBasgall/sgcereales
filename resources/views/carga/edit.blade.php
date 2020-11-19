@@ -94,6 +94,8 @@
                                 descarga asociada</label>
             @endif
             <hr>
+            <div><label class="info-text-margin"><i class="fa fa-exclamation-circle"></i>
+                            Los campos con * son obligatorios</label></div>
             <div class="center-of-page"><button type="submit" class="save-button"><i class="fa fa-check"></i>
                     Guardar</button></div>
             </form>
