@@ -131,8 +131,7 @@ Route::get('/reporte', 'ReporteController@index');
 Route::get('/reporte/export_excel', 'ReporteController@export_excel');
 Route::get('/reporte/export_pdf', 'ReporteController@export_pdf');
 Route::get('/reporte/send_email/{id}', 'ReporteController@send_email');
-Route::get('/reporte/getLocalidades', 'ReporteController@getLocalidades');
+//Route::get('/reporte/getLocalidades', 'ReporteController@getLocalidades');
 
-//Route::get('/config/backup', 'ConfigController@show_backup');
 Route::get('/config/backup', 'ConfigController@run_backup');
 

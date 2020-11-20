@@ -1,9 +1,39 @@
 <table>
-    <div>Filtros aplicados</div>
     <thead>
         <tr>
+            <th rowspan="6" colspan="6" valign="middle"><b>
+                    {{$entregador->nombre}}<br>
+                    {{$entregador->descripcion}}<br>
+                    @foreach ($entregador_domicilio as $domicilio)
+                    @foreach($provincias as $provincia)
+                    @if($provincia->id == $domicilio->provincia)
+                    @foreach($localidades as $localidad)
+                    @if($localidad->id == $domicilio->localidad)
+                    {{$domicilio->domicilio}}, {{$localidad->nombre}} ({{$provincia->abreviatura}} -
+                    {{$domicilio->cp}})<br>
+                    @endif
+                    @endforeach
+                    @endif
+                    @endforeach
+                    @endforeach
+                    @foreach ($entregador_contacto as $contacto)
+                    | {{$contacto->contacto}} |
+                    @endforeach
+                </b>
+            </th>
             <th><strong>Fecha desde</strong></th>
+            <td>{{$filtros->fechaDesde}}</td>
+        </tr>
+        <tr>
             <th><strong>Fecha hasta</strong></th>
+            <td>{{$filtros->fechaHasta}}</td>
+        </tr>
+        <tr></tr>
+        <tr></tr>
+        <tr></tr>
+        <tr></tr>
+        <tr></tr>
+        <tr>
             <th><strong>Titular carta porte</strong></th>
             <th><strong>Intermediario</strong></th>
             <th><strong>Remitente comercial</strong></th>
@@ -15,8 +45,6 @@
     </thead>
     <tbody>
         <tr>
-            <td>{{$filtros->fechaDesde}}</td>
-            <td>{{$filtros->fechaHasta}}</td>
             @if(isset($filtros->idTitular))
             <td>{{$filtros->idTitular}}</td>
             @else

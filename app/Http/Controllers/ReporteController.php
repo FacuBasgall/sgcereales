@@ -80,6 +80,7 @@ class ReporteController extends Controller
                                 ->join('aviso_entregador', 'aviso.idAviso', '=', 'aviso_entregador.idAviso')
                                 ->whereBetween('aviso_entregador.fecha', [$request->fechaDesde, $request->fechaHasta])
                                 ->where('aviso_entregador.idEntregador', '=', $idEntregador)
+                                ->where('aviso.estado', '=', true)
                                 ->select('aviso.*')
                                 ->get();
                 }
@@ -151,7 +152,8 @@ class ReporteController extends Controller
     {
         $hoy = date("Y-m-d");
         $filename = "Reporte general " . $hoy . ".xlsx";
-        return Excel::download(new ReporteExport(), $filename);
+        $filtro = Filtro::first();
+        return Excel::download(new ReporteExport($filtro->idFiltro), $filename);
     }
 /*
     public function export_pdf($idAviso)
@@ -219,6 +221,7 @@ class ReporteController extends Controller
         return back();
     } */
 
+    /* NO VA!
     public function getLocalidades(Request $request)
     {
         if($request->ajax()){
@@ -229,4 +232,5 @@ class ReporteController extends Controller
             return response()->json($localidadesArray);
         }
     }
+    */
 }

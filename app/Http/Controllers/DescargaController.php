@@ -59,40 +59,46 @@ class DescargaController extends Controller
     {
         $carga = Carga::where('idCarga', $request->carga)->first();
         $hoy = date("Y-m-d");
+        $existe = Descarga::where('idCarga', $request->carga)->exists();
 
-        if($request->fecha >= $carga->fecha && $request->fecha <= $hoy){
-            $descarga = new Descarga;
-            $descarga->idCarga = $request->carga;
-            $descarga->fecha = $request->fecha;
-            $descarga->bruto = $request->bruto;
-            $descarga->tara = $request->tara;
-            $descarga->humedad = $request->humedad;
-            $descarga->ph = $request->ph;
-            $descarga->proteina = $request->proteina;
-            $descarga->calidad = $request->calidad;
-            $descarga->borrado = false;
+        if(!$existe){
+            if($request->fecha >= $carga->fecha && $request->fecha <= $hoy){
+                $descarga = new Descarga;
+                $descarga->idCarga = $request->carga;
+                $descarga->fecha = $request->fecha;
+                $descarga->bruto = $request->bruto;
+                $descarga->tara = $request->tara;
+                $descarga->humedad = $request->humedad;
+                $descarga->ph = $request->ph;
+                $descarga->proteina = $request->proteina;
+                $descarga->calidad = $request->calidad;
+                $descarga->borrado = false;
 
-            $aviso = Aviso::where('idAviso', $carga->idAviso)->first();
-            $producto = Producto::where('idProducto', $aviso->idProducto)->first();
-            $existe = Merma::where('idProducto', $producto->idProducto)->where('humedad', $request->humedad)->exists();
-            if ($existe){
-                $merma = Merma::where('idProducto', $producto->idProducto)->where('humedad', $request->humedad)->first();
-                $mermaManipuleo = $producto->mermaManipuleo;
-                $mermaSecado = $merma->merma;
-                $descarga->merma = $mermaManipuleo + $mermaSecado;
+                $aviso = Aviso::where('idAviso', $carga->idAviso)->first();
+                $producto = Producto::where('idProducto', $aviso->idProducto)->first();
+                $existe = Merma::where('idProducto', $producto->idProducto)->where('humedad', $request->humedad)->exists();
+                if ($existe){
+                    $merma = Merma::where('idProducto', $producto->idProducto)->where('humedad', $request->humedad)->first();
+                    $mermaManipuleo = $producto->mermaManipuleo;
+                    $mermaSecado = $merma->merma;
+                    $descarga->merma = $mermaManipuleo + $mermaSecado;
+                }else{
+                    $descarga->merma = NULL;
+                }
+                $descarga->save();
+
+                alert()->success("La descarga fue creada con éxito", 'Descarga guardada');
+                return redirect()->action('AvisoController@show', $carga->idAviso);
+            }elseif($request->fecha > $hoy){
+                alert()->error("La fecha no puede ser mayor al dia de hoy", 'Ha ocurrido un error')->persistent('Cerrar');
+                return back()->withInput();
             }else{
-                $descarga->merma = NULL;
+                alert()->error("La fecha no puede ser menor a la fecha de carga", 'Ha ocurrido un error')->persistent('Cerrar');
+                return back()->withInput();
             }
-            $descarga->save();
-
-            alert()->success("La descarga fue creada con éxito", 'Descarga guardada');
-            return redirect()->action('AvisoController@show', $carga->idAviso);
-        }elseif($request->fecha > $hoy){
-            alert()->error("La fecha no puede ser mayor al dia de hoy", 'Ha ocurrido un error')->persistent('Cerrar');
-            return back()->withInput();
         }else{
-            alert()->error("La fecha no puede ser menor a la fecha de carga", 'Ha ocurrido un error')->persistent('Cerrar');
-            return back()->withInput();
+            alert()->error("Ya existe una descarga asociada a esta carga", 'Ha ocurrido un error')->persistent('Cerrar');
+            return redirect()->action('AvisoController@show', $carga->idAviso);
         }
 
        /**FORMULAS
