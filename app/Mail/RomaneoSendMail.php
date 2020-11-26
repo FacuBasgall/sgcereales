@@ -10,7 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use App\Exports\RomaneoExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade as PDF;
-use MultiMail;
+use \Mail;
 
 use App\Aviso;
 use App\Descarga;

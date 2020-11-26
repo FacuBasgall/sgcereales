@@ -65,7 +65,7 @@ class CargaController extends Controller
                 $carga->save();
 
                 alert()->success("La carga fue creada con éxito", 'Carga guardada');
-                if(isset($request->check)){
+                if(isset($request->switchbutton)){
                     return redirect()->action('DescargaController@create', $carga->idCarga);
                 }else{
                     $aviso = Aviso::where('idAviso', $carga->idAviso)->first();

@@ -31,7 +31,6 @@ use App\Provincia;
 use Datatables;
 use DB;
 use Mail;
-use MultiMail;
 use SweetAlert;
 
 class AvisoController extends Controller
@@ -449,7 +448,7 @@ class AvisoController extends Controller
                 $correosTitular = Titular_Contacto::where('cuit', $aviso->idTitularCartaPorte)->where('tipo', 3)->pluck('contacto'); //Tipo = 3 = Emails / funcion pluck('contacto') solo selecciona del array los contactos
                 $correosRemitente = Remitente_Contacto::where('cuit', $aviso->idRemitenteComercial)->where('tipo', 3)->pluck('contacto');
                 //$correosCorredor se agregar en el RomaneoSendMail
-                \MultiMail::to($correosTitular)->cc($correosRemitente)->send(new RomaneoSendMail($idAviso));
+                \Mail::to($correosTitular)->cc($correosRemitente)->send(new RomaneoSendMail($idAviso));
                 alert()->success("El aviso ha sido enviado con éxito", 'Correo enviado');
             }
         }else{

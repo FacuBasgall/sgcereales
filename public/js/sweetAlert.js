@@ -8,7 +8,7 @@ function warning(key, redirect) {
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-            window.location.href = '//127.0.0.1:8000/'+ redirect + '/destroy/' + key;
+            window.location.href = '//localhost:8000/'+ redirect + '/destroy/' + key;
       }});
 }
 
@@ -21,20 +21,20 @@ function warningContact(key, redirect) {
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-            window.location.href = '//127.0.0.1:8000/'+ redirect + '/delete_contact/' + key;
+            window.location.href = '//localhost:8000/'+ redirect + '/delete_contact/' + key;
       }});
 }
 
 function warningSendEmails(key) {
     swal({
         title: "¿Está seguro?",
-        text: "El Romaneo procedera a enviarse",
+        text: "Esta acción podría demorar unos minutos",
         icon: "warning",
         buttons: ["Cancelar", "Aceptar"],
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-            window.location.href = '//127.0.0.1:8000/aviso/send_email/' + key;
+            window.location.href = '//localhost:8000/aviso/send_email/' + key;
       }});
 }
 
@@ -47,7 +47,7 @@ function warningDomicile(key, redirect) {
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-            window.location.href = '//127.0.0.1:8000/'+ redirect + '/delete_domicile/' + key;
+            window.location.href = '//localhost:8000/'+ redirect + '/delete_domicile/' + key;
       }});
 }
 
@@ -57,9 +57,11 @@ function warningBackup() {
         text: "Esta acción podría demorar unos minutos",
         icon: "warning",
         buttons: ["Cancelar", "Aceptar"],
+        closeModal: false,
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-            window.location.href = '//127.0.0.1:8000/config/backup';
+            swal.stopLoading(),
+            window.location.href = '//localhost:8000/config/backup';
       }});
 }

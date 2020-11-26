@@ -141,10 +141,10 @@
                         <a onclick="warning( '{{$aviso->idAviso}}' , 'aviso');"><button class="delete-button"
                                 title="Eliminar"><i class="fa fa-trash"></i> Eliminar</button></a>
                         <a href="{{ action('AvisoController@export_excel', $aviso->idAviso) }}"><button
-                                class="export-button"><i class="fa fa-file-excel-o"></i> Exportar
+                                class="export-button"><i class="fa fa-file-excel-o"></i> Descargar
                                 Excel</button></a>
                         <a href="{{ action('AvisoController@export_pdf', $aviso->idAviso) }}"><button
-                                class="export-button"><i class="fa fa-file-pdf-o"></i> Exportar
+                                class="export-button"><i class="fa fa-file-pdf-o"></i> Descargar
                                 PDF</button></a>
                         <a onclick="warningSendEmails( '{{$aviso->idAviso}}');"><button class="export-button"><i
                                     class="fa fa-envelope"></i> Enviar</button></a>

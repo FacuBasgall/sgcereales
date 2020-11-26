@@ -33,7 +33,6 @@ use App\Provincia;
 use Datatables;
 use DB;
 use Mail;
-use MultiMail;
 use SweetAlert;
 
 class ReporteController extends Controller
@@ -151,46 +150,47 @@ class ReporteController extends Controller
     public function export_excel()
     {
         $hoy = date("Y-m-d");
-        $filename = "Reporte general " . $hoy . ".xlsx";
+        $filename = "Reporte General de Descargas " . $hoy . ".xlsx";
         $filtro = Filtro::first();
         return Excel::download(new ReporteExport($filtro->idFiltro), $filename);
     }
-/*
-    public function export_pdf($idAviso)
+
+    public function export_pdf()
     {
-        $aviso = Aviso::where('idAviso', $idAviso)->first();
+        $hoy = date("Y-m-d");
+        $filename = "Reporte General de Descargas " . $hoy . ".pdf";
+        $entregadorAutenticado = auth()->user()->idUser;
+        $filtros = Filtro::first();
+        $resultados = DB::table('reporte-temp')
+                        ->join('aviso', 'reporte-temp.idAviso', '=', 'aviso.idAviso')
+                        ->join('carga', 'aviso.idAviso', '=', 'carga.idAviso')
+                        ->join('descarga', 'carga.idCarga', '=', 'descarga.idCarga')
+                        ->join('aviso_entregador',  'aviso.idAviso', '=', 'aviso_entregador.idAviso')
+                        ->join('aviso_producto', 'aviso.idAviso', '=', 'aviso_producto.idAviso')
+                        ->where('aviso_entregador.idEntregador', '=', $entregadorAutenticado)
+                        ->select('reporte-temp.*', 'aviso.*', 'carga.*', 'descarga.*', 'aviso_producto.*')
+                        ->get();
 
-        if($aviso->estado){
-            $cargas = Carga::where('idAviso', $aviso->idAviso)->get();
-            $descargas = Descarga::all();
-            $corredor = Corredor::where('cuit', $aviso->idCorredor)->first();
-            $destinatario = Destino::where('cuit', $aviso->idDestinatario)->first();
-            $intermediario = Intermediario::where('cuit', $aviso->idIntermediario)->first();
-            $producto = Producto::where('idProducto', $aviso->idProducto)->first();
-            $remitente = Remitente_Comercial::where('cuit', $aviso->idRemitenteComercial)->first();
-            $aviso_producto = Aviso_Producto::where('idAviso', $aviso->idAviso)->first();
-            $aviso_entregador = Aviso_Entregador::where('idAviso', $aviso->idAviso)->first();
-            $titular = Titular::where('cuit', $aviso->idTitularCartaPorte)->first();
-            $entregador = User::where('idUser', $aviso_entregador->idEntregador)->first();
-            $entregador_contacto = Entregador_Contacto::where('idUser', $entregador->idUser)->get();
-            $entregador_domicilio = Entregador_Domicilio::where('idUser', $entregador->idUser)->get();
-            $localidad = Localidad::where('id', $aviso->localidadProcedencia)->first();
-            $provincia = Provincia::where('id', $aviso->provinciaProcedencia)->first();
+        $titulares = Titular::where('borrado', false)->get();
+        $destinatarios = Destino::where('borrado', false)->get();
+        $intermediarios = Intermediario::where('borrado', false)->get();
+        $remitentes = Remitente_Comercial::where('borrado', false)->get();
+        $corredores = Corredor::where('borrado', false)->get();
+        $productos = Producto::where('borrado', false)->get();
+        $entregador = User::where('idUser', $entregadorAutenticado)->first(); //Solo Usuario Entregador Autenticado
+        $localidades = Localidad::all();
+        $provincias = Provincia::all();
+        $entregador_contacto = Entregador_Contacto::where('idUser', $entregadorAutenticado)->get();
+        $entregador_domicilio = Entregador_Domicilio::where('idUser', $entregadorAutenticado)->get();
 
-            $filename = $aviso->nroAviso . " " . $titular->nombre . ".pdf";
+        $pdf = PDF::loadView('exports.reporte-pdf', compact(['resultados', 'filtros', 'destinatarios', 'titulares',
+        'intermediarios', 'remitentes', 'corredores', 'productos', 'entregador', 'localidades', 'provincias',
+        'entregador_contacto', 'entregador_domicilio']));
+        $pdf->setPaper('a4', 'landscape');
+        return $pdf->download($filename);
 
-            $pdf = PDF::loadView('exports.pdf', compact(['aviso', 'cargas', 'descargas', 'corredor',
-                'destinatario', 'intermediario', 'producto', 'remitente', 'titular', 'aviso_producto',
-                'aviso_entregador', 'entregador', 'entregador_contacto', 'entregador_domicilio',
-                'localidad', 'provincia']));
-            $pdf->setPaper('a4', 'landscape');
-            return $pdf->download($filename);
-        }else{
-            alert()->error("El aviso debe estar terminado para exportalo", 'No se puede ejecutar la acción')->persistent('Cerrar');
-            return back();
-        }
     }
-
+/*
     public function send_email($idAviso)
     {
         $aviso = Aviso::where('idAviso', $idAviso)->first();
@@ -212,7 +212,7 @@ class ReporteController extends Controller
                 $correosTitular = Titular_Contacto::where('cuit', $aviso->idTitularCartaPorte)->where('tipo', 3)->pluck('contacto'); //Tipo = 3 = Emails / funcion pluck('contacto') solo selecciona del array los contactos
                 $correosRemitente = Remitente_Contacto::where('cuit', $aviso->idRemitenteComercial)->where('tipo', 3)->pluck('contacto');
                 //$correosCorredor se agregar en el RomaneoSendMail
-                \MultiMail::to($correosTitular)->cc($correosRemitente)->send(new RomaneoSendMail($idAviso));
+                \Mail::to($correosTitular)->cc($correosRemitente)->send(new RomaneoSendMail($idAviso));
                 alert()->success("El aviso ha sido enviado con éxito", 'Correo enviado');
             }
         }else{
@@ -220,17 +220,4 @@ class ReporteController extends Controller
         }
         return back();
     } */
-
-    /* NO VA!
-    public function getLocalidades(Request $request)
-    {
-        if($request->ajax()){
-            $localidades = Localidad::where('idProvincia', $request->provincia_id)->get();
-            foreach($localidades as $localidad){
-                $localidadesArray[$localidad->id] = $localidad->nombre;
-            }
-            return response()->json($localidadesArray);
-        }
-    }
-    */
 }

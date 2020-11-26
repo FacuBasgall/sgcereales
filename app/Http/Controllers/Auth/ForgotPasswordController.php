@@ -55,14 +55,14 @@ class ForgotPasswordController extends Controller
             );
             Mail::send('auth.verify',['token' => $token], function($message) use ($request) {
                       $message->from($request->email);
-                      $message->to('facubasgall@gmail.com');
+                      $message->to('sgcereales@gmail.com');
                       $message->subject('Notificación de reestablecimiento de contraseña');
                    });
             //alert()->success("Se ha enviado por correo el enlace para restablecer la contraseña", 'Correo enviado con éxito')->persistent('Cerrar');
-            return back()->with('message', 'We have e-mailed your password reset link!');
+            return back()->with('message', 'Se ha enviado por correo el enlace para restablecer la contraseña');
         }else{
-            alert()->error("El correo ingresado es incorrecto", 'Ha ocurrido un error')->persistent('Cerrar');
-            return back()->withInput();
+            //alert()->error("El correo ingresado es incorrecto", 'Ha ocurrido un error')->persistent('Cerrar');
+            return back()->withInput()->with('message', 'El correo ingresado es incorrecto');
         }
     }
 }

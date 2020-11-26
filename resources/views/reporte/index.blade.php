@@ -241,9 +241,9 @@
                 <strong>Total descargado con merma (Kg):</strong> {{$totalMerma}}
                 <hr>
                 <div class="center-of-page">
-                    <a href="{{action('ReporteController@export_excel')}}"><button class="export-button"><i class="fa fa-file-excel-o"></i> Exportar
+                    <a href="{{action('ReporteController@export_excel')}}"><button class="export-button"><i class="fa fa-file-excel-o"></i> Descargar
                             Excel</button></a>
-                    <a href="#"><button class="export-button"><i class="fa fa-file-pdf-o"></i> Exportar
+                    <a href="{{action('ReporteController@export_pdf')}}"><button class="export-button"><i class="fa fa-file-pdf-o"></i> Descargar
                             PDF</button></a>
                     <a onclick="#"><button class="export-button"><i class="fa fa-envelope"></i> Enviar</button></a>
                 </div>

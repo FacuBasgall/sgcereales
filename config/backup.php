@@ -136,11 +136,11 @@ return [
         'notifiable' => \Spatie\Backup\Notifications\Notifiable::class,
 
         'mail' => [
-            'to' => 'facubasgall@gmail.com',
+            'to' => 'sgcereales@gmail.com',
 
             'from' => [
-                'address' => env('MAIL_FROM_ADDRESS', 'facubasgall@gmail.com'),
-                'name' => env('MAIL_FROM_NAME', 'Facu Basgall'),
+                'address' => env('MAIL_FROM_ADDRESS', 'sgcereales@gmail.com'),
+                'name' => env('MAIL_FROM_NAME', 'Sistema Gestor de Cereales'),
             ],
         ],
 
