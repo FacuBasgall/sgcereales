@@ -17,10 +17,7 @@
     <div class="container">
         <div class="card">
             <div class="box">
-                <div class="form-title" style="font-size:20px;"><b>Preferencias de email</b><i
-                        class="fa fa-question-circle"
-                        title="Valores a reemplazar NRO_AVISO y CORREO, debe expresarse entre llaves dobles"
-                        style="left: 100px; position: relative;"></i></div>
+                <div class="form-title" style="font-size:20px;"><b>Preferencias de email</b></div>
                 <form action="{{action('UsuarioController@store_email_preferences')}}" method="POST" autocomplete="off">
                     {{ method_field('PUT') }}
                     {{ csrf_field() }}
@@ -35,29 +32,28 @@
                             @endforeach
                         </select>
                         <script>
-                        $.fn.select2.defaults.set('language', 'es');
-                        $("#email").select2({
-                            placeholder: 'Seleccione',
-                            dropdownAutoWidth: true,
-                        });
+                            $.fn.select2.defaults.set('language', 'es');
+                            $("#email").select2({
+                                placeholder: 'Seleccione',
+                                dropdownAutoWidth: true,
+                            });
                         </script>
                     </label>
                     <br>
                     <label for="asunto">
                         <span>Asunto*: </span>
-                        <textarea name="asunto" id="asunto" class="textarea" value="{{$preferencia->asunto}}"
-                            maxlength="200" style="height:80px;" cols="150" required>{{$preferencia->asunto}}</textarea>
+                        <textarea name="asunto" id="asunto" class="textarea" value="{{$preferencia->asunto}}" maxlength="200" style="height:80px;" cols="150" required>{{$preferencia->asunto}}</textarea>
                     </label>
                     <br>
                     <label for="cuerpo">
                         <span>Cuerpo*: </span>
-                        <textarea name="cuerpo" id="cuerpo" class="textarea" value="{{$preferencia->cuerpo}}"
-                            maxlength="200" style="height:80px;" cols="150" required>{{$preferencia->cuerpo}}</textarea>
+                        <textarea name="cuerpo" id="cuerpo" class="textarea" value="{{$preferencia->cuerpo}}" maxlength="200" style="height:80px;" cols="150" required>{{$preferencia->cuerpo}}</textarea>
                     </label>
                     <div><label class="info-text-margin"><i class="fa fa-exclamation-circle"></i>
                             Los campos con * son obligatorios</label></div>
-                    <div class="center-of-page"><button type="submit" class="save-button" style="margin-top:13px;"><i
-                                class="fa fa-check"></i>
+                    <div><label class="info-text-margin"><i class="fa fa-exclamation-circle"></i>
+                            Valores NRO_AVISO y CORREO, debe expresarse entre llaves dobles</label></div>
+                    <div class="center-of-page"><button type="submit" class="save-button" style="margin-top:13px;"><i class="fa fa-check"></i>
                             Guardar</button></div>
                 </form>
             </div>
