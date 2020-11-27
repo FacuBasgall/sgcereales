@@ -13,7 +13,7 @@ body {
 
 .header-card{
     margin: 20px 0px 20px 0px;
-    width: auto;
+    width: 1250px;
     height: auto;
     background: #fff;
     border-radius: 10px;
@@ -27,7 +27,7 @@ body {
 
 .results-card{
     margin: 20px 0px 20px 0px;
-    width: 1200px;
+    width: 1250px;
     height: auto;
     background: #fff;
     border-radius: 10px;
@@ -104,4 +104,6 @@ input::-webkit-inner-spin-button {
     padding: 8px;
   }
 
-
+  strong{
+    font-weight:bold;
+  }

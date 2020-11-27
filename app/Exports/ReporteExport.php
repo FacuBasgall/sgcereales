@@ -58,7 +58,7 @@ class ReporteExport implements FromView, ShouldAutoSize
                         ->join('aviso_entregador',  'aviso.idAviso', '=', 'aviso_entregador.idAviso')
                         ->join('aviso_producto', 'aviso.idAviso', '=', 'aviso_producto.idAviso')
                         ->where('aviso_entregador.idEntregador', '=', $entregadorAutenticado)
-                        ->select('reporte-temp.*', 'aviso.*', 'carga.*', 'descarga.*', 'aviso_producto.*')
+                        ->select('reporte-temp.*', 'aviso.*', 'carga.*', 'descarga.*', 'aviso_producto.*', 'aviso_entregador.*')
                         ->get();
 
         $titulares = Titular::where('borrado', false)->get();

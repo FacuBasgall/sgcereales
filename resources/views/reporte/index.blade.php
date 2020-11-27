@@ -139,9 +139,10 @@
             </form>
         </div>
         <div class="results-card">
-            <table>  <!--   <table id="idDataTable" class="table table-striped"> para datatable-->
+            <table>
+                <!--   <table id="idDataTable" class="table table-striped"> para datatable-->
                 @if(!empty($resultado) && $resultado->count())
-                <div class="header-title">Datos encontrados:</div>
+                <div class="header-title">Resultados encontrados:</div>
                 <thead>
                     <tr>
                         <th><strong>Número</strong></th>
@@ -170,44 +171,60 @@
                         @endforeach
                         @foreach ($titulares as $titular)
                         @if($titular->cuit == $aviso->idTitularCartaPorte)
-                        <td><div class="cortar">{{$titular->nombre}}</div></td>
+                        <td>
+                            <div class="cortar">{{$titular->nombre}}</div>
+                        </td>
                         @endif
                         @endforeach
                         @foreach ($intermediarios as $intermediario)
                         @if($intermediario->cuit == $aviso->idIntermediario)
-                        <td><div class="cortar">{{$intermediario->nombre}}</div></td>
+                        <td>
+                            <div class="cortar">{{$intermediario->nombre}}</div>
+                        </td>
                         @endif
                         @endforeach
                         @foreach ($remitentes as $remitente)
                         @if($remitente->cuit == $aviso->idRemitenteComercial)
-                        <td><div class="cortar">{{$remitente->nombre}}</div></td>
+                        <td>
+                            <div class="cortar">{{$remitente->nombre}}</div>
+                        </td>
                         @endif
                         @endforeach
                         @foreach ($corredores as $corredor)
                         @if($corredor->cuit == $aviso->idCorredor)
-                        <td><div class="cortar">{{$corredor->nombre}}</div></td>
+                        <td>
+                            <div class="cortar">{{$corredor->nombre}}</div>
+                        </td>
                         @endif
                         @endforeach
                         @foreach ($destinatarios as $destinatario)
                         @if($destinatario->cuit == $aviso->idDestinatario)
-                        <td><div class="cortar">{{$destinatario->nombre}}</div></td>
+                        <td>
+                            <div class="cortar">{{$destinatario->nombre}}</div>
+                        </td>
                         @endif
                         @endforeach
                         @foreach ($productos as $producto)
                         @if($producto->idProducto == $aviso->idProducto)
-                        <td><div class="cortar">{{$producto->nombre}}</div></td>
+                        <td>
+                            <div class="cortar">{{$producto->nombre}}</div>
+                        </td>
                         @endif
                         @endforeach
                         @foreach ($provincias as $provincia)
                         @if ($provincia->id == $aviso->provinciaProcedencia)
                         @foreach ($localidades as $localidad)
                         @if ($localidad->id == $aviso->localidadProcedencia)
-                        <td><div class="cortar">{{$localidad->nombre}} ({{$provincia->abreviatura}})</div></td>
+                        <td>
+                            <div class="cortar">{{$localidad->nombre}} ({{$provincia->abreviatura}})</div>
+                        </td>
                         @endif
                         @endforeach
                         @endif
                         @endforeach
-                        <td><div class="cortar">{{$aviso->lugarDescarga}}</div></td>
+                        <td>
+                            <div class="cortar">{{$aviso->lugarDescarga}}</div>
+                        </td>
                         @php $descargado = 0; $merma = 0 @endphp
                         @foreach ($cargas as $carga)
                         @if($carga->idAviso == $aviso->idAviso)
@@ -235,23 +252,25 @@
                         <td>{{$totalMerma}}</td>
                     </tr> -->
                 </tbody>
-                </table>
-                <br>
+            </table>
+            <br>
+            <div>
                 <strong>Total descargado (Kg):</strong> {{$total}}
                 <strong>Total descargado con merma (Kg):</strong> {{$totalMerma}}
-                <hr>
-                <div class="center-of-page">
-                    <a href="{{action('ReporteController@export_excel')}}"><button class="export-button"><i class="fa fa-file-excel-o"></i> Descargar
-                            Excel</button></a>
-                    <a href="{{action('ReporteController@export_pdf')}}"><button class="export-button"><i class="fa fa-file-pdf-o"></i> Descargar
-                            PDF</button></a>
-                    <a onclick="#"><button class="export-button"><i class="fa fa-envelope"></i> Enviar</button></a>
-                </div>
-                @elseif ($filtros['fechaDesde']>'1970-01-01')
-                <label class="no-results">No se han encontrado resultados</label>
-                @else
-                <label class="no-results">Realice una búsqueda para obtener resultados</label>
-                @endif
+            </div>
+            <hr>
+            <div class="center-of-page">
+                <a href="{{action('ReporteController@export_excel')}}"><button class="export-button"><i class="fa fa-file-excel-o"></i> Descargar
+                        Excel</button></a>
+                <a href="{{action('ReporteController@export_pdf')}}"><button class="export-button"><i class="fa fa-file-pdf-o"></i> Descargar
+                        PDF</button></a>
+                <a onclick="#"><button class="export-button"><i class="fa fa-envelope"></i> Enviar</button></a>
+            </div>
+            @elseif ($filtros['fechaDesde']>'1970-01-01')
+            <label class="no-results">No se han encontrado resultados</label>
+            @else
+            <label class="no-results">Realice una búsqueda para obtener resultados</label>
+            @endif
             <!-- </table> -->
         </div>
     </div>
