@@ -120,7 +120,7 @@ class AvisoController extends Controller
         $dif = intval($fecha2) - intval($fecha1);
 
         if($dif != 1){
-            alert()->error("Verifique las fechas ingresadas", 'Ha ocurrido un error')->persistent('Cerrar');
+            alert()->error("Verifique los años de cosecha ingresados", 'Ha ocurrido un error')->persistent('Cerrar');
             return back()->withInput();
         }
 
@@ -156,7 +156,7 @@ class AvisoController extends Controller
         $aviso_entregador = new Aviso_Entregador;
         $aviso_entregador->idAviso = $aviso->idAviso;
         $aviso_entregador->idEntregador = $idEntregador;
-        $aviso_entregador->fecha = date("Y-m-d");
+        $aviso_entregador->fecha = $request->fecha;
         $aviso_entregador->save();
 
         alert()->success("El aviso fue creado con éxito", 'Aviso creado');

@@ -39,16 +39,6 @@ class ReporteExport implements FromView, ShouldAutoSize
 
     public function view(): View
     {
-       /*
-        $reporte = Reporte::all();
-        $avisos = DB::table('aviso')
-                    ->join('reporte-temp', 'aviso.idAviso', '=', 'reporte-temp.idAviso')
-                    ->select('aviso.*')
-                    ->get();
-        $cargas = Carga::where('borrado', false)->get();
-        $descargas = Descarga::where('borrado', false)->get();
-        */
-
         $entregadorAutenticado = auth()->user()->idUser;
         $filtros = Filtro::where('idFiltro', $this->idFiltro)->first();
         $resultados = DB::table('reporte-temp')

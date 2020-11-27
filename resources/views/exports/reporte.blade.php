@@ -1,39 +1,42 @@
 <div>
     <table>
         <thead>
-        <tr>
-            <th rowspan="6" colspan="6" valign="middle"><b>
-                    {{$entregador->nombre}}<br>
-                    {{$entregador->descripcion}}<br>
-                    @foreach ($entregador_domicilio as $domicilio)
-                    @foreach($provincias as $provincia)
-                    @if($provincia->id == $domicilio->provincia)
-                    @foreach($localidades as $localidad)
-                    @if($localidad->id == $domicilio->localidad)
-                    {{$domicilio->domicilio}}, {{$localidad->nombre}} ({{$provincia->abreviatura}} -
-                    {{$domicilio->cp}})<br>
-                    @endif
-                    @endforeach
-                    @endif
-                    @endforeach
-                    @endforeach
-                    @foreach ($entregador_contacto as $contacto)
-                    | {{$contacto->contacto}} |
-                    @endforeach
-                </b>
-            </th>
-            <th><strong>Fecha desde</strong></th>
-            <td>{{$filtros->fechaDesde}}</td>
-        </tr>
-        <tr>
-            <th><strong>Fecha hasta</strong></th>
-            <td>{{$filtros->fechaHasta}}</td>
-        </tr>
-        <tr></tr>
-        <tr></tr>
-        <tr></tr>
-        <tr></tr>
-        <tr></tr>
+            <tr>
+                <th rowspan="6" colspan="6" valign="middle"><b>
+                        {{$entregador->nombre}}<br>
+                        {{$entregador->descripcion}}<br>
+                        @foreach ($entregador_domicilio as $domicilio)
+                        @foreach($provincias as $provincia)
+                        @if($provincia->id == $domicilio->provincia)
+                        @foreach($localidades as $localidad)
+                        @if($localidad->id == $domicilio->localidad)
+                        {{$domicilio->domicilio}}, {{$localidad->nombre}} ({{$provincia->abreviatura}} -
+                        {{$domicilio->cp}})<br>
+                        @endif
+                        @endforeach
+                        @endif
+                        @endforeach
+                        @endforeach
+                        @foreach ($entregador_contacto as $contacto)
+                        | {{$contacto->contacto}} |
+                        @endforeach
+                    </b>
+                </th>
+                <th>Resumen General de Descarga</th>
+            </tr>
+            <tr>
+                <th><strong>Fecha desde</strong></th>
+                <td>{{$filtros->fechaDesde}}</td>
+            </tr>
+            <tr>
+                <th><strong>Fecha hasta</strong></th>
+                <td>{{$filtros->fechaHasta}}</td>
+            </tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
             <tr>
                 <th><strong>Número</strong></th>
                 <th><strong>Fecha</strong></th>
@@ -112,12 +115,12 @@
                     <div>{{$resultado->lugarDescarga}}</div>
                 </td>
                 @php $descargado = 0; $merma = 0 @endphp
-               
+
                 @php
                 $descargado += $resultado->bruto - $resultado->tara;
                 $merma += round(($resultado->bruto - $resultado->tara) * ($resultado->merma / 100));
                 @endphp
-                
+
                 <td>{{$descargado}}</td>
                 <td>{{$descargado - $merma}}</td>
                 @php $total += $descargado; $totalMerma += ($descargado - $merma); @endphp

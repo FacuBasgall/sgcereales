@@ -4,9 +4,6 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/general-reports.css') }}">
-    <!-- <link rel="stylesheet" type="text/css" href="{{ asset('dataTable/jquery.dataTables.min.css') }}">
-    <script type="text/javascript" src="/dataTable/jquery.dataTables.min.js"></script> -->
-
     <link rel="stylesheet" type="text/css" href="{{ asset('css/cortar-aviso.css') }}">
 </head>
 
@@ -140,7 +137,6 @@
         </div>
         <div class="results-card">
             <table>
-                <!--   <table id="idDataTable" class="table table-striped"> para datatable-->
                 @if(!empty($resultado) && $resultado->count())
                 <div class="header-title">Resultados encontrados:</div>
                 <thead>
@@ -243,14 +239,6 @@
                         @php $total += $descargado; $totalMerma += ($descargado - $merma); @endphp
                     </tr>
                     @endforeach
-                    <!-- <tr>
-                        <th><strong>Total descargado (Kg):</strong></th>
-                        <td>{{$total}}</td>
-                    </tr>
-                    <tr>
-                        <th><strong>Total descargado con merma (Kg):</strong></th>
-                        <td>{{$totalMerma}}</td>
-                    </tr> -->
                 </tbody>
             </table>
             <br>
@@ -276,42 +264,4 @@
     </div>
     @include('sweet::alert')
 </body>
-<!-- <script>
-$(document).ready(function() {
-    $('#idDataTable').DataTable({
-        "order": [
-            [0, "desc"]
-        ],
-        "language": {
-            "sProcessing": "Procesando...",
-            "sLengthMenu": "Mostrar _MENU_ avisos",
-            "sZeroRecords": "No se encontraron resultados",
-            "sEmptyTable": "Ningún dato disponible en esta tabla",
-            "sInfo": "Mostrando avisos del _START_ al _END_ de un total de _TOTAL_ avisos",
-            "sInfoEmpty": "Mostrando avisos del 0 al 0 de un total de 0 avisos",
-            "sInfoFiltered": "(filtrado de un total de _MAX_ avisos)",
-            "sInfoPostFix": "",
-            "sSearch": "Buscar:",
-            "sUrl": "",
-            "sInfoThousands": ",",
-            "sLoadingRecords": "Cargando...",
-            "oPaginate": {
-                "sFirst": "Primero",
-                "sLast": "Último",
-                "sNext": "Siguiente",
-                "sPrevious": "Anterior"
-            },
-            "oAria": {
-                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-            },
-            "buttons": {
-                "copy": "Copiar",
-                "colvis": "Visibilidad"
-            }
-        }
-    });
-});
-</script> -->
-
 @endsection

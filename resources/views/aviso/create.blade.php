@@ -18,6 +18,12 @@
             <div class="box">
                 <form action="{{action('AvisoController@store')}}" method="POST" autocomplete="off">
                     {{ csrf_field() }}
+                    <p class="form-title"><strong>Aviso</strong></p>
+                    <label for="fecha" class="margin-right">
+                        <span>Fecha*:</span>
+                        <input type="date" value="{{old('fecha')}}" name="fecha" id="fecha" class="common-input"
+                            required>
+                    </label>
                     <p class="form-title"><strong>Intermitentes</strong></p>
                     <label for="titular" class="margin-right">
                         <span>Titular*:</span>
@@ -205,7 +211,7 @@
                 </label>
                 <hr>
                 <div><label class="info-text-margin"><i class="fa fa-exclamation-circle"></i>
-                            Los campos con * son obligatorios</label></div>
+                        Los campos con * son obligatorios</label></div>
                 <div class="center-of-page"> <button type="submit" class="save-button"><i class="fa fa-check"></i>
                         Guardar</button></div>
                 </form>
