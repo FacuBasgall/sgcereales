@@ -44,6 +44,7 @@ class ReporteController extends Controller
 
     public function index(Request $request)
     {
+//FUNCION DE PRUEBA PARA OPTIMIZAR LA CONSULTA
         $resultado = NULL;
         $filtros = array(
             "fechaDesde" => $request->fechaDesde,
@@ -147,6 +148,111 @@ class ReporteController extends Controller
             'avisos_entregadores', 'localidades', 'provincias', 'resultado', 'filtros']));
     }
 
+    /*public function index(Request $request)
+    {
+        $resultado = NULL;
+        $filtros = array(
+            "fechaDesde" => $request->fechaDesde,
+            "fechaHasta" => $request->fechaHasta,
+            "titular" => $request->titular,
+            "intermediario" => $request->intermediario,
+            "remitente" => $request->remitente,
+            "corredor" => $request->corredor,
+            "destinatario" => $request->destinatario,
+            "entregador" => $request->entregador,
+            "producto" => $request->producto,
+        );
+        $control = false;
+
+        $idEntregador = auth()->user()->idUser;
+
+        $reportesBD = Reporte::all();
+        foreach($reportesBD as $report){
+            $report->delete(); //vaciar la tabla reportes-temp
+        }
+
+        $filtrosBD = Filtro::all();
+        foreach($filtrosBD as $filt){
+            $filt->delete(); //vaciar la tabla filtro-reporte-temp
+        }
+
+        if(isset($request->fechaDesde) && isset($request->fechaHasta)){
+            if($request->fechaDesde <= $request->fechaHasta){
+                $existe = Aviso_Entregador::whereBetween('fecha', [$request->fechaDesde, $request->fechaHasta])->where('idEntregador', $idEntregador)->exists();
+                if($existe){
+                    $control = true;
+                    $resultado = DB::table('aviso')
+                                ->join('aviso_entregador', 'aviso.idAviso', '=', 'aviso_entregador.idAviso')
+                                ->whereBetween('aviso_entregador.fecha', [$request->fechaDesde, $request->fechaHasta])
+                                ->where('aviso_entregador.idEntregador', '=', $idEntregador)
+                                ->where('aviso.estado', '=', true)
+                                ->select('aviso.*')
+                                ->get();
+                }
+                $nuevoFiltro = new Filtro;
+                $nuevoFiltro->fechaDesde = $filtros["fechaDesde"];
+                $nuevoFiltro->fechaHasta = $filtros["fechaHasta"];
+                $nuevoFiltro->idTitular = $filtros["titular"];
+                $nuevoFiltro->idIntermediario = $filtros["intermediario"];
+                $nuevoFiltro->idRemitente = $filtros["remitente"];
+                $nuevoFiltro->idCorredor = $filtros["corredor"];
+                $nuevoFiltro->idDestinatario = $filtros["destinatario"];
+                $nuevoFiltro->entregador = $filtros["entregador"];
+                $nuevoFiltro->idProducto = $filtros["producto"];
+                $nuevoFiltro->save();
+            }else{
+                alert()->warning("La fecha desde debe ser menor a la fecha hasta", 'Ha ocurrido un error')->persistent('Cerrar');
+                return back()->withInput();
+            }
+        }
+        if($control){
+            if(isset($request->titular)){
+                $resultado = $resultado->where('idTitularCartaPorte', $request->titular);
+            }
+            if(isset($request->corredor)){
+                $resultado = $resultado->where('idCorredor', $request->corredor);
+            }
+            if(isset($request->intermediario)){
+                $resultado = $resultado->where('idIntermediario', $request->intermediario);
+            }
+            if(isset($request->remitente)){
+                $resultado = $resultado->where('idRemitenteComercial', $request->remitente);
+            }
+            if(isset($request->destinatario)){
+                $resultado = $resultado->where('idDestinatario', $request->destinatario);
+            }
+            if(isset($request->entregador)){
+                $resultado = $resultado->where('entregador', $request->entregador);
+            }
+            if(isset($request->producto)){
+                $resultado = $resultado->where('idProducto', $request->producto);
+            }
+            foreach($resultado as $result){
+                $nuevoReporte = new Reporte;
+                $nuevoReporte->idAviso = $result->idAviso;
+                $nuevoReporte->idFiltro = $nuevoFiltro->idFiltro;
+                $nuevoReporte->save();
+            }
+        }
+        $cargas = Carga::where('borrado', false)->get();
+        $descargas = Descarga::where('borrado', false)->get();
+        $destinatarios = Destino::where('borrado', false)->get();
+        $titulares = Titular::where('borrado', false)->get();
+        $intermediarios = Intermediario::where('borrado', false)->get();
+        $remitentes = Remitente_Comercial::where('borrado', false)->get();
+        $corredores = Corredor::where('borrado', false)->get();
+        $entregador = User::where('idUser', $idEntregador)->first(); //Solo Usuario Entregador Autenticado
+        $productos = Producto::where('borrado', false)->get();
+        $avisos_productos = Aviso_Producto::all();
+        $avisos_entregadores = Aviso_Entregador::where('idEntregador', $idEntregador)->get();
+        $localidades = Localidad::all();
+        $provincias = Provincia::all();
+
+        return view('reporte.index', compact(['cargas', 'descargas', 'destinatarios', 'titulares',
+            'intermediarios', 'remitentes', 'corredores', 'entregador', 'productos', 'avisos_productos',
+            'avisos_entregadores', 'localidades', 'provincias', 'resultado', 'filtros']));
+    }
+*/
     public function export_excel()
     {
         $hoy = date("Y-m-d");

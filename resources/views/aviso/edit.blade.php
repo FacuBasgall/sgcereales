@@ -20,6 +20,13 @@
                 <form action="{{action('AvisoController@update', $aviso->idAviso)}}" method="POST" autocomplete="off">
                     {{ method_field('PUT') }}
                     {{ csrf_field() }}
+                    <p class="form-title"><strong>Romaneo</strong></p>
+                    <label for="fecha" class="margin-right">
+                        <span>Fecha*:</span>
+                        <input type="date" value="{{$aviso_entregador->fecha}}" name="fecha" id="fecha" class="common-input"
+                            required>
+                    </label>
+                    <hr>
                     <p class="form-title"><strong>Intermitentes</strong></p>
                     <label for="titular" class="margin-right">
                         <span>Titular*:</span>
@@ -227,11 +234,12 @@
                 <label for="obs">
                     <p class="form-title"><strong>Observaciones</strong></p>
                     <textarea name="obs" id="obs" value="{{$aviso->observacion}}" class="observation-box"
-                        style="height:80px;" placeholder="Ingrese una observación" cols="150">{{$aviso->observacion}}</textarea>
+                        style="height:80px;" placeholder="Ingrese una observación"
+                        cols="150">{{$aviso->observacion}}</textarea>
                 </label>
                 <hr>
                 <div><label class="info-text-margin"><i class="fa fa-exclamation-circle"></i>
-                            Los campos con * son obligatorios</label></div>
+                        Los campos con * son obligatorios</label></div>
                 <div class="center-of-page"><button type="submit" class="save-button"><i class="fa fa-check"></i>
                         Guardar</button></div>
                 </form>

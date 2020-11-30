@@ -24,6 +24,8 @@
                         href="{{ action('AvisoController@edit', $aviso->idAviso) }}"><button class="small-edit-button"
                             title="Editar datos del aviso"><i class="fa fa-pencil"></i></button></a></div>
                 <div class="info-margin">
+                    <label class="labels"><strong>Fecha:
+                        </strong>{{date("d/m/Y", strtotime($aviso_entregador->fecha))}}</label>
                     @if(isset($aviso->entregador))
                     <label class="labels"><strong>Entregador: </strong>{{$aviso->entregador}}</label>
                     @else

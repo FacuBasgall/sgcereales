@@ -264,11 +264,12 @@ class AvisoController extends Controller
         $destinatarios = Destino::where('borrado', false)->orderBy('nombre')->get();
         $productos = Producto::where('borrado', false)->orderBy('nombre')->get();
         $aviso_producto = Aviso_Producto::where('idAviso', $idAviso)->first();
+        $aviso_entregador = Aviso_Entregador::where('idAviso', $idAviso)->first();
         $localidades = Localidad::all();
         $provincias = Provincia::all();
 
         return view('aviso.edit', compact(['lugarDescarga', 'tipoProducto', 'aviso', 'titulares', 'intermediarios', 'remitentes', 'corredores',
-            'destinatarios', 'productos', 'aviso_producto', 'localidades', 'provincias']));
+            'destinatarios', 'productos', 'aviso_producto', 'aviso_entregador', 'localidades', 'provincias']));
     }
 
     /**
