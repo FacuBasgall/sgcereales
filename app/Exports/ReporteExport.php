@@ -43,29 +43,30 @@ class ReporteExport implements FromView, ShouldAutoSize
         $filtros = Filtro::where('idFiltro', $this->idFiltro)->first();
         $resultados = DB::table('reporte-temp')
                         ->join('aviso', 'reporte-temp.idAviso', '=', 'aviso.idAviso')
-                        ->join('carga', 'aviso.idAviso', '=', 'carga.idAviso')
-                        ->join('descarga', 'carga.idCarga', '=', 'descarga.idCarga')
                         ->join('aviso_entregador',  'aviso.idAviso', '=', 'aviso_entregador.idAviso')
                         ->join('aviso_producto', 'aviso.idAviso', '=', 'aviso_producto.idAviso')
                         ->where('aviso_entregador.idEntregador', '=', $entregadorAutenticado)
-                        ->select('reporte-temp.*', 'aviso.*', 'carga.*', 'descarga.*', 'aviso_producto.*', 'aviso_entregador.*')
+                        ->select('reporte-temp.*', 'aviso.*', 'aviso_producto.*', 'aviso_entregador.*')
                         ->get();
-
+        $descargas = DB::table('descarga')
+                    ->join('carga', 'carga.idCarga', 'descarga.idCarga')
+                    ->join('reporte-temp', 'reporte-temp.idAviso', 'carga.idAviso')
+                    ->select('descarga.*', 'reporte-temp.idAviso')
+                    ->get();
         $titulares = Titular::where('borrado', false)->get();
         $destinatarios = Destino::where('borrado', false)->get();
         $intermediarios = Intermediario::where('borrado', false)->get();
         $remitentes = Remitente_Comercial::where('borrado', false)->get();
         $corredores = Corredor::where('borrado', false)->get();
         $productos = Producto::where('borrado', false)->get();
-        $entregador = User::where('idUser', $entregadorAutenticado)->first(); //Solo Usuario Entregador Autenticado
         $localidades = Localidad::all();
         $provincias = Provincia::all();
+        $entregador = User::where('idUser', $entregadorAutenticado)->first();
         $entregador_contacto = Entregador_Contacto::where('idUser', $entregadorAutenticado)->get();
         $entregador_domicilio = Entregador_Domicilio::where('idUser', $entregadorAutenticado)->get();
 
-
-        return view('exports.reporte', compact(['resultados', 'filtros', 'destinatarios', 'titulares',
-            'intermediarios', 'remitentes', 'corredores', 'productos', 'entregador', 'localidades', 'provincias',
+        return view('exports.reporte', compact(['resultados', 'descargas', 'filtros', 'destinatarios', 'titulares',
+            'intermediarios', 'remitentes', 'corredores', 'productos', 'localidades', 'provincias', 'entregador',
             'entregador_contacto', 'entregador_domicilio']));
     }
 }

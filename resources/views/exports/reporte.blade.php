@@ -115,12 +115,14 @@
                     <div>{{$resultado->lugarDescarga}}</div>
                 </td>
                 @php $descargado = 0; $merma = 0 @endphp
-
-                @php
-                $descargado += $resultado->bruto - $resultado->tara;
-                $merma += round(($resultado->bruto - $resultado->tara) * ($resultado->merma / 100));
-                @endphp
-
+                @foreach($descargas as $descarga)
+                @if($descarga->idAviso == $resultado->idAviso)
+                    @php
+                    $descargado += $descarga->bruto - $descarga->tara;
+                    $merma += round(($descarga->bruto - $descarga->tara) * ($descarga->merma / 100));
+                    @endphp
+                @endif
+                @endforeach
                 <td>{{$descargado}}</td>
                 <td>{{$descargado - $merma}}</td>
                 @php $total += $descargado; $totalMerma += ($descargado - $merma); @endphp
