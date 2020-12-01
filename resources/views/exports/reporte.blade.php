@@ -46,6 +46,8 @@
                 <th><strong>Corredor</strong></th>
                 <th><strong>Destinatario</strong></th>
                 <th><strong>Producto</strong></th>
+                <th><strong>Tipo</strong></th>
+                <th><strong>Cosecha</strong></th>
                 <th><strong>Procedencia</strong></th>
                 <th><strong>Destino</strong></th>
                 <th><strong>Neto (Kg)</strong></th>
@@ -100,6 +102,8 @@
                 </td>
                 @endif
                 @endforeach
+                <td>{{$resultado->tipo}}</td>
+                <td>{{$resultado->cosecha}}</td>
                 @foreach ($provincias as $provincia)
                 @if ($provincia->id == $resultado->provinciaProcedencia)
                 @foreach ($localidades as $localidad)
@@ -117,10 +121,10 @@
                 @php $descargado = 0; $merma = 0 @endphp
                 @foreach($descargas as $descarga)
                 @if($descarga->idAviso == $resultado->idAviso)
-                    @php
-                    $descargado += $descarga->bruto - $descarga->tara;
-                    $merma += round(($descarga->bruto - $descarga->tara) * ($descarga->merma / 100));
-                    @endphp
+                @php
+                $descargado += $descarga->bruto - $descarga->tara;
+                $merma += round(($descarga->bruto - $descarga->tara) * ($descarga->merma / 100));
+                @endphp
                 @endif
                 @endforeach
                 <td>{{$descargado}}</td>

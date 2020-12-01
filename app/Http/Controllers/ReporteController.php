@@ -163,14 +163,16 @@ class ReporteController extends Controller
         $filtros = Filtro::first();
         $resultados = DB::table('reporte-temp')
                         ->join('aviso', 'reporte-temp.idAviso', '=', 'aviso.idAviso')
-                        ->join('carga', 'aviso.idAviso', '=', 'carga.idAviso')
-                        ->join('descarga', 'carga.idCarga', '=', 'descarga.idCarga')
                         ->join('aviso_entregador',  'aviso.idAviso', '=', 'aviso_entregador.idAviso')
                         ->join('aviso_producto', 'aviso.idAviso', '=', 'aviso_producto.idAviso')
                         ->where('aviso_entregador.idEntregador', '=', $entregadorAutenticado)
-                        ->select('reporte-temp.*', 'aviso.*', 'carga.*', 'descarga.*', 'aviso_producto.*')
+                        ->select('reporte-temp.*', 'aviso.*', 'aviso_producto.*', 'aviso_entregador.*')
                         ->get();
-
+        $descargas = DB::table('descarga')
+                    ->join('carga', 'carga.idCarga', 'descarga.idCarga')
+                    ->join('reporte-temp', 'reporte-temp.idAviso', 'carga.idAviso')
+                    ->select('descarga.*', 'reporte-temp.idAviso')
+                    ->get();
         $titulares = Titular::where('borrado', false)->get();
         $destinatarios = Destino::where('borrado', false)->get();
         $intermediarios = Intermediario::where('borrado', false)->get();
@@ -183,7 +185,7 @@ class ReporteController extends Controller
         $entregador_contacto = Entregador_Contacto::where('idUser', $entregadorAutenticado)->get();
         $entregador_domicilio = Entregador_Domicilio::where('idUser', $entregadorAutenticado)->get();
 
-        $pdf = PDF::loadView('exports.reporte-pdf', compact(['resultados', 'filtros', 'destinatarios', 'titulares',
+        $pdf = PDF::loadView('exports.reporte-pdf', compact(['resultados', 'descargas', 'filtros', 'destinatarios', 'titulares',
         'intermediarios', 'remitentes', 'corredores', 'productos', 'entregador', 'localidades', 'provincias',
         'entregador_contacto', 'entregador_domicilio']));
         $pdf->setPaper('a4', 'landscape');

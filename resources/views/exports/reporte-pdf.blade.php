@@ -56,7 +56,7 @@
         <table>
             <thead>
                 <tr>
-                    <th rowspan="6" colspan="6" valign="middle"><b>
+                    <th rowspan="5" colspan="4" valign="middle"><b>
                             {{$entregador->nombre}}<br>
                             {{$entregador->descripcion}}<br>
                             @foreach ($entregador_domicilio as $domicilio)
@@ -76,7 +76,7 @@
                             @endforeach
                         </b>
                     </th>
-                    <th>Resumen General de Descarga</th>
+                    <th colspan="3">Resumen General de Descarga</th>
                 </tr>
                 <tr>
                     <th><strong>Desde</strong></th>
@@ -95,6 +95,8 @@
                     <th><strong>Corredor</strong></th>
                     <th><strong>Destinatario</strong></th>
                     <th><strong>Producto</strong></th>
+                    <th><strong>Tipo</strong></th>
+                    <th><strong>Cosecha</strong></th>
                     <th><strong>Procedencia</strong></th>
                     <th><strong>Destino</strong></th>
                     <th><strong>Neto (Kg)</strong></th>
@@ -110,66 +112,70 @@
                     @foreach ($titulares as $titular)
                     @if($titular->cuit == $resultado->idTitularCartaPorte)
                     <td>
-                        <div>{{$titular->nombre}}</div>
+                        {{$titular->nombre}}
                     </td>
                     @endif
                     @endforeach
                     @foreach ($intermediarios as $intermediario)
                     @if($intermediario->cuit == $resultado->idIntermediario)
                     <td>
-                        <div>{{$intermediario->nombre}}</div>
+                        {{$intermediario->nombre}}
                     </td>
                     @endif
                     @endforeach
                     @foreach ($remitentes as $remitente)
                     @if($remitente->cuit == $resultado->idRemitenteComercial)
                     <td>
-                        <div>{{$remitente->nombre}}</div>
+                        {{$remitente->nombre}}
                     </td>
                     @endif
                     @endforeach
                     @foreach ($corredores as $corredor)
                     @if($corredor->cuit == $resultado->idCorredor)
                     <td>
-                        <div>{{$corredor->nombre}}</div>
+                        {{$corredor->nombre}}
                     </td>
                     @endif
                     @endforeach
                     @foreach ($destinatarios as $destinatario)
                     @if($destinatario->cuit == $resultado->idDestinatario)
                     <td>
-                        <div>{{$destinatario->nombre}}</div>
+                        {{$destinatario->nombre}}
                     </td>
                     @endif
                     @endforeach
                     @foreach ($productos as $producto)
                     @if($producto->idProducto == $resultado->idProducto)
                     <td>
-                        <div>{{$producto->nombre}}</div>
+                        {{$producto->nombre}}
                     </td>
                     @endif
                     @endforeach
+                    <td>{{$resultado->tipo}}</td>
+                    <td>{{$resultado->cosecha}}</td>
                     @foreach ($provincias as $provincia)
                     @if ($provincia->id == $resultado->provinciaProcedencia)
                     @foreach ($localidades as $localidad)
                     @if ($localidad->id == $resultado->localidadProcedencia)
                     <td>
-                        <div>{{$localidad->nombre}} ({{$provincia->abreviatura}})</div>
+                        {{$localidad->nombre}} ({{$provincia->abreviatura}})
                     </td>
                     @endif
                     @endforeach
                     @endif
                     @endforeach
                     <td>
-                        <div>{{$resultado->lugarDescarga}}</div>
+                        {{$resultado->lugarDescarga}}
                     </td>
                     @php $descargado = 0; $merma = 0 @endphp
-
-                    @php
-                    $descargado += $resultado->bruto - $resultado->tara;
-                    $merma += round(($resultado->bruto - $resultado->tara) * ($resultado->merma / 100));
-                    @endphp
-
+                    @foreach($descargas as $descarga)
+                    @if($descarga->idAviso == $resultado->idAviso)
+                        @php
+                        $descargado += $descarga->bruto - $descarga->tara;
+                        $merma += round(($descarga->bruto - $descarga->tara) * ($descarga->merma / 100));
+                        @endphp
+                    @endif
+                    @endforeach
                     <td>{{$descargado}}</td>
                     <td>{{$descargado - $merma}}</td>
                     @php $total += $descargado; $totalMerma += ($descargado - $merma); @endphp
@@ -177,19 +183,19 @@
                 @endforeach
             </tbody>
             <br>
-            <div>
+
                 <th>Total descargado (Kg):</th>
                 <td>{{$total}}</td>
                 <th>Total descargado con merma (Kg):</th>
                 <td>{{$totalMerma}}</td>
-            </div>
+
         </table>
-    </div>
+
     <footer class="footer">
         @php $fecha = date("d/m/Y"); @endphp
-        <div>
+
             <p class="fecha">{{$fecha}}</p>
-        </div>
+
     </footer>
     <script type="text/php">
         if ( isset($pdf) ) {
