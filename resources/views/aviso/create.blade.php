@@ -18,11 +18,12 @@
             <div class="box">
                 <form action="{{action('AvisoController@store')}}" method="POST" autocomplete="off">
                     {{ csrf_field() }}
+                    @php $hoy = date("Y-m-d") @endphp
                     <div>
                         <p class="form-title"><strong>Romaneo</strong></p>
                         <label for="fecha" class="margin-right">
                             <span>Fecha*:</span>
-                            <input type="date" value="{{old('fecha')}}" name="fecha" id="fecha" class="common-input"
+                            <input type="date" value="{{$hoy}}" name="fecha" id="fecha" class="common-input"
                                 required>
                         </label>
                     </div>

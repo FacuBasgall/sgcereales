@@ -19,10 +19,11 @@
             <div class="box">
                 <form action="{{action('DescargaController@store')}}" method="POST" autocomplete="off">
                     {{ csrf_field() }}
+                    @php $hoy = date("Y-m-d") @endphp
                     <p class="form-title"><strong>Datos de la descarga</strong></p>
                     <label for="fecha">
                         <span>Fecha de descarga*:</span>
-                        <input type="date" value="{{old('fecha')}}" name="fecha" id="fecha" class="common-input"
+                        <input type="date" value="{{$hoy}}" name="fecha" id="fecha" class="common-input"
                             required>
                     </label>
                     <label for="bruto">

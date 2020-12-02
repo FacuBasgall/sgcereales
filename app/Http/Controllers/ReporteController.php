@@ -192,10 +192,14 @@ class ReporteController extends Controller
         return $pdf->download($filename);
 
     }
-/*
-    public function send_email($idAviso)
+
+    public function send_email()
     {
-        $aviso = Aviso::where('idAviso', $idAviso)->first();
+        $aviso = DB::table('aviso')->join('reporte-temp', 'reporte-temp.idAviso', 'aviso.idAviso')
+                                ->join
+                                ->select('aviso.*')->get();
+
+
         $titular = Titular::where('cuit', $aviso->idTitularCartaPorte)->first();
         $corredor = Corredor::where('cuit', $aviso->idCorredor)->first();
         $remitente = Remitente_Comercial::where('cuit', $aviso->idRemitenteComercial)->first();
@@ -213,7 +217,7 @@ class ReporteController extends Controller
             }else{
                 $correosTitular = Titular_Contacto::where('cuit', $aviso->idTitularCartaPorte)->where('tipo', 3)->pluck('contacto'); //Tipo = 3 = Emails / funcion pluck('contacto') solo selecciona del array los contactos
                 $correosRemitente = Remitente_Contacto::where('cuit', $aviso->idRemitenteComercial)->where('tipo', 3)->pluck('contacto');
-                //$correosCorredor se agregar en el RomaneoSendMail
+                //$correosCorredor se agrega en el ReporteSendMail
                 \Mail::to($correosTitular)->cc($correosRemitente)->send(new RomaneoSendMail($idAviso));
                 alert()->success("El aviso ha sido enviado con éxito", 'Correo enviado');
             }
@@ -221,5 +225,5 @@ class ReporteController extends Controller
             alert()->error("El aviso debe estar terminado para poder enviarlo", 'No se puede ejecutar la acción')->persistent('Cerrar');
         }
         return back();
-    } */
+    }
 }

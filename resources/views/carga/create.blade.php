@@ -64,6 +64,7 @@
             <div class="box">
                 <form action="{{action('CargaController@store')}}" method="POST" autocomplete="off">
                     {{ csrf_field() }}
+                    @php $hoy = date("Y-m-d") @endphp
                     <p class="form-title"><strong>Datos de la carga</strong></p>
                     <label for="cartaPorte">
                         <span>Número carta porte*:</span>
@@ -72,7 +73,7 @@
                     </label>
                     <label for="fecha">
                         <span>Fecha de carga*:</span>
-                        <input type="date" value="{{old('fecha')}}" name="fecha" id="fecha" class="common-input"
+                        <input type="date" value="{{$hoy}}" name="fecha" id="fecha" class="common-input"
                             required>
                     </label>
                     <label for="matricula">
@@ -93,7 +94,7 @@
                         <input type="checkbox" name="switchbutton" id="switchlabel" class="switchbutton__checkbox" checked> <label for="switchlabel" class="switchbutton__label"></label>
                         <p style="margin-left:70px;">Deseo ingresar la descarga ahora</p>
                         <!-- Botón -->
-                        
+
                     </div>
                     <input type="hidden" name="idAviso" id="idAviso" value="{{$aviso->idAviso}}">
                     <div class="center-of-page"><button type="submit" class="save-button"><i class="fa fa-check"></i>

@@ -38,6 +38,19 @@ function warningSendEmails(key) {
       }});
 }
 
+function warningSendEmailsReporte() {
+    swal({
+        title: "¿Está seguro?",
+        text: "Esta acción podría demorar unos minutos",
+        icon: "warning",
+        buttons: ["Cancelar", "Aceptar"],
+        dangerMode: true,
+      }).then((willDelete) => {
+        if (willDelete) {
+            window.location.href = '//localhost:8000/reporte/send_email';
+      }});
+}
+
 function warningDomicile(key, redirect) {
     swal({
         title: "¿Está seguro?",

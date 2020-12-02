@@ -311,6 +311,10 @@ class AvisoController extends Controller
         $aviso_producto->tipo = $request->tipo;
         $aviso_producto->save();
 
+        $aviso_entregador = Aviso_Entregador::findOrfail($idAviso);
+        $aviso_entregador->fecha = $request->fecha;
+        $aviso_entregador->save();
+
         alert()->success("El aviso fue editado con éxito", 'Aviso guardado');
         return redirect()->action('AvisoController@show', $aviso->idAviso);
     }
@@ -445,10 +449,9 @@ class AvisoController extends Controller
             }elseif(!$existeRemitente){
                 alert()->error("El remitente: $remitente->nombre no posee dirección de correo", 'No se puede ejecutar la acción')->persistent('Cerrar');
             }else{
-                //VER ESTO!!!!
                 $correosTitular = Titular_Contacto::where('cuit', $aviso->idTitularCartaPorte)->where('tipo', 3)->pluck('contacto'); //Tipo = 3 = Emails / funcion pluck('contacto') solo selecciona del array los contactos
                 $correosRemitente = Remitente_Contacto::where('cuit', $aviso->idRemitenteComercial)->where('tipo', 3)->pluck('contacto');
-                //$correosCorredor se agregar en el RomaneoSendMail
+                //$correosCorredor se agrega en el RomaneoSendMail
                 \Mail::to($correosTitular)->cc($correosRemitente)->send(new RomaneoSendMail($idAviso));
                 alert()->success("El aviso ha sido enviado con éxito", 'Correo enviado');
             }

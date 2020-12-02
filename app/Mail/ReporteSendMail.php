@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-use App\Exports\RomaneoExport;
+use App\Exports\ReporteExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade as PDF;
 use \Mail;
@@ -32,20 +32,19 @@ use App\Corredor_Contacto;
 use App\Localidad;
 use App\Provincia;
 
-class RomaneoSendMail extends Mailable
+
+class ReporteSendMail extends Mailable
 {
     use Queueable, SerializesModels;
-
-    protected $idAviso;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($idAviso)
+    public function __construct()
     {
-        $this->idAviso = $idAviso;
+        //
     }
 
     /**
@@ -88,6 +87,7 @@ class RomaneoSendMail extends Mailable
 
         $filenameExcel = $aviso->nroAviso . " " . $titular->nombre . ".xlsx";
         $filenamePdf = $aviso->nroAviso . " " . $titular->nombre . ".pdf";
+        //$asunto = "Envio del aviso nro: " . $aviso->nroAviso;
 
         $correosCorredor = Corredor_Contacto::where('cuit', $aviso->idCorredor)->where('tipo', 3)->pluck('contacto');
 

@@ -252,7 +252,7 @@
                         Excel</button></a>
                 <a href="{{action('ReporteController@export_pdf')}}"><button class="export-button"><i class="fa fa-file-pdf-o"></i> Descargar
                         PDF</button></a>
-                <a onclick="#"><button class="export-button"><i class="fa fa-envelope"></i> Enviar</button></a>
+                <a onclick="warningSendEmailsReporte();"><button class="export-button"><i class="fa fa-envelope"></i> Enviar</button></a>
             </div>
             @elseif ($filtros['fechaDesde']>'1970-01-01')
             <label class="no-results">No se han encontrado resultados</label>
