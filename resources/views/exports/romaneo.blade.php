@@ -23,7 +23,7 @@
             <th><b>Nro Aviso:</b></th>
             <td>{{ $aviso->nroAviso }}</td>
             <th><b>Fecha:</b></th>
-            <td>{{ $aviso_entregador->fecha }}</td>
+            <td>{{ date("d/m/Y", strtotime($aviso_entregador->fecha)) }}</td>
         </tr>
         <tr>
             <th style="font-weight:bold">Grano:</th>

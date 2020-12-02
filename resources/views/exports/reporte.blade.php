@@ -26,10 +26,10 @@
             <th><b>Resumen General de Descarga</b></th>
         </tr>
         <tr>
-            <th><b style="font-weight:bold">Fecha desde: {{$filtros->fechaDesde}}</b></th>
+            <th><b style="font-weight:bold">Fecha desde: {{date("d/m/Y", strtotime($filtros->fechaDesde))}}</b></th>
         </tr>
         <tr>
-            <th><b style="font-weight:bold">Fecha hasta: {{$filtros->fechaHasta}}</b></th>
+            <th><b style="font-weight:bold">Fecha hasta: {{date("d/m/Y", strtotime($filtros->fechaHasta))}}</b></th>
         </tr>
         <tr></tr>
         <tr></tr>
@@ -100,7 +100,11 @@
             </td>
             @endif
             @endforeach
+            @if(isset($resultado->tipo))
             <td>{{$resultado->tipo}}</td>
+            @else
+            <td>-</td>
+            @endif
             <td>{{$resultado->cosecha}}</td>
             @foreach ($provincias as $provincia)
             @if ($provincia->id == $resultado->provinciaProcedencia)

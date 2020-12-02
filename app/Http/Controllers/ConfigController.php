@@ -7,8 +7,6 @@ use SweetAlert;
 
 class ConfigController extends Controller
 {
-    protected $last_backup = NULL; //fecha y hora del ultimo bk realizado
-
     public function __construct()
     {
         $this->middleware('auth');
