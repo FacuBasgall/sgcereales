@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/contact-form.css') }}">
     <script type="text/javascript" src="{{ asset('js/select-localidad.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/select-pais.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/show.css') }}">
 </head>
 
 <body>
@@ -84,7 +85,7 @@
                 </div>
                 @endforeach
                 @else
-                <p>No se encontró información</p>
+                <label class="labels info-text"><i class="fa fa-exclamation-circle"></i> No se encontraron domicilios</label>
                 @endif
             </div>
         </div>
