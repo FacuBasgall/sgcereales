@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/cortar-aviso.css') }}">
 </head>
 
-<body>
+<body style="font-family: sans-serif;">
     <div class="cuadro">
         <div class="card">
             <div class="card-header">

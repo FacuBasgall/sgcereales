@@ -22,7 +22,7 @@ class ConfigController extends Controller
             alert()->error("No se ha completado el proceso de backup", 'Ha ocurrido un error')->persistent('Cerrar');
             return back();
         }else{
-            alert()->success("El proceso de backup se realizó correctamente", 'Backup completo')->persistent('Cerrar');
+            alert()->success("Ya puede utilizar el sistema", 'Backup completo')->persistent('Cerrar');
             return back();
         }
     }

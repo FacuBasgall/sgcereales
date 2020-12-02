@@ -66,8 +66,8 @@ function warningDomicile(key, redirect) {
 
 function warningBackup() {
     swal({
-        title: "¿Está seguro?",
-        text: "Esta acción podría demorar unos minutos",
+        title: "¿Está seguro? Ésta acción podría demorar unos minutos",
+        text: "No utilice el sistema hasta que se complete el proceso.",
         icon: "warning",
         buttons: ["Cancelar", "Aceptar"],
         closeModal: false,
