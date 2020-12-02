@@ -90,10 +90,10 @@
                             Los campos con * son obligatorios</label></div>
                     <div class="switchbutton">
                         <!-- Checkbox -->
-                        <input type="checkbox" name="switchbutton" id="switchlabel" class="switchbutton__checkbox" checked> Deseo ingresar la
-                        descarga ahora
+                        <input type="checkbox" name="switchbutton" id="switchlabel" class="switchbutton__checkbox" checked> <label for="switchlabel" class="switchbutton__label"></label>
+                        <p style="margin-left:70px;">Deseo ingresar la descarga ahora</p>
                         <!-- Botón -->
-                        <label for="switchlabel" class="switchbutton__label"></label>
+                        
                     </div>
                     <input type="hidden" name="idAviso" id="idAviso" value="{{$aviso->idAviso}}">
                     <div class="center-of-page"><button type="submit" class="save-button"><i class="fa fa-check"></i>
