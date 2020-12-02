@@ -15,11 +15,13 @@
                 {{ csrf_field() }}
                 <label for="fechaDesde">
                     <span>Fecha desde*:</span>
-                    <input class="common-input" type="date" value="{{$filtros['fechaDesde']}}" name="fechaDesde" id="fechaDesde" required>
+                    <input class="common-input" type="date" value="{{$filtros['fechaDesde']}}" name="fechaDesde"
+                        id="fechaDesde" required>
                 </label>
                 <label for="fechaHasta">
                     <span>Fecha hasta*:</span>
-                    <input class="common-input" type="date" value="{{$filtros['fechaHasta']}}" name="fechaHasta" id="fechaHasta" required>
+                    <input class="common-input" type="date" value="{{$filtros['fechaHasta']}}" name="fechaHasta"
+                        id="fechaHasta" required>
                 </label>
                 <label class="margin-right" for="titular">
                     <span>Titular carta porte:</span>
@@ -31,12 +33,12 @@
                         @endforeach
                     </select>
                     <script>
-                        $.fn.select2.defaults.set('language', 'es');
-                        $("#labeltitular").select2({
-                            placeholder: 'Seleccione',
-                            dropdownAutoWidth: true,
-                            allowClear: true
-                        });
+                    $.fn.select2.defaults.set('language', 'es');
+                    $("#labeltitular").select2({
+                        placeholder: 'Seleccione',
+                        dropdownAutoWidth: true,
+                        allowClear: true
+                    });
                     </script>
                 </label>
                 <label class="margin-right" for="intermediario">
@@ -44,17 +46,18 @@
                     <select class="common-input" name="intermediario" id="labelintermediario">
                         <option value=""></option>
                         @foreach ($intermediarios as $intermediario)
-                        <option value="{{ $intermediario->cuit }}" {{$filtros['intermediario'] == $intermediario->cuit ? 'selected':''}}>
+                        <option value="{{ $intermediario->cuit }}"
+                            {{$filtros['intermediario'] == $intermediario->cuit ? 'selected':''}}>
                             {{$intermediario->nombre}}</option>
                         @endforeach
                     </select>
                     <script>
-                        $.fn.select2.defaults.set('language', 'es');
-                        $("#labelintermediario").select2({
-                            placeholder: 'Seleccione',
-                            dropdownAutoWidth: true,
-                            allowClear: true
-                        });
+                    $.fn.select2.defaults.set('language', 'es');
+                    $("#labelintermediario").select2({
+                        placeholder: 'Seleccione',
+                        dropdownAutoWidth: true,
+                        allowClear: true
+                    });
                     </script>
                 </label>
                 <label class="margin-right" for="remitente">
@@ -62,17 +65,18 @@
                     <select class="common-input" name="remitente" id="labelremitente">
                         <option value=""></option>
                         @foreach ($remitentes as $remitente)
-                        <option value="{{ $remitente->cuit }}" {{$filtros['remitente'] == $remitente->cuit ? 'selected':''}}>
+                        <option value="{{ $remitente->cuit }}"
+                            {{$filtros['remitente'] == $remitente->cuit ? 'selected':''}}>
                             {{$remitente->nombre}}</option>
                         @endforeach
                     </select>
                     <script>
-                        $.fn.select2.defaults.set('language', 'es');
-                        $("#labelremitente").select2({
-                            placeholder: 'Seleccione',
-                            dropdownAutoWidth: true,
-                            allowClear: true
-                        });
+                    $.fn.select2.defaults.set('language', 'es');
+                    $("#labelremitente").select2({
+                        placeholder: 'Seleccione',
+                        dropdownAutoWidth: true,
+                        allowClear: true
+                    });
                     </script>
                 </label>
                 <label class="margin-right" for="corredor">
@@ -80,17 +84,18 @@
                     <select class="common-input" name="corredor" id="labelcorredor">
                         <option value=""></option>
                         @foreach ($corredores as $corredor)
-                        <option value="{{ $corredor->cuit }}" {{$filtros['corredor'] == $corredor->cuit ? 'selected':''}}>
+                        <option value="{{ $corredor->cuit }}"
+                            {{$filtros['corredor'] == $corredor->cuit ? 'selected':''}}>
                             {{$corredor->nombre}}</option>
                         @endforeach
                     </select>
                     <script>
-                        $.fn.select2.defaults.set('language', 'es');
-                        $("#labelcorredor").select2({
-                            placeholder: 'Seleccione',
-                            dropdownAutoWidth: true,
-                            allowClear: true
-                        });
+                    $.fn.select2.defaults.set('language', 'es');
+                    $("#labelcorredor").select2({
+                        placeholder: 'Seleccione',
+                        dropdownAutoWidth: true,
+                        allowClear: true
+                    });
                     </script>
                 </label>
                 <label class="margin-right" for="destinatario">
@@ -98,17 +103,19 @@
                     <select class="common-input" name="destinatario" id="labeldestinatario">
                         <option value=""></option>
                         @foreach ($destinatarios as $destinatario)
-                        <option value="{{ $destinatario->cuit }}" {{$filtros['destinatario'] == $destinatario->cuit ? 'selected':''}}>{{$destinatario->nombre}}
+                        <option value="{{ $destinatario->cuit }}"
+                            {{$filtros['destinatario'] == $destinatario->cuit ? 'selected':''}}>
+                            {{$destinatario->nombre}}
                         </option>
                         @endforeach
                     </select>
                     <script>
-                        $.fn.select2.defaults.set('language', 'es');
-                        $("#labeldestinatario").select2({
-                            placeholder: 'Seleccione',
-                            dropdownAutoWidth: true,
-                            allowClear: true
-                        });
+                    $.fn.select2.defaults.set('language', 'es');
+                    $("#labeldestinatario").select2({
+                        placeholder: 'Seleccione',
+                        dropdownAutoWidth: true,
+                        allowClear: true
+                    });
                     </script>
                 </label>
                 <label class="margin-right" for="producto">
@@ -116,23 +123,30 @@
                     <select class="common-input" name="producto" id="labelproducto">
                         <option value=""></option>
                         @foreach ($productos as $producto)
-                        <option value="{{ $producto->idProducto }}" {{$filtros['producto'] == $producto->idProducto ? 'selected':''}}> {{$producto->nombre}}</option>
+                        <option value="{{ $producto->idProducto }}"
+                            {{$filtros['producto'] == $producto->idProducto ? 'selected':''}}> {{$producto->nombre}}
+                        </option>
                         @endforeach
                     </select>
                     <script>
-                        $.fn.select2.defaults.set('language', 'es');
-                        $("#labelproducto").select2({
-                            placeholder: 'Seleccione',
-                            dropdownAutoWidth: true,
-                            allowClear: true
-                        });
+                    $.fn.select2.defaults.set('language', 'es');
+                    $("#labelproducto").select2({
+                        placeholder: 'Seleccione',
+                        dropdownAutoWidth: true,
+                        allowClear: true
+                    });
                     </script>
                 </label>
                 <label for="entregador">
                     <span>Entregador:</span>
-                    <input class="common-input" type="text" value="{{$filtros['entregador']}}" name="entregador" id="entregador">
+                    <input class="common-input" type="text" value="{{$filtros['entregador']}}" name="entregador"
+                        id="entregador">
                 </label>
-                <button type="submit" class="find-button"><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
+                <div><label class="info-text-margin"><i class="fa fa-exclamation-circle"></i>
+                        Los campos con * son obligatorios</label></div>
+                <div class="center-of-page"><button type="submit" class="find-button"><i class="fa fa-search" aria-hidden="true"></i>
+                    Buscar</button></div>
+
             </form>
         </div>
         <div class="results-card">
@@ -248,11 +262,14 @@
             </div>
             <hr>
             <div class="center-of-page">
-                <a href="{{action('ReporteController@export_excel')}}"><button class="export-button"><i class="fa fa-file-excel-o"></i> Descargar
+                <a href="{{action('ReporteController@export_excel')}}"><button class="export-button"><i
+                            class="fa fa-file-excel-o"></i> Descargar
                         Excel</button></a>
-                <a href="{{action('ReporteController@export_pdf')}}"><button class="export-button"><i class="fa fa-file-pdf-o"></i> Descargar
+                <a href="{{action('ReporteController@export_pdf')}}"><button class="export-button"><i
+                            class="fa fa-file-pdf-o"></i> Descargar
                         PDF</button></a>
-                <a onclick="warningSendEmailsReporte();"><button class="export-button"><i class="fa fa-envelope"></i> Enviar</button></a>
+                <a onclick="warningSendEmailsReporte();"><button class="export-button"><i class="fa fa-envelope"></i>
+                        Enviar</button></a>
             </div>
             @elseif ($filtros['fechaDesde']>'1970-01-01')
             <label class="no-results">No se han encontrado resultados</label>

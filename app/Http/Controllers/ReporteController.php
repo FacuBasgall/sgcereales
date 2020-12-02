@@ -195,9 +195,15 @@ class ReporteController extends Controller
 
     public function send_email()
     {
-        $aviso = DB::table('aviso')->join('reporte-temp', 'reporte-temp.idAviso', 'aviso.idAviso')
-                                ->join
-                                ->select('aviso.*')->get();
+        //VER A QUIEN SE LO QUIERE MANDAR
+        $resultados = DB::table('reporte-temp')
+                                ->join('aviso', 'aviso.idAviso', 'reporte-temp.idAviso')
+                                ->join('titular', 'titular.cuit', 'aviso.idTitularCartaPorte')
+                                ->join('corredor', 'corredor.cuit', 'aviso.idCorredor')
+                                ->join('remitente', 'remitente.cuit', 'aviso.idRemitenteComercial')
+                                ->join('titular_contacto', 'titular_contacto.cuit', 'titular.cuit')
+
+                                ->select('')->get();
 
 
         $titular = Titular::where('cuit', $aviso->idTitularCartaPorte)->first();
