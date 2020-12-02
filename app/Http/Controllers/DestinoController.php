@@ -173,9 +173,9 @@ class DestinoController extends Controller
 
     public function contact($cuit){
         $tipoContacto = Tipo_Contacto::orderBy('descripcion')->get();
-        $destinatario = Destino::findOrFail($cuit);
+        $destino = Destino::findOrFail($cuit);
         $destinoContacto = Destino_Contacto::where('cuit', $cuit)->get();
-        return view('destino.contact', compact(['tipoContacto', 'destinoContacto', 'destinatario']));
+        return view('destino.contact', compact(['tipoContacto', 'destinoContacto', 'destino']));
     }
 
     public function add_contact(Request $request, $cuit)

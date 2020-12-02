@@ -5,6 +5,7 @@
 <head>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/contact-form.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/header.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/show.css') }}">
 </head>
 
 <body>
@@ -51,7 +52,7 @@
                 @endforeach
                 @endforeach
                 @else
-                <p>No se encontró información</p>
+                <label class="labels info-text"><i class="fa fa-exclamation-circle"></i> No se encontraron contactos</label>
                 @endif
             </div>
         </div>

@@ -31,20 +31,25 @@ use App\Entregador_Domicilio;
 use App\Corredor_Contacto;
 use App\Localidad;
 use App\Provincia;
+use App\Filtro;
+use DB;
 
 
 class ReporteSendMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    protected $asunto;
+    protected $cuerpo;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($asunto, $cuerpo)
     {
-        //
+        $this->asunto = $asunto;
+        $this->cuerpo = $cuerpo;
     }
 
     /**
@@ -54,47 +59,48 @@ class ReporteSendMail extends Mailable
      */
     public function build()
     {
-        $idUser = auth()->user()->idUser;
-        $aviso = Aviso::where('idAviso', $this->idAviso)->first();
-        $titular = Titular::where('cuit', $aviso->idTitularCartaPorte)->first();
-        $cargas = Carga::where('idAviso', $aviso->idAviso)->get();
-        $descargas = Descarga::all();
-        $corredor = Corredor::where('cuit', $aviso->idCorredor)->first();
-        $destinatario = Destino::where('cuit', $aviso->idDestinatario)->first();
-        $intermediario = Intermediario::where('cuit', $aviso->idIntermediario)->first();
-        $producto = Producto::where('idProducto', $aviso->idProducto)->first();
-        $remitente = Remitente_Comercial::where('cuit', $aviso->idRemitenteComercial)->first();
-        $aviso_producto = Aviso_Producto::where('idAviso', $aviso->idAviso)->first();
-        $aviso_entregador = Aviso_Entregador::where('idAviso', $aviso->idAviso)->first();
-        $entregador = User::where('idUser', $idUser)->first();
-        $entregador_contacto = Entregador_Contacto::where('idUser', $idUser)->get();
-        $entregador_domicilio = Entregador_Domicilio::where('idUser', $idUser)->get();
+        $asunto = $this->asunto;
+        $cuerpo = $this->cuerpo;
+        $hoy = date("Y-m-d");
+        $entregadorAutenticado = auth()->user()->idUser;
+        $filtros = Filtro::first();
+
+        /**CARGA PDF */
+        $resultados = DB::table('reporte-temp')
+                        ->join('aviso', 'reporte-temp.idAviso', '=', 'aviso.idAviso')
+                        ->join('aviso_entregador',  'aviso.idAviso', '=', 'aviso_entregador.idAviso')
+                        ->join('aviso_producto', 'aviso.idAviso', '=', 'aviso_producto.idAviso')
+                        ->where('aviso_entregador.idEntregador', '=', $entregadorAutenticado)
+                        ->select('reporte-temp.*', 'aviso.*', 'aviso_producto.*', 'aviso_entregador.*')
+                        ->get();
+        $descargas = DB::table('descarga')
+                    ->join('carga', 'carga.idCarga', 'descarga.idCarga')
+                    ->join('reporte-temp', 'reporte-temp.idAviso', 'carga.idAviso')
+                    ->select('descarga.*', 'reporte-temp.idAviso')
+                    ->get();
+        $titulares = Titular::where('borrado', false)->get();
+        $destinatarios = Destino::where('borrado', false)->get();
+        $intermediarios = Intermediario::where('borrado', false)->get();
+        $remitentes = Remitente_Comercial::where('borrado', false)->get();
+        $corredores = Corredor::where('borrado', false)->get();
+        $productos = Producto::where('borrado', false)->get();
+        $entregador = User::where('idUser', $entregadorAutenticado)->first(); //Solo Usuario Entregador Autenticado
         $localidades = Localidad::all();
         $provincias = Provincia::all();
+        $entregador_contacto = Entregador_Contacto::where('idUser', $entregadorAutenticado)->get();
+        $entregador_domicilio = Entregador_Domicilio::where('idUser', $entregadorAutenticado)->get();
 
-        $pdf = PDF::loadView('exports.pdf', compact(['aviso', 'titular', 'cargas', 'descargas', 'corredor',
-            'destinatario', 'intermediario', 'producto', 'remitente', 'aviso_producto', 'aviso_entregador',
-            'entregador', 'entregador_contacto', 'entregador_domicilio', 'localidades', 'provincias']));
+        $pdf = PDF::loadView('exports.reporte-pdf', compact(['resultados', 'descargas', 'filtros', 'destinatarios', 'titulares',
+        'intermediarios', 'remitentes', 'corredores', 'productos', 'entregador', 'localidades', 'provincias',
+        'entregador_contacto', 'entregador_domicilio']));
         $pdf->setPaper('a4', 'landscape');
 
-        $preferencias = Usuario_Preferencias_Correo::where('idUser', $idUser)->first();
-        $email = Entregador_Contacto::where('id', $preferencias->email)->first();
-        $asunto = str_replace('{{NRO_AVISO}}', $aviso->nroAviso, $preferencias->asunto);
-        $asunto = str_replace('{{CORREO}}', $email->contacto, $asunto);
-
-        $cuerpo = str_replace('{{NRO_AVISO}}', $aviso->nroAviso, $preferencias->cuerpo);
-        $cuerpo = str_replace('{{CORREO}}', $email->contacto, $cuerpo);
-
-        $filenameExcel = $aviso->nroAviso . " " . $titular->nombre . ".xlsx";
-        $filenamePdf = $aviso->nroAviso . " " . $titular->nombre . ".pdf";
-        //$asunto = "Envio del aviso nro: " . $aviso->nroAviso;
-
-        $correosCorredor = Corredor_Contacto::where('cuit', $aviso->idCorredor)->where('tipo', 3)->pluck('contacto');
+        $filenameExcel = "Reporte General de Descargas " . $hoy . ".xlsx";
+        $filenamePdf = "Reporte General de Descargas " . $hoy . ".pdf";
 
         return $this->view('mails.romaneo_mail', compact(['cuerpo']))
-            ->cc($correosCorredor)
             ->subject($asunto)
             ->attachData($pdf->output(), $filenamePdf)
-            ->attach(Excel::download(new RomaneoExport($this->idAviso), $filenameExcel)->getFile(), ['as' => $filenameExcel]);
+            ->attach(Excel::download(new ReporteExport($filtros->idFiltro), $filenameExcel)->getFile(), ['as' => $filenameExcel]);
     }
 }

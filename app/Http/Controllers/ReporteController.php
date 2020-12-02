@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Exports\ReporteExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade as PDF;
-use App\Mail\RomaneoSendMail;
+use App\Mail\ReporteSendMail;
 
 use App\Reporte;
 use App\Filtro;
@@ -29,6 +29,7 @@ use App\Entregador_Contacto;
 use App\Entregador_Domicilio;
 use App\Localidad;
 use App\Provincia;
+use App\Usuario_Preferencias_Correo;
 
 use Datatables;
 use DB;
@@ -193,43 +194,84 @@ class ReporteController extends Controller
 
     }
 
-    public function send_email()
+    public function send_email(Request $request)
     {
-        //VER A QUIEN SE LO QUIERE MANDAR
-        $resultados = DB::table('reporte-temp')
-                                ->join('aviso', 'aviso.idAviso', 'reporte-temp.idAviso')
-                                ->join('titular', 'titular.cuit', 'aviso.idTitularCartaPorte')
-                                ->join('corredor', 'corredor.cuit', 'aviso.idCorredor')
-                                ->join('remitente', 'remitente.cuit', 'aviso.idRemitenteComercial')
-                                ->join('titular_contacto', 'titular_contacto.cuit', 'titular.cuit')
-
-                                ->select('')->get();
-
-
-        $titular = Titular::where('cuit', $aviso->idTitularCartaPorte)->first();
-        $corredor = Corredor::where('cuit', $aviso->idCorredor)->first();
-        $remitente = Remitente_Comercial::where('cuit', $aviso->idRemitenteComercial)->first();
-
-        if($aviso->estado){
-            $existeTitular = Titular_Contacto::where('cuit', $aviso->idTitularCartaPorte)->where('tipo', 3)->exists();
-            $existeCorredor = Corredor_Contacto::where('cuit', $aviso->idCorredor)->where('tipo', 3)->exists();
-            $existeRemitente = Remitente_Contacto::where('cuit', $aviso->idRemitenteComercial)->where('tipo', 3)->exists();
-            if(!$existeTitular){
-                alert()->error("El titular: $titular->nombre no posee dirección de correo", 'No se puede ejecutar la acción')->persistent('Cerrar');
-            }elseif(!$existeCorredor){
-                alert()->error("El corredor: $corredor->nombre no posee dirección de correo", 'No se puede ejecutar la acción')->persistent('Cerrar');
-            }elseif(!$existeRemitente){
-                alert()->error("El remitente: $remitente->nombre no posee dirección de correo", 'No se puede ejecutar la acción')->persistent('Cerrar');
-            }else{
-                $correosTitular = Titular_Contacto::where('cuit', $aviso->idTitularCartaPorte)->where('tipo', 3)->pluck('contacto'); //Tipo = 3 = Emails / funcion pluck('contacto') solo selecciona del array los contactos
-                $correosRemitente = Remitente_Contacto::where('cuit', $aviso->idRemitenteComercial)->where('tipo', 3)->pluck('contacto');
-                //$correosCorredor se agrega en el ReporteSendMail
-                \Mail::to($correosTitular)->cc($correosRemitente)->send(new RomaneoSendMail($idAviso));
-                alert()->success("El aviso ha sido enviado con éxito", 'Correo enviado');
+        $correos = array();
+        foreach($request->email as $email){
+            if(filter_var($email, FILTER_VALIDATE_EMAIL)){
+                $correos[] = $email;
             }
-        }else{
-            alert()->error("El aviso debe estar terminado para poder enviarlo", 'No se puede ejecutar la acción')->persistent('Cerrar');
         }
-        return back();
+        $asunto = $request->asunto;
+        $cuerpo = $request->cuerpo;
+        \Mail::to($correos)->send(new ReporteSendMail($asunto, $cuerpo));
+        alert()->success("El reporte general ha sido enviado con éxito", 'Correo enviado');
+        return redirect()->action('ReporteController@index');
+    }
+
+    public function load_email()
+    {
+        /**CARGA DE TODOS LOS CORREOS DE TODAS LAS PERSONAS */
+        $correosTitular = DB::table('reporte-temp')
+                        ->rightJoin('aviso', 'aviso.idAviso', 'reporte-temp.idAviso')
+                        ->rightJoin('titular_contacto', 'titular_contacto.cuit', 'aviso.idTitularCartaPorte')
+                        ->where('titular_contacto.tipo', '=', 3)
+                        ->distinct()
+                        ->select('titular_contacto.contacto')
+                        ->get();
+        $correosCorredor = DB::table('reporte-temp')
+                        ->rightJoin('aviso', 'aviso.idAviso', 'reporte-temp.idAviso')
+                        ->rightJoin('corredor_contacto', 'corredor_contacto.cuit', 'aviso.idCorredor')
+                        ->where('corredor_contacto.tipo', '=', 3)
+                        ->distinct()
+                        ->select('corredor_contacto.contacto')
+                        ->get();
+        $correosRemitente = DB::table('reporte-temp')
+                        ->rightJoin('aviso', 'aviso.idAviso', 'reporte-temp.idAviso')
+                        ->rightJoin('remitente_contacto', 'remitente_contacto.cuit', 'aviso.idRemitenteComercial')
+                        ->where('remitente_contacto.tipo', '=', 3)
+                        ->distinct()
+                        ->select('remitente_contacto.contacto')
+                        ->get();
+        $correosIntermediario = DB::table('reporte-temp')
+                        ->rightJoin('aviso', 'aviso.idAviso', 'reporte-temp.idAviso')
+                        ->rightJoin('intermediario_contacto', 'intermediario_contacto.cuit', 'aviso.idIntermediario')
+                        ->where('intermediario_contacto.tipo', '=', 3)
+                        ->distinct()
+                        ->select('intermediario_contacto.contacto')
+                        ->get();
+        $correosDestinatario = DB::table('reporte-temp')
+                        ->rightJoin('aviso', 'aviso.idAviso', 'reporte-temp.idAviso')
+                        ->rightJoin('destinatario_contacto', 'destinatario_contacto.cuit', 'aviso.idDestinatario')
+                        ->where('destinatario_contacto.tipo', '=', 3)
+                        ->distinct()
+                        ->select('destinatario_contacto.contacto')
+                        ->get();
+
+        /**COPIA AL ARRAY */
+        $correos = array();
+        foreach($correosTitular as $titular){
+            $correos[] = $titular->contacto;
+        }
+        foreach($correosRemitente as $remitente){
+            $correos[] = $remitente->contacto;
+        }
+        foreach($correosCorredor as $corredor){
+            $correos[] = $corredor->contacto;
+        }
+        foreach($correosIntermediario as $intermediario){
+            $correos[] = $intermediario->contacto;
+        }
+        foreach($correosDestinatario as $destinatario){
+            $correos[] = $destinatario->contacto;
+        }
+
+        /**ELIMINAR LOS CORREOS REPETIDOS */
+        $correos = array_unique($correos);
+        $entregadorAutenticado = auth()->user()->idUser;
+        $user_preferencias = Usuario_Preferencias_Correo::where('idUser', $entregadorAutenticado)->first();
+        $user_email = Entregador_Contacto::where('id', $user_preferencias->email)->first();
+
+        return view('reporte.mail', compact(['correos', 'user_email']));
     }
 }

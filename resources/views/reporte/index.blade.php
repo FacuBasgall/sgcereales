@@ -268,7 +268,7 @@
                 <a href="{{action('ReporteController@export_pdf')}}"><button class="export-button"><i
                             class="fa fa-file-pdf-o"></i> Descargar
                         PDF</button></a>
-                <a onclick="warningSendEmailsReporte();"><button class="export-button"><i class="fa fa-envelope"></i>
+                <a href="{{action('ReporteController@load_email')}}"><button class="export-button"><i class="fa fa-envelope"></i>
                         Enviar</button></a>
             </div>
             @elseif ($filtros['fechaDesde']>'1970-01-01')
@@ -276,7 +276,6 @@
             @else
             <label class="no-results">Realice una búsqueda para obtener resultados</label>
             @endif
-            <!-- </table> -->
         </div>
     </div>
     @include('sweet::alert')

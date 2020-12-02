@@ -53,6 +53,16 @@ body {
     margin-right: 25px;
 }
 
+.common-input-long {
+    margin-top: 15px;
+    width: 900px;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    margin-right: 25px;
+}
+
 textarea {
     border: 1px solid #ccc;
     border-radius: 6px;
@@ -87,6 +97,6 @@ input::-webkit-inner-spin-button {
 }
 
 .center-of-page {
-    display: flex; 
+    display: flex;
     justify-content: center;
 }

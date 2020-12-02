@@ -130,7 +130,8 @@ Route::get('/aviso/getLocalidades', 'AvisoController@getLocalidades');
 Route::get('/reporte', 'ReporteController@index');
 Route::get('/reporte/export_excel', 'ReporteController@export_excel');
 Route::get('/reporte/export_pdf', 'ReporteController@export_pdf');
-Route::get('/reporte/send_email', 'ReporteController@send_email');
+Route::post('/reporte/send_email', 'ReporteController@send_email');
+Route::get('/reporte/load_email', 'ReporteController@load_email');
 
 Route::get('/config/backup', 'ConfigController@run_backup');
 
