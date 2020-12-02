@@ -1,26 +1,26 @@
 <head>
     <!-- Navbar menu -->
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link href="{{ asset('css/Navbar/bootstrap-home.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/Navbar/bootstrap-home.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/Navbar/bootstrap.min.css') }}" rel="stylesheet">
+    <script type="text/javascript" src="{{ asset('js/navbarMenu/bootstrap.min.js') }}"></script>
     <!-- sweet alert -->
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/sweetAlertJs.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/sweetAlert.js') }}"></script>
     <!-- Loading animation -->
     <script type="text/javascript" src="{{ asset('js/loading.js') }}"></script>
     <!-- common buttons in the app -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/common-buttons.css') }}">
 
-    <!-- lib jquery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- lib jquery 3.3.1 -->
+    <script type="text/javascript" src="{{ asset('js/navbarMenu/jquery.min.js') }}"></script>
 
-    <!-- select2 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/i18n/es.js"></script>
+    <!-- select2 v4.1.0-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/select2/select2.min.css') }}">
+    <script type="text/javascript" src="{{ asset('js/select2/select2.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/select2/select2es.js') }}"></script>
 
     <!-- Header de camino de hormiga-->
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/header.css') }}">
 
     <!-- config app -->
