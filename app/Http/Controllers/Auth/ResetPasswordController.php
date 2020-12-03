@@ -33,32 +33,11 @@ class ResetPasswordController extends Controller
 
     public function showResetForm($token)
     {
-        /*$this->validate($request, $this->rules(), $this->validationErrorMessages());
-
-        $response = $this->broker()->reset(
-            $this->credentials($request), function ($user, $password) {
-                $this->resetPassword($user, $password);
-            }
-        );
-
-        return $response == \Password::PASSWORD_RESET
-                    ? response()->success($response, 200)
-                    : response()->error($response, 422);
-        */
         return view('auth.passwords.reset', ['token' => $token]);
     }
 
     protected function reset(Request $request)
     {
-        /*$user->forceFill([
-            'password' => $password,
-            'remember_token' => str_random(60),
-        ])->save();
-
-        // GENERAR TOKEN PARA SATELLIZER AQUI ??
-        // $this->guard()->login($user);
-        */
-
         $rules = [
             'username' => 'required|string|exists:usuario',
             'email' => 'required|email',
@@ -91,6 +70,5 @@ class ResetPasswordController extends Controller
           DB::table('password_resets')->where(['username'=> $request->username])->delete();
 
           return redirect('/login')->with('message', 'Tu contraseña ha sido cambiada!');
-
     }
 }
