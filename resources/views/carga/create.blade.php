@@ -69,7 +69,7 @@
                     <label for="cartaPorte">
                         <span>Número carta porte*:</span>
                         <input type="number" value="{{old('cartaPorte')}}" name="cartaPorte" id="cartaPorte"
-                            class="common-input" max="99999999999999999999" min="0" required>
+                            class="common-input" min="0" max="99999999999999999999" required>
                     </label>
                     <label for="fecha">
                         <span>Fecha de carga*:</span>
@@ -83,7 +83,7 @@
                     </label>
                     <label for="kilos">
                         <span>Cargado (Kg)*:</span>
-                        <input type="number" value="{{old('kilos')}}" min="0" step="0.1" name="kilos" id="kilos"
+                        <input type="number" value="{{old('kilos')}}" min="0" max="9999999999" step="0.1" name="kilos" id="kilos"
                             class="common-input" onkeydown="noComa(event)" required>
                     </label>
                     <hr>

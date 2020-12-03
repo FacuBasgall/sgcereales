@@ -59,7 +59,7 @@ class ForgotPasswordController extends Controller
                       $message->subject('Notificación de reestablecimiento de contraseña');
                    });
             alert()->success("Se ha enviado por correo el enlace para restablecer la contraseña", 'Correo enviado con éxito')->persistent('Cerrar');
-            return redirect()->action('LoginController@login');
+            return redirect()->action('Auth\LoginController@login');
         }else{
             alert()->error("El correo ingresado es incorrecto", 'Ha ocurrido un error')->persistent('Cerrar');
             return back()->withInput();

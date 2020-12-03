@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\MessageBag;
 use App\User;
 use App\Entregador_Contacto;
 use App\Entregador_Domicilio;
@@ -20,6 +21,7 @@ use \Auth;
 
 class UsuarioController extends Controller
 {
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -58,23 +60,26 @@ class UsuarioController extends Controller
             'email' => 'required|string|max:255',
             'password' => 'required|string|min:8|confirmed',
             'password_confirmation' => 'required',
-            'cuit' => 'required',
+            'cuit' => 'required|min:11|max:11',
             'nombre' => 'required',
-            'descripcion' => 'required',
+            'descripcion' => 'required|max:250',
         ];
 
         $messages = [
-            'username.required' => 'Agrega un nombre de usuario.',
+            'username.required' => 'El campo nombre de usuario no puede ser vacio.',
             'username.max' =>'El nombre de usuario no puede ser mayor a :max caracteres.',
             'username.unique' => 'El nombre de usuario ya está en uso.',
-            'email.required' => 'Agrega un correo electrónico.',
+            'email.required' => 'El campo correo electrónico no puede ser vacio.',
             'email.max' =>'El correo electrónico no puede ser mayor a :max caracteres.',
-            'password.required' => 'Agrega una contraseña.',
+            'password.required' => 'El campo contraseña no puede ser vacio.',
             'password.min' => 'La contraseña debe ser mayor a :min caracteres.',
             'password.confirmed' => 'Las contraseñas no coinciden.',
-            'cuit.required' => 'Agrega un CUIT',
-            'nombre.required' => 'Agrega un nombre y apellido',
-            'descripcion.required' => 'Agrega una descripción',
+            'cuit.required' => 'El campo CUIT no puede ser vacio.',
+            'cuit.min' => 'El campo CUIT debe ser mayor a :min caracteres.',
+            'cuit.max' => 'El campo CUIT debe ser menor a :max caracteres.',
+            'nombre.required' => 'El campo nombre y apellido no puede ser vacio.',
+            'descripcion.required' => 'El campo descripción no puede ser vacio.',
+            'descripcion.max' => 'No puede ser mayor a :max caracteres.',
         ];
 
         $this->validate($request, $rules, $messages);
@@ -82,33 +87,32 @@ class UsuarioController extends Controller
         if(!filter_var($request->email, FILTER_VALIDATE_EMAIL)){
             alert()->error("El correo electrónico ingresado no es una dirección valida", "Ha ocurrido un error")->persistent('Cerrar');
             return back()->withInput();
+        }else{
+            $nuevo = new User;
+            $nuevo->username = $request->username;
+            $nuevo->password = Hash::make($request->password);
+            $nuevo->tipoUser = 'E';
+            $nuevo->cuit = $request->cuit;
+            $nuevo->nombre = $request->nombre;
+            $nuevo->descripcion = $request->descripcion;
+            $nuevo->save();
+
+            $contacto = new Entregador_Contacto;
+            $contacto->idUser = $nuevo->idUser;
+            $contacto->tipo = 3;
+            $contacto->contacto = $request->email;
+            $contacto->save();
+
+            $preferencia = new Usuario_Preferencias_Correo;
+            $preferencia->idUser = $nuevo->idUser;
+            $preferencia->email = $contacto->id;
+            $preferencia->asunto = "Envio del aviso nro: {{NRO_AVISO}}";
+            $preferencia->cuerpo = "A continuación se adjuntan los romaneos correspondientes al aviso nro: {{NRO_AVISO}}. Por favor no responder este correo. Comunicarse con {{CORREO}}";
+            $preferencia->save();
+
+            alert()->success("El usuario fue creado con éxito", 'Usuario creado');
+            return redirect()->action('UsuarioController@create');
         }
-
-        $nuevo = new User;
-        $nuevo->username = $request->username;
-        $nuevo->password = Hash::make($request->password);
-        $nuevo->tipoUser = 'E';
-        $nuevo->cuit = $request->cuit;
-        $nuevo->nombre = $request->nombre;
-        $nuevo->descripcion = $request->descripcion;
-        $nuevo->save();
-
-        $contacto = new Entregador_Contacto;
-        $contacto->idUser = $nuevo->idUser;
-        $contacto->tipo = 3;
-        $contacto->contacto = $request->email;
-        $contacto->save();
-
-        $preferencia = new Usuario_Preferencias_Correo;
-        $preferencia->idUser = $nuevo->idUser;
-        $preferencia->email = $contacto->id;
-        $preferencia->asunto = "Envio del aviso nro: {{NRO_AVISO}}";
-        $preferencia->correo = "A continuación se adjuntan los romaneos correspondientes al aviso nro: {{NRO_AVISO}}.
-                                Por favor no responder este correo. Comunicarse con {{CORREO}}";
-        $preferencia->save();
-
-        alert()->success("El usuario fue creado con éxito", 'Usuario creado');
-        return redirect()->action('UsuarioController@create');
     }
 
     /**
@@ -227,8 +231,16 @@ class UsuarioController extends Controller
     public function delete_contact($id)
     {
         $delete = Entregador_Contacto::where('id', $id)->first();
+        $mensaje = "El contacto fue eliminado con éxito.";
+        if($delete->tipo == 3){
+            $esPreferencia = Usuario_Preferencias_Correo::where('email', $delete->id)->exists();
+            if($esPreferencia){
+                alert()->error("No se puede eliminar el correo porque está definido como preferencia.", 'Ha ocurrido un error')->persistent('Cerrar');
+                return back();
+            }
+        }
         $delete->delete();
-        alert()->success("El contacto fue eliminado con éxito", 'Contacto eliminado');
+        alert()->success($mensaje, 'Contacto eliminado');
         return back();
     }
 

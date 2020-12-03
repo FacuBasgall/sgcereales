@@ -28,12 +28,12 @@
                     </label>
                     <label for="bruto">
                         <span>Brutos (Kg)*:</span>
-                        <input type="number" value="{{$carga->kilos}}" min="0" step="0.1" name="bruto" id="bruto"
+                        <input type="number" value="{{$carga->kilos}}" min="0" max="9999999999" step="0.1" name="bruto" id="bruto"
                             class="common-input" onkeydown="noComa(event)" required>
                     </label>
                     <label for="tara">
                         <span>Tara (Kg)*:</span>
-                        <input type="number" value="{{old('tara')}}" min="0" step="0.1" name="tara" id="tara"
+                        <input type="number" value="{{old('tara')}}" min="0" max="9999999999" step="0.1" name="tara" id="tara"
                             class="common-input" onkeydown="noComa(event)" required>
                     </label>
                     <label for="humedad">
@@ -43,12 +43,12 @@
                     </label>
                     <label for="ph">
                         <span>Ph: </span>
-                        <input type="number" value="{{old('ph')}}" step="0.1" min="0" name="ph" id="ph"
+                        <input type="number" value="{{old('ph')}}" step="0.1" min="0" max="9999999999" name="ph" id="ph"
                             class="common-input-cp" onkeydown="noComa(event)">
                     </label>
                     <label for="proteina">
                         <span>Proteína: </span>
-                        <input type="number" value="{{old('proteina')}}" step="0.1" min="0" name="proteina"
+                        <input type="number" value="{{old('proteina')}}" step="0.1" min="0" max="9999999999" name="proteina"
                             id="proteina" class="common-input" onkeydown="noComa(event)">
                     </label>
                     <label for="calidad">

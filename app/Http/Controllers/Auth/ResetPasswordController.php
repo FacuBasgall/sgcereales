@@ -25,12 +25,6 @@ class ResetPasswordController extends Controller
 
     use ResetsPasswords;
 
-    // Comentamos esto que no hace falta
-    // public function __construct()
-    // {
-    //     $this->middleware('guest');
-    // }
-
     public function showResetForm($token)
     {
         return view('auth.passwords.reset', ['token' => $token]);
@@ -69,6 +63,7 @@ class ResetPasswordController extends Controller
 
           DB::table('password_resets')->where(['username'=> $request->username])->delete();
 
-          return redirect('/login')->with('message', 'Tu contraseña ha sido cambiada!');
+          alert()->success("La contraseña se ha cambiado exitosamente", 'Tu contraseña ha sido cambiada')->persistent('Cerrar');
+          return redirect('/login');
     }
 }
