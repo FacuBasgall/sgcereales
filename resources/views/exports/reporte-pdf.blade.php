@@ -51,7 +51,7 @@
 </head>
 
 <body class="container">
-    <title>Reporte General de Descargas</title>
+    <title>Resumen General de Avisos de Descargas</title>
     <div class="box">
         <table>
             <thead>
@@ -76,7 +76,7 @@
                             @endforeach
                         </b>
                     </th>
-                    <th colspan="9">Resumen General de Descarga</th>
+                    <th colspan="9">Resumen General de Avisos de Descargas</th>
                 </tr>
                 <tr>
                     <th colspan="9"><strong>Desde: </strong>{{date("d/m/Y", strtotime($filtros->fechaDesde))}}</th>

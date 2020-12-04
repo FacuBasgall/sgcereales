@@ -12,9 +12,11 @@
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index');
+Route::get('/', 'HomeController@verificacion');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->middleware('entregador')->name('home');
+Route::get('/verificacion', 'HomeController@verificacion');
+
 
 Route::get('/login', 'Auth\LoginController@login')->name('login');
 Route::post('/login/auth', 'Auth\LoginController@authenticate');
@@ -26,8 +28,27 @@ Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail
 Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
 Route::post('/password/reset', 'Auth\ResetPasswordController@reset');
 
-Route::get('/usuario/create', 'UsuarioController@create');
-Route::post('/usuario/store', 'UsuarioController@store');
+Route::get('/admin', 'AdminController@index');
+Route::get('/admin/create', 'AdminController@create');
+Route::post('/admin/store', 'AdminController@store');
+Route::get('/admin/show', 'AdminController@show');
+Route::get('/admin/edit', 'AdminController@edit');
+Route::put('/admin/update', 'AdminController@update');
+Route::get('/admin/contact', 'AdminController@contact');
+Route::get('/admin/add_contact', 'AdminController@add_contact');
+Route::get('/admin/delete_contact/{id}', 'AdminController@delete_contact');
+Route::get('/admin/domicile', 'AdminController@domicile');
+Route::get('/admin/add_domicile', 'AdminController@add_domicile');
+Route::get('/admin/delete_domicile/{id}', 'AdminController@delete_domicile');
+Route::get('/admin/getLocalidades', 'AdminController@getLocalidades');
+Route::get('/admin/form_password', 'AdminController@form_password');
+Route::post('/admin/change_password', 'AdminController@change_password');
+Route::get('/admin/email_preferences', 'AdminController@edit_email_preferences');
+Route::post('/admin/email_preferences/store', 'AdminController@store_email_preferences');
+Route::get('/admin/usuarios', 'AdminController@view_users');
+Route::get('/admin/usuario/disable/{id}', 'AdminController@disable_user');
+Route::get('/admin/usuario/enable/{id}', 'AdminController@enable_user');
+
 Route::get('/usuario/show', 'UsuarioController@show');
 Route::get('/usuario/edit', 'UsuarioController@edit');
 Route::put('/usuario/update', 'UsuarioController@update');

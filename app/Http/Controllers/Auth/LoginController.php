@@ -54,13 +54,18 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
         $credentials = $request->only('username', 'password');
-        if (Auth::attempt($credentials)) {
-            return redirect()->action('HomeController@index');
+        $usuario = User::where('username', $request->username)->first();
+        if($usuario->habilitado == false){
+            //Error si el usuario no está habilitado
+            return redirect('login')->withErrors("El usuario no está habilitado. Póngase en contacto con su administrador.");
         }else{
-            //Error
-            return redirect('login')->withErrors("El nombre de usuario o contraseña son incorrectos");
+            if (Auth::attempt($credentials)) {
+                return redirect()->action('HomeController@verificacion');
+            }else{
+                //Error
+                return redirect('login')->withErrors("El nombre de usuario o contraseña son incorrectos.");
+            }
         }
-
     }
 
     public function logout()

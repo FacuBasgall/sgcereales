@@ -1,4 +1,4 @@
-@extends('layout.master')
+@extends('layout.master-admin')
 @section('content')
 @parent
 
@@ -10,13 +10,13 @@
 <body>
     <div class="card-header">
         <label class="title col-md-8 col-form-label">Configuraciones
-            <i class="fa fa-chevron-right"></i><a href="{{ action('UsuarioController@show')}}"> Perfil de usuario
+            <i class="fa fa-chevron-right"></i><a href="{{ action('AdminController@show')}}"> Perfil de usuario
             </a><i class="fa fa-chevron-right"></i> Gestión de contactos</label>
     </div>
     <div class="container">
         <div class="form-card">
             <span class="form-title"><strong>Añadir infomación de contacto</strong></span><br>
-            <form action="{{action('UsuarioController@add_contact')}}" method="GET" autocomplete="off">
+            <form action="{{action('AdminController@add_contact')}}" method="GET" autocomplete="off">
                 {{ csrf_field() }}
                 <label for="tipo">
                     <select name="tipo" class="common-input" required>

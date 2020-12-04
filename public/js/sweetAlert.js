@@ -78,3 +78,13 @@ function warningBackup() {
             window.location.href = '//localhost:8000/config/backup';
       }});
 }
+
+function acercaDe(){
+    swal({
+        html: true,
+        title: "Acerca del sistema",
+        text: "Proyecto desarrollado con fines académicos para aprobar la cátedra Taller de Integración de la Facultad de Ciencia y Tecnología - UADER. \n Autores: Basgall Facundo Tomás, Cascone María Belén, Ernst Gotte Bernardita.",
+        icon: "info",
+      });
+
+}

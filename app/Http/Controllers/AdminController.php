@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
@@ -17,13 +18,112 @@ use DB;
 use SweetAlert;
 use \Auth;
 
-class UsuarioController extends Controller
+class AdminController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('entregador');
+        $this->middleware('admin');
+    }
+
+    public function index()
+    {
+        return view('admin.index');
+    }
+
+    public function view_users()
+    {
+        $usuarios = User::all();
+        return view('admin.users', ['usuarios' => $usuarios]);
+    }
+
+    public function disable_user($id)
+    {
+        //
+    }
+
+    public function enable_user($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('admin.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $rules = [
+            'username' => 'required|string|max:255|unique:usuario',
+            'email' => 'required|string|max:255',
+            'password' => 'required|string|min:8|confirmed',
+            'password_confirmation' => 'required',
+            'cuit' => 'required|min:11|max:11',
+            'nombre' => 'required',
+            'descripcion' => 'required|max:250',
+        ];
+
+        $messages = [
+            'username.required' => 'El campo nombre de usuario no puede ser vacio.',
+            'username.max' =>'El nombre de usuario no puede ser mayor a :max caracteres.',
+            'username.unique' => 'El nombre de usuario ya está en uso.',
+            'email.required' => 'El campo correo electrónico no puede ser vacio.',
+            'email.max' =>'El correo electrónico no puede ser mayor a :max caracteres.',
+            'password.required' => 'El campo contraseña no puede ser vacio.',
+            'password.min' => 'La contraseña debe ser mayor a :min caracteres.',
+            'password.confirmed' => 'Las contraseñas no coinciden.',
+            'cuit.required' => 'El campo CUIT no puede ser vacio.',
+            'cuit.min' => 'El campo CUIT debe ser igual a 11 caracteres.',
+            'cuit.max' => 'El campo CUIT debe ser igual a 11 caracteres.',
+            'nombre.required' => 'El campo nombre y apellido no puede ser vacio.',
+            'descripcion.required' => 'El campo descripción no puede ser vacio.',
+            'descripcion.max' => 'No puede ser mayor a :max caracteres.',
+        ];
+
+        $this->validate($request, $rules, $messages);
+
+        if(!filter_var($request->email, FILTER_VALIDATE_EMAIL)){
+            alert()->error("El correo electrónico ingresado no es una dirección valida", "Ha ocurrido un error")->persistent('Cerrar');
+            return back()->withInput();
+        }else{
+            $nuevo = new User;
+            $nuevo->username = $request->username;
+            $nuevo->password = Hash::make($request->password);
+            $nuevo->tipoUser = 'E';
+            $nuevo->cuit = $request->cuit;
+            $nuevo->nombre = $request->nombre;
+            $nuevo->descripcion = $request->descripcion;
+            $nuevo->habilitado = true;
+            $nuevo->save();
+
+            $contacto = new Entregador_Contacto;
+            $contacto->idUser = $nuevo->idUser;
+            $contacto->tipo = 3;
+            $contacto->contacto = $request->email;
+            $contacto->save();
+
+            $preferencia = new Usuario_Preferencias_Correo;
+            $preferencia->idUser = $nuevo->idUser;
+            $preferencia->email = $contacto->id;
+            $preferencia->asunto = "Envio del aviso nro: {{NRO_AVISO}}";
+            $preferencia->cuerpo = "A continuación se adjuntan los romaneos correspondientes al aviso nro: {{NRO_AVISO}}. Por favor no responder este correo. Comunicarse con {{CORREO}}";
+            $preferencia->save();
+
+            alert()->success("El usuario fue creado con éxito", 'Usuario creado');
+            return redirect()->action('UsuarioController@create');
+        }
     }
 
     /**
@@ -32,18 +132,13 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function show()
     {
         $idUser = auth()->user()->idUser;
         $entregadorContacto = Entregador_Contacto::where('idUser', $idUser)->get();
         $tipoContacto = Tipo_Contacto::all();
-        $entregadorDomicilio = Entregador_Domicilio::where('idUser', $idUser)->get();
-        $localidades = Localidad::all();
-        $provincias = Provincia::all();
-        $preferencia = Usuario_Preferencias_Correo::where('idUser', $idUser)->first();
-        $correo = Entregador_Contacto::where('idUser', $idUser)->where('tipo', 3)->where('id', $preferencia->email)->first();
-        return view('usuario.show',  compact(['entregadorContacto', 'tipoContacto', 'entregadorDomicilio',
-            'localidades', 'provincias', 'preferencia', 'correo']));
+        return view('admin.show',  compact(['entregadorContacto', 'tipoContacto']));
     }
 
     /**
@@ -54,7 +149,7 @@ class UsuarioController extends Controller
      */
     public function edit()
     {
-        return view('usuario.edit');
+        return view('admin.edit');
     }
 
     /**
@@ -80,7 +175,7 @@ class UsuarioController extends Controller
         $idUser = auth()->user()->idUser;
         $tipoContacto = Tipo_Contacto::orderBy('descripcion')->get();
         $entregadorContacto = Entregador_Contacto::where('idUser', $idUser)->get();
-        return view('usuario.contact', compact(['tipoContacto', 'entregadorContacto']));
+        return view('admin.contact', compact(['tipoContacto', 'entregadorContacto']));
     }
 
     public function add_contact(Request $request)
@@ -168,7 +263,7 @@ class UsuarioController extends Controller
                             ->get();
 
 
-        return view('usuario.domicile', compact(['localidades', 'provincias', 'entregadorDomicilio']));
+        return view('admin.domicile', compact(['localidades', 'provincias', 'entregadorDomicilio']));
     }
 
     public function add_domicile(Request $request)
@@ -215,7 +310,7 @@ class UsuarioController extends Controller
 
     public function form_password()
     {
-        return view('usuario.password');
+        return view('admin.password');
     }
 
     public function change_password(Request $request)
@@ -261,7 +356,7 @@ class UsuarioController extends Controller
         $idUser = auth()->user()->idUser;
         $preferencia = Usuario_Preferencias_Correo::where('idUser', $idUser)->first();
         $entregadorContacto = Entregador_Contacto::where('idUser', $idUser)->where('tipo', 3)->get();
-        return view('usuario.email', compact(['preferencia', 'entregadorContacto']));
+        return view('admin.email', compact(['preferencia', 'entregadorContacto']));
     }
 
     public function store_email_preferences(Request $request)

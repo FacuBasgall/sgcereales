@@ -8,9 +8,12 @@
 </head>
 
 <body>
+    <div class="card-header">
+        <label class="title col-md-8 col-form-label">Reportes
+            <i class="fa fa-chevron-right"></i> Resumen de avisos terminados</label>
+    </div>
     <div class="container">
         <div class="header-card">
-            <div class="header-title">Reportes generales</div>
             <form action="{{action('ReporteController@index')}}" method="GET">
                 {{ csrf_field() }}
                 <label for="fechaDesde">
@@ -144,8 +147,9 @@
                 </label>
                 <div><label class="info-text-margin"><i class="fa fa-exclamation-circle"></i>
                         Los campos con * son obligatorios</label></div>
-                <div class="center-of-page"><button type="submit" class="find-button"><i class="fa fa-search" aria-hidden="true"></i>
-                    Buscar</button></div>
+                <div class="center-of-page"><button type="submit" class="find-button"><i class="fa fa-search"
+                            aria-hidden="true"></i>
+                        Buscar</button></div>
 
             </form>
         </div>
@@ -268,13 +272,14 @@
                 <a href="{{action('ReporteController@export_pdf')}}"><button class="export-button"><i
                             class="fa fa-file-pdf-o"></i> Descargar
                         PDF</button></a>
-                <a href="{{action('ReporteController@load_email')}}"><button class="export-button"><i class="fa fa-envelope"></i>
+                <a href="{{action('ReporteController@load_email')}}"><button class="export-button"><i
+                            class="fa fa-envelope"></i>
                         Enviar</button></a>
             </div>
             @elseif ($filtros['fechaDesde']>'1970-01-01')
-            <label class="no-results">No se han encontrado resultados</label>
+            <label class="no-results">No se han encontrado resultados.</label>
             @else
-            <label class="no-results">Realice una búsqueda para obtener resultados</label>
+            <label class="no-results">Realice una búsqueda para obtener resultados.</label>
             @endif
         </div>
     </div>

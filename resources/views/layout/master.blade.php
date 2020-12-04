@@ -83,24 +83,28 @@
                         Corredores
                     </a>
                 </li>
-                <li class="nav-item" id="reporte">
-                    <a class="nav-link" href="{{ action('ReporteController@index') }}" title="Reportes Generales">
+                <li class="nav-item dropdown" id="reporte">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" title="Reportes">
                         <i class="fa fa-bar-chart"></i>
-                        Reportes Generales
+                        Reportes
                     </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li id="descarga"><a href="{{ action('ReporteController@index') }}" class="dropdown-item">Resumen de avisos</a></li>
+                        <li id="dos"><a href="#" class="dropdown-item">Segundo reporte</a></li>
+                        <li id="tres"><a href="#" class="dropdown-item">Tercer reporte</a></li>
+                    </ul>
                 </li>
             </ul>
             <ul class="navbar-nav">
                 <li class="nav-item dropdown" id="usuario">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" title="Configuración">
-                        <i class="fa fa-cog ">
+                        <i class="fa fa-cog">
                         </i>
                         Configuraciones
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li id="show"><a href="{{action('UsuarioController@show')}}" class="dropdown-item">Gestión de usuario</a></li>
-                        <li id="create"><a href="{{action('UsuarioController@create')}}" class="dropdown-item">Añadir usuario</a></li>
-                        <li id="backup"><a onclick="warningBackup();" class="dropdown-item">Copia de resguardo</a></li>
+                        <li id="show"><a href="{{action('UsuarioController@show')}}" class="dropdown-item">Perfil de usuario</a></li>
+                        <li id="acerca"><a onclick="acercaDe();" class="dropdown-item">Acerca de</a></li>
                         <li id="manual"><a href="#" class="dropdown-item">Manual de usuario</a></li>
                     </ul>
                 </li>

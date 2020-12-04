@@ -9,7 +9,7 @@
 <body>
     <div class="card-header">
         <label class="title col-md-8 col-form-label">Configuraciones
-            <i class="fa fa-chevron-right"></i><a href="{{ action('UsuarioController@show')}}"> Gestión de usuario
+            <i class="fa fa-chevron-right"></i><a href="{{ action('UsuarioController@show')}}"> Perfil de usuario
             </a><i class="fa fa-chevron-right"></i> Editar datos de usuario</label>
     </div>
     <div class="container">

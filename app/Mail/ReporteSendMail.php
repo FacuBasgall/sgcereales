@@ -95,8 +95,8 @@ class ReporteSendMail extends Mailable
         'entregador_contacto', 'entregador_domicilio']));
         $pdf->setPaper('a4', 'landscape');
 
-        $filenameExcel = "Reporte General de Descargas " . $hoy . ".xlsx";
-        $filenamePdf = "Reporte General de Descargas " . $hoy . ".pdf";
+        $filenameExcel = "Resumen General de Avisos de Descargas " . $hoy . ".xlsx";
+        $filenamePdf = "Resumen General de Avisos de Descargas " . $hoy . ".pdf";
 
         return $this->view('mails.romaneo_mail', compact(['cuerpo']))
             ->subject($asunto)

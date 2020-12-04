@@ -66,4 +66,16 @@ class HomeController extends Controller
             'intermediarios', 'remitentes', 'corredores', 'productos', 'avisos_productos',
             'avisos_entregadores', 'localidades', 'provincias']));
     }
+
+    public function verificacion()
+    {
+        /**Si el usuario es entregador devuelve la vista normal del sistema,
+         * en cambio si es admin solo las funciones de este usuario
+         */
+        if(auth()->user()->tipoUser == 'E'){
+            return redirect()->action('HomeController@index');
+        }else{
+            return redirect()->action('AdminController@index');
+        }
+    }
 }

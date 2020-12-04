@@ -9,8 +9,8 @@
 
 <body>
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><a>Configuraciones</a> <i class="fa fa-chevron-right"></i>
-            <a>Gestión de usuario</a></label>
+        <label class="title col-md-8 col-form-label">Configuraciones <i class="fa fa-chevron-right"></i>
+            Perfil de usuario</label>
     </div>
     <div class="container">
         <div class="card">

@@ -1,4 +1,4 @@
-@extends('layout.master')
+@extends('layout.master-admin')
 @section('content')
 @parent
 
@@ -10,12 +10,12 @@
 <body>
     <div class="card-header">
         <label class="title col-md-8 col-form-label">Configuraciones
-            <i class="fa fa-chevron-right"></i><a href="{{ action('UsuarioController@show')}}"> Perfil de usuario
+            <i class="fa fa-chevron-right"></i><a href="{{ action('AdminController@show')}}"> Perfil de usuario
             </a><i class="fa fa-chevron-right"></i> Cambiar contraseña</label>
     </div>
     <div class="container">
         <div class="card">
-            <form method="POST" action="{{ action('UsuarioController@change_password') }}" autocomplete="off">
+            <form method="POST" action="{{ action('AdminController@change_password') }}" autocomplete="off">
                 {{ csrf_field() }}
                 <div class="form-group">
                     <label for="passwordold">{{ __('Contraseña') }}</label>

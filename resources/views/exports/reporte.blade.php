@@ -23,7 +23,7 @@
                     </b>
                 </th>
             </div>
-            <th><b>Resumen General de Descarga</b></th>
+            <th><b>Resumen General de Avisos de Descargas</b></th>
         </tr>
         <tr>
             <th><b style="font-weight:bold">Fecha desde: {{date("d/m/Y", strtotime($filtros->fechaDesde))}}</b></th>
