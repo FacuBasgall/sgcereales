@@ -18,7 +18,7 @@ class EntregadorMiddleware
     {
         if ($request->user() && $request->user()->tipoUser != 'E')
         {
-            return abort(401);
+            return abort(403);
         }
         return $next($request);
     }

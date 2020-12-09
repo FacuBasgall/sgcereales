@@ -33,18 +33,25 @@ class AdminController extends Controller
 
     public function view_users()
     {
-        $usuarios = User::all();
+        $usuarios = User::where('idUser', '<>', auth()->user()->idUser)->get(); //Todos los usuarios, excepto el usuario autenticado
         return view('admin.users', ['usuarios' => $usuarios]);
     }
 
-    public function disable_user($id)
+    public function change_status($id)
     {
-        //
-    }
-
-    public function enable_user($id)
-    {
-        //
+        $user = User::findOrFail($id);
+        if($user->habilitado){
+            $user->habilitado = false;
+            $mensaje = "El usuario se ha deshabilitado correctamente";
+            $titulo = "Usuario deshabilitado";
+        }else{
+            $user->habilitado = true;
+            $mensaje = "El usuario se ha habilitado correctamente";
+            $titulo = "Usuario habilitado";
+        }
+        $user->save();
+        alert()->success($mensaje, $titulo);
+        return redirect()->action('AdminController@view_users');
     }
 
     /**

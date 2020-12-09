@@ -8,7 +8,7 @@
 
 <body>
     <div class="card-header">
-        <label class="title col-md-8 col-form-label">Configuraciones
+        <label class="title col-md-8 col-form-label"><a href="{{ action('AdminController@view_users') }}">Gestión de usuarios</a>
             <i class="fa fa-chevron-right"></i> Crear usuario</label>
     </div>
     <div class="container">

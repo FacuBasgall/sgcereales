@@ -46,8 +46,7 @@ Route::post('/admin/change_password', 'AdminController@change_password');
 Route::get('/admin/email_preferences', 'AdminController@edit_email_preferences');
 Route::post('/admin/email_preferences/store', 'AdminController@store_email_preferences');
 Route::get('/admin/usuarios', 'AdminController@view_users');
-Route::get('/admin/usuario/disable/{id}', 'AdminController@disable_user');
-Route::get('/admin/usuario/enable/{id}', 'AdminController@enable_user');
+Route::get('/admin/usuario/change_status/{id}', 'AdminController@change_status');
 
 Route::get('/usuario/show', 'UsuarioController@show');
 Route::get('/usuario/edit', 'UsuarioController@edit');

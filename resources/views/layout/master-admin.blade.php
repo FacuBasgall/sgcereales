@@ -31,7 +31,7 @@
 
 <body>
     <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark" style="font-family:sans-serif;">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="{{action('AdminController@index')}}" title="Inicio">
             <div class="img">
                 <img src="{{ URL::to('/image/SGC.jpg') }}">
             </div>

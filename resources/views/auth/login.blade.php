@@ -11,7 +11,8 @@
                         <div style="display:flex; justify-content:center; align-items:center;">
                             <img style="border-radius:50%; width:80px;" src="{{ URL::to('/image/SGC.jpg') }}">
                         </div>
-                        <div style="display:flex; justify-content:center; align-items:center; text-align:center; font-size:30px;">
+                        <div
+                            style="display:flex; justify-content:center; align-items:center; text-align:center; font-size:30px;">
                             <span><b>Bienvenido<br>
                                     Sistema Gestor de Cereales</b></span>
                         </div>
@@ -22,25 +23,36 @@
                             <form method="POST" action="{{ action('Auth\LoginController@authenticate') }}">
                                 {{ csrf_field() }}
                                 @if ($errors->any())
-                                <p class="alert alert-danger">El nombre de usuario o contraseña son incorrectos</p>
+                                <ul class="alert alert-danger">
+                                    @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
                                 @endif
                                 <div class="form-group row">
-                                    <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('Nombre de usuario') }}</label>
+                                    <label for="username"
+                                        class="col-md-4 col-form-label text-md-right">{{ __('Nombre de usuario') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
+                                        <input id="username" type="text"
+                                            class="form-control @error('username') is-invalid @enderror" name="username"
+                                            value="{{ old('username') }}" required autocomplete="username" autofocus>
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña') }}</label>
+                                    <label for="password"
+                                        class="col-md-4 col-form-label text-md-right">{{ __('Contraseña') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                                        <input id="password" type="password"
+                                            class="form-control @error('password') is-invalid @enderror" name="password"
+                                            required autocomplete="current-password">
                                     </div>
                                 </div>
                         </div>
-                        <a class="btn btn-link" style="display:flex; justify-content:center; align-items:center;" href="{{action ('Auth\ForgotPasswordController@showLinkRequestForm')}}">
+                        <a class="btn btn-link" style="display:flex; justify-content:center; align-items:center;"
+                            href="{{action ('Auth\ForgotPasswordController@showLinkRequestForm')}}">
                             {{ __('Forgot Your Password?') }}
                         </a>
                         <div>

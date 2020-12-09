@@ -18,7 +18,7 @@ class AdminMiddleware
     {
         if ($request->user() && $request->user()->tipoUser != 'A')
         {
-            return response()->view('unauthorized', ['role' => 'ADMINISTRADOR']);
+            return abort(403);
         }
         return $next($request);
     }
