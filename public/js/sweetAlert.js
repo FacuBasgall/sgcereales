@@ -75,7 +75,7 @@ function warningBackup() {
       }).then((willDelete) => {
         if (willDelete) {
             swal.stopLoading(),
-            window.location.href = '//localhost:8000/config/backup';
+            window.location.href = '//localhost:8000/admin/backup';
       }});
 }
 

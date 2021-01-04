@@ -17,7 +17,6 @@ Route::get('/', 'HomeController@verificacion');
 Route::get('/home', 'HomeController@index')->middleware('entregador')->name('home');
 Route::get('/verificacion', 'HomeController@verificacion');
 
-
 Route::get('/login', 'Auth\LoginController@login')->name('login');
 Route::post('/login/auth', 'Auth\LoginController@authenticate');
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
@@ -47,6 +46,7 @@ Route::get('/admin/email_preferences', 'AdminController@edit_email_preferences')
 Route::post('/admin/email_preferences/store', 'AdminController@store_email_preferences');
 Route::get('/admin/usuarios', 'AdminController@view_users');
 Route::get('/admin/usuario/change_status/{id}', 'AdminController@change_status');
+Route::get('/admin/backup', 'AdminController@backup');
 
 Route::get('/usuario/show', 'UsuarioController@show');
 Route::get('/usuario/edit', 'UsuarioController@edit');
@@ -152,6 +152,3 @@ Route::get('/reporte/export_excel', 'ReporteController@export_excel');
 Route::get('/reporte/export_pdf', 'ReporteController@export_pdf');
 Route::post('/reporte/send_email', 'ReporteController@send_email');
 Route::get('/reporte/load_email', 'ReporteController@load_email');
-
-Route::get('/config/backup', 'ConfigController@run_backup');
-

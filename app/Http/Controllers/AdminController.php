@@ -377,4 +377,17 @@ class AdminController extends Controller
         alert()->success("Las preferencias de correo fueron editadas con exito", 'Editado con éxito');
         return redirect()->action('UsuarioController@show');
     }
+
+    public function backup()
+    {
+        $cmd = shell_exec("cd .. & php artisan backup:clean");
+        $cmd = shell_exec("cd .. & php artisan backup:run --only-db");
+        if(stristr($cmd, "Backup completed") === false){
+            alert()->error("No se ha completado el proceso de backup", 'Ha ocurrido un error')->persistent('Cerrar');
+            return back();
+        }else{
+            alert()->success("Ya puede utilizar el sistema", 'Backup completo')->persistent('Cerrar');
+            return back();
+        }
+    }
 }

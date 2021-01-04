@@ -192,7 +192,6 @@ class ReporteController extends Controller
         'entregador_contacto', 'entregador_domicilio']));
         $pdf->setPaper('a4', 'landscape');
         return $pdf->download($filename);
-
     }
 
     public function send_email(Request $request)

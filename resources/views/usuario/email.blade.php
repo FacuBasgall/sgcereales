@@ -19,7 +19,6 @@
             <div class="box">
                 <div class="form-title" style="font-size:20px;"><b>Preferencias de email</b></div>
                 <form action="{{action('UsuarioController@store_email_preferences')}}" method="POST" autocomplete="off">
-                    {{ method_field('PUT') }}
                     {{ csrf_field() }}
                     <label for="email">
                         <span>Correo*: </span>
@@ -52,7 +51,7 @@
                     <div><label class="info-text-margin"><i class="fa fa-exclamation-circle"></i>
                             Los campos con * son obligatorios</label></div>
                     <div><label class="info-text-margin"><i class="fa fa-exclamation-circle"></i>
-                            Valores NRO_AVISO y CORREO, debe expresarse entre llaves dobles</label></div>
+                            Valor NRO_AVISO debe expresarse entre llaves dobles</label></div>
                     <div class="center-of-page"><button type="submit" class="save-button" style="margin-top:13px;"><i class="fa fa-check"></i>
                             Guardar</button></div>
                 </form>

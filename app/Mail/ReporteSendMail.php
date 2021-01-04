@@ -63,6 +63,7 @@ class ReporteSendMail extends Mailable
         $cuerpo = $this->cuerpo;
         $hoy = date("Y-m-d");
         $entregadorAutenticado = auth()->user()->idUser;
+        $nombreUsuario = auth()->user()->nombre;
         $filtros = Filtro::first();
 
         /**CARGA PDF */
@@ -98,8 +99,12 @@ class ReporteSendMail extends Mailable
         $filenameExcel = "Resumen General de Avisos de Descargas " . $hoy . ".xlsx";
         $filenamePdf = "Resumen General de Avisos de Descargas " . $hoy . ".pdf";
 
+        $preferencias = Usuario_Preferencias_Correo::where('idUser', $entregadorAutenticado)->first();
+        $email = Entregador_Contacto::where('id', $preferencias->email)->first();
+
         return $this->view('mails.romaneo_mail', compact(['cuerpo']))
             ->subject($asunto)
+            ->replyTo($email->contacto, $nombreUsuario)
             ->attachData($pdf->output(), $filenamePdf)
             ->attach(Excel::download(new ReporteExport($filtros->idFiltro), $filenameExcel)->getFile(), ['as' => $filenameExcel]);
     }

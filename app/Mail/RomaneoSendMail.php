@@ -56,6 +56,7 @@ class RomaneoSendMail extends Mailable
     public function build()
     {
         $idUser = auth()->user()->idUser;
+        $nombreUsuario = auth()->user()->nombre;
         $aviso = Aviso::where('idAviso', $this->idAviso)->first();
         $titular = Titular::where('cuit', $aviso->idTitularCartaPorte)->first();
         $cargas = Carga::where('idAviso', $aviso->idAviso)->get();
@@ -81,10 +82,8 @@ class RomaneoSendMail extends Mailable
         $preferencias = Usuario_Preferencias_Correo::where('idUser', $idUser)->first();
         $email = Entregador_Contacto::where('id', $preferencias->email)->first();
         $asunto = str_replace('{{NRO_AVISO}}', $aviso->nroAviso, $preferencias->asunto);
-        $asunto = str_replace('{{CORREO}}', $email->contacto, $asunto);
 
         $cuerpo = str_replace('{{NRO_AVISO}}', $aviso->nroAviso, $preferencias->cuerpo);
-        $cuerpo = str_replace('{{CORREO}}', $email->contacto, $cuerpo);
 
         $filenameExcel = $aviso->nroAviso . " " . $titular->nombre . ".xlsx";
         $filenamePdf = $aviso->nroAviso . " " . $titular->nombre . ".pdf";
@@ -94,6 +93,7 @@ class RomaneoSendMail extends Mailable
         return $this->view('mails.romaneo_mail', compact(['cuerpo']))
             ->cc($correosCorredor)
             ->subject($asunto)
+            ->replyTo($email->contacto, $nombreUsuario)
             ->attachData($pdf->output(), $filenamePdf)
             ->attach(Excel::download(new RomaneoExport($this->idAviso), $filenameExcel)->getFile(), ['as' => $filenameExcel]);
     }

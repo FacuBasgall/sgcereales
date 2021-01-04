@@ -8,7 +8,7 @@ return [
          * The name of this application. You can use this name to monitor
          * the backups.
          */
-        'name' => env('APP_NAME', 'sgcereales-backup'),
+        'name' => env('APP_NAME'),
 
         'source' => [
 
@@ -101,6 +101,7 @@ return [
              * The disk names on which the backups will be stored.
              */
             'disks' => [
+                'dropbox',
                 'local',
             ],
         ],
@@ -166,7 +167,7 @@ return [
      */
     'monitor_backups' => [
         [
-            'name' => env('APP_NAME', 'sgcereales-backup'),
+            'name' => env('APP_NAME', ''),
             'disks' => ['local'],
             /*'health_checks' => [
                 \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays::class => 1,
