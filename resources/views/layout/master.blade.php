@@ -36,7 +36,8 @@
                 <img src="{{ URL::to('/image/SGC.jpg') }}">
             </div>
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -89,7 +90,8 @@
                         Reportes
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li id="descarga"><a href="{{ action('ReporteController@index') }}" class="dropdown-item">Resumen de avisos</a></li>
+                        <li id="descarga"><a href="{{ action('ReporteController@index') }}"
+                                class="dropdown-item">Resumen de avisos</a></li>
                         <li id="dos"><a href="#" class="dropdown-item">Segundo reporte</a></li>
                         <li id="tres"><a href="#" class="dropdown-item">Tercer reporte</a></li>
                     </ul>
@@ -103,7 +105,8 @@
                         Configuraciones
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li id="show"><a href="{{action('UsuarioController@show')}}" class="dropdown-item">Perfil de usuario</a></li>
+                        <li id="show"><a href="{{action('UsuarioController@show')}}" class="dropdown-item">Perfil de
+                                usuario</a></li>
                         <li id="acerca"><a onclick="acercaDe();" class="dropdown-item">Acerca de</a></li>
                         <li id="manual"><a href="#" class="dropdown-item">Manual de usuario</a></li>
                     </ul>
@@ -121,28 +124,28 @@
     <div id="loader" class="center"></div>
     @yield('content')
     <script>
-        $(document).ready(function() {
-            var loc = window.location.href; // grabbing the url
-            var str = loc.split("/")[3]; // splitting the url and taking the third string
-            if (str.localeCompare("") == 0)
-                $("#home").addClass("active");
-            else
-                $("#" + str).addClass("active");
-        });
+    $(document).ready(function() {
+        var loc = window.location.href; // grabbing the url
+        var str = loc.split("/")[3]; // splitting the url and taking the third string
+        if (str.localeCompare("") == 0)
+            $("#home").addClass("active");
+        else
+            $("#" + str).addClass("active");
+    });
 
-        $(function() {
-            $(".dropdown").hover(
-                function() {
-                    $('.dropdown-menu', this).stop(true, true).fadeIn("fast");
-                    $(this).toggleClass('open');
-                    $('b', this).toggleClass("caret caret-up");
-                },
-                function() {
-                    $('.dropdown-menu', this).stop(true, true).fadeOut("fast");
-                    $(this).toggleClass('open');
-                    $('b', this).toggleClass("caret caret-up");
-                });
-        });
+    $(function() {
+        $(".dropdown").hover(
+            function() {
+                $('.dropdown-menu', this).stop(true, true).fadeIn("fast");
+                $(this).toggleClass('open');
+                $('b', this).toggleClass("caret caret-up");
+            },
+            function() {
+                $('.dropdown-menu', this).stop(true, true).fadeOut("fast");
+                $(this).toggleClass('open');
+                $('b', this).toggleClass("caret caret-up");
+            });
+    });
     </script>
     @include('sweet::alert')
 </body>

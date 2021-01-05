@@ -1,7 +1,11 @@
+.home{
+    margin:20px;
+}
+
 .img-admin {
     width: 300px;
     height: 300px;
-    margin: 0 auto;
+    margin: 10px auto;
     border-radius: 50%;
     overflow: hidden;
 }
