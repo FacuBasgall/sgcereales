@@ -274,4 +274,9 @@ class ReporteController extends Controller
 
         return view('reporte.mail', compact(['correos', 'user_email']));
     }
+
+    public function prueba()
+    {
+        return view('reporte.prueba');
+    }
 }
