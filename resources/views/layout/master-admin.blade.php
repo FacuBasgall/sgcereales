@@ -13,6 +13,7 @@
 
     <!-- lib jquery 3.3.1 -->
     <script type="text/javascript" src="{{ asset('js/navbarMenu/jquery.min.js') }}"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 
     <!-- select2 v4.1.0-->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/select2/select2.min.css') }}">
@@ -20,7 +21,6 @@
     <script type="text/javascript" src="{{ asset('js/select2/select2es.js') }}"></script>
 
     <!-- Header de camino de hormiga-->
-    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/header.css') }}">
 
     <!-- config app -->
