@@ -13,6 +13,7 @@
 
     <!-- lib jquery 3.3.1 -->
     <script type="text/javascript" src="{{ asset('js/navbarMenu/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 
     <!-- select2 v4.1.0-->
