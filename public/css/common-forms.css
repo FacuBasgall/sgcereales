@@ -100,3 +100,7 @@ input::-webkit-inner-spin-button {
     display: flex;
     justify-content: center;
 }
+
+[list]::-webkit-calendar-picker-indicator {
+    display: none;
+}

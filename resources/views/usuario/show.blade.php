@@ -87,7 +87,7 @@
                 <div class="form-title">Preferencias de email <a
                         href="{{ action('UsuarioController@edit_email_preferences') }}"><button
                             class="small-edit-button" title="Editar"><i class="fa fa-pencil"></i></button></a></div>
-                <label class="labels"><strong>Correo: </strong>{{$correo->contacto}}</label><br>
+                <label class="labels"><strong>Email: </strong>{{$correo->contacto}}</label><br>
                 <label class="labels"><strong>Asunto: </strong>{{$preferencia->asunto}}</label><br>
                 <label class="labels"><strong>Cuerpo: </strong>{{$preferencia->cuerpo}}</label>
             </div>

@@ -39,6 +39,11 @@
                     contactos</label>
                 @endif
                 <hr>
+                <div class="form-title">Preferencias de email <a
+                        href="{{ action('AdminController@edit_email_preferences') }}"><button
+                            class="small-edit-button" title="Editar"><i class="fa fa-pencil"></i></button></a></div>
+                <label class="labels"><strong>Email: </strong>{{$correo->contacto}}</label><br>
+                <hr>
             </div>
         </div>
     </div>
