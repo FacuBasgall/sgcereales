@@ -93,8 +93,8 @@
                     <ul class="dropdown-menu" role="menu">
                         <li id="descarga"><a href="{{ action('ReporteController@index') }}"
                                 class="dropdown-item">Resumen de avisos</a></li>
-                        <li id="dos"><a href="#" class="dropdown-item">Segundo reporte</a></li>
-                        <li id="tres"><a href="#" class="dropdown-item">Tercer reporte</a></li>
+                        <!-- <li id="dos"><a href="#" class="dropdown-item">Segundo reporte</a></li>
+                        <li id="tres"><a href="#" class="dropdown-item">Tercer reporte</a></li> -->
                     </ul>
                 </li>
             </ul>
