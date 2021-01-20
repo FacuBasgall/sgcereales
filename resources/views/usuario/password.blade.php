@@ -18,7 +18,7 @@
             <form method="POST" action="{{ action('UsuarioController@change_password') }}" autocomplete="off">
                 {{ csrf_field() }}
                 <div class="form-group">
-                    <label for="passwordold">{{ __('Contraseña') }}</label>
+                    <label for="passwordold">{{ __('Contraseña*') }}</label>
 
                     <div>
                         <input id="passwordold" type="password" class="form-control @error('passwordold') is-invalid @enderror common-input" name="passwordold" required>
@@ -32,7 +32,7 @@
                 </div>
 
                 <div>
-                    <label for="password">{{ __('Nueva contraseña') }}</label>
+                    <label for="password">{{ __('Nueva contraseña*') }}</label>
 
                     <div>
                         <input id="password" type="password" class="form-control @error('password') is-invalid @enderror common-input" name="password" required autocomplete="new-password">
@@ -46,13 +46,14 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="password-confirm">{{ __('Confirmar contraseña') }}</label>
+                    <label for="password-confirm">{{ __('Confirmar contraseña*') }}</label>
 
                     <div>
                         <input id="password-confirm" type="password" class="form-control common-input" name="password_confirmation" required autocomplete="new-password">
                     </div>
                 </div>
-
+                <div><label class="info-text-margin"><i class="fa fa-exclamation-circle"></i>
+                        Los campos con * son obligatorios</label></div>
                 <div style="display:flex; justify-content:center;">
                     <button type="submit"  class="save-button">
                         {{ __('Guardar') }}

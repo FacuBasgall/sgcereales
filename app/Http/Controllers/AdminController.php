@@ -145,7 +145,9 @@ class AdminController extends Controller
         $idUser = auth()->user()->idUser;
         $entregadorContacto = Entregador_Contacto::where('idUser', $idUser)->get();
         $tipoContacto = Tipo_Contacto::all();
-        return view('admin.show',  compact(['entregadorContacto', 'tipoContacto']));
+        $preferencia = Usuario_Preferencias_Correo::where('idUser', $idUser)->first();
+        $correo = Entregador_Contacto::where('idUser', $idUser)->where('tipo', 3)->where('id', $preferencia->email)->first();
+        return view('admin.show',  compact(['entregadorContacto', 'tipoContacto', 'correo']));
     }
 
     /**
@@ -371,11 +373,11 @@ class AdminController extends Controller
         $idUser = auth()->user()->idUser;
         $preferencia = Usuario_Preferencias_Correo::where('idUser', $idUser)->first();
         $preferencia->email = $request->email;
-        $preferencia->asunto = $request->asunto;
-        $preferencia->cuerpo = $request->cuerpo;
+        $preferencia->asunto = "";
+        $preferencia->cuerpo = "";
         $preferencia->save();
         alert()->success("Las preferencias de correo fueron editadas con exito", 'Editado con éxito');
-        return redirect()->action('UsuarioController@show');
+        return redirect()->action('AdminController@show');
     }
 
     public function backup()

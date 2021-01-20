@@ -116,7 +116,7 @@
                     <a class="nav-link" href="{{url('logout')}}" title="Cerrar Sesión">
                         <i class="fa fa-power-off">
                         </i>
-                        Cerrar Sesión <br>{{auth()->user()->username}}
+                        Cerrar Sesión
                     </a>
                 </li>
             </ul>

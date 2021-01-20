@@ -39,7 +39,7 @@
                 @foreach ($tipoContacto as $tipo)
                 @foreach ($entregadorContacto as $contacto)
                 @if ($tipo->idTipoContacto == $contacto->tipo)
-                <div class="margin-right"><strong>{{$tipo->descripcion}}: </strong>{{$contacto->contacto}} <a onclick="warningContact('{{$contacto->id}}', 'usuario');"><button class="small-delete-button" title="Eliminar"><i class="fa fa-trash"></i></button></a>
+                <div class="margin-right"><strong>{{$tipo->descripcion}}: </strong>{{$contacto->contacto}} <a onclick="warningContact('{{$contacto->id}}', 'admin');"><button class="small-delete-button" title="Eliminar"><i class="fa fa-trash"></i></button></a>
                 </div>
                 @endif
                 @endforeach
