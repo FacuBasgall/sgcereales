@@ -44,7 +44,7 @@ class ReporteController extends Controller
         $this->middleware('entregador');
     }
 
-    public function index(Request $request)
+    public function summary(Request $request) /**Resumen de Descargas en Avisos terminados */
     {
         $resultado = NULL;
         $filtros = array(
@@ -144,12 +144,12 @@ class ReporteController extends Controller
         $localidades = Localidad::all();
         $provincias = Provincia::all();
 
-        return view('reporte.index', compact(['cargas', 'descargas', 'destinatarios', 'titulares',
+        return view('reporte.summary', compact(['cargas', 'descargas', 'destinatarios', 'titulares',
             'intermediarios', 'remitentes', 'corredores', 'entregador', 'productos', 'avisos_productos',
             'avisos_entregadores', 'localidades', 'provincias', 'resultado', 'filtros']));
     }
 
-    public function export_excel()
+    public function export_excel() /**Exportar a Excel -> Resumen de Descargas en Avisos terminados */
     {
         $hoy = date("Y-m-d");
         $filename = "Reporte General de Descargas " . $hoy . ".xlsx";
@@ -157,7 +157,7 @@ class ReporteController extends Controller
         return Excel::download(new ReporteExport($filtro->idFiltro), $filename);
     }
 
-    public function export_pdf()
+    public function export_pdf() /**Exportar a PDF -> Resumen de Descargas en Avisos terminados */
     {
         $hoy = date("Y-m-d");
         $filename = "Reporte General de Descargas " . $hoy . ".pdf";
@@ -194,7 +194,7 @@ class ReporteController extends Controller
         return $pdf->download($filename);
     }
 
-    public function send_email(Request $request)
+    public function send_email(Request $request) /**Enviar por Correo -> Resumen de Descargas en Avisos terminados */
     {
         $correos = array();
         foreach($request->email as $email){
@@ -206,7 +206,7 @@ class ReporteController extends Controller
         $cuerpo = $request->cuerpo;
         \Mail::to($correos)->send(new ReporteSendMail($asunto, $cuerpo));
         alert()->success("El reporte general ha sido enviado con éxito", 'Correo enviado');
-        return redirect()->action('ReporteController@index');
+        return redirect()->action('ReporteController@summary');
     }
 
     public function load_email()
@@ -277,6 +277,12 @@ class ReporteController extends Controller
 
     public function prueba()
     {
-        return view('reporte.prueba');
+        $productos = Producto::all();
+        $productoJson = array();
+        foreach($productos as $producto){
+            $productoJson['nombre'] = $producto->nombre;
+            $productoJson['mermaManipuleo'] = $producto->mermaManipuleo;
+        }
+        return view('reporte.prueba', compact(['productoJson']));
     }
 }

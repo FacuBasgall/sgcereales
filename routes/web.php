@@ -147,9 +147,10 @@ Route::get('/aviso/export_pdf/{id}', 'AvisoController@export_pdf');
 Route::get('/aviso/send_email/{id}', 'AvisoController@send_email');
 Route::get('/aviso/getLocalidades', 'AvisoController@getLocalidades');
 
-Route::get('/reporte', 'ReporteController@index');
+Route::get('/reporte/summary', 'ReporteController@summary');
 Route::get('/reporte/export_excel', 'ReporteController@export_excel');
 Route::get('/reporte/export_pdf', 'ReporteController@export_pdf');
 Route::post('/reporte/send_email', 'ReporteController@send_email');
 Route::get('/reporte/load_email', 'ReporteController@load_email');
 Route::get('/reporte/prueba', 'ReporteController@prueba');
+

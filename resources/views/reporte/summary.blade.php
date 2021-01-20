@@ -14,7 +14,7 @@
     </div>
     <div class="container">
         <div class="header-card">
-            <form action="{{action('ReporteController@index')}}" method="GET">
+            <form action="{{action('ReporteController@summary')}}" method="GET">
                 {{ csrf_field() }}
                 <label for="fechaDesde">
                     <span>Fecha desde*:</span>
