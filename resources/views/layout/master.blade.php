@@ -93,7 +93,7 @@
                     <ul class="dropdown-menu" role="menu">
                         <li id="descarga"><a href="{{ action('ReporteController@summary') }}"
                                 class="dropdown-item">Resumen de avisos</a></li>
-                        <li id="dos"><a href="#" class="dropdown-item">Segundo reporte</a></li>
+                        <li id="dos"><a href="{{ action('ReporteController@products') }}" class="dropdown-item">Resumen de productos</a></li>
                         <li id="tres"><a href="#" class="dropdown-item">Tercer reporte</a></li>
                     </ul>
                 </li>
