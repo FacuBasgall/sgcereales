@@ -6,7 +6,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/general-reports.css') }}">
     <script src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
-
 <body>
     <div class="card-header">
         <label class="title col-md-8 col-form-label">Reportes
@@ -75,6 +74,14 @@
         var materialOptions = {
             chart: {
                 title: 'Kg Descargados por Producto'
+            },
+            axes: {
+                x: {
+                    0: { label: 'Producto'}
+                },
+                y: {
+                    0: { label: 'Kilogramos (Kg)'}
+                }
             },
             bars: 'vertical'
         };
