@@ -37,8 +37,7 @@
                 <img src="{{ URL::to('/image/SGC.jpg') }}">
             </div>
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -91,10 +90,9 @@
                         Reportes
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li id="descarga"><a href="{{ action('ReporteController@summary') }}"
-                                class="dropdown-item">Resumen de avisos</a></li>
-                        <li id="dos"><a href="{{ action('ReporteController@products') }}" class="dropdown-item">Resumen de productos</a></li>
-                        <li id="tres"><a href="#" class="dropdown-item">Tercer reporte</a></li>
+                        <li id="reporte1"><a href="{{ action('ReporteController@summary') }}" class="dropdown-item">Resumen de avisos</a></li>
+                        <li id="reporte2"><a href="{{ action('ReporteController@products') }}" class="dropdown-item">Resumen de productos</a></li>
+                        <li id="reporte3"><a href="{{ action('ReporteController@productivity') }}" class="dropdown-item">Productividad</a></li>
                     </ul>
                 </li>
             </ul>
@@ -125,28 +123,28 @@
     <div id="loader" class="center"></div>
     @yield('content')
     <script>
-    $(document).ready(function() {
-        var loc = window.location.href; // grabbing the url
-        var str = loc.split("/")[3]; // splitting the url and taking the third string
-        if (str.localeCompare("") == 0)
-            $("#home").addClass("active");
-        else
-            $("#" + str).addClass("active");
-    });
+        $(document).ready(function() {
+            var loc = window.location.href; // grabbing the url
+            var str = loc.split("/")[3]; // splitting the url and taking the third string
+            if (str.localeCompare("") == 0)
+                $("#home").addClass("active");
+            else
+                $("#" + str).addClass("active");
+        });
 
-    $(function() {
-        $(".dropdown").hover(
-            function() {
-                $('.dropdown-menu', this).stop(true, true).fadeIn("fast");
-                $(this).toggleClass('open');
-                $('b', this).toggleClass("caret caret-up");
-            },
-            function() {
-                $('.dropdown-menu', this).stop(true, true).fadeOut("fast");
-                $(this).toggleClass('open');
-                $('b', this).toggleClass("caret caret-up");
-            });
-    });
+        $(function() {
+            $(".dropdown").hover(
+                function() {
+                    $('.dropdown-menu', this).stop(true, true).fadeIn("fast");
+                    $(this).toggleClass('open');
+                    $('b', this).toggleClass("caret caret-up");
+                },
+                function() {
+                    $('.dropdown-menu', this).stop(true, true).fadeOut("fast");
+                    $(this).toggleClass('open');
+                    $('b', this).toggleClass("caret caret-up");
+                });
+        });
     </script>
     @include('sweet::alert')
 </body>

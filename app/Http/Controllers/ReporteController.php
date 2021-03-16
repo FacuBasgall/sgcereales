@@ -295,6 +295,7 @@ class ReporteController extends Controller
         $fechaDesde = $request->fechaDesde;
         $fechaHasta = $request->fechaHasta;
         $control = 0;
+        $entregadorAutenticado = auth()->user()->idUser;
         $arrayProductos[] = ['Nombre del Producto', 'Total Descargado (Kg)', 'Total Descargado con Merma (Kg)'];
         if ($fechaDesde <= $fechaHasta) {
             $query = DB::table('aviso')
@@ -303,12 +304,13 @@ class ReporteController extends Controller
                 ->join('producto', 'producto.idProducto', '=', 'aviso.idProducto')
                 ->join('aviso_entregador', 'aviso_entregador.idAviso', '=', 'aviso.idAviso')
                 ->where('aviso.estado', '=', 1) //avisos terminados
+                ->where('aviso_entregador.idEntregador', '=', $entregadorAutenticado)
                 ->whereBetween('aviso_entregador.fecha', [$fechaDesde, $fechaHasta])
                 ->select('producto.nombre', 'producto.mermaManipuleo', 'descarga.bruto', 'descarga.tara', 'descarga.merma')
                 ->orderBy('producto.nombre')
                 ->get();
 
-            if(sizeof($query) > 0){
+            if (sizeof($query) > 0) {
                 $control = 1;
                 $girasol = array('Nombre' => 'Girasol', 'Neto' => 0, 'NetoFinal' => 0);
                 $maiz = array('Nombre' => 'Maiz', 'Neto' => 0, 'NetoFinal' => 0);
@@ -339,19 +341,101 @@ class ReporteController extends Controller
                             break;
                     }
                 }
-        
+
                 $arrayProductos[] = [$girasol['Nombre'], $girasol['Neto'], $girasol['NetoFinal']];
                 $arrayProductos[] = [$maiz['Nombre'], $maiz['Neto'], $maiz['NetoFinal']];
                 $arrayProductos[] = [$soja['Nombre'], $soja['Neto'], $soja['NetoFinal']];
                 $arrayProductos[] = [$sorgo['Nombre'], $sorgo['Neto'], $sorgo['NetoFinal']];
-                $arrayProductos[] = [$trigo['Nombre'], $trigo['Neto'], $trigo['NetoFinal']];                
-            }          
-        }else{
+                $arrayProductos[] = [$trigo['Nombre'], $trigo['Neto'], $trigo['NetoFinal']];
+            }
+        } else {
             alert()->warning("La fecha desde debe ser menor a la fecha hasta", 'Ha ocurrido un error')->persistent('Cerrar');
             return back()->withInput();
         }
-        if($control == 0 && $fechaDesde == NULL)
+        if ($control == 0 && $fechaDesde == NULL)
             $control = 2; //No se realizo una busqueda
-        return view('reporte.products', compact(['fechaDesde', 'fechaHasta', 'control']))->with('productos', json_encode($arrayProductos));        
+        return view('reporte.products', compact(['fechaDesde', 'fechaHasta', 'control']))->with('productos', json_encode($arrayProductos));
+    }
+
+    public function productivity(Request $request)
+    {
+        $control = 0;
+        $entregadorAutenticado = auth()->user()->idUser;
+        $arrayProductividad[] = ['Meses', 'Cantidad de Romaneos'];
+        /**Selecciona todos los años sin repetir */
+        $aniosSelect = DB::table('aviso_entregador')
+            ->join('aviso', 'aviso.idAviso', '=', 'aviso_entregador.idAviso')
+            ->where('aviso_entregador.idEntregador', '=', $entregadorAutenticado)
+            ->where('aviso.estado', '=', 1)
+            ->select(DB::raw('YEAR(fecha) as anio'))
+            ->distinct()
+            ->get();
+        $anioQuery = NULL;
+        if (isset($request->anio)) {
+            $control = 1;
+            $anioQuery = $request->anio;
+            /**Devuelve la cantidad avisos/romaneos realizados por mes en el año seleccionado */
+            $query = DB::table('aviso_entregador')
+                ->join('aviso', 'aviso.idAviso', '=', 'aviso_entregador.idAviso')
+                ->where('aviso_entregador.idEntregador', '=', $entregadorAutenticado)
+                ->where('aviso.estado', '=', 1)
+                ->whereYear('aviso_entregador.fecha', $anioQuery)
+                ->select(DB::raw('MONTH(fecha) as mes'), DB::raw('count(*) as cantidad'))
+                ->groupBy('mes')
+                ->get();
+            
+            $stop_mes = 12;
+            if($anioQuery == date('Y')){
+                $stop_mes = date('m');
+            }
+            for($i_mes = 1; $i_mes < $stop_mes+1; $i_mes++){
+                $cant_aux = 0;
+                foreach ($query as $q){
+                    if($q->mes == $i_mes){
+                        $cant_aux = $q->cantidad;
+                    }
+                }
+                switch ($i_mes) {
+                    case 1:
+                        $arrayProductividad[] = ['Enero', $cant_aux];
+                        break;
+                    case 2:
+                        $arrayProductividad[] = ['Febrero', $cant_aux];
+                        break;
+                    case 3:
+                        $arrayProductividad[] = ['Marzo', $cant_aux];
+                        break;
+                    case 4:
+                        $arrayProductividad[] = ['Abril', $cant_aux];
+                        break;
+                    case 5:
+                        $arrayProductividad[] = ['Mayo', $cant_aux];
+                        break;
+                    case 6:
+                        $arrayProductividad[] = ['Junio', $cant_aux];
+                        break;
+                    case 7:
+                        $arrayProductividad[] = ['Julio', $cant_aux];
+                        break;
+                    case 8:
+                        $arrayProductividad[] = ['Agosto', $cant_aux];
+                        break;
+                    case 9:
+                        $arrayProductividad[] = ['Septiembre', $cant_aux];
+                        break;
+                    case 10:
+                        $arrayProductividad[] = ['Octubre', $cant_aux];
+                        break;
+                    case 11:
+                        $arrayProductividad[] = ['Noviembre', $cant_aux];
+                        break;
+                    case 12:
+                        $arrayProductividad[] = ['Diciembre', $cant_aux];
+                        break;
+                }
+            }
+        }
+
+        return view('reporte.productivity', compact(['aniosSelect', 'control']))->with('productividad', json_encode($arrayProductividad));
     }
 }
