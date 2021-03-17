@@ -42,7 +42,7 @@ class CorredorController extends Controller
                 alert()->warning("No se encontraron resultados para: $query", 'No se encontraron resultados')->persistent('Cerrar');
             }
         }
-        return view('corredor.index', compact('arrayCorredor'));
+        return view('corredor.index', compact('arrayCorredor', 'query'));
     }
 
     /**
