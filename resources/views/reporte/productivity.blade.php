@@ -44,8 +44,8 @@
         </div>
         <div class="results-card">
             @if($control == 1)
-            <div class="header-title">Resultados encontrados:</div>
-            <div id="curve_chart"></div>
+            <div style="margin-left:50px;" class="header-title">Resultados encontrados:</div>
+            <div style="margin-left:25px" id="curve_chart"></div>
             @elseif($control == 0)
             <label class="no-results">Realice una búsqueda para obtener resultados.</label>
             @endif
@@ -66,17 +66,20 @@
         var data = google.visualization.arrayToDataTable(productividad);
 
         var options = {
-            title: 'Cantidad de Romaneos terminados por meses',
+            title: 'Cantidad de romaneos terminados por meses',
+            width: 1100,
+            height: 500,
+            pointSize: 5,
             legend: {
                 position: 'top'
             },
-            vAxis: { 
-                format: '###', 
-                title: 'Cantidad (unidad)',
+            hAxis: {
+                title: 'Meses'
             },
-            hAxis: {  
-                title: 'Meses',
-            },
+            vAxis: {
+                format: '###',
+                title: 'Cantidad (unidad)'
+            }
         };
         var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
         chart.draw(data, options);

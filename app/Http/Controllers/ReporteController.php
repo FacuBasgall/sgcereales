@@ -383,7 +383,7 @@ class ReporteController extends Controller
                 ->select(DB::raw('MONTH(fecha) as mes'), DB::raw('count(*) as cantidad'))
                 ->groupBy('mes')
                 ->get();
-            
+
             $stop_mes = 12;
             if($anioQuery == date('Y')){
                 $stop_mes = date('m');
@@ -397,40 +397,40 @@ class ReporteController extends Controller
                 }
                 switch ($i_mes) {
                     case 1:
-                        $arrayProductividad[] = ['Enero', $cant_aux];
+                        $arrayProductividad[] = ['Ene', $cant_aux];
                         break;
                     case 2:
-                        $arrayProductividad[] = ['Febrero', $cant_aux];
+                        $arrayProductividad[] = ['Feb', $cant_aux];
                         break;
                     case 3:
-                        $arrayProductividad[] = ['Marzo', $cant_aux];
+                        $arrayProductividad[] = ['Mar', $cant_aux];
                         break;
                     case 4:
-                        $arrayProductividad[] = ['Abril', $cant_aux];
+                        $arrayProductividad[] = ['Abr', $cant_aux];
                         break;
                     case 5:
-                        $arrayProductividad[] = ['Mayo', $cant_aux];
+                        $arrayProductividad[] = ['May', $cant_aux];
                         break;
                     case 6:
-                        $arrayProductividad[] = ['Junio', $cant_aux];
+                        $arrayProductividad[] = ['Jun', $cant_aux];
                         break;
                     case 7:
-                        $arrayProductividad[] = ['Julio', $cant_aux];
+                        $arrayProductividad[] = ['Jul', $cant_aux];
                         break;
                     case 8:
-                        $arrayProductividad[] = ['Agosto', $cant_aux];
+                        $arrayProductividad[] = ['Ago', $cant_aux];
                         break;
                     case 9:
-                        $arrayProductividad[] = ['Septiembre', $cant_aux];
+                        $arrayProductividad[] = ['Sep', $cant_aux];
                         break;
                     case 10:
-                        $arrayProductividad[] = ['Octubre', $cant_aux];
+                        $arrayProductividad[] = ['Oct', $cant_aux];
                         break;
                     case 11:
-                        $arrayProductividad[] = ['Noviembre', $cant_aux];
+                        $arrayProductividad[] = ['Nov', $cant_aux];
                         break;
                     case 12:
-                        $arrayProductividad[] = ['Diciembre', $cant_aux];
+                        $arrayProductividad[] = ['Dic', $cant_aux];
                         break;
                 }
             }
