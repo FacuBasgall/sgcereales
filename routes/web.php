@@ -135,6 +135,7 @@ Route::get('/producto', 'ProductoController@index');
 Route::get('/producto/show/{id}', 'ProductoController@show');
 
 Route::get('/aviso', 'AvisoController@index');
+Route::get('/aviso/pending', 'AvisoController@pending');
 Route::get('/aviso/create', 'AvisoController@create');
 Route::post('/aviso/store', 'AvisoController@store');
 Route::get('/aviso/show/{id}', 'AvisoController@show');

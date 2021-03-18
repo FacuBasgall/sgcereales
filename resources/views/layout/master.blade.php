@@ -42,11 +42,15 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item" id="aviso">
-                    <a class="nav-link" href="{{ action('AvisoController@index') }}" title="Avisos">
+                <li class="nav-item dropdown" id="aviso">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" title="Avisos">
                         <i class="fa fa-newspaper-o"></i>
                         Avisos
                     </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li id="todos"><a href="{{ action('AvisoController@index') }}" class="dropdown-item">Todos</a></li>
+                        <li id="pendientes"><a href="{{ action('AvisoController@pending') }}" class="dropdown-item">Pendientes</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item" id="producto">
                     <a class="nav-link" href="{{ action('ProductoController@index') }}" title="Productos">

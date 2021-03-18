@@ -19,9 +19,9 @@
                 <label for="anio">
                     <span>Año*:</span>
                     <select name="anio" id="labelanio" class="common-input" required>
-                        <option value="" selected disabled hidden></option>
+                        <option value=""></option>
                         @foreach ($aniosSelect as $year)
-                        <option value="{{ $year->anio }}" {{old('year') == $year->anio ? 'selected':''}}>
+                        <option value="{{ $year->anio }}" {{$anioQuery == $year->anio ? 'selected':''}}>
                             {{$year->anio}}
                         </option>
                         @endforeach

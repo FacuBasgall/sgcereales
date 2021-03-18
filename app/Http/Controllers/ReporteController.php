@@ -436,6 +436,6 @@ class ReporteController extends Controller
             }
         }
 
-        return view('reporte.productivity', compact(['aniosSelect', 'control']))->with('productividad', json_encode($arrayProductividad));
+        return view('reporte.productivity', compact(['aniosSelect', 'control', 'anioQuery']))->with('productividad', json_encode($arrayProductividad));
     }
 }
