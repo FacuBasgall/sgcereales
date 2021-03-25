@@ -189,7 +189,7 @@
                         max="99" required>
                 </label>
                 <hr>
-                <p class="form-title"><strong>Procedencia de la mercaderia</strong></p>
+                <p class="form-title"><strong>Procedencia de la mercadería</strong></p>
                 <label for="provincia" class="margin-right">
                     <span>Provincia*:</span>
                     <select name="provincia" id="provincia" class="common-input">

@@ -17,7 +17,7 @@
         <div class="search-bar">
             <form class="{{action('TitularController@index')}}" method="GET" autocomplete="off">
                 {{ csrf_field() }}
-                <input class="searchTerm" type="search" placeholder="Buscar..." name="search" id="search">
+                <input class="searchTerm" value="{{$query}}" type="search" placeholder="Buscar..." name="search" id="search">
                 <button class="searchButton" type="submit"><i class="fa fa-search"></i></button>
             </form>
         </div>

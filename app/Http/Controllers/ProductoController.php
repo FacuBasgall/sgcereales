@@ -38,7 +38,7 @@ class ProductoController extends Controller
                 alert()->warning("No se encontraron resultados para: $query", 'No se encontraron resultados')->persistent('Cerrar');
             }
         }
-        return view('producto.index', compact('productos'));
+        return view('producto.index', compact('productos', 'query'));
     }
 
     /**

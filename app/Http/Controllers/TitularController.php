@@ -42,7 +42,7 @@ class TitularController extends Controller
                 alert()->warning("No se encontraron resultados para: $query", 'No se encontraron resultados')->persistent('Cerrar');
             }
         }
-        return view('titular.index', compact('arrayTitular'));
+        return view('titular.index', compact('arrayTitular', 'query'));
     }
 
     /**

@@ -42,7 +42,7 @@ class RemitenteController extends Controller
                 alert()->warning("No se encontraron resultados para: $query", 'No se encontraron resultados')->persistent('Cerrar');
             }
         }
-        return view('remitente.index', compact('arrayRemitente'));
+        return view('remitente.index', compact('arrayRemitente', 'query'));
     }
 
     /**

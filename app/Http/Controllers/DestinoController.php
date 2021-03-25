@@ -42,7 +42,7 @@ class DestinoController extends Controller
                 alert()->warning("No se encontraron resultados para: $query", 'No se encontraron resultados')->persistent('Cerrar');
             }
         }
-        return view('destino.index', compact('arrayDestino'));
+        return view('destino.index', compact('arrayDestino', 'query'));
     }
 
     /**

@@ -42,7 +42,7 @@ class IntermediarioController extends Controller
                 alert()->warning("No se encontraron resultados para: $query", 'No se encontraron resultados')->persistent('Cerrar');
             }
         }
-        return view('intermediario.index', compact('arrayIntermediario'));
+        return view('intermediario.index', compact('arrayIntermediario', 'query'));
     }
 
     /**

@@ -49,8 +49,8 @@ class AvisoController extends Controller
 
     public function index()
     {
-        $entregadorAutenticado = auth()->user()->idUser;
         $avisos = Aviso::where('borrado', false)->get();
+        $entregadorAutenticado = auth()->user()->idUser;
         $cargas = Carga::where('borrado', false)->get();
         $descargas = Descarga::where('borrado', false)->get();
         $destinatarios = Destino::where('borrado', false)->get();
@@ -70,6 +70,28 @@ class AvisoController extends Controller
 
     }
 
+    public function pending()
+    {
+        $entregadorAutenticado = auth()->user()->idUser;
+        $avisos = Aviso::where('borrado', false)->where('estado', 0)->get(); //false, pendiente
+        $cargas = Carga::where('borrado', false)->get();
+        $descargas = Descarga::where('borrado', false)->get();
+        $destinatarios = Destino::where('borrado', false)->get();
+        $titulares = Titular::where('borrado', false)->get();
+        $intermediarios = Intermediario::where('borrado', false)->get();
+        $remitentes = Remitente_Comercial::where('borrado', false)->get();
+        $corredores = Corredor::where('borrado', false)->get();
+        $productos = Producto::where('borrado', false)->get();
+        $avisos_productos = Aviso_Producto::all();
+        $avisos_entregadores = Aviso_Entregador::where('idEntregador', $entregadorAutenticado)->get();
+        $localidades = Localidad::all();
+        $provincias = Provincia::all();
+
+        return view('aviso.index', compact(['avisos', 'cargas', 'descargas', 'destinatarios', 'titulares',
+            'intermediarios', 'remitentes', 'corredores', 'productos', 'avisos_productos',
+            'avisos_entregadores', 'localidades', 'provincias']));
+    }
+    
     /**
      * Show the form for creating a new resource.
      *
