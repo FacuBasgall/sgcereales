@@ -54,8 +54,8 @@ class ForgotPasswordController extends Controller
                 ['username' => $request->username, 'token' => $token, 'created_at' => Carbon::now()]
             );
             Mail::send('auth.verify',['token' => $token], function($message) use ($request) {
-                      $message->from($request->email);
-                      $message->to('sgcereales@gmail.com');
+                      $message->from('sgcereales@gmail.com');
+                      $message->to($request->email);
                       $message->subject('Notificación de reestablecimiento de contraseña');
                    });
             alert()->success("Se ha enviado por correo el enlace para restablecer la contraseña", 'Correo enviado con éxito')->persistent('Cerrar');
