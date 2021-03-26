@@ -129,7 +129,7 @@ class AdminController extends Controller
             $preferencia->save();
 
             alert()->success("El usuario fue creado con éxito", 'Usuario creado');
-            return redirect()->action('UsuarioController@create');
+            return redirect()->action('AdminController@view_users');
         }
     }
 
