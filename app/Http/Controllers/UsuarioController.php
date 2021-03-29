@@ -66,8 +66,21 @@ class UsuarioController extends Controller
      */
     public function update(Request $request)
     {
+        $rules = [
+            'cuit' => 'required|min:11|max:11|unique:usuario',
+        ];
+
+        $messages = [
+            'cuit.required' => 'El campo CUIT no puede ser vacio.',
+            'cuit.min' => 'El campo CUIT debe ser igual a 11 caracteres.',
+            'cuit.max' => 'El campo CUIT debe ser igual a 11 caracteres.',
+            'cuit.unique' => 'El campo CUIT ya está en uso.',
+        ];
+        $this->validate($request, $rules, $messages);
+
         $idUser = auth()->user()->idUser;
         $entregador = User::where('idUser', $idUser)->first();
+        $entregador->cuit = $request->cuit;
         $entregador->nombre = $request->nombre;
         $entregador->descripcion = $request->descripcion;
         $entregador->save();

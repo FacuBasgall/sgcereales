@@ -31,8 +31,6 @@ Route::get('/admin', 'AdminController@index');
 Route::get('/admin/create', 'AdminController@create');
 Route::post('/admin/store', 'AdminController@store');
 Route::get('/admin/show', 'AdminController@show');
-Route::get('/admin/edit', 'AdminController@edit');
-Route::put('/admin/update', 'AdminController@update');
 Route::get('/admin/contact', 'AdminController@contact');
 Route::get('/admin/add_contact', 'AdminController@add_contact');
 Route::get('/admin/delete_contact/{id}', 'AdminController@delete_contact');
