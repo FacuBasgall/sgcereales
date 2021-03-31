@@ -143,7 +143,8 @@ Route::get('/aviso/destroy/{id}', 'AvisoController@destroy');
 Route::get('/aviso/change_status/{id}', 'AvisoController@change_status');
 Route::get('/aviso/export_excel/{id}', 'AvisoController@export_excel');
 Route::get('/aviso/export_pdf/{id}', 'AvisoController@export_pdf');
-Route::get('/aviso/send_email/{id}', 'AvisoController@send_email');
+Route::post('/aviso/send_email/{id}', 'AvisoController@send_email');
+Route::get('/aviso/load_email/{id}', 'AvisoController@load_email');
 Route::get('/aviso/getLocalidades', 'AvisoController@getLocalidades');
 
 Route::get('/reporte/summary', 'ReporteController@summary');
