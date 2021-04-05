@@ -12,6 +12,11 @@
         font-size: 14px;
     }
 
+    .entregador {
+        font-family: sans-serif;
+        font-size: 12px;
+    }
+
     table {
         border-collapse: collapse;
     }
@@ -57,7 +62,7 @@
     <div class="box">
         <table>
             <tr>
-                <th rowspan="6" colspan="6">
+                <th rowspan="6" colspan="6" class="entregador">
                     {{$entregador->nombre}}<br>
                     {{$entregador->descripcion}}<br>
                     @foreach ($entregador_domicilio as $domicilio)
@@ -73,7 +78,7 @@
                     @endforeach
                     @endforeach
                     @foreach ($entregador_contacto as $contacto)
-                    | {{$contacto->contacto}} |
+                    | {{$contacto->contacto}}
                     @endforeach
                 </th>
                 <th><strong>Nro Aviso:</strong></th>
