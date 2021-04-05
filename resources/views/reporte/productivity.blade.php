@@ -67,11 +67,11 @@
 
         var options = {
             title: 'Cantidad de romaneos terminados por meses',
-            width: 1100,
-            height: 500,
+            width: 1000,
+            height: 450,
             pointSize: 5,
             legend: {
-                position: 'top'
+                position: 'none'
             },
             hAxis: {
                 title: 'Meses'
