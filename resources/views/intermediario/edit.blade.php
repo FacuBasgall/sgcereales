@@ -23,6 +23,13 @@
                 <form action="{{action('IntermediarioController@update', $intermediario->cuit)}}" method="POST" autocomplete="off">
                     {{ method_field('PUT') }}
                     {{ csrf_field() }}
+                    @if ($errors->any())
+                    <ul class="alert alert-danger">
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                    @endif
                     <p class="form-title"><strong>Datos del intermediario</strong></p>
                     <label for="nombre">
                         <span>Nombre y apellido*:</span>
@@ -31,8 +38,7 @@
                     </label>
                     <label for="cuit">
                         <span>CUIT: </span>
-                        <input type="number" name="cuit" id="cuit" class="common-input" value="{{$intermediario->cuit}}"
-                            readonly>
+                        <input type="number" name="cuit" id="cuit" class="common-input @error('cuit') is-invalid @enderror" min="0" max="999999999999999" value="{{$intermediario->cuit}}" required>
                     </label>
                     <label for="dgr">
                         <span>DGR: </span>

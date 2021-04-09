@@ -77,7 +77,7 @@ class AdminController extends Controller
             'email' => 'required|string|max:255',
             'password' => 'required|string|min:8|confirmed',
             'password_confirmation' => 'required',
-            'cuit' => 'required|min:11|max:11',
+            'cuit' => 'required|min:11|max:11|unique:usuario',
             'nombre' => 'required',
             'descripcion' => 'required|max:250',
         ];
@@ -94,6 +94,7 @@ class AdminController extends Controller
             'cuit.required' => 'El campo CUIT no puede ser vacio.',
             'cuit.min' => 'El campo CUIT debe ser igual a 11 caracteres.',
             'cuit.max' => 'El campo CUIT debe ser igual a 11 caracteres.',
+            'cuit.unique' => 'El campo CUIT ya está en uso.',
             'nombre.required' => 'El campo nombre y apellido no puede ser vacio.',
             'descripcion.required' => 'El campo descripción no puede ser vacio.',
             'descripcion.max' => 'No puede ser mayor a :max caracteres.',
@@ -125,11 +126,11 @@ class AdminController extends Controller
             $preferencia->idUser = $nuevo->idUser;
             $preferencia->email = $contacto->id;
             $preferencia->asunto = "Envio del aviso nro: {{NRO_AVISO}}";
-            $preferencia->cuerpo = "A continuación se adjuntan los romaneos correspondientes al aviso nro: {{NRO_AVISO}}. Por favor no responder este correo. Comunicarse con {{CORREO}}";
+            $preferencia->cuerpo = "A continuación se adjuntan los romaneos correspondientes al aviso nro: {{NRO_AVISO}}.";
             $preferencia->save();
 
             alert()->success("El usuario fue creado con éxito", 'Usuario creado');
-            return redirect()->action('UsuarioController@create');
+            return redirect()->action('AdminController@view_users');
         }
     }
 
@@ -158,7 +159,7 @@ class AdminController extends Controller
      */
     public function edit()
     {
-        return view('admin.edit');
+       //
     }
 
     /**
@@ -170,13 +171,7 @@ class AdminController extends Controller
      */
     public function update(Request $request)
     {
-        $idUser = auth()->user()->idUser;
-        $entregador = User::where('idUser', $idUser)->first();
-        $entregador->nombre = $request->nombre;
-        $entregador->descripcion = $request->descripcion;
-        $entregador->save();
-        alert()->success("El usuario fue editado con éxito", 'Editado con éxito');
-        return redirect()->action('UsuarioController@show');
+        //
     }
 
     public function contact()

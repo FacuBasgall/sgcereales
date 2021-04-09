@@ -31,8 +31,6 @@ Route::get('/admin', 'AdminController@index');
 Route::get('/admin/create', 'AdminController@create');
 Route::post('/admin/store', 'AdminController@store');
 Route::get('/admin/show', 'AdminController@show');
-Route::get('/admin/edit', 'AdminController@edit');
-Route::put('/admin/update', 'AdminController@update');
 Route::get('/admin/contact', 'AdminController@contact');
 Route::get('/admin/add_contact', 'AdminController@add_contact');
 Route::get('/admin/delete_contact/{id}', 'AdminController@delete_contact');
@@ -145,7 +143,8 @@ Route::get('/aviso/destroy/{id}', 'AvisoController@destroy');
 Route::get('/aviso/change_status/{id}', 'AvisoController@change_status');
 Route::get('/aviso/export_excel/{id}', 'AvisoController@export_excel');
 Route::get('/aviso/export_pdf/{id}', 'AvisoController@export_pdf');
-Route::get('/aviso/send_email/{id}', 'AvisoController@send_email');
+Route::post('/aviso/send_email/{id}', 'AvisoController@send_email');
+Route::get('/aviso/load_email/{id}', 'AvisoController@load_email');
 Route::get('/aviso/getLocalidades', 'AvisoController@getLocalidades');
 
 Route::get('/reporte/summary', 'ReporteController@summary');

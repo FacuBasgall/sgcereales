@@ -138,8 +138,21 @@ class IntermediarioController extends Controller
      */
     public function update(Request $request, $cuit)
     {
+        $rules = [
+            'cuit' => 'required|min:11|max:11|unique:intermediario',
+        ];
+
+        $messages = [
+            'cuit.required' => 'El campo CUIT no puede ser vacio.',
+            'cuit.min' => 'El campo CUIT debe ser igual a 11 caracteres.',
+            'cuit.max' => 'El campo CUIT debe ser igual a 11 caracteres.',
+            'cuit.unique' => 'El campo CUIT ya está en uso.',
+        ];
+        $this->validate($request, $rules, $messages);
+        
         $nuevo = Intermediario::findOrFail($cuit);
         $nuevo->nombre = $request->nombre;
+        $nuevo->cuit = $request->cuit;
         $nuevo->dgr = $request->dgr;
         $nuevo->condIva = $request->iva;
         if($request->pais == "Argentina"){
@@ -152,6 +165,7 @@ class IntermediarioController extends Controller
         }
         $nuevo->domicilio = $request->domicilio;
         $nuevo->save();
+        $cuit = $nuevo->cuit;
         alert()->success("El intermediario $nuevo->nombre fue editado con éxito", 'Editado con éxito');
         return redirect()->action('IntermediarioController@show', $cuit);
     }

@@ -148,8 +148,8 @@
                         <a href="{{ action('AvisoController@export_pdf', $aviso->idAviso) }}"><button
                                 class="export-button"><i class="fa fa-file-pdf-o"></i> Descargar
                                 PDF</button></a>
-                        <a onclick="warningSendEmails( '{{$aviso->idAviso}}');"><button class="export-button"><i
-                                    class="fa fa-envelope"></i> Enviar</button></a>
+                        <a href="{{ action('AvisoController@load_email', $aviso->idAviso) }}"><button 
+                                class="export-button"><i class="fa fa-envelope"></i> Enviar</button></a>
                     </div>
                 </div>
             </div>

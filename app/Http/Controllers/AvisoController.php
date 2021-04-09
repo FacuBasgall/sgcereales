@@ -27,6 +27,7 @@ use App\Entregador_Contacto;
 use App\Entregador_Domicilio;
 use App\Localidad;
 use App\Provincia;
+use App\Usuario_Preferencias_Correo;
 
 use Datatables;
 use DB;
@@ -64,10 +65,11 @@ class AvisoController extends Controller
         $localidades = Localidad::all();
         $provincias = Provincia::all();
 
-        return view('aviso.index', compact(['avisos', 'cargas', 'descargas', 'destinatarios', 'titulares',
+        return view('aviso.index', compact([
+            'avisos', 'cargas', 'descargas', 'destinatarios', 'titulares',
             'intermediarios', 'remitentes', 'corredores', 'productos', 'avisos_productos',
-            'avisos_entregadores', 'localidades', 'provincias']));
-
+            'avisos_entregadores', 'localidades', 'provincias'
+        ]));
     }
 
     public function pending()
@@ -87,11 +89,13 @@ class AvisoController extends Controller
         $localidades = Localidad::all();
         $provincias = Provincia::all();
 
-        return view('aviso.index', compact(['avisos', 'cargas', 'descargas', 'destinatarios', 'titulares',
+        return view('aviso.index', compact([
+            'avisos', 'cargas', 'descargas', 'destinatarios', 'titulares',
             'intermediarios', 'remitentes', 'corredores', 'productos', 'avisos_productos',
-            'avisos_entregadores', 'localidades', 'provincias']));
+            'avisos_entregadores', 'localidades', 'provincias'
+        ]));
     }
-    
+
     /**
      * Show the form for creating a new resource.
      *
@@ -100,20 +104,20 @@ class AvisoController extends Controller
     public function create()
     {
         $lugarDescargaDB = DB::table('aviso')
-                        ->distinct()
-                        ->select('aviso.lugarDescarga')
-                        ->get();
+            ->distinct()
+            ->select('aviso.lugarDescarga')
+            ->get();
         $lugarDescarga = array();
-        foreach($lugarDescargaDB as $lugar){
+        foreach ($lugarDescargaDB as $lugar) {
             $lugarDescarga[] = $lugar;
         }
 
         $tipoProductoDB = DB::table('aviso_producto')
-                        ->distinct()
-                        ->select('aviso_producto.tipo')
-                        ->get();
+            ->distinct()
+            ->select('aviso_producto.tipo')
+            ->get();
         $tipoProducto = array();
-        foreach($tipoProductoDB as $tipo){
+        foreach ($tipoProductoDB as $tipo) {
             $tipoProducto[] = $tipo;
         }
 
@@ -126,8 +130,10 @@ class AvisoController extends Controller
         $localidades = Localidad::all();
         $provincias = Provincia::all();
 
-        return view('aviso.create', compact(['lugarDescarga', 'tipoProducto', 'titulares', 'intermediarios', 'remitentes', 'corredores',
-            'destinatarios', 'productos', 'localidades', 'provincias']));
+        return view('aviso.create', compact([
+            'lugarDescarga', 'tipoProducto', 'titulares', 'intermediarios', 'remitentes', 'corredores',
+            'destinatarios', 'productos', 'localidades', 'provincias'
+        ]));
     }
 
     /**
@@ -142,7 +148,7 @@ class AvisoController extends Controller
         $fecha2 = "20" . $request->cosecha2;
         $dif = intval($fecha2) - intval($fecha1);
 
-        if($dif != 1){
+        if ($dif != 1) {
             alert()->error("Verifique los años de cosecha ingresados", 'Ha ocurrido un error')->persistent('Cerrar');
             return back()->withInput();
         }
@@ -212,17 +218,17 @@ class AvisoController extends Controller
         $arrayCarga = array();
         $arrayDescarga = array();
 
-        if(!empty($cargas) && $cargas->count()){
-            foreach($cargas as $carga){
+        if (!empty($cargas) && $cargas->count()) {
+            foreach ($cargas as $carga) {
                 $control = false;
                 $arrayCarga[] = $carga;
-                foreach($descargas as $descarga){
-                    if($descarga->idCarga == $carga->idCarga){
+                foreach ($descargas as $descarga) {
+                    if ($descarga->idCarga == $carga->idCarga) {
                         $control = true;
                         $arrayDescarga[] = $descarga;
                     }
                 }
-                if($control == false){
+                if ($control == false) {
                     $descargaVacia = new Descarga;
                     $descargaVacia->idDescarga = "-";
                     $descargaVacia->idCarga = $carga->idCarga;
@@ -241,16 +247,18 @@ class AvisoController extends Controller
         }
 
         /**FORMULAS
-        *   NETO KG = BRUTO - TARA
+         *   NETO KG = BRUTO - TARA
             MERMA % = MERMA HUMEDAD + MERMA MANIPULEO
             MERMA KG = NETO KG x (MERMA % / 100)
             NETO FINAL = NETO KG - MERMA KG
             DIFERENCIA = NETO FINAL - KG CARGA
-        */
+         */
 
-        return view('aviso.show', compact(['aviso', 'arrayCarga', 'arrayDescarga', 'destino', 'titular',
+        return view('aviso.show', compact([
+            'aviso', 'arrayCarga', 'arrayDescarga', 'destino', 'titular',
             'intermediario', 'remitente', 'corredor', 'producto', 'aviso_producto', 'aviso_entregador',
-            'entregador', 'localidad', 'provincia']));
+            'entregador', 'localidad', 'provincia'
+        ]));
     }
 
     /**
@@ -262,20 +270,20 @@ class AvisoController extends Controller
     public function edit($idAviso)
     {
         $lugarDescargaDB = DB::table('aviso')
-                        ->distinct()
-                        ->select('aviso.lugarDescarga')
-                        ->get();
+            ->distinct()
+            ->select('aviso.lugarDescarga')
+            ->get();
         $lugarDescarga = array();
-        foreach($lugarDescargaDB as $lugar){
+        foreach ($lugarDescargaDB as $lugar) {
             $lugarDescarga[] = $lugar;
         }
 
         $tipoProductoDB = DB::table('aviso_producto')
-                        ->distinct()
-                        ->select('aviso_producto.tipo')
-                        ->get();
+            ->distinct()
+            ->select('aviso_producto.tipo')
+            ->get();
         $tipoProducto = array();
-        foreach($tipoProductoDB as $tipo){
+        foreach ($tipoProductoDB as $tipo) {
             $tipoProducto[] = $tipo;
         }
 
@@ -291,8 +299,10 @@ class AvisoController extends Controller
         $localidades = Localidad::all();
         $provincias = Provincia::all();
 
-        return view('aviso.edit', compact(['lugarDescarga', 'tipoProducto', 'aviso', 'titulares', 'intermediarios', 'remitentes', 'corredores',
-            'destinatarios', 'productos', 'aviso_producto', 'aviso_entregador', 'localidades', 'provincias']));
+        return view('aviso.edit', compact([
+            'lugarDescarga', 'tipoProducto', 'aviso', 'titulares', 'intermediarios', 'remitentes', 'corredores',
+            'destinatarios', 'productos', 'aviso_producto', 'aviso_entregador', 'localidades', 'provincias'
+        ]));
     }
 
     /**
@@ -308,7 +318,7 @@ class AvisoController extends Controller
         $fecha2 = "20" . $request->cosecha2;
         $dif = intval($fecha2) - intval($fecha1);
 
-        if($dif != 1){
+        if ($dif != 1) {
             alert()->error("Verifique las fechas ingresadas", 'Ha ocurrido un error')->persistent('Cerrar');
             return back();
         }
@@ -352,9 +362,9 @@ class AvisoController extends Controller
     {
         $aviso = Aviso::findOrFail($idAviso);
         $cargas = Carga::where('idAviso', $idAviso)->get();
-        foreach ($cargas as $carga){
+        foreach ($cargas as $carga) {
             $descarga = Descarga::where('idCarga', $carga->idCarga)->first();
-            if($descarga)
+            if ($descarga)
                 $descarga->delete();
             $carga->delete();
         }
@@ -367,20 +377,21 @@ class AvisoController extends Controller
         return redirect('/aviso');
     }
 
-    public function change_status($idAviso){
+    public function change_status($idAviso)
+    {
         $aviso = Aviso::findOrFail($idAviso);
-        if($aviso->estado == false){
+        if ($aviso->estado == false) {
             $cargas = Carga::where('idAviso', $idAviso)->get();
-            foreach ($cargas as $carga){
+            foreach ($cargas as $carga) {
                 $descarga = Descarga::where('idCarga', $carga->idCarga)->exists();
-                if(!$descarga){
+                if (!$descarga) {
                     //DEVOLVER ERROR -> PARA QUE PUEDA ESTAR TERMINADO DEBE TENER TODAS LAS DESCARGAS
                     alert()->error("Se debe completar el aviso para poder cambiar su estado", 'Ha ocurrido un error')->persistent('Cerrar');
                     return back();
                 }
             }
             $aviso->estado = true;
-        }else{
+        } else {
             $aviso->estado = false;
         }
         $aviso->save();
@@ -388,16 +399,17 @@ class AvisoController extends Controller
         return redirect()->action('AvisoController@show', $idAviso);
     }
 
-    private function generate_key($idEntregador){
+    private function generate_key($idEntregador)
+    {
         $key = "";
         $existe = Aviso_Entregador::where('idEntregador', $idEntregador)->exists();
-        if(!$existe){
+        if (!$existe) {
             $key = "SGC-0000000001";
-        }else{
+        } else {
             $ultAviso = Aviso_Entregador::where('idEntregador', $idEntregador)->orderBy('idAviso', 'desc')->first();
             $ultimo = Aviso::where('idAviso', $ultAviso->idAviso)->first();
             $array = explode("-", $ultimo->nroAviso);
-            $array[1] = intval($array[1]+1);
+            $array[1] = intval($array[1] + 1);
             $nro = str_pad($array[1], 10, "0", STR_PAD_LEFT);
             $key = "SGC-" . $nro;
         }
@@ -408,22 +420,21 @@ class AvisoController extends Controller
     {
         $aviso = Aviso::where('idAviso', $idAviso)->first();
 
-        if($aviso->estado){
+        if ($aviso->estado) {
             $titular = Titular::where('cuit', $aviso->idTitularCartaPorte)->first();
             $filename = $aviso->nroAviso . " " . $titular->nombre . ".xlsx";
             return Excel::download(new RomaneoExport($idAviso), $filename);
-        }else{
+        } else {
             alert()->error("El aviso debe estar terminado para exportalo", 'No se puede ejecutar la acción')->persistent('Cerrar');
             return back();
         }
-
     }
 
     public function export_pdf($idAviso)
     {
         $aviso = Aviso::where('idAviso', $idAviso)->first();
 
-        if($aviso->estado){
+        if ($aviso->estado) {
             $cargas = Carga::where('idAviso', $aviso->idAviso)->get();
             $descargas = Descarga::all();
             $corredor = Corredor::where('cuit', $aviso->idCorredor)->first();
@@ -442,53 +453,114 @@ class AvisoController extends Controller
 
             $filename = $aviso->nroAviso . " " . $titular->nombre . ".pdf";
 
-            $pdf = PDF::loadView('exports.pdf', compact(['aviso', 'cargas', 'descargas', 'corredor',
+            $pdf = PDF::loadView('exports.pdf', compact([
+                'aviso', 'cargas', 'descargas', 'corredor',
                 'destinatario', 'intermediario', 'producto', 'remitente', 'titular', 'aviso_producto',
                 'aviso_entregador', 'entregador', 'entregador_contacto', 'entregador_domicilio',
-                'localidades', 'provincias']));
+                'localidades', 'provincias'
+            ]));
             $pdf->setPaper('a4', 'landscape');
             return $pdf->download($filename);
-        }else{
+        } else {
             alert()->error("El aviso debe estar terminado para exportalo", 'No se puede ejecutar la acción')->persistent('Cerrar');
             return back();
         }
     }
 
-    public function send_email($idAviso)
+    public function send_email(Request $request)
     {
-        $aviso = Aviso::where('idAviso', $idAviso)->first();
-        $titular = Titular::where('cuit', $aviso->idTitularCartaPorte)->first();
-        $corredor = Corredor::where('cuit', $aviso->idCorredor)->first();
-        $remitente = Remitente_Comercial::where('cuit', $aviso->idRemitenteComercial)->first();
-
-        if($aviso->estado){
-            $existeTitular = Titular_Contacto::where('cuit', $aviso->idTitularCartaPorte)->where('tipo', 3)->exists();
-            $existeCorredor = Corredor_Contacto::where('cuit', $aviso->idCorredor)->where('tipo', 3)->exists();
-            $existeRemitente = Remitente_Contacto::where('cuit', $aviso->idRemitenteComercial)->where('tipo', 3)->exists();
-            if(!$existeTitular){
-                alert()->error("El titular: $titular->nombre no posee dirección de correo", 'No se puede ejecutar la acción')->persistent('Cerrar');
-            }elseif(!$existeCorredor){
-                alert()->error("El corredor: $corredor->nombre no posee dirección de correo", 'No se puede ejecutar la acción')->persistent('Cerrar');
-            }elseif(!$existeRemitente){
-                alert()->error("El remitente: $remitente->nombre no posee dirección de correo", 'No se puede ejecutar la acción')->persistent('Cerrar');
-            }else{
-                $correosTitular = Titular_Contacto::where('cuit', $aviso->idTitularCartaPorte)->where('tipo', 3)->pluck('contacto'); //Tipo = 3 = Emails / funcion pluck('contacto') solo selecciona del array los contactos
-                $correosRemitente = Remitente_Contacto::where('cuit', $aviso->idRemitenteComercial)->where('tipo', 3)->pluck('contacto');
-                //$correosCorredor se agrega en el RomaneoSendMail
-                \Mail::to($correosTitular)->cc($correosRemitente)->send(new RomaneoSendMail($idAviso));
-                alert()->success("El aviso ha sido enviado con éxito", 'Correo enviado');
+        $correos = array();
+        foreach ($request->email as $email) {
+            if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $correos[] = $email;
             }
-        }else{
-            alert()->error("El aviso debe estar terminado para poder enviarlo", 'No se puede ejecutar la acción')->persistent('Cerrar');
         }
-        return back();
+        $idAviso = $request->idAviso;
+        $asunto = $request->asunto;
+        $cuerpo = $request->cuerpo;
+        \Mail::to($correos)->send(new RomaneoSendMail($idAviso, $asunto, $cuerpo));
+        alert()->success("El aviso ha sido enviado con éxito", 'Correo enviado');
+        return redirect()->action('AvisoController@show', $idAviso);
+    }
+
+    public function load_email($idAviso)
+    {
+        $aviso = Aviso::findOrFail($idAviso);
+        if ($aviso->estado) {
+            /**CARGA DE TODOS LOS CORREOS DE TODAS LAS PERSONAS */
+            $correosTitular = DB::table('aviso')
+                ->rightJoin('titular_contacto', 'titular_contacto.cuit', '=', 'aviso.idTitularCartaPorte')
+                ->where('titular_contacto.tipo', '=', 3)
+                ->where('aviso.idAviso', '=', $idAviso)
+                ->distinct()
+                ->select('titular_contacto.contacto')
+                ->get();
+            $correosCorredor = DB::table('aviso')
+                ->rightJoin('corredor_contacto', 'corredor_contacto.cuit', '=', 'aviso.idCorredor')
+                ->where('corredor_contacto.tipo', '=', 3)
+                ->where('aviso.idAviso', '=', $idAviso)
+                ->distinct()
+                ->select('corredor_contacto.contacto')
+                ->get();
+            $correosRemitente = DB::table('aviso')
+                ->rightJoin('remitente_contacto', 'remitente_contacto.cuit', '=', 'aviso.idRemitenteComercial')
+                ->where('remitente_contacto.tipo', '=', 3)
+                ->where('aviso.idAviso', '=', $idAviso)
+                ->distinct()
+                ->select('remitente_contacto.contacto')
+                ->get();
+            $correosIntermediario = DB::table('aviso')
+                ->rightJoin('intermediario_contacto', 'intermediario_contacto.cuit', '=', 'aviso.idIntermediario')
+                ->where('intermediario_contacto.tipo', '=', 3)
+                ->where('aviso.idAviso', '=', $idAviso)
+                ->distinct()
+                ->select('intermediario_contacto.contacto')
+                ->get();
+            $correosDestinatario = DB::table('aviso')
+                ->rightJoin('destinatario_contacto', 'destinatario_contacto.cuit', '=', 'aviso.idDestinatario')
+                ->where('destinatario_contacto.tipo', '=', 3)
+                ->where('aviso.idAviso', '=', $idAviso)
+                ->distinct()
+                ->select('destinatario_contacto.contacto')
+                ->get();
+
+            /**COPIA AL ARRAY */
+            $correos = array();
+            foreach ($correosTitular as $titular) {
+                $correos[] = $titular->contacto;
+            }
+            foreach ($correosRemitente as $remitente) {
+                $correos[] = $remitente->contacto;
+            }
+            foreach ($correosCorredor as $corredor) {
+                $correos[] = $corredor->contacto;
+            }
+            foreach ($correosIntermediario as $intermediario) {
+                $correos[] = $intermediario->contacto;
+            }
+            foreach ($correosDestinatario as $destinatario) {
+                $correos[] = $destinatario->contacto;
+            }
+
+            /**ELIMINAR LOS CORREOS REPETIDOS */
+            $correos = array_unique($correos);
+
+            $entregadorAutenticado = auth()->user()->idUser;
+            $preferencias = Usuario_Preferencias_Correo::where('idUser', $entregadorAutenticado)->first();
+            $asunto = str_replace('{{NRO_AVISO}}', $aviso->nroAviso, $preferencias->asunto);
+            $cuerpo = str_replace('{{NRO_AVISO}}', $aviso->nroAviso, $preferencias->cuerpo);
+            return view('aviso.mail', compact(['correos', 'aviso', 'asunto', 'cuerpo']));
+        }else {
+            alert()->error("El aviso debe estar terminado para poder enviarlo", 'No se puede ejecutar la acción')->persistent('Cerrar');
+            return back();
+        }
     }
 
     public function getLocalidades(Request $request)
     {
-        if($request->ajax()){
+        if ($request->ajax()) {
             $localidades = Localidad::where('idProvincia', $request->provincia_id)->get();
-            foreach($localidades as $localidad){
+            foreach ($localidades as $localidad) {
                 $localidadesArray[$localidad->id] = $localidad->nombre;
             }
             return response()->json($localidadesArray);

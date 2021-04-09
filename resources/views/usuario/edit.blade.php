@@ -19,13 +19,20 @@
                 <form action="{{action('UsuarioController@update')}}" method="POST" autocomplete="off">
                     {{ method_field('PUT') }}
                     {{ csrf_field() }}
+                    @if ($errors->any())
+                    <ul class="alert alert-danger">
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                    @endif
                     <label for="nombre">
                         <span>Nombre y apellido*:</span>
                         <input type="text" name="nombre" id="nombre" class="common-input-address" value="{{auth()->user()->nombre}}" maxlength="200" required>
                     </label>
                     <label for="cuit">
                         <span>CUIT: </span>
-                        <input type="number" name="cuit" id="cuit" class="common-input" value="{{auth()->user()->cuit}}" readonly>
+                        <input type="number" name="cuit" id="cuit" class="common-input @error('cuit') is-invalid @enderror" min="0" max="999999999999999" value="{{auth()->user()->cuit}}" required>
                     </label>
                     <br>
                     <label for="descripcion">

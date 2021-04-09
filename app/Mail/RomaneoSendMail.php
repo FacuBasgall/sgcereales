@@ -37,15 +37,19 @@ class RomaneoSendMail extends Mailable
     use Queueable, SerializesModels;
 
     protected $idAviso;
+    protected $asunto;
+    protected $cuerpo;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($idAviso)
+    public function __construct($idAviso, $asunto, $cuerpo)
     {
         $this->idAviso = $idAviso;
+        $this->asunto = $asunto;
+        $this->cuerpo = $cuerpo;
     }
 
     /**
@@ -81,17 +85,14 @@ class RomaneoSendMail extends Mailable
 
         $preferencias = Usuario_Preferencias_Correo::where('idUser', $idUser)->first();
         $email = Entregador_Contacto::where('id', $preferencias->email)->first();
-        $asunto = str_replace('{{NRO_AVISO}}', $aviso->nroAviso, $preferencias->asunto);
 
-        $cuerpo = str_replace('{{NRO_AVISO}}', $aviso->nroAviso, $preferencias->cuerpo);
+        $asunto = $this->asunto;
+        $cuerpo = $this->cuerpo;
 
         $filenameExcel = $aviso->nroAviso . " " . $titular->nombre . ".xlsx";
         $filenamePdf = $aviso->nroAviso . " " . $titular->nombre . ".pdf";
 
-        $correosCorredor = Corredor_Contacto::where('cuit', $aviso->idCorredor)->where('tipo', 3)->pluck('contacto');
-
         return $this->view('mails.romaneo_mail', compact(['cuerpo']))
-            ->cc($correosCorredor)
             ->subject($asunto)
             ->replyTo($email->contacto, $nombreUsuario)
             ->attachData($pdf->output(), $filenamePdf)
