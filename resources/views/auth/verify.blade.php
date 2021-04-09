@@ -1,9 +1,6 @@
-@extends('layouts.app')
-
-@section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div>{{ __('Verify Your Email Address') }}</div>
+        <div>Solicitud de reestablecimiento de contraseña</div>
             <div>
                 @if (session('resent'))
                 <div class="alert alert-success" role="alert">
@@ -16,4 +13,3 @@
         </div>
     </div>
 </div>
-@endsection
