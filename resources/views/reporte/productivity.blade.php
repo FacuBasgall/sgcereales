@@ -66,7 +66,7 @@
         var data = google.visualization.arrayToDataTable(productividad);
 
         var options = {
-            title: 'Cantidad de romaneos terminados por meses',
+            title: 'Cantidad de romaneos terminados por mes',
             width: 1000,
             height: 450,
             pointSize: 5,
