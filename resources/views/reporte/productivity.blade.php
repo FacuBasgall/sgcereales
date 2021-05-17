@@ -70,6 +70,7 @@
             width: 1000,
             height: 450,
             pointSize: 5,
+            bar: {groupWidth: "90%"},
             legend: {
                 position: 'none'
             },
@@ -81,7 +82,7 @@
                 title: 'Cantidad (unidad)'
             }
         };
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+        var chart = new google.visualization.ColumnChart(document.getElementById('curve_chart'));
         chart.draw(data, options);
     }
 </script>
