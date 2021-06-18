@@ -70,6 +70,10 @@
             <td>
                 {{$intermediario->nombre}}
             </td>
+            @else
+            <td>
+                <div> - </div>
+            </td>
             @endif
             @endforeach
             @foreach ($remitentes as $remitente)

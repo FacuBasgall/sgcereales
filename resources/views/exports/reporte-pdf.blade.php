@@ -2,51 +2,51 @@
 
 <head>
     <style>
-    @page {
-        margin: 2cm 2cm;
-        font-family: sans-serif;
-    }
+        @page {
+            margin: 2cm 2cm;
+            font-family: sans-serif;
+        }
 
-    body {
-        font-family: sans-serif;
-        font-size: 14px;
-    }
+        body {
+            font-family: sans-serif;
+            font-size: 12px;
+        }
 
-    table {
-        border-collapse: collapse;
-    }
+        table {
+            border-collapse: collapse;
+        }
 
-    .container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: left;
-    }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: left;
+        }
 
-    .box {
-        text-align: left;
-        width: 100%
-    }
+        .box {
+            text-align: left;
+            width: 100%
+        }
 
-    table,
-    td,
-    th {
-        border: 1px solid black;
-    }
+        table,
+        td,
+        th {
+            border: 1px solid black;
+        }
 
-    .footer {
-        position: absolute;
-        bottom: -65px;
-        width: 100%;
-        height: 40px;
-    }
+        .footer {
+            position: absolute;
+            bottom: -65px;
+            width: 100%;
+            height: 40px;
+        }
 
-    .fecha {
-        text-align: left;
-    }
+        .fecha {
+            text-align: left;
+        }
 
-    .pagina {
-        text-align: right;
-    }
+        .pagina {
+            text-align: right;
+        }
     </style>
 </head>
 
@@ -119,6 +119,8 @@
                     <td>
                         {{$intermediario->nombre}}
                     </td>
+                    @else
+                    <td> - </td>
                     @endif
                     @endforeach
                     @foreach ($remitentes as $remitente)
@@ -152,7 +154,7 @@
                     @if(isset($resultado->tipo))
                     <td>{{$resultado->tipo}}</td>
                     @else
-                    <td>-</td>
+                    <td> - </td>
                     @endif
                     <td>{{$resultado->cosecha}}</td>
                     @foreach ($provincias as $provincia)

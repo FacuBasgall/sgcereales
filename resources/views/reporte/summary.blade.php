@@ -195,6 +195,10 @@
                         <td>
                             <div class="cortar">{{$intermediario->nombre}}</div>
                         </td>
+                        @else
+                        <td>
+                            <div> - </div>
+                        </td>
                         @endif
                         @endforeach
                         @foreach ($remitentes as $remitente)

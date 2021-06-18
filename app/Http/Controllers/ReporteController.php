@@ -133,11 +133,11 @@ class ReporteController extends Controller
         }
         $cargas = Carga::where('borrado', false)->get();
         $descargas = Descarga::where('borrado', false)->get();
-        $destinatarios = Destino::where('borrado', false)->get();
-        $titulares = Titular::where('borrado', false)->get();
-        $intermediarios = Intermediario::where('borrado', false)->get();
-        $remitentes = Remitente_Comercial::where('borrado', false)->get();
-        $corredores = Corredor::where('borrado', false)->get();
+        $destinatarios = Destino::all();
+        $titulares = Titular::all();
+        $intermediarios = Intermediario::all();
+        $remitentes = Remitente_Comercial::all();
+        $corredores = Corredor::all();
         $entregador = User::where('idUser', $idEntregador)->first(); //Solo Usuario Entregador Autenticado
         $productos = Producto::where('borrado', false)->get();
         $avisos_productos = Aviso_Producto::all();
@@ -180,18 +180,20 @@ class ReporteController extends Controller
             ->join('reporte-temp', 'reporte-temp.idAviso', '=', 'carga.idAviso')
             ->select('descarga.*', 'reporte-temp.idAviso')
             ->get();
-        $titulares = Titular::where('borrado', false)->get();
-        $destinatarios = Destino::where('borrado', false)->get();
-        $intermediarios = Intermediario::where('borrado', false)->get();
-        $remitentes = Remitente_Comercial::where('borrado', false)->get();
-        $corredores = Corredor::where('borrado', false)->get();
-        $productos = Producto::where('borrado', false)->get();
+        $titulares = Titular::all();
+        $destinatarios = Destino::all();
+        $intermediarios = Intermediario::all();
+        $remitentes = Remitente_Comercial::all();
+        $corredores = Corredor::all();
+        $productos = Producto::all();
         $entregador = User::where('idUser', $entregadorAutenticado)->first(); //Solo Usuario Entregador Autenticado
         $localidades = Localidad::all();
         $provincias = Provincia::all();
         $entregador_contacto = Entregador_Contacto::where('idUser', $entregadorAutenticado)->get();
         $entregador_domicilio = Entregador_Domicilio::where('idUser', $entregadorAutenticado)->get();
 
+
+        $pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
         $pdf = PDF::loadView('exports.reporte-pdf', compact([
             'resultados', 'descargas', 'filtros', 'destinatarios', 'titulares',
             'intermediarios', 'remitentes', 'corredores', 'productos', 'entregador', 'localidades', 'provincias',

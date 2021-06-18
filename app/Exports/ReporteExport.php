@@ -53,11 +53,11 @@ class ReporteExport implements FromView, ShouldAutoSize
                     ->join('reporte-temp', 'reporte-temp.idAviso', 'carga.idAviso')
                     ->select('descarga.*', 'reporte-temp.idAviso')
                     ->get();
-        $titulares = Titular::where('borrado', false)->get();
-        $destinatarios = Destino::where('borrado', false)->get();
-        $intermediarios = Intermediario::where('borrado', false)->get();
-        $remitentes = Remitente_Comercial::where('borrado', false)->get();
-        $corredores = Corredor::where('borrado', false)->get();
+        $titulares = Titular::all();
+        $destinatarios = Destino::all();
+        $intermediarios = Intermediario::all();
+        $remitentes = Remitente_Comercial::all();
+        $corredores = Corredor::all();
         $productos = Producto::where('borrado', false)->get();
         $localidades = Localidad::all();
         $provincias = Provincia::all();
