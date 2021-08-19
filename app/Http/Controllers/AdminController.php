@@ -95,9 +95,9 @@ class AdminController extends Controller
             'cuit.min' => 'El campo CUIT debe ser igual a 11 caracteres.',
             'cuit.max' => 'El campo CUIT debe ser igual a 11 caracteres.',
             'cuit.unique' => 'El campo CUIT ya está en uso.',
-            'nombre.required' => 'El campo nombre y apellido no puede ser vacio.',
-            'descripcion.required' => 'El campo descripción no puede ser vacio.',
-            'descripcion.max' => 'No puede ser mayor a :max caracteres.',
+            'nombre.required' => 'El campo Nombre y Apellido no puede ser vacio.',
+            'descripcion.required' => 'El campo Descripción no puede ser vacio.',
+            'descripcion.max' => 'El campo Descripción no puede ser mayor a :max caracteres.',
         ];
 
         $this->validate($request, $rules, $messages);

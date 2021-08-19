@@ -17,16 +17,21 @@
         <div class="card">
             <form action="{{action('TitularController@store')}}" method="POST" autocomplete="off">
                 {{ csrf_field() }}
+                @if ($errors->any())
+                <ul class="alert alert-danger">
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                @endif
                 <p class="form-title"><strong>Datos del titular</strong></p>
                 <label for="nombre">
                     <span>Nombre y apellido*:</span>
-                    <input type="text" value="{{old('nombre')}}" name="nombre" id="nombre" class="common-input"
-                        maxlength="200" required>
+                    <input type="text" value="{{old('nombre')}}" name="nombre" id="nombre" class="common-input" maxlength="200" required>
                 </label>
                 <label for="cuit">
                     <span>CUIT*:</span>
-                    <input type="number" value="{{old('cuit')}}" name="cuit" id="cuit" class="common-input" min="0"
-                        max="999999999999999" required>
+                    <input type="number" value="{{old('cuit')}}" name="cuit" id="cuit" class="common-input" min="0" max="999999999999999" required>
                 </label>
                 <label for="dgr">
                     <span>DGR: </span>
@@ -37,17 +42,16 @@
                     <select name="iva" id="iva" class="common-input" required>
                         <option value="" selected disabled hidden></option>
                         @foreach ($iva as $condicion)
-                        <option value="{{ $condicion->idCondIva }}"
-                            {{old('iva') == $condicion->idCondIva ? 'selected':''}}>{{ $condicion->descripcion }}
+                        <option value="{{ $condicion->idCondIva }}" {{old('iva') == $condicion->idCondIva ? 'selected':''}}>{{ $condicion->descripcion }}
                         </option>
                         @endforeach
                     </select>
                     <script>
-                    $.fn.select2.defaults.set('language', 'es');
-                    $("#iva").select2({
-                        placeholder: 'Seleccione',
-                        dropdownAutoWidth: true,
-                    });
+                        $.fn.select2.defaults.set('language', 'es');
+                        $("#iva").select2({
+                            placeholder: 'Seleccione',
+                            dropdownAutoWidth: true,
+                        });
                     </script>
                 </label>
                 <label for="pais" class="margin-right">
@@ -63,28 +67,29 @@
                         <option value="" selected disabled hidden></option>
                         @foreach ($provincias as $provincia)
                         <option value="{{ $provincia->id }}" {{old('provincia') == $provincia->id ? 'selected':''}}>
-                            {{$provincia->nombre}}</option>
+                            {{$provincia->nombre}}
+                        </option>
                         @endforeach
                     </select>
                     <script>
-                    $.fn.select2.defaults.set('language', 'es');
-                    $("#provincia").select2({
-                        placeholder: 'Seleccione',
-                        dropdownAutoWidth: true,
-                        allowClear: true
-                    });
+                        $.fn.select2.defaults.set('language', 'es');
+                        $("#provincia").select2({
+                            placeholder: 'Seleccione',
+                            dropdownAutoWidth: true,
+                            allowClear: true
+                        });
                     </script>
                 </label>
                 <label for="localidad" class="margin-right" id="loc" style="display:;">
                     <span>Localidad:</span>
                     <select name="localidad" id="localidad" class="common-input"></select>
                     <script>
-                    $.fn.select2.defaults.set('language', 'es');
-                    $("#localidad").select2({
-                        placeholder: 'Seleccione',
-                        dropdownAutoWidth: true,
-                        allowClear: true
-                    });
+                        $.fn.select2.defaults.set('language', 'es');
+                        $("#localidad").select2({
+                            placeholder: 'Seleccione',
+                            dropdownAutoWidth: true,
+                            allowClear: true
+                        });
                     </script>
                 </label>
                 <label for="cp" id="cod" style="display:;">
@@ -97,12 +102,11 @@
                 </label>
                 <label for="domicilio">
                     <span>Domicilio: </span>
-                    <input type="text" value="{{old('domicilio')}}" name="domicilio" id="domicilio"
-                        class="common-input-address" maxlength="250">
+                    <input type="text" value="{{old('domicilio')}}" name="domicilio" id="domicilio" class="common-input-address" maxlength="250">
                 </label>
                 <hr>
                 <div><label class="info-text-margin"><i class="fa fa-exclamation-circle"></i>
-                            Los campos con * son obligatorios</label></div>
+                        Los campos con * son obligatorios</label></div>
                 <div class="center-of-page"> <button type="submit" class="save-button"><i class="fa fa-check"></i>
                         Guardar</button> </div>
             </form>

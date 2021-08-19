@@ -50,6 +50,7 @@ class AvisoController extends Controller
 
     public function index()
     {
+        $title = "Listado de Avisos";
         $avisos = Aviso::where('borrado', false)->get();
         $entregadorAutenticado = auth()->user()->idUser;
         $cargas = Carga::where('borrado', false)->get();
@@ -68,12 +69,13 @@ class AvisoController extends Controller
         return view('aviso.index', compact([
             'avisos', 'cargas', 'descargas', 'destinatarios', 'titulares',
             'intermediarios', 'remitentes', 'corredores', 'productos', 'avisos_productos',
-            'avisos_entregadores', 'localidades', 'provincias'
+            'avisos_entregadores', 'localidades', 'provincias', 'title',
         ]));
     }
 
     public function pending()
     {
+        $title = "Listado de Avisos Pendientes";
         $entregadorAutenticado = auth()->user()->idUser;
         $avisos = Aviso::where('borrado', false)->where('estado', 0)->get(); //false, pendiente
         $cargas = Carga::where('borrado', false)->get();
@@ -92,7 +94,7 @@ class AvisoController extends Controller
         return view('aviso.index', compact([
             'avisos', 'cargas', 'descargas', 'destinatarios', 'titulares',
             'intermediarios', 'remitentes', 'corredores', 'productos', 'avisos_productos',
-            'avisos_entregadores', 'localidades', 'provincias'
+            'avisos_entregadores', 'localidades', 'provincias', 'title',
         ]));
     }
 

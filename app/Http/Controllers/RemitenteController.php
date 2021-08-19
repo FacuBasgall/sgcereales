@@ -75,6 +75,17 @@ class RemitenteController extends Controller
             }
         }
         else{
+            $rules = [
+                'cuit' => 'required|min:11|max:11|unique:usuario',
+            ];
+    
+            $messages = [
+                'cuit.required' => 'El campo CUIT no puede ser vacio.',
+                'cuit.min' => 'El campo CUIT debe ser igual a 11 caracteres.',
+                'cuit.max' => 'El campo CUIT debe ser igual a 11 caracteres.',
+                'cuit.unique' => 'El campo CUIT ya está en uso.',
+            ];
+            $this->validate($request, $rules, $messages);
             $nuevo = new Remitente_Comercial;
             $nuevo->cuit = $request->cuit;
         }
@@ -139,16 +150,20 @@ class RemitenteController extends Controller
     public function update(Request $request, $cuit)
     {
         $rules = [
-            'cuit' => 'required|min:11|max:11|unique:remitente',
+            'cuit' => 'required|min:11|max:11',
         ];
 
         $messages = [
             'cuit.required' => 'El campo CUIT no puede ser vacio.',
             'cuit.min' => 'El campo CUIT debe ser igual a 11 caracteres.',
             'cuit.max' => 'El campo CUIT debe ser igual a 11 caracteres.',
-            'cuit.unique' => 'El campo CUIT ya está en uso.',
         ];
         $this->validate($request, $rules, $messages);
+        $controlCuit = $this->validar_cuit($request->cuit);
+        if($controlCuit == 1){
+            alert()->error("El CUIT ya se encuentra en uso", 'Ha ocurrido un error');
+            return redirect()->action('RemitenteController@edit');
+        }
         
         $nuevo = Remitente_Comercial::findOrFail($cuit);
         $nuevo->nombre = $request->nombre;
@@ -168,6 +183,23 @@ class RemitenteController extends Controller
         $cuit = $nuevo->cuit;
         alert()->success("El remitente $nuevo->nombre fue editado con éxito", 'Editado con éxito');
         return redirect()->action('RemitenteController@show', $cuit);
+    }
+
+    public function validar_cuit($cuit)
+    {
+        $control = 0; //El cuit no se repite
+        $userAuth = auth()->user()->cuit;
+        if($userAuth == $cuit){
+            $control = 0; //El cuit es igual al del usuario
+        }else{
+            $usuarios = Remitente_Comercial::all();
+            foreach($usuarios as $usuario){
+                if($usuario->cuit == $cuit){
+                    $control = 1; //El cuit ya esta en uso con otro usuario
+                } 
+            }
+        }
+        return $control;
     }
 
     /**

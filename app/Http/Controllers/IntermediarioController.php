@@ -75,6 +75,17 @@ class IntermediarioController extends Controller
             }
         }
         else{
+            $rules = [
+                'cuit' => 'required|min:11|max:11|unique:usuario',
+            ];
+    
+            $messages = [
+                'cuit.required' => 'El campo CUIT no puede ser vacio.',
+                'cuit.min' => 'El campo CUIT debe ser igual a 11 caracteres.',
+                'cuit.max' => 'El campo CUIT debe ser igual a 11 caracteres.',
+                'cuit.unique' => 'El campo CUIT ya está en uso.',
+            ];
+            $this->validate($request, $rules, $messages);
             $nuevo = new Intermediario;
             $nuevo->cuit = $request->cuit;
         }
@@ -139,16 +150,20 @@ class IntermediarioController extends Controller
     public function update(Request $request, $cuit)
     {
         $rules = [
-            'cuit' => 'required|min:11|max:11|unique:intermediario',
+            'cuit' => 'required|min:11|max:11',
         ];
 
         $messages = [
             'cuit.required' => 'El campo CUIT no puede ser vacio.',
             'cuit.min' => 'El campo CUIT debe ser igual a 11 caracteres.',
             'cuit.max' => 'El campo CUIT debe ser igual a 11 caracteres.',
-            'cuit.unique' => 'El campo CUIT ya está en uso.',
         ];
         $this->validate($request, $rules, $messages);
+        $controlCuit = $this->validar_cuit($request->cuit);
+        if($controlCuit == 1){
+            alert()->error("El CUIT ya se encuentra en uso", 'Ha ocurrido un error');
+            return redirect()->action('IntermediarioController@edit');
+        }
         
         $nuevo = Intermediario::findOrFail($cuit);
         $nuevo->nombre = $request->nombre;
@@ -170,6 +185,22 @@ class IntermediarioController extends Controller
         return redirect()->action('IntermediarioController@show', $cuit);
     }
 
+    public function validar_cuit($cuit)
+    {
+        $control = 0; //El cuit no se repite
+        $userAuth = auth()->user()->cuit;
+        if($userAuth == $cuit){
+            $control = 0; //El cuit es igual al del usuario
+        }else{
+            $usuarios = Intermediario::all();
+            foreach($usuarios as $usuario){
+                if($usuario->cuit == $cuit){
+                    $control = 1; //El cuit ya esta en uso con otro usuario
+                } 
+            }
+        }
+        return $control;
+    }
     /**
      * Remove the specified resource from storage.
      *

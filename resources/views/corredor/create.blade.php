@@ -17,6 +17,13 @@
         <div class="card">
             <form action="{{action('CorredorController@store')}}" method="POST" autocomplete="off">
                 {{ csrf_field() }}
+                @if ($errors->any())
+                <ul class="alert alert-danger">
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                @endif
                 <p class="form-title"><strong>Datos del corredor</strong></p>
                 <label for="nombre">
                     <span>Nombre y apellido*:</span>

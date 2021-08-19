@@ -83,7 +83,7 @@ function acercaDe(){
     swal({
         html: true,
         title: "Acerca del sistema",
-        text: "Proyecto desarrollado con fines académicos para aprobar la cátedra Taller de Integración de la Facultad de Ciencia y Tecnología - UADER. \n Autores: Basgall Facundo Tomás, Cascone María Belén, Ernst Gotte Bernardita.",
+        text: "Proyecto desarrollado con fines académicos correspondiente a la carrera Analisis de Sistemas para aprobar la cátedra Taller de Integración de la Facultad de Ciencia y Tecnología - UADER. \n Autores: Basgall Facundo Tomás, Cascone María Belén, Ernst Gotte Bernardita.",
         icon: "info",
       });
 

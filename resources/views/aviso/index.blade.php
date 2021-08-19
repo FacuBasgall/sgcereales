@@ -14,7 +14,7 @@
     <div class="cuadro">
         <div class="card">
             <div class="card-header">
-                <label class="title col-md-8 col-form-label"><b>Listado de Avisos</b></label>
+                <label class="title col-md-8 col-form-label"><b>{{$title}}</b></label>
                 <a href="{{ action('AvisoController@create') }}"><button class="plus-button" title="Crear Aviso"><i class="fa fa-plus"></i> Crear Aviso</button></a>
             </div>
             <div class="card-body border">
