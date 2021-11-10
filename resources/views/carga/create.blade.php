@@ -73,8 +73,8 @@
                     </label>
                     <label for="cartaPorte">
                         <span>Número carta porte*:</span>
-                        <input type="number" value="{{old('cartaPorte')}}" name="cartaPorte" id="cartaPorte"
-                            class="common-input" min="0" max="99999999999999999999" required>
+                        <input type="text" value="{{old('cartaPorte')}}" name="cartaPorte" id="cartaPorte"
+                            class="common-input" maxlength="15" required>
                     </label>
                     <label for="fecha">
                         <span>Fecha de carga*:</span>
