@@ -66,6 +66,11 @@
                     {{ csrf_field() }}
                     @php $hoy = date("Y-m-d") @endphp
                     <p class="form-title"><strong>Datos de la carga</strong></p>
+                    <label for="ctg">
+                        <span>CTG*:</span>
+                        <input type="text" value="{{old('ctg')}}" name="ctg" id="ctg"
+                            class="common-input" maxlength="11" required>
+                    </label>
                     <label for="cartaPorte">
                         <span>Número carta porte*:</span>
                         <input type="number" value="{{old('cartaPorte')}}" name="cartaPorte" id="cartaPorte"

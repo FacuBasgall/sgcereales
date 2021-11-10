@@ -76,6 +76,7 @@
         </tr>
         <tr>
             <th><b>Matricula</b></th>
+            <th>CTG</th>
             <th><b>C.P.</b></th>
             <th><b>Fecha</b></th>
             <th><b>Kilos</b></th>
@@ -98,6 +99,7 @@
         @foreach ($cargas as $carga)
         <tr>
             <td>{{$carga->matriculaCamion}}</td>
+            <td>{{$carga->ctg}}</td>
             <td>{{$carga->nroCartaPorte}}</td>
             <td>{{$carga->fecha}}</td>
             <td>{{$carga->kilos}}</td>

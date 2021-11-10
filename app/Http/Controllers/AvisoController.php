@@ -114,6 +114,15 @@ class AvisoController extends Controller
             $lugarDescarga[] = $lugar;
         }
 
+        $entregadorDB = DB::table('aviso')
+            ->distinct()
+            ->select('aviso.entregador')
+            ->get();
+        $entregador = array();
+        foreach ($entregadorDB as $e) {
+            $entregador[] = $e;
+        }
+
         $tipoProductoDB = DB::table('aviso_producto')
             ->distinct()
             ->select('aviso_producto.tipo')
@@ -133,7 +142,7 @@ class AvisoController extends Controller
         $provincias = Provincia::all();
 
         return view('aviso.create', compact([
-            'lugarDescarga', 'tipoProducto', 'titulares', 'intermediarios', 'remitentes', 'corredores',
+            'lugarDescarga', 'entregador', 'tipoProducto', 'titulares', 'intermediarios', 'remitentes', 'corredores',
             'destinatarios', 'productos', 'localidades', 'provincias'
         ]));
     }
@@ -280,6 +289,15 @@ class AvisoController extends Controller
             $lugarDescarga[] = $lugar;
         }
 
+        $entregadorDB = DB::table('aviso')
+            ->distinct()
+            ->select('aviso.entregador')
+            ->get();
+        $entregador = array();
+        foreach ($entregadorDB as $e) {
+            $entregador[] = $e;
+        }
+
         $tipoProductoDB = DB::table('aviso_producto')
             ->distinct()
             ->select('aviso_producto.tipo')
@@ -302,7 +320,7 @@ class AvisoController extends Controller
         $provincias = Provincia::all();
 
         return view('aviso.edit', compact([
-            'lugarDescarga', 'tipoProducto', 'aviso', 'titulares', 'intermediarios', 'remitentes', 'corredores',
+            'lugarDescarga', 'entregador', 'tipoProducto', 'aviso', 'titulares', 'intermediarios', 'remitentes', 'corredores',
             'destinatarios', 'productos', 'aviso_producto', 'aviso_entregador', 'localidades', 'provincias'
         ]));
     }
@@ -333,6 +351,7 @@ class AvisoController extends Controller
         $aviso->idRemitenteComercial = $request->remitente;
         $aviso->idCorredor = $request->corredor;
         $aviso->idDestinatario = $request->destinatario;
+        $aviso->entregador = $request->entregador;
         $aviso->lugarDescarga = $request->lugarDescarga;
         $aviso->provinciaProcedencia = $request->provincia;
         $aviso->localidadProcedencia = $request->localidad;
@@ -552,7 +571,7 @@ class AvisoController extends Controller
             $asunto = str_replace('{{NRO_AVISO}}', $aviso->nroAviso, $preferencias->asunto);
             $cuerpo = str_replace('{{NRO_AVISO}}', $aviso->nroAviso, $preferencias->cuerpo);
             return view('aviso.mail', compact(['correos', 'aviso', 'asunto', 'cuerpo']));
-        }else {
+        } else {
             alert()->error("El aviso debe estar terminado para poder enviarlo", 'No se puede ejecutar la acción')->persistent('Cerrar');
             return back();
         }

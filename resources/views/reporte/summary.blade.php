@@ -162,7 +162,6 @@
                         <th><strong>Número</strong></th>
                         <th><strong>Fecha</strong></th>
                         <th><strong>Titular</strong></th>
-                        <th><strong>Intermediario</strong></th>
                         <th><strong>Remitente</strong></th>
                         <th><strong>Corredor</strong></th>
                         <th><strong>Destinatario</strong></th>
@@ -187,17 +186,6 @@
                         @if($titular->cuit == $aviso->idTitularCartaPorte)
                         <td>
                             <div class="cortar">{{$titular->nombre}}</div>
-                        </td>
-                        @endif
-                        @endforeach
-                        @foreach ($intermediarios as $intermediario)
-                        @if($intermediario->cuit == $aviso->idIntermediario)
-                        <td>
-                            <div class="cortar">{{$intermediario->nombre}}</div>
-                        </td>
-                        @else
-                        <td>
-                            <div> - </div>
                         </td>
                         @endif
                         @endforeach

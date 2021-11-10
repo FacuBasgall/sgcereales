@@ -54,11 +54,12 @@ class CargaController extends Controller
         $hoy = date("Y-m-d");
 
         if($request->fecha <= $hoy){
-            $existe = Carga::where('nroCartaPorte', $request->cartaPorte)->exists();
+            $existe = Carga::where('ctg', $request->ctg)->exists();
             if(!$existe){
                 $carga = new Carga;
                 $carga->idAviso = $request->idAviso;
                 $carga->matriculaCamion = $request->matricula;
+                $carga->ctg = $request->ctg;
                 $carga->nroCartaPorte = $request->cartaPorte;
                 $carga->fecha = $request->fecha;
                 $carga->kilos = $request->kilos;
@@ -77,7 +78,7 @@ class CargaController extends Controller
                     }
                 }
             }else{
-                alert()->error("El Nro de carta porte ya existe", 'Ha ocurrido un error')->persistent('Cerrar');
+                alert()->error("El Nro de CTG ya existe", 'Ha ocurrido un error')->persistent('Cerrar');
                 return back()->withInput();
             }
         }else{
@@ -132,6 +133,7 @@ class CargaController extends Controller
         if($request->fecha <= $hoy){
             $carga = Carga::findOrfail($request->idCarga);
             $carga->matriculaCamion = $request->matricula;
+            $carga->ctg = $request->ctg;
             $carga->nroCartaPorte = $request->cartaPorte;
             $carga->fecha = $request->fecha;
             $carga->kilos = $request->kilos;

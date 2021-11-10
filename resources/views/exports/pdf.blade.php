@@ -142,6 +142,7 @@
             </tr>
             <tr>
                 <th>Matricula</th>
+                <th>CTG</th>
                 <th>C.P.</th>
                 <th>Fecha</th>
                 <th>Kilos</th>
@@ -162,6 +163,7 @@
             @foreach ($cargas as $carga)
             <tr>
                 <td>{{$carga->matriculaCamion}}</td>
+                <td>{{$carga->ctg}}</td>
                 <td>{{$carga->nroCartaPorte}}</td>
                 <td>{{date("d/m/Y", strtotime($carga->fecha ))}}</td>
                 <td>{{$carga->kilos}}</td>

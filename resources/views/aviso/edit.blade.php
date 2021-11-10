@@ -9,8 +9,7 @@
 
 <body>
     <div class="card-header">
-        <label class="title col-md-8 col-form-label"><a href="{{ action('AvisoController@index') }}">Avisos</a> <i
-                class="fa fa-chevron-right"></i> <a href="{{ action('AvisoController@show', $aviso->idAviso) }}">Detalle
+        <label class="title col-md-8 col-form-label"><a href="{{ action('AvisoController@index') }}">Avisos</a> <i class="fa fa-chevron-right"></i> <a href="{{ action('AvisoController@show', $aviso->idAviso) }}">Detalle
                 del aviso</a> <i class="fa fa-chevron-right"></i> Editar aviso
             {{$aviso->nroAviso}}</label>
     </div>
@@ -23,8 +22,7 @@
                     <p class="form-title"><strong>Romaneo</strong></p>
                     <label for="fecha" class="margin-right">
                         <span>Fecha*:</span>
-                        <input type="date" value="{{$aviso_entregador->fecha}}" name="fecha" id="fecha" class="common-input"
-                            required>
+                        <input type="date" value="{{$aviso_entregador->fecha}}" name="fecha" id="fecha" class="common-input" required>
                     </label>
                     <hr>
                     <p class="form-title"><strong>Intermitentes</strong></p>
@@ -41,11 +39,11 @@
                             @endforeach
                         </select>
                         <script>
-                        $.fn.select2.defaults.set('language', 'es');
-                        $("#labeltitular").select2({
-                            placeholder: 'Seleccione',
-                            dropdownAutoWidth: true,
-                        });
+                            $.fn.select2.defaults.set('language', 'es');
+                            $("#labeltitular").select2({
+                                placeholder: 'Seleccione',
+                                dropdownAutoWidth: true,
+                            });
                         </script>
                     </label>
                     <label for="intermediario" class="margin-right">
@@ -61,11 +59,11 @@
                             @endforeach
                         </select>
                         <script>
-                        $.fn.select2.defaults.set('language', 'es');
-                        $("#labelintermediario").select2({
-                            placeholder: 'Seleccione',
-                            dropdownAutoWidth: true,
-                        });
+                            $.fn.select2.defaults.set('language', 'es');
+                            $("#labelintermediario").select2({
+                                placeholder: 'Seleccione',
+                                dropdownAutoWidth: true,
+                            });
                         </script>
                     </label>
                     <label for="remitente" class="margin-right">
@@ -81,11 +79,11 @@
                             @endforeach
                         </select>
                         <script>
-                        $.fn.select2.defaults.set('language', 'es');
-                        $("#labelremitente").select2({
-                            placeholder: 'Seleccione',
-                            dropdownAutoWidth: true,
-                        });
+                            $.fn.select2.defaults.set('language', 'es');
+                            $("#labelremitente").select2({
+                                placeholder: 'Seleccione',
+                                dropdownAutoWidth: true,
+                            });
                         </script>
                     </label>
                     <label for="corredor" class="margin-right">
@@ -101,11 +99,11 @@
                             @endforeach
                         </select>
                         <script>
-                        $.fn.select2.defaults.set('language', 'es');
-                        $("#labelcorredor").select2({
-                            placeholder: 'Seleccione',
-                            dropdownAutoWidth: true,
-                        });
+                            $.fn.select2.defaults.set('language', 'es');
+                            $("#labelcorredor").select2({
+                                placeholder: 'Seleccione',
+                                dropdownAutoWidth: true,
+                            });
                         </script>
                     </label>
                     <label for="destinatario" class="margin-right">
@@ -121,28 +119,30 @@
                             @endforeach
                         </select>
                         <script>
-                        $.fn.select2.defaults.set('language', 'es');
-                        $("#labeldestinatario").select2({
-                            placeholder: 'Seleccione',
-                            dropdownAutoWidth: true,
-                        });
+                            $.fn.select2.defaults.set('language', 'es');
+                            $("#labeldestinatario").select2({
+                                placeholder: 'Seleccione',
+                                dropdownAutoWidth: true,
+                            });
                         </script>
                     </label>
                     <label for="lugarDescarga">
                         <span>Destino*:</span>
-                        <input type="text" value="{{$aviso->lugarDescarga}}" name="lugarDescarga" class="common-input"
-                            list="lugarDescarga" maxlength="100" required>
+                        <input type="text" value="{{$aviso->lugarDescarga}}" name="lugarDescarga" class="common-input" list="lugarDescarga" maxlength="100" required>
                         <datalist id="lugarDescarga">
                             @foreach ((array)$lugarDescarga as $destino)
                             <option value="{{$destino->lugarDescarga}}"></option>
                             @endforeach
                         </datalist>
                     </label>
-                    <!-- EL ENTREGADOR ES EL USUARIO QUE ESTA AUTENTICADO EN EL MOMENTO -->
                     <label for="entregador">
                         <span>Entregador:</span>
-                        <input type="text" value="{{$aviso->entregador}}" name="entregador" id="entregador"
-                            class="common-input" maxlength="50">
+                        <input type="text" value="{{$aviso->entregador}}" name="entregador" class="common-input" list="entregador" maxlength="50">
+                        <datalist id="entregador">
+                            @foreach ((array)$entregador as $e)
+                            <option value="{{$e->entregador}}"></option>
+                            @endforeach
+                        </datalist>
                     </label>
                     <hr>
             </div>
@@ -161,17 +161,16 @@
                         @endforeach
                     </select>
                     <script>
-                    $.fn.select2.defaults.set('language', 'es');
-                    $("#labelproducto").select2({
-                        placeholder: 'Seleccione',
-                        dropdownAutoWidth: true,
-                    });
+                        $.fn.select2.defaults.set('language', 'es');
+                        $("#labelproducto").select2({
+                            placeholder: 'Seleccione',
+                            dropdownAutoWidth: true,
+                        });
                     </script>
                 </label>
                 <label for="tipo">
                     <span>Tipo de producto:</span>
-                    <input type="text" value="{{$aviso_producto->tipo}}" name="tipo" class="common-input"
-                        maxlength="150" list="tipo">
+                    <input type="text" value="{{$aviso_producto->tipo}}" name="tipo" class="common-input" maxlength="150" list="tipo">
                     <datalist id="tipo">
                         @foreach ((array)$tipoProducto as $tipo)
                         <option value="{{$tipo->tipo}}"></option>
@@ -183,10 +182,8 @@
                     $año2 = substr($aviso_producto->cosecha, -2, 2);
                     @endphp
                     <span>Cosecha*:</span>
-                    20 <input type="number" value="{{$año1}}" name="cosecha1" id="cosecha1" class="year-input" min="10"
-                        max="99" required>
-                    /20 <input type="number" value="{{$año2}}" name="cosecha2" id="cosecha2" class="year-input" min="10"
-                        max="99" required>
+                    20 <input type="number" value="{{$año1}}" name="cosecha1" id="cosecha1" class="year-input" min="10" max="99" required>
+                    /20 <input type="number" value="{{$año2}}" name="cosecha2" id="cosecha2" class="year-input" min="10" max="99" required>
                 </label>
                 <hr>
                 <p class="form-title"><strong>Procedencia de la mercadería</strong></p>
@@ -203,11 +200,11 @@
                         @endforeach
                     </select>
                     <script>
-                    $.fn.select2.defaults.set('language', 'es');
-                    $("#provincia").select2({
-                        placeholder: 'Seleccione',
-                        dropdownAutoWidth: true,
-                    });
+                        $.fn.select2.defaults.set('language', 'es');
+                        $("#provincia").select2({
+                            placeholder: 'Seleccione',
+                            dropdownAutoWidth: true,
+                        });
                     </script>
                 </label>
                 <label for="localidad" class="margin-right">
@@ -223,19 +220,17 @@
                         @endforeach
                     </select>
                     <script>
-                    $.fn.select2.defaults.set('language', 'es');
-                    $("#localidad").select2({
-                        placeholder: 'Seleccione',
-                        dropdownAutoWidth: true,
-                    });
+                        $.fn.select2.defaults.set('language', 'es');
+                        $("#localidad").select2({
+                            placeholder: 'Seleccione',
+                            dropdownAutoWidth: true,
+                        });
                     </script>
                 </label>
                 <hr>
                 <label for="obs">
                     <p class="form-title"><strong>Observaciones</strong></p>
-                    <textarea name="obs" id="obs" value="{{$aviso->observacion}}" class="observation-box"
-                        style="height:80px;" placeholder="Ingrese una observación"
-                        cols="150">{{$aviso->observacion}}</textarea>
+                    <textarea name="obs" id="obs" value="{{$aviso->observacion}}" class="observation-box" style="height:80px;" placeholder="Ingrese una observación" cols="150">{{$aviso->observacion}}</textarea>
                 </label>
                 <hr>
                 <div><label class="info-text-margin"><i class="fa fa-exclamation-circle"></i>

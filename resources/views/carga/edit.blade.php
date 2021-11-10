@@ -22,9 +22,14 @@
                     {{ method_field('PUT') }}
                     {{ csrf_field() }}
                     <p class="form-title"><strong>Datos de la carga</strong></p>
+                    <label for="ctg">
+                        <span>CTG*:</span>
+                        <input type="text" value="{{$carga->ctg}}" name="ctg" id="ctg"
+                            class="common-input" maxlength="11" required>
+                    </label>
                     <label for="cartaPorte">
                         <span>Número carta porte*:</span>
-                        <input type="text" name="cartaPorte" id="cartaPorte" value="{{$carga->nroCartaPorte}}"
+                        <input type="number" name="cartaPorte" id="cartaPorte" value="{{$carga->nroCartaPorte}}"
                             class="common-input" max="99999999999999999999" min="0" required>
                     </label>
                     <label for="fecha">
