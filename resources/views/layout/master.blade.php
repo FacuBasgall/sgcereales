@@ -50,6 +50,7 @@
                     <ul class="dropdown-menu" role="menu">
                         <li id="todos"><a href="{{ action('AvisoController@index') }}" class="dropdown-item">Todos</a></li>
                         <li id="pendientes"><a href="{{ action('AvisoController@pending') }}" class="dropdown-item">Pendientes</a></li>
+                        <li id="agregar"><a href="{{ action('AvisoController@create') }}" class="dropdown-item">Crear aviso</a></li>
                     </ul>
                 </li>
                 <li class="nav-item" id="producto">

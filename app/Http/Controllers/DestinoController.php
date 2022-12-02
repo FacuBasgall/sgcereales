@@ -137,7 +137,7 @@ class DestinoController extends Controller
         $iva = Condicion_IVA::orderBy('descripcion')->get();
         $localidades = Localidad::all();
         $provincias = Provincia::all();
-        return view('destino.edit', compact(['destino', 'contacto', 'iva',
+        return view('destino.edit', compact(['destino', 'iva',
             'localidades', 'provincias']));
     }
 
