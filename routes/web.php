@@ -16,6 +16,7 @@ Route::get('/', 'HomeController@verificacion');
 
 Route::get('/home', 'HomeController@index')->middleware('entregador')->name('home');
 Route::get('/verificacion', 'HomeController@verificacion');
+Route::get('/home/download', 'HomeController@download');
 
 Route::get('/login', 'Auth\LoginController@login')->name('login');
 Route::post('/login/auth', 'Auth\LoginController@authenticate');
@@ -154,4 +155,3 @@ Route::post('/reporte/send_email', 'ReporteController@send_email');
 Route::get('/reporte/load_email', 'ReporteController@load_email');
 Route::get('/reporte/products', 'ReporteController@products');
 Route::get('/reporte/productivity', 'ReporteController@productivity');
-

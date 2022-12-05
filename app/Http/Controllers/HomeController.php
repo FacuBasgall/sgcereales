@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 use App\Aviso;
 use App\Descarga;
@@ -59,6 +60,16 @@ class HomeController extends Controller
             return redirect()->action('HomeController@index');
         }else{
             return redirect()->action('AdminController@index');
+        }
+    }
+
+    public function download()
+    {
+        $exists = Storage::disk('public')->exists('SGC_ManualUser.pdf');
+        if($exists){
+            return Storage::download('SGC_ManualUser.pdf');
+        }else{
+            return back();
         }
     }
 }

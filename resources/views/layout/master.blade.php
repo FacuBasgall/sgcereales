@@ -112,7 +112,7 @@
                         <li id="show"><a href="{{action('UsuarioController@show')}}" class="dropdown-item">Perfil de
                                 usuario</a></li>
                         <li id="acerca"><a onclick="acercaDe();" class="dropdown-item">Acerca de</a></li>
-                        <li id="manual"><a href="#" class="dropdown-item">Manual de usuario</a></li>
+                        <li id="manual"><a href="{{action('HomeController@download')}}" class="dropdown-item">Manual de usuario</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
