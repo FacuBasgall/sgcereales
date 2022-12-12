@@ -63,7 +63,7 @@ class HomeController extends Controller
         }
     }
 
-    public function download()
+    public function manualuser()
     {
         $exists = Storage::disk('public')->exists('SGC_ManualUser.pdf');
         if($exists){

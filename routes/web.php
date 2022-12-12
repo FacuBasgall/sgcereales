@@ -16,7 +16,7 @@ Route::get('/', 'HomeController@verificacion');
 
 Route::get('/home', 'HomeController@index')->middleware('entregador')->name('home');
 Route::get('/verificacion', 'HomeController@verificacion');
-Route::get('/home/download', 'HomeController@download');
+Route::get('/home/manualuser', 'HomeController@manualuser');
 
 Route::get('/login', 'Auth\LoginController@login')->name('login');
 Route::post('/login/auth', 'Auth\LoginController@authenticate');

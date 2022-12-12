@@ -61,7 +61,7 @@
                     </a>
                 </li>
                 <li class="nav-item" id="manual">
-                    <a class="nav-link" href="{{action('HomeController@download')}}" title="Manual de usuario">
+                    <a class="nav-link" href="{{action('HomeController@manualuser')}}" title="Manual de usuario">
                         <i class="fa fa-book"></i>
                         Manual de usuario
                     </a>
