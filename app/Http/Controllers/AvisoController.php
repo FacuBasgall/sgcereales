@@ -32,6 +32,8 @@ use App\Usuario_Preferencias_Correo;
 use Datatables;
 use DB;
 use Mail;
+use Matrix\Matrix;
+use SebastianBergmann\Environment\Console;
 use SweetAlert;
 
 class AvisoController extends Controller
@@ -51,25 +53,43 @@ class AvisoController extends Controller
     public function index()
     {
         $title = "Listado de Avisos";
-        $avisos = Aviso::where('borrado', false)->get();
         $entregadorAutenticado = auth()->user()->idUser;
-        $cargas = Carga::where('borrado', false)->get();
-        $descargas = Descarga::where('borrado', false)->get();
-        $destinatarios = Destino::all();
-        $titulares = Titular::all();
-        $intermediarios = Intermediario::all();
-        $remitentes = Remitente_Comercial::all();
-        $corredores = Corredor::all();
-        $productos = Producto::all();
-        $avisos_productos = Aviso_Producto::all();
         $avisos_entregadores = Aviso_Entregador::where('idEntregador', $entregadorAutenticado)->get();
-        $localidades = Localidad::all();
-        $provincias = Provincia::all();
+        $array_avisos = array(); 
+        $i = 0;
+        foreach ($avisos_entregadores as $aviso_entregador) {
+            $aviso = Aviso::where('idAviso', $aviso_entregador->idAviso)->where('borrado', false)->first();
 
+            $destinatario = Destino::where('cuit', $aviso->idDestinatario)->first();
+            $titular = Titular::where('cuit', $aviso->idTitularCartaPorte)->first();
+            $remitente = Remitente_Comercial::where('cuit', $aviso->idRemitenteComercial)->first();
+            $corredor = Corredor::where('cuit', $aviso->idCorredor)->first();
+            $producto = Producto::where('idProducto', $aviso->idProducto)->first();
+            $localidad = Localidad::where('id', $aviso->localidadProcedencia)->first();
+            $provincia = Provincia::where('id', $aviso->provinciaProcedencia)->first();
+
+            $array_avisos[$i]['idaviso'] = $aviso->idAviso;
+            $array_avisos[$i]['nroaviso'] = $aviso->nroAviso;
+            $array_avisos[$i]['fecha'] = $aviso_entregador->fecha;
+            $array_avisos[$i]['producto'] = $producto->nombre;
+            $array_avisos[$i]['destinatario'] = $destinatario->nombre;
+            $array_avisos[$i]['titular'] = $titular->nombre;
+            $array_avisos[$i]['remitente'] = $remitente->nombre;
+            $array_avisos[$i]['corredor'] = $corredor->nombre;
+            if($aviso->entregador){
+                $array_avisos[$i]['entregador'] = $aviso->entregador;
+            }else{
+                $array_avisos[$i]['entregador'] = auth()->user()->nombre;
+            }
+            $array_avisos[$i]['lugardescarga'] = $aviso->lugarDescarga;
+            $array_avisos[$i]['estado'] = $aviso->estado; //True = terminado, False = pendiente
+            $array_avisos[$i]['localidad'] = $localidad->nombre;
+            $array_avisos[$i]['provincia'] = $provincia->abreviatura;
+
+            $i++;
+        }
         return view('aviso.index', compact([
-            'avisos', 'cargas', 'descargas', 'destinatarios', 'titulares',
-            'intermediarios', 'remitentes', 'corredores', 'productos', 'avisos_productos',
-            'avisos_entregadores', 'localidades', 'provincias', 'title',
+            'title', 'array_avisos',
         ]));
     }
 
@@ -77,24 +97,46 @@ class AvisoController extends Controller
     {
         $title = "Listado de Avisos Pendientes";
         $entregadorAutenticado = auth()->user()->idUser;
-        $avisos = Aviso::where('borrado', false)->where('estado', 0)->get(); //false, pendiente
-        $cargas = Carga::where('borrado', false)->get();
-        $descargas = Descarga::where('borrado', false)->get();
-        $destinatarios = Destino::all();
-        $titulares = Titular::all();
-        $intermediarios = Intermediario::all();
-        $remitentes = Remitente_Comercial::all();
-        $corredores = Corredor::all();
-        $productos = Producto::all();
-        $avisos_productos = Aviso_Producto::all();
         $avisos_entregadores = Aviso_Entregador::where('idEntregador', $entregadorAutenticado)->get();
-        $localidades = Localidad::all();
-        $provincias = Provincia::all();
-
+        $array_avisos = array(); 
+        $i = 0;
+        foreach ($avisos_entregadores as $aviso_entregador) {
+            $existe_aviso = Aviso::where('idAviso', $aviso_entregador->idAviso)->where('estado', 0)->where('borrado', false)->exists();
+            if($existe_aviso){
+                $aviso = Aviso::where('idAviso', $aviso_entregador->idAviso)->where('estado', 0)->where('borrado', false)->first();
+                
+                $destinatario = Destino::where('cuit', $aviso->idDestinatario)->first();
+                $titular = Titular::where('cuit', $aviso->idTitularCartaPorte)->first();
+                $remitente = Remitente_Comercial::where('cuit', $aviso->idRemitenteComercial)->first();
+                $corredor = Corredor::where('cuit', $aviso->idCorredor)->first();
+                $producto = Producto::where('idProducto', $aviso->idProducto)->first();
+                $localidad = Localidad::where('id', $aviso->localidadProcedencia)->first();
+                $provincia = Provincia::where('id', $aviso->provinciaProcedencia)->first();
+    
+                $array_avisos[$i]['idaviso'] = $aviso->idAviso;
+                $array_avisos[$i]['nroaviso'] = $aviso->nroAviso;
+                $array_avisos[$i]['fecha'] = $aviso_entregador->fecha;
+                $array_avisos[$i]['producto'] = $producto->nombre;
+                $array_avisos[$i]['destinatario'] = $destinatario->nombre;
+                $array_avisos[$i]['titular'] = $titular->nombre;
+                $array_avisos[$i]['remitente'] = $remitente->nombre;
+                $array_avisos[$i]['corredor'] = $corredor->nombre;
+                if($aviso->entregador){
+                    $array_avisos[$i]['entregador'] = $aviso->entregador;
+                }else{
+                    $array_avisos[$i]['entregador'] = auth()->user()->nombre;
+                }
+                $array_avisos[$i]['lugardescarga'] = $aviso->lugarDescarga;
+                $array_avisos[$i]['estado'] = $aviso->estado; //True = terminado, False = pendiente
+                $array_avisos[$i]['localidad'] = $localidad->nombre;
+                $array_avisos[$i]['provincia'] = $provincia->abreviatura;
+                
+                $i++;    
+            }
+        }
+            
         return view('aviso.index', compact([
-            'avisos', 'cargas', 'descargas', 'destinatarios', 'titulares',
-            'intermediarios', 'remitentes', 'corredores', 'productos', 'avisos_productos',
-            'avisos_entregadores', 'localidades', 'provincias', 'title',
+            'title', 'array_avisos',
         ]));
     }
 

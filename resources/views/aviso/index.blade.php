@@ -33,88 +33,46 @@
                             <th>Fecha de creación</th>
                             <th>Estado</th>
                             <th>Acciones</th>
-
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($avisos_entregadores as $aviso_entregador)
-                        @foreach($avisos as $aviso)
-                        @if($aviso->idAviso == $aviso_entregador->idAviso)
+                        @foreach($array_avisos as $aviso)
                         <tr>
-                            <td>{{ $aviso->nroAviso }}</td>
-
-                            @if (isset($aviso->entregador))
+                            <td>{{ $aviso['nroaviso'] }}</td>
                             <td>
-                                <div class="cortar">{{$aviso->entregador}}</div>
+                                <div class="cortar">{{$aviso['entregador']}}</div>
                             </td>
-                            @else
                             <td>
-                                <div class="cortar">{{auth()->user()->nombre}}</div>
+                                <div class="cortar">{{$aviso['producto']}}</div>
                             </td>
-                            @endif
-
-                            @foreach ($productos as $producto)
-                            @if ($producto->idProducto == $aviso->idProducto)
-                            <td>{{$producto->nombre}}</td>
-                            @endif
-                            @endforeach
-
-                            @foreach ($titulares as $titular)
-                            @if ($titular->cuit == $aviso->idTitularCartaPorte)
                             <td>
-                                <div class="cortar">{{ $titular->nombre }}</div>
+                                <div class="cortar">{{ $aviso['titular'] }}</div>
                             </td>
-                            @endif
-                            @endforeach
-                            @foreach ($remitentes as $remitente)
-                            @if ($remitente->cuit == $aviso->idRemitenteComercial)
                             <td>
-                                <div class="cortar">{{ $remitente->nombre }}</div>
+                                <div class="cortar">{{ $aviso['remitente'] }}</div>
                             </td>
-                            @endif
-                            @endforeach
-                            @foreach ($corredores as $corredor)
-                            @if ($corredor->cuit == $aviso->idCorredor)
                             <td>
-                                <div class="cortar">{{ $corredor->nombre }}</div>
+                                <div class="cortar">{{ $aviso['corredor'] }}</div>
                             </td>
-                            @endif
-                            @endforeach
-                            @foreach ($provincias as $provincia)
-                            @if ($provincia->id == $aviso->provinciaProcedencia)
-                            @foreach ($localidades as $localidad)
-                            @if ($localidad->id == $aviso->localidadProcedencia)
                             <td>
-                                <div class="cortar">{{$localidad->nombre}} ({{$provincia->abreviatura}})</div>
+                                <div class="cortar">{{$aviso['localidad']}} ({{$aviso['provincia']}})</div>
                             </td>
-                            @endif
-                            @endforeach
-                            @endif
-                            @endforeach
-                            @foreach ($destinatarios as $destinatario)
-                            @if ($destinatario->cuit == $aviso->idDestinatario)
                             <td>
-                                <div class="cortar">{{ $destinatario->nombre }}</div>
+                                <div class="cortar">{{ $aviso['destinatario'] }}</div>
                             </td>
-                            @endif
-                            @endforeach
                             <td>
-                                <div class="cortar">{{$aviso->lugarDescarga}}</div>
+                                <div class="cortar">{{$aviso['lugardescarga']}}</div>
                             </td>
-
-                            <td>{{$aviso_entregador->fecha}}</td>
-
-                            @if ($aviso->estado == true)
+                            <td>{{$aviso['fecha']}}</td>
+                            @if ($aviso['estado'] == true)
                             <td style="color: green;">Terminado</td>
                             @else
                             <td style="color: red;">Pendiente</td>
                             @endif
                             <td>
-                                <a href="{{ action('AvisoController@show', $aviso->idAviso) }}"><button class="show-button" title="Ver más" style="padding: 7px;"><i class="fa fa-eye"></i> Ver</button></a>
+                                <a href="{{ action('AvisoController@show', $aviso['idaviso']) }}"><button class="show-button" title="Ver más" style="padding: 7px;"><i class="fa fa-eye"></i> Ver</button></a>
                             </td>
                         </tr>
-                        @endif
-                        @endforeach
                         @endforeach
                     </tbody>
                 </table>
