@@ -29,20 +29,8 @@ class DestinoController extends Controller
 
     public function index(Request $request)
     {
-        $query = $request->search;
-        if($request->search == ''){
-            $arrayDestino = Destino::where('borrado', false)->orderBy('nombre')->paginate(10);
-        }else{
-            $destinatario =  Destino::where('borrado', false)->where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->exists();
-            if($destinatario){
-                $arrayDestino = Destino::where('borrado', false)->where('nombre', 'LIKE', "%$query%")
-                    ->orWhere('cuit', 'LIKE', "%$query%")->orderBy('nombre')->paginate(10);
-            }else{
-                $arrayDestino = Destino::where('borrado', false)->orderBy('nombre')->paginate(10);
-                alert()->warning("No se encontraron resultados para: $query", 'No se encontraron resultados')->persistent('Cerrar');
-            }
-        }
-        return view('destino.index', compact('arrayDestino', 'query'));
+        $arrayDestino = Destino::where('borrado', false)->orderBy('nombre')->get();
+        return view('destino.index', compact('arrayDestino'));
     }
 
     /**

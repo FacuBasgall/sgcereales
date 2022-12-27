@@ -27,22 +27,10 @@ class TitularController extends Controller
         $this->middleware('entregador');
     }
 
-    public function index(Request $request)
+    public function index()
     {
-        $query = $request->search;
-        if($request->search == ''){
-            $arrayTitular = Titular::where('borrado', false)->orderBy('nombre')->paginate(10);
-        }else{
-            $titular =  Titular::where('borrado', false)->where('nombre', 'LIKE', "%$query%")->orWhere('cuit', 'LIKE', "%$query%")->exists();
-            if($titular){
-                $arrayTitular = Titular::where('borrado', false)->where('nombre', 'LIKE', "%$query%")
-                    ->orWhere('cuit', 'LIKE', "%$query%")->orderBy('nombre')->paginate(10);
-            }else{
-                $arrayTitular = Titular::where('borrado', false)->orderBy('nombre')->paginate(10);
-                alert()->warning("No se encontraron resultados para: $query", 'No se encontraron resultados')->persistent('Cerrar');
-            }
-        }
-        return view('titular.index', compact('arrayTitular', 'query'));
+        $arrayTitular = Titular::where('borrado', false)->orderBy('nombre')->get();
+        return view('titular.index', compact('arrayTitular'));
     }
 
     /**
