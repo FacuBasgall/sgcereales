@@ -48,9 +48,10 @@
                         Avisos
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li id="todos"><a href="{{ action('AvisoController@index') }}" class="dropdown-item">Todos</a></li>
+                        <li id="ultimos"><a href="{{ action('AvisoController@index') }}" class="dropdown-item">Últimos</a></li>
                         <li id="pendientes"><a href="{{ action('AvisoController@pending') }}" class="dropdown-item">Pendientes</a></li>
-                        <li id="agregar"><a href="{{ action('AvisoController@create') }}" class="dropdown-item">Crear aviso</a></li>
+                        <li id="historia"><a href="{{ action('AvisoController@history') }}" class="dropdown-item">Históricos</a></li>
+                        <li id="agregar"><a href="{{ action('AvisoController@create') }}" class="dropdown-item">Nuevo aviso</a></li>
                     </ul>
                 </li>
                 <li class="nav-item" id="producto">
@@ -59,35 +60,55 @@
                         Productos
                     </a>
                 </li>
-                <li class="nav-item" id="titular">
-                    <a class="nav-link" href="{{ action('TitularController@index') }}" title="Titulares Carta Porte">
+                <li class="nav-item dropdown" id="titular">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" title="Titulares">
                         <i class="fa fa-address-card"></i>
                         Titulares
                     </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li id="titulares"><a href="{{ action('TitularController@index') }}" class="dropdown-item">Ver todos</a></li>
+                        <li id="creartitular"><a href="{{ action('TitularController@create') }}" class="dropdown-item">Nuevo titular</a></li>
+                    </ul>
                 </li>
-                <li class="nav-item" id="intermediario">
-                    <a class="nav-link" href="{{ action('IntermediarioController@index') }}" title="Intermediarios">
+                <li class="nav-item dropdown" id="intermediario">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" title="Intermediarios">
                         <i class="fa fa-users"></i>
                         Intermediarios
                     </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li id="intermediarios"><a href="{{ action('IntermediarioController@index') }}" class="dropdown-item">Ver todos</a></li>
+                        <li id="crearintermediario"><a href="{{ action('IntermediarioController@create') }}" class="dropdown-item">Nuevo intermediario</a></li>
+                    </ul>
                 </li>
-                <li class="nav-item" id="remitente">
-                    <a class="nav-link" href="{{ action('RemitenteController@index') }}" title="Remitentes Comerciales">
+                <li class="nav-item dropdown" id="remitente">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" title="Remitentes">
                         <i class="fa fa-user"></i>
                         Remitentes
                     </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li id="remitente"><a href="{{ action('RemitenteController@index') }}" class="dropdown-item">Ver todos</a></li>
+                        <li id="crearremitente"><a href="{{ action('RemitenteController@create') }}" class="dropdown-item">Nuevo remitente</a></li>
+                    </ul>
                 </li>
-                <li class="nav-item" id="destino">
-                    <a class="nav-link" href="{{ action('DestinoController@index') }}" title="Destinatarios">
+                <li class="nav-item dropdown" id="destino">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" title="Destinatarios">
                         <i class="fa fa-truck"></i>
                         Destinatarios
                     </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li id="destino"><a href="{{ action('DestinoController@index') }}" class="dropdown-item">Ver todos</a></li>
+                        <li id="creardestino"><a href="{{ action('DestinoController@create') }}" class="dropdown-item">Nuevo destinatario</a></li>
+                    </ul>
                 </li>
-                <li class="nav-item" id="corredor">
-                    <a class="nav-link" href="{{ action('CorredorController@index') }}" title="Corredores">
+                <li class="nav-item dropdown" id="corredor">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" title="Corredores">
                         <i class="fa fa-handshake-o"></i>
                         Corredores
                     </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li id="corredor"><a href="{{ action('CorredorController@index') }}" class="dropdown-item">Ver todos</a></li>
+                        <li id="crearcorredor"><a href="{{ action('CorredorController@create') }}" class="dropdown-item">Nuevo corredor</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item dropdown" id="reporte">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" title="Reportes">

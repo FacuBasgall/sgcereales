@@ -15,9 +15,6 @@ use App\Corredor;
 use App\Producto;
 use App\Destino;
 use App\Titular;
-use App\Titular_Contacto;
-use App\Remitente_Contacto;
-use App\Corredor_Contacto;
 use App\Intermediario;
 use App\Remitente_Comercial;
 use App\User;
@@ -28,6 +25,9 @@ use App\Entregador_Domicilio;
 use App\Localidad;
 use App\Provincia;
 use App\Usuario_Preferencias_Correo;
+use App\Reporte;
+use App\Filtro;
+
 
 use Datatables;
 use DB;
@@ -50,93 +50,181 @@ class AvisoController extends Controller
         $this->middleware('entregador');
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $hoy = date("Y-m-d");
+        $fechafin = date_create($hoy);
+        $dias = $request->dias;
+        if($dias == '90d'){
+            $fechainicio = date_sub($fechafin, date_interval_create_from_date_string('90 days'));
+        }elseif($dias == '60d'){
+            $fechainicio = date_sub($fechafin, date_interval_create_from_date_string('60 days'));
+        }else{
+            #dias = 30 | por defecto
+            $fechainicio = date_sub($fechafin, date_interval_create_from_date_string('30 days'));
+        }
+        $fechainicio = date_format($fechainicio, 'Y-m-d');
+
         $title = "Listado de Avisos";
         $entregadorAutenticado = auth()->user()->idUser;
-        $avisos_entregadores = Aviso_Entregador::where('idEntregador', $entregadorAutenticado)->get();
-        $array_avisos = array(); 
-        $i = 0;
-        foreach ($avisos_entregadores as $aviso_entregador) {
-            $aviso = Aviso::where('idAviso', $aviso_entregador->idAviso)->where('borrado', false)->first();
+        $nombreEntregador = auth()->user()->nombre;
+        $avisos = DB::table('aviso_entregador')
+            ->join('aviso', 'aviso_entregador.idAviso', '=', 'aviso.idAviso')
+            ->join('destinatario', 'aviso.idDestinatario', '=', 'destinatario.cuit')
+            ->join('titular', 'aviso.idTitularCartaPorte', '=', 'titular.cuit')
+            ->join('corredor', 'aviso.idCorredor', '=', 'corredor.cuit')
+            ->join('remitente', 'aviso.idRemitenteComercial', '=', 'remitente.cuit')
+            ->join('producto', 'aviso.idProducto', '=', 'producto.idProducto')
+            ->join('localidad', 'aviso.localidadProcedencia', '=', 'localidad.id')
+            ->join('provincia', 'aviso.provinciaProcedencia', '=', 'provincia.id')
+            ->where('aviso_entregador.idEntregador', '=', $entregadorAutenticado)
+            ->whereDate('aviso_entregador.fecha', '>=', $fechainicio)
+            ->select('aviso.idAviso', 'aviso.nroAviso', 'aviso_entregador.fecha', 'producto.nombre as productoNombre', 
+            'destinatario.nombre as destinatarioNombre', 'titular.nombre as titularNombre', 'corredor.nombre as corredorNombre', 
+            'remitente.nombre as remitenteNombre', 'localidad.nombre as localidadNombre', 
+            'provincia.abreviatura as provinciaAbreviatura', 'aviso.entregador', 'aviso.lugarDescarga', 'aviso.estado')
+            ->orderByDesc('aviso_entregador.fecha', 'aviso.nroAviso')
+            ->get();
 
-            $destinatario = Destino::where('cuit', $aviso->idDestinatario)->first();
-            $titular = Titular::where('cuit', $aviso->idTitularCartaPorte)->first();
-            $remitente = Remitente_Comercial::where('cuit', $aviso->idRemitenteComercial)->first();
-            $corredor = Corredor::where('cuit', $aviso->idCorredor)->first();
-            $producto = Producto::where('idProducto', $aviso->idProducto)->first();
-            $localidad = Localidad::where('id', $aviso->localidadProcedencia)->first();
-            $provincia = Provincia::where('id', $aviso->provinciaProcedencia)->first();
-
-            $array_avisos[$i]['idaviso'] = $aviso->idAviso;
-            $array_avisos[$i]['nroaviso'] = $aviso->nroAviso;
-            $array_avisos[$i]['fecha'] = $aviso_entregador->fecha;
-            $array_avisos[$i]['producto'] = $producto->nombre;
-            $array_avisos[$i]['destinatario'] = $destinatario->nombre;
-            $array_avisos[$i]['titular'] = $titular->nombre;
-            $array_avisos[$i]['remitente'] = $remitente->nombre;
-            $array_avisos[$i]['corredor'] = $corredor->nombre;
-            if($aviso->entregador){
-                $array_avisos[$i]['entregador'] = $aviso->entregador;
-            }else{
-                $array_avisos[$i]['entregador'] = auth()->user()->nombre;
-            }
-            $array_avisos[$i]['lugardescarga'] = $aviso->lugarDescarga;
-            $array_avisos[$i]['estado'] = $aviso->estado; //True = terminado, False = pendiente
-            $array_avisos[$i]['localidad'] = $localidad->nombre;
-            $array_avisos[$i]['provincia'] = $provincia->abreviatura;
-
-            $i++;
-        }
         return view('aviso.index', compact([
-            'title', 'array_avisos',
+            'title', 'avisos', 'nombreEntregador',
         ]));
     }
 
     public function pending()
     {
+        #copiar busqueda por fechas
         $title = "Listado de Avisos Pendientes";
         $entregadorAutenticado = auth()->user()->idUser;
-        $avisos_entregadores = Aviso_Entregador::where('idEntregador', $entregadorAutenticado)->get();
-        $array_avisos = array(); 
-        $i = 0;
-        foreach ($avisos_entregadores as $aviso_entregador) {
-            $existe_aviso = Aviso::where('idAviso', $aviso_entregador->idAviso)->where('estado', 0)->where('borrado', false)->exists();
-            if($existe_aviso){
-                $aviso = Aviso::where('idAviso', $aviso_entregador->idAviso)->where('estado', 0)->where('borrado', false)->first();
-                
-                $destinatario = Destino::where('cuit', $aviso->idDestinatario)->first();
-                $titular = Titular::where('cuit', $aviso->idTitularCartaPorte)->first();
-                $remitente = Remitente_Comercial::where('cuit', $aviso->idRemitenteComercial)->first();
-                $corredor = Corredor::where('cuit', $aviso->idCorredor)->first();
-                $producto = Producto::where('idProducto', $aviso->idProducto)->first();
-                $localidad = Localidad::where('id', $aviso->localidadProcedencia)->first();
-                $provincia = Provincia::where('id', $aviso->provinciaProcedencia)->first();
-    
-                $array_avisos[$i]['idaviso'] = $aviso->idAviso;
-                $array_avisos[$i]['nroaviso'] = $aviso->nroAviso;
-                $array_avisos[$i]['fecha'] = $aviso_entregador->fecha;
-                $array_avisos[$i]['producto'] = $producto->nombre;
-                $array_avisos[$i]['destinatario'] = $destinatario->nombre;
-                $array_avisos[$i]['titular'] = $titular->nombre;
-                $array_avisos[$i]['remitente'] = $remitente->nombre;
-                $array_avisos[$i]['corredor'] = $corredor->nombre;
-                if($aviso->entregador){
-                    $array_avisos[$i]['entregador'] = $aviso->entregador;
-                }else{
-                    $array_avisos[$i]['entregador'] = auth()->user()->nombre;
+        $nombreEntregador = auth()->user()->nombre;
+        $avisos = DB::table('aviso_entregador')
+            ->join('aviso', 'aviso_entregador.idAviso', '=', 'aviso.idAviso')
+            ->join('destinatario', 'aviso.idDestinatario', '=', 'destinatario.cuit')
+            ->join('titular', 'aviso.idTitularCartaPorte', '=', 'titular.cuit')
+            ->join('corredor', 'aviso.idCorredor', '=', 'corredor.cuit')
+            ->join('remitente', 'aviso.idRemitenteComercial', '=', 'remitente.cuit')
+            ->join('producto', 'aviso.idProducto', '=', 'producto.idProducto')
+            ->join('localidad', 'aviso.localidadProcedencia', '=', 'localidad.id')
+            ->join('provincia', 'aviso.provinciaProcedencia', '=', 'provincia.id')
+            ->where('aviso_entregador.idEntregador', '=', $entregadorAutenticado)
+            ->where('aviso.estado', '=', false)
+            ->select('aviso.idAviso', 'aviso.nroAviso', 'aviso_entregador.fecha', 'producto.nombre as productoNombre', 
+            'destinatario.nombre as destinatarioNombre', 'titular.nombre as titularNombre', 'corredor.nombre as corredorNombre', 
+            'remitente.nombre as remitenteNombre', 'localidad.nombre as localidadNombre', 
+            'provincia.abreviatura as provinciaAbreviatura', 'aviso.entregador', 'aviso.lugarDescarga', 'aviso.estado')
+            ->orderByDesc('aviso_entregador.fecha', 'aviso.nroAviso')
+            ->get();    
+              
+        return view('aviso.index', compact([
+            'title', 'avisos', 'nombreEntregador',
+        ]));
+    }
+
+    public function history(Request $request)
+    /**Historico de Avisos */
+    {
+        $resultado = NULL;
+        $filtros = array(
+            "fechaDesde" => $request->fechaDesde,
+            "fechaHasta" => $request->fechaHasta,
+            "titular" => $request->titular,
+            "intermediario" => $request->intermediario,
+            "remitente" => $request->remitente,
+            "corredor" => $request->corredor,
+            "destinatario" => $request->destinatario,
+            "entregador" => $request->entregador,
+            "producto" => $request->producto,
+        );
+        $control = false;
+
+        $idEntregador = auth()->user()->idUser;
+
+        $reportesBD = Reporte::all();
+        foreach ($reportesBD as $report) {
+            $report->delete(); //vaciar la tabla reportes-temp
+        }
+
+        $filtrosBD = Filtro::all();
+        foreach ($filtrosBD as $filt) {
+            $filt->delete(); //vaciar la tabla filtro-reporte-temp
+        }
+
+        if (isset($request->fechaDesde) && isset($request->fechaHasta)) {
+            if ($request->fechaDesde <= $request->fechaHasta) {
+                $existe = Aviso_Entregador::whereBetween('fecha', [$request->fechaDesde, $request->fechaHasta])->where('idEntregador', $idEntregador)->exists();
+                if ($existe) {
+                    $control = true;
+                    $resultado = DB::table('aviso')
+                        ->join('aviso_entregador', 'aviso.idAviso', '=', 'aviso_entregador.idAviso')
+                        ->whereBetween('aviso_entregador.fecha', [$request->fechaDesde, $request->fechaHasta])
+                        ->where('aviso_entregador.idEntregador', '=', $idEntregador)
+                        ->where('aviso.estado', '=', true)
+                        ->select('aviso.*')
+                        ->get();
                 }
-                $array_avisos[$i]['lugardescarga'] = $aviso->lugarDescarga;
-                $array_avisos[$i]['estado'] = $aviso->estado; //True = terminado, False = pendiente
-                $array_avisos[$i]['localidad'] = $localidad->nombre;
-                $array_avisos[$i]['provincia'] = $provincia->abreviatura;
-                
-                $i++;    
+                $nuevoFiltro = new Filtro;
+                $nuevoFiltro->fechaDesde = $filtros["fechaDesde"];
+                $nuevoFiltro->fechaHasta = $filtros["fechaHasta"];
+                $nuevoFiltro->idTitular = $filtros["titular"];
+                $nuevoFiltro->idIntermediario = $filtros["intermediario"];
+                $nuevoFiltro->idRemitente = $filtros["remitente"];
+                $nuevoFiltro->idCorredor = $filtros["corredor"];
+                $nuevoFiltro->idDestinatario = $filtros["destinatario"];
+                $nuevoFiltro->entregador = $filtros["entregador"];
+                $nuevoFiltro->idProducto = $filtros["producto"];
+                $nuevoFiltro->save();
+            } else {
+                alert()->warning("La fecha desde debe ser menor a la fecha hasta", 'Ha ocurrido un error')->persistent('Cerrar');
+                return back()->withInput();
             }
         }
-            
-        return view('aviso.index', compact([
-            'title', 'array_avisos',
+        if ($control) {
+            if (isset($request->titular)) {
+                $resultado = $resultado->where('idTitularCartaPorte', $request->titular);
+            }
+            if (isset($request->corredor)) {
+                $resultado = $resultado->where('idCorredor', $request->corredor);
+            }
+            if (isset($request->intermediario)) {
+                $resultado = $resultado->where('idIntermediario', $request->intermediario);
+            }
+            if (isset($request->remitente)) {
+                $resultado = $resultado->where('idRemitenteComercial', $request->remitente);
+            }
+            if (isset($request->destinatario)) {
+                $resultado = $resultado->where('idDestinatario', $request->destinatario);
+            }
+            if (isset($request->entregador)) {
+                $resultado = $resultado->where('entregador', $request->entregador);
+            }
+            if (isset($request->producto)) {
+                $resultado = $resultado->where('idProducto', $request->producto);
+            }
+            foreach ($resultado as $result) {
+                $nuevoReporte = new Reporte;
+                $nuevoReporte->idAviso = $result->idAviso;
+                $nuevoReporte->idFiltro = $nuevoFiltro->idFiltro;
+                $nuevoReporte->save();
+            }
+        }
+        $cargas = Carga::where('borrado', false)->get();
+        $descargas = Descarga::where('borrado', false)->get();
+        $destinatarios = Destino::all();
+        $titulares = Titular::all();
+        $intermediarios = Intermediario::all();
+        $remitentes = Remitente_Comercial::all();
+        $corredores = Corredor::all();
+        $entregador = User::where('idUser', $idEntregador)->first(); //Solo Usuario Entregador Autenticado
+        $productos = Producto::where('borrado', false)->get();
+        $avisos_productos = Aviso_Producto::all();
+        $avisos_entregadores = Aviso_Entregador::where('idEntregador', $idEntregador)->get();
+        $localidades = Localidad::all();
+        $provincias = Provincia::all();
+
+        return view('aviso.history', compact([
+            'cargas', 'descargas', 'destinatarios', 'titulares',
+            'intermediarios', 'remitentes', 'corredores', 'entregador', 'productos', 'avisos_productos',
+            'avisos_entregadores', 'localidades', 'provincias', 'resultado', 'filtros'
         ]));
     }
 

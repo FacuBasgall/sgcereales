@@ -15,6 +15,20 @@
         <div class="card">
             <div class="card-header">
                 <label class="title col-md-8 col-form-label"><b>{{$title}}</b></label>
+                <label for="dias" class="margin-right">
+                    <span>Visualizar últimos:</span>
+                    <select name="dias" id="dias" class="common-input">
+                        <option value="30d">
+                            30 días
+                        </option>
+                        <option value="60d">
+                            60 días
+                        </option>
+                        <option value="90d">
+                            90 días
+                        </option>
+                    </select>
+                </label>
                 <a href="{{ action('AvisoController@create') }}"><button class="plus-button" title="Crear Aviso"><i class="fa fa-plus"></i> Crear Aviso</button></a>
             </div>
             <div class="card-body border">
@@ -36,41 +50,47 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($array_avisos as $aviso)
+                        @foreach($avisos as $aviso)
                         <tr>
-                            <td>{{ $aviso['nroaviso'] }}</td>
+                            <td>{{ $aviso->nroAviso }}</td>
+                            @if ($aviso->entregador == NULL)
                             <td>
-                                <div class="cortar">{{$aviso['entregador']}}</div>
+                                <div class="cortar">{{$nombreEntregador}}</div>
+                            </td>
+                            @else
+                            <td>
+                                <div class="cortar">{{$aviso->entregador}}</div>
+                            </td>
+                            @endif
+                            <td>
+                                <div class="cortar">{{$aviso->productoNombre}}</div>
                             </td>
                             <td>
-                                <div class="cortar">{{$aviso['producto']}}</div>
+                                <div class="cortar">{{ $aviso->titularNombre }}</div>
                             </td>
                             <td>
-                                <div class="cortar">{{ $aviso['titular'] }}</div>
+                                <div class="cortar">{{ $aviso->remitenteNombre }}</div>
                             </td>
                             <td>
-                                <div class="cortar">{{ $aviso['remitente'] }}</div>
+                                <div class="cortar">{{ $aviso->corredorNombre }}</div>
                             </td>
                             <td>
-                                <div class="cortar">{{ $aviso['corredor'] }}</div>
+                                <div class="cortar">{{$aviso->localidadNombre}} ({{$aviso->provinciaAbreviatura}})</div>
                             </td>
                             <td>
-                                <div class="cortar">{{$aviso['localidad']}} ({{$aviso['provincia']}})</div>
+                                <div class="cortar">{{ $aviso->destinatarioNombre }}</div>
                             </td>
                             <td>
-                                <div class="cortar">{{ $aviso['destinatario'] }}</div>
+                                <div class="cortar">{{$aviso->lugarDescarga}}</div>
                             </td>
-                            <td>
-                                <div class="cortar">{{$aviso['lugardescarga']}}</div>
-                            </td>
-                            <td>{{$aviso['fecha']}}</td>
-                            @if ($aviso['estado'] == true)
+                            <td>{{$aviso->fecha}}</td>
+                            @if ($aviso->estado == true)
                             <td style="color: green;">Terminado</td>
                             @else
                             <td style="color: red;">Pendiente</td>
                             @endif
                             <td>
-                                <a href="{{ action('AvisoController@show', $aviso['idaviso']) }}"><button class="show-button" title="Ver más" style="padding: 7px;"><i class="fa fa-eye"></i> Ver</button></a>
+                                <a href="{{ action('AvisoController@show', $aviso->idAviso) }}"><button class="show-button" title="Ver más" style="padding: 7px;"><i class="fa fa-eye"></i> Ver</button></a>
                             </td>
                         </tr>
                         @endforeach
