@@ -13,7 +13,7 @@
 <body style="font-family: sans-serif;">
     <div class="card">
         <div class="card-header">
-            <label class="title col-md-8 col-form-label"><b>Listado de Avisos Históricos</b></label>
+            <label class="title col-md-8 col-form-label"><b>Listado de Avisos</b></label>
             <a href="{{ action('AvisoController@create') }}"><button class="plus-button" title="Crear Aviso"><i class="fa fa-plus"></i> Crear Aviso</button></a>
         </div>
         <div class="container">
@@ -113,11 +113,12 @@
                 [9, "desc"],
                 [0, "desc"]
             ],
+            "searching": false,
             "language": {
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ avisos",
                 "sZeroRecords": "No se encontraron resultados",
-                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sEmptyTable": "No hay datos disponibles. Realice una nueva búsqueda para obtener resultados",
                 "sInfo": "Mostrando avisos del _START_ al _END_ de un total de _TOTAL_ avisos",
                 "sInfoEmpty": "Mostrando avisos del 0 al 0 de un total de 0 avisos",
                 "sInfoFiltered": "(filtrado de un total de _MAX_ avisos)",

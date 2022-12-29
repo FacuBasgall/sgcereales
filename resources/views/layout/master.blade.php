@@ -48,10 +48,10 @@
                         Avisos
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li id="ultimos"><a href="{{ action('AvisoController@index') }}" class="dropdown-item">Últimos</a></li>
-                        <li id="pendientes"><a href="{{ action('AvisoController@pending') }}" class="dropdown-item">Pendientes</a></li>
-                        <li id="historia"><a href="{{ action('AvisoController@history') }}" class="dropdown-item">Históricos</a></li>
-                        <li id="agregar"><a href="{{ action('AvisoController@create') }}" class="dropdown-item">Crear aviso</a></li>
+                        <li id="ultimos" title="Muestra avisos de hasta 30 días atrás"><a href="{{ action('AvisoController@index') }}" class="dropdown-item">Últimos</a></li>
+                        <li id="pendientes" title="Muestra avisos pendientes"><a href="{{ action('AvisoController@pending') }}" class="dropdown-item">Pendientes</a></li>
+                        <li id="historia" title="Muestra avisos de más de 30 días de antiguedad"><a href="{{ action('AvisoController@history') }}" class="dropdown-item">Históricos</a></li>
+                        <li id="agregar" title="Crear un nuevo aviso"><a href="{{ action('AvisoController@create') }}" class="dropdown-item">Crear aviso</a></li>
                     </ul>
                 </li>
                 <li class="nav-item" id="producto">

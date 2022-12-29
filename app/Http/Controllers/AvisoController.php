@@ -50,20 +50,9 @@ class AvisoController extends Controller
 
     public function index(Request $request)
     {
-        $hoy = date("Y-m-d");
-        $fechafin = date_create($hoy);
-        $dias = $request->dias;
-        if ($dias == '90d') {
-            $fechainicio = date_sub($fechafin, date_interval_create_from_date_string('90 days'));
-        } elseif ($dias == '60d') {
-            $fechainicio = date_sub($fechafin, date_interval_create_from_date_string('60 days'));
-        } else {
-            #dias = 30 | por defecto
-            $fechainicio = date_sub($fechafin, date_interval_create_from_date_string('30 days'));
-        }
-        $fechainicio = date_format($fechainicio, 'Y-m-d');
+        $fechainicio = date_format((date_sub(date_create(date("Y-m-d")), date_interval_create_from_date_string('30 days'))), 'Y-m-d');
 
-        $title = "Listado de Avisos";
+        $title = "Listado de avisos de los últimos 30 días";
         $entregadorAutenticado = auth()->user()->idUser;
         $nombreEntregador = auth()->user()->nombre;
         $avisos = DB::table('aviso_entregador')
@@ -102,19 +91,6 @@ class AvisoController extends Controller
 
     public function pending(Request $request)
     {
-        $hoy = date("Y-m-d");
-        $fechafin = date_create($hoy);
-        $dias = $request->dias;
-        if ($dias == '90d') {
-            $fechainicio = date_sub($fechafin, date_interval_create_from_date_string('90 days'));
-        } elseif ($dias == '60d') {
-            $fechainicio = date_sub($fechafin, date_interval_create_from_date_string('60 days'));
-        } else {
-            #dias = 30 | por defecto
-            $fechainicio = date_sub($fechafin, date_interval_create_from_date_string('30 days'));
-        }
-        $fechainicio = date_format($fechainicio, 'Y-m-d');
-        
         $title = "Listado de Avisos Pendientes";
         $entregadorAutenticado = auth()->user()->idUser;
         $nombreEntregador = auth()->user()->nombre;
@@ -129,7 +105,6 @@ class AvisoController extends Controller
             ->join('provincia', 'aviso.provinciaProcedencia', '=', 'provincia.id')
             ->where('aviso_entregador.idEntregador', '=', $entregadorAutenticado)
             ->where('aviso.estado', '=', false)
-            ->whereDate('aviso_entregador.fecha', '>=', $fechainicio)
             ->select(
                 'aviso.idAviso',
                 'aviso.nroAviso',

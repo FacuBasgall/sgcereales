@@ -15,20 +15,6 @@
         <div class="card">
             <div class="card-header">
                 <label class="title col-md-8 col-form-label"><b>{{$title}}</b></label>
-                <label for="dias" class="margin-right">
-                    <span>Visualizar últimos:</span>
-                    <select name="dias" id="dias" class="common-input">
-                        <option value="30d">
-                            30 días
-                        </option>
-                        <option value="60d">
-                            60 días
-                        </option>
-                        <option value="90d">
-                            90 días
-                        </option>
-                    </select>
-                </label>
                 <a href="{{ action('AvisoController@create') }}"><button class="plus-button" title="Crear Aviso"><i class="fa fa-plus"></i> Crear Aviso</button></a>
             </div>
             <div class="card-body border">
