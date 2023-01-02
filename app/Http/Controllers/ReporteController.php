@@ -8,24 +8,14 @@ use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade as PDF;
 use App\Mail\ReporteSendMail;
 
-use App\Reporte;
 use App\Filtro;
-use App\Aviso;
-use App\Descarga;
-use App\Carga;
 use App\Corredor;
 use App\Producto;
 use App\Destino;
 use App\Titular;
-use App\Intermediario;
 use App\Remitente_Comercial;
 use App\User;
-use App\Aviso_Producto;
-use App\Aviso_Entregador;
 use App\Entregador_Contacto;
-use App\Entregador_Domicilio;
-use App\Localidad;
-use App\Provincia;
 use App\Usuario_Preferencias_Correo;
 
 use Datatables;
@@ -44,108 +34,99 @@ class ReporteController extends Controller
     public function summary(Request $request)
     /**Resumen de Descargas en Avisos terminados */
     {
-        $resultado = NULL;
-        $filtros = array(
-            "fechaDesde" => $request->fechaDesde,
-            "fechaHasta" => $request->fechaHasta,
-            "titular" => $request->titular,
-            "intermediario" => $request->intermediario,
-            "remitente" => $request->remitente,
-            "corredor" => $request->corredor,
-            "destinatario" => $request->destinatario,
-            "entregador" => $request->entregador,
-            "producto" => $request->producto,
-        );
-        $control = false;
-
-        $idEntregador = auth()->user()->idUser;
-
-        $reportesBD = Reporte::all();
-        foreach ($reportesBD as $report) {
-            $report->delete(); //vaciar la tabla reportes-temp
-        }
-
         $filtrosBD = Filtro::all();
         foreach ($filtrosBD as $filt) {
             $filt->delete(); //vaciar la tabla filtro-reporte-temp
         }
 
-        if (isset($request->fechaDesde) && isset($request->fechaHasta)) {
-            if ($request->fechaDesde <= $request->fechaHasta) {
-                $existe = Aviso_Entregador::whereBetween('fecha', [$request->fechaDesde, $request->fechaHasta])->where('idEntregador', $idEntregador)->exists();
-                if ($existe) {
-                    $control = true;
-                    $resultado = DB::table('aviso')
-                        ->join('aviso_entregador', 'aviso.idAviso', '=', 'aviso_entregador.idAviso')
-                        ->whereBetween('aviso_entregador.fecha', [$request->fechaDesde, $request->fechaHasta])
-                        ->where('aviso_entregador.idEntregador', '=', $idEntregador)
-                        ->where('aviso.estado', '=', true)
-                        ->select('aviso.*')
-                        ->get();
-                }
+        $entregadorAutenticado = auth()->user()->idUser;
+        $nombreEntregador = auth()->user()->nombre;
+
+        $fechadesde = $request->fechaDesde;
+        $fechahasta = $request->fechaHasta;
+        $titular = $request->titular;
+        $remitente = $request->remitente;
+        $corredor = $request->corredor;
+        $destinatario = $request->destinatario;
+        $producto = $request->producto;
+
+        $avisos = NULL;
+
+        if (isset($fechadesde) && isset($fechahasta)) {
+            if ($fechadesde <= $fechahasta) {
+                $avisos = DB::table('aviso_entregador')
+                    ->join('aviso', 'aviso_entregador.idAviso', '=', 'aviso.idAviso')
+                    ->join('destinatario', 'aviso.idDestinatario', '=', 'destinatario.cuit')
+                    ->join('titular', 'aviso.idTitularCartaPorte', '=', 'titular.cuit')
+                    ->join('corredor', 'aviso.idCorredor', '=', 'corredor.cuit')
+                    ->join('remitente', 'aviso.idRemitenteComercial', '=', 'remitente.cuit')
+                    ->join('producto', 'aviso.idProducto', '=', 'producto.idProducto')
+                    ->join('localidad', 'aviso.localidadProcedencia', '=', 'localidad.id')
+                    ->join('provincia', 'aviso.provinciaProcedencia', '=', 'provincia.id')
+                    ->join('carga', 'aviso.idAviso', 'carga.idAviso')
+                    ->join('descarga', 'carga.idCarga', 'descarga.idCarga')
+                    ->where('aviso_entregador.idEntregador', '=', $entregadorAutenticado)
+                    ->whereBetween('aviso_entregador.fecha', [$fechadesde, $fechahasta])
+                    ->where('aviso.estado', '=', true)
+                    ->when($titular, function ($avisos, $titular) {
+                        return $avisos->where('aviso.idTitularCartaPorte', $titular);
+                    })
+                    ->when($remitente, function ($avisos, $remitente) {
+                        return $avisos->where('aviso.idRemitenteComercial', $remitente);
+                    })
+                    ->when($corredor, function ($avisos, $corredor) {
+                        return $avisos->where('aviso.idCorredor', $corredor);
+                    })
+                    ->when($destinatario, function ($avisos, $destinatario) {
+                        return $avisos->where('aviso.idDestinatario', $destinatario);
+                    })
+                    ->when($producto, function ($avisos, $producto) {
+                        return $avisos->where('aviso.idProducto', $producto);
+                    })
+                    ->select(
+                        'aviso.idAviso',
+                        'aviso.nroAviso',
+                        'aviso_entregador.fecha',
+                        'producto.nombre as productoNombre',
+                        'destinatario.nombre as destinatarioNombre',
+                        'titular.nombre as titularNombre',
+                        'corredor.nombre as corredorNombre',
+                        'remitente.nombre as remitenteNombre',
+                        'localidad.nombre as localidadNombre',
+                        'provincia.abreviatura as provinciaAbreviatura',
+                        'aviso.entregador',
+                        'aviso.lugarDescarga',
+                        'descarga.bruto',
+                        'descarga.tara',
+                        'descarga.merma'
+                    )
+                    ->orderByDesc('aviso_entregador.fecha', 'aviso.nroAviso')
+                    ->get();
+
                 $nuevoFiltro = new Filtro;
-                $nuevoFiltro->fechaDesde = $filtros["fechaDesde"];
-                $nuevoFiltro->fechaHasta = $filtros["fechaHasta"];
-                $nuevoFiltro->idTitular = $filtros["titular"];
-                $nuevoFiltro->idIntermediario = $filtros["intermediario"];
-                $nuevoFiltro->idRemitente = $filtros["remitente"];
-                $nuevoFiltro->idCorredor = $filtros["corredor"];
-                $nuevoFiltro->idDestinatario = $filtros["destinatario"];
-                $nuevoFiltro->entregador = $filtros["entregador"];
-                $nuevoFiltro->idProducto = $filtros["producto"];
+                $nuevoFiltro->fechaDesde = $fechadesde;
+                $nuevoFiltro->fechaHasta = $fechahasta;
+                $nuevoFiltro->idTitular = $titular;
+                $nuevoFiltro->idRemitente = $remitente;
+                $nuevoFiltro->idCorredor = $corredor;
+                $nuevoFiltro->idDestinatario = $destinatario;
+                $nuevoFiltro->idProducto = $producto;
                 $nuevoFiltro->save();
             } else {
                 alert()->warning("La fecha desde debe ser menor a la fecha hasta", 'Ha ocurrido un error')->persistent('Cerrar');
                 return back()->withInput();
             }
         }
-        if ($control) {
-            if (isset($request->titular)) {
-                $resultado = $resultado->where('idTitularCartaPorte', $request->titular);
-            }
-            if (isset($request->corredor)) {
-                $resultado = $resultado->where('idCorredor', $request->corredor);
-            }
-            if (isset($request->intermediario)) {
-                $resultado = $resultado->where('idIntermediario', $request->intermediario);
-            }
-            if (isset($request->remitente)) {
-                $resultado = $resultado->where('idRemitenteComercial', $request->remitente);
-            }
-            if (isset($request->destinatario)) {
-                $resultado = $resultado->where('idDestinatario', $request->destinatario);
-            }
-            if (isset($request->entregador)) {
-                $resultado = $resultado->where('entregador', $request->entregador);
-            }
-            if (isset($request->producto)) {
-                $resultado = $resultado->where('idProducto', $request->producto);
-            }
-            foreach ($resultado as $result) {
-                $nuevoReporte = new Reporte;
-                $nuevoReporte->idAviso = $result->idAviso;
-                $nuevoReporte->idFiltro = $nuevoFiltro->idFiltro;
-                $nuevoReporte->save();
-            }
-        }
-        $cargas = Carga::where('borrado', false)->get();
-        $descargas = Descarga::where('borrado', false)->get();
-        $destinatarios = Destino::all();
-        $titulares = Titular::all();
-        $intermediarios = Intermediario::all();
-        $remitentes = Remitente_Comercial::all();
-        $corredores = Corredor::all();
-        $entregador = User::where('idUser', $idEntregador)->first(); //Solo Usuario Entregador Autenticado
-        $productos = Producto::where('borrado', false)->get();
-        $avisos_productos = Aviso_Producto::all();
-        $avisos_entregadores = Aviso_Entregador::where('idEntregador', $idEntregador)->get();
-        $localidades = Localidad::all();
-        $provincias = Provincia::all();
+
+        $destinatarios = Destino::where('borrado', false)->orderBy('nombre')->get();
+        $titulares = Titular::where('borrado', false)->orderBy('nombre')->get();
+        $remitentes = Remitente_Comercial::where('borrado', false)->orderBy('nombre')->get();
+        $corredores = Corredor::where('borrado', false)->orderBy('nombre')->get();
+        $productos = Producto::where('borrado', false)->orderBy('nombre')->get();
 
         return view('reporte.summary', compact([
-            'cargas', 'descargas', 'destinatarios', 'titulares',
-            'intermediarios', 'remitentes', 'corredores', 'entregador', 'productos', 'avisos_productos',
-            'avisos_entregadores', 'localidades', 'provincias', 'resultado', 'filtros'
+            'avisos', 'nombreEntregador', 'destinatarios', 'titulares', 'remitentes', 'corredores', 'productos',
+            'fechadesde', 'fechahasta', 'titular', 'remitente', 'corredor', 'destinatario', 'producto',
         ]));
     }
 
@@ -163,40 +144,91 @@ class ReporteController extends Controller
     {
         $hoy = date("Y-m-d");
         $filename = "Reporte General de Descargas " . $hoy . ".pdf";
-        $entregadorAutenticado = auth()->user()->idUser;
-        $filtros = Filtro::first();
-        $resultados = DB::table('reporte-temp')
-            ->join('aviso', 'reporte-temp.idAviso', '=', 'aviso.idAviso')
-            ->join('aviso_entregador',  'aviso.idAviso', '=', 'aviso_entregador.idAviso')
-            ->join('aviso_producto', 'aviso.idAviso', '=', 'aviso_producto.idAviso')
-            ->where('aviso_entregador.idEntregador', '=', $entregadorAutenticado)
-            ->select('reporte-temp.*', 'aviso.*', 'aviso_producto.*', 'aviso_entregador.*')
-            ->get();
-        $descargas = DB::table('descarga')
-            ->join('carga', 'carga.idCarga', '=', 'descarga.idCarga')
-            ->join('reporte-temp', 'reporte-temp.idAviso', '=', 'carga.idAviso')
-            ->select('descarga.*', 'reporte-temp.idAviso')
-            ->get();
-        $titulares = Titular::all();
-        $destinatarios = Destino::all();
-        $intermediarios = Intermediario::all();
-        $remitentes = Remitente_Comercial::all();
-        $corredores = Corredor::all();
-        $productos = Producto::all();
-        $entregador = User::where('idUser', $entregadorAutenticado)->first(); //Solo Usuario Entregador Autenticado
-        $localidades = Localidad::all();
-        $provincias = Provincia::all();
-        $entregador_contacto = Entregador_Contacto::where('idUser', $entregadorAutenticado)->get();
-        $entregador_domicilio = Entregador_Domicilio::where('idUser', $entregadorAutenticado)->get();
 
+        $entregadorAutenticado = auth()->user()->idUser;
+        $filtro = Filtro::first();
+        $fechadesde = $filtro->fechaDesde;
+        $fechahasta = $filtro->fechaHasta;
+        $titular = $filtro->idTitular;
+        $remitente = $filtro->idRemitente;
+        $corredor = $filtro->idCorredor;
+        $destinatario = $filtro->idDestinatario;
+        $producto = $filtro->idProducto;
+
+        $avisos = DB::table('aviso')
+            ->join('aviso_entregador', 'aviso.idAviso', '=', 'aviso_entregador.idAviso')
+            ->join('aviso_producto', 'aviso.idAviso', '=', 'aviso_producto.idAviso')
+            ->join('destinatario', 'aviso.idDestinatario', '=', 'destinatario.cuit')
+            ->join('titular', 'aviso.idTitularCartaPorte', '=', 'titular.cuit')
+            ->join('corredor', 'aviso.idCorredor', '=', 'corredor.cuit')
+            ->join('remitente', 'aviso.idRemitenteComercial', '=', 'remitente.cuit')
+            ->join('intermediario', 'aviso.idIntermediario', '=', 'intermediario.cuit')
+            ->join('producto', 'aviso.idProducto', '=', 'producto.idProducto')
+            ->join('localidad', 'aviso.localidadProcedencia', '=', 'localidad.id')
+            ->join('provincia', 'aviso.provinciaProcedencia', '=', 'provincia.id')
+            ->join('carga', 'aviso.idAviso', 'carga.idAviso')
+            ->join('descarga', 'carga.idCarga', 'descarga.idCarga')
+            ->where('aviso_entregador.idEntregador', '=', $entregadorAutenticado)
+            ->whereBetween('aviso_entregador.fecha', [$fechadesde, $fechahasta])
+            ->where('aviso.estado', '=', true)
+            ->when($titular, function ($avisos, $titular) {
+                return $avisos->where('aviso.idTitularCartaPorte', $titular);
+            })
+            ->when($remitente, function ($avisos, $remitente) {
+                return $avisos->where('aviso.idRemitenteComercial', $remitente);
+            })
+            ->when($corredor, function ($avisos, $corredor) {
+                return $avisos->where('aviso.idCorredor', $corredor);
+            })
+            ->when($destinatario, function ($avisos, $destinatario) {
+                return $avisos->where('aviso.idDestinatario', $destinatario);
+            })
+            ->when($producto, function ($avisos, $producto) {
+                return $avisos->where('aviso.idProducto', $producto);
+            })
+            ->select(
+                'aviso.idAviso',
+                'aviso.nroAviso',
+                'aviso_entregador.fecha',
+                'producto.nombre as productoNombre',
+                'aviso_producto.tipo as tipoProducto',
+                'destinatario.nombre as destinatarioNombre',
+                'titular.nombre as titularNombre',
+                'corredor.nombre as corredorNombre',
+                'remitente.nombre as remitenteNombre',
+                'intermediario.nombre as intermediarioNombre',
+                'localidad.nombre as localidadNombre',
+                'provincia.abreviatura as provinciaAbreviatura',
+                'aviso.entregador',
+                'aviso.lugarDescarga',
+                'descarga.bruto',
+                'descarga.tara',
+                'descarga.merma'
+            )
+            ->orderByDesc('aviso_entregador.fecha', 'aviso.nroAviso')
+            ->get();
+
+        $entregador = User::where('idUser', $entregadorAutenticado)->select('nombre', 'descripcion')->first();
+        $contactos = Entregador_Contacto::where('idUser', $entregadorAutenticado)->select('contacto')->get();
+        $domicilio = DB::table('entregador_domicilio')
+            ->join('localidad', 'entregador_domicilio.localidad', 'localidad.id')
+            ->join('provincia', 'entregador_domicilio.provincia', 'provincia.id')
+            ->where('entregador_domicilio.idUser', '=', $entregadorAutenticado)
+            ->where('localidad.id', '=', 'entregador_domicilio.localidad')
+            ->where('provincia.id', '=', 'entregador_domicilio.provincia')
+            ->select(
+                'entregador_domicilio.domicilio as calle',
+                'entregador_domicilio.cp',
+                'localidad.nombre as nombreLocalidad',
+                'provincia.abreviatura as provinciaAbrev'
+            )
+            ->get();
 
         $pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
         $pdf = PDF::loadView('exports.reporte-pdf', compact([
-            'resultados', 'descargas', 'filtros', 'destinatarios', 'titulares',
-            'intermediarios', 'remitentes', 'corredores', 'productos', 'entregador', 'localidades', 'provincias',
-            'entregador_contacto', 'entregador_domicilio'
+            'avisos', 'domicilio', 'entregador', 'contactos', 'fechadesde', 'fechahasta',
         ]));
-        $pdf->setPaper('a4', 'landscape');
+        $pdf->setPaper('oficio', 'landscape');
         return $pdf->download($filename);
     }
 
@@ -384,13 +416,13 @@ class ReporteController extends Controller
                 ->get();
 
             $stop_mes = 12;
-            if($anioQuery == date('Y')){
+            if ($anioQuery == date('Y')) {
                 $stop_mes = date('m');
             }
-            for($i_mes = 1; $i_mes < $stop_mes+1; $i_mes++){
+            for ($i_mes = 1; $i_mes < $stop_mes + 1; $i_mes++) {
                 $cant_aux = 0;
-                foreach ($query as $q){
-                    if($q->mes == $i_mes){
+                foreach ($query as $q) {
+                    if ($q->mes == $i_mes) {
                         $cant_aux = $q->cantidad;
                     }
                 }

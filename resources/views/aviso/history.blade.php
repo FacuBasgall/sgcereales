@@ -22,11 +22,106 @@
                     {{ csrf_field() }}
                     <label for="fechaDesde">
                         <span>Fecha desde*:</span>
-                        <input class="common-input" type="date" value="{{old('fechaDesde')}}" name="fechaDesde" id="fechaDesde" required>
+                        <input class="common-input" type="date" value="{{$fechadesde}}" name="fechaDesde" id="fechaDesde" required>
                     </label>
                     <label for="fechaHasta">
                         <span>Fecha hasta*:</span>
-                        <input class="common-input" type="date" value="{{old('fechaHasta')}}" name="fechaHasta" id="fechaHasta" required>
+                        <input class="common-input" type="date" value="{{$fechahasta}}" name="fechaHasta" id="fechaHasta" required>
+                    </label>
+                    <label class="margin-right" for="titular">
+                        <span>Titular carta porte:</span>
+                        <select class="common-input" name="titular" id="labeltitular">
+                            <option value=""></option>
+                            @foreach ($titulares as $t)
+                            <option value="{{ $t->cuit }}" {{$titular == $t->cuit ? 'selected':''}}>
+                                {{$t->nombre}}
+                            </option>
+                            @endforeach
+                        </select>
+                        <script>
+                            $.fn.select2.defaults.set('language', 'es');
+                            $("#labeltitular").select2({
+                                placeholder: 'Seleccione',
+                                dropdownAutoWidth: true,
+                                allowClear: true
+                            });
+                        </script>
+                    </label>
+                    <label class="margin-right" for="remitente">
+                        <span>Remitente comercial:</span>
+                        <select class="common-input" name="remitente" id="labelremitente">
+                            <option value=""></option>
+                            @foreach ($remitentes as $r)
+                            <option value="{{ $r->cuit }}" {{$remitente == $r->cuit ? 'selected':''}}>
+                                {{$r->nombre}}
+                            </option>
+                            @endforeach
+                        </select>
+                        <script>
+                            $.fn.select2.defaults.set('language', 'es');
+                            $("#labelremitente").select2({
+                                placeholder: 'Seleccione',
+                                dropdownAutoWidth: true,
+                                allowClear: true
+                            });
+                        </script>
+                    </label>
+                    <label class="margin-right" for="corredor">
+                        <span>Corredor:</span>
+                        <select class="common-input" name="corredor" id="labelcorredor">
+                            <option value=""></option>
+                            @foreach ($corredores as $c)
+                            <option value="{{ $c->cuit }}" {{$corredor == $c->cuit ? 'selected':''}}>
+                                {{$c->nombre}}
+                            </option>
+                            @endforeach
+                        </select>
+                        <script>
+                            $.fn.select2.defaults.set('language', 'es');
+                            $("#labelcorredor").select2({
+                                placeholder: 'Seleccione',
+                                dropdownAutoWidth: true,
+                                allowClear: true
+                            });
+                        </script>
+                    </label>
+                    <label class="margin-right" for="destinatario">
+                        <span>Destinatario:</span>
+                        <select class="common-input" name="destinatario" id="labeldestinatario">
+                            <option value=""></option>
+                            @foreach ($destinatarios as $d)
+                            <option value="{{ $d->cuit }}" {{$destinatario == $d->cuit ? 'selected':''}}>
+                                {{$d->nombre}}
+                            </option>
+                            @endforeach
+                        </select>
+                        <script>
+                            $.fn.select2.defaults.set('language', 'es');
+                            $("#labeldestinatario").select2({
+                                placeholder: 'Seleccione',
+                                dropdownAutoWidth: true,
+                                allowClear: true
+                            });
+                        </script>
+                    </label>
+                    <label class="margin-right" for="producto">
+                        <span>Producto:</span>
+                        <select class="common-input" name="producto" id="labelproducto">
+                            <option value=""></option>
+                            @foreach ($productos as $p)
+                            <option value="{{ $p->idProducto }}" {{$producto == $p->idProducto ? 'selected':''}}> 
+                                {{$p->nombre}}
+                            </option>
+                            @endforeach
+                        </select>
+                        <script>
+                            $.fn.select2.defaults.set('language', 'es');
+                            $("#labelproducto").select2({
+                                placeholder: 'Seleccione',
+                                dropdownAutoWidth: true,
+                                allowClear: true
+                            });
+                        </script>
                     </label>
                     <div><label class="info-text-margin"><i class="fa fa-exclamation-circle"></i>
                             Los campos con * son obligatorios</label></div>
