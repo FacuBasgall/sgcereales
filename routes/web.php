@@ -156,3 +156,7 @@ Route::post('/reporte/send_email', 'ReporteController@send_email');
 Route::get('/reporte/load_email', 'ReporteController@load_email');
 Route::get('/reporte/products', 'ReporteController@products');
 Route::get('/reporte/productivity', 'ReporteController@productivity');
+
+Route::get('/localidad', 'LocalidadController@index');
+Route::get('/localidad/create', 'LocalidadController@create');
+Route::get('/localidad/store', 'LocalidadController@store');

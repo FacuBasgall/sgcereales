@@ -130,6 +130,7 @@
                         Configuraciones
                     </a>
                     <ul class="dropdown-menu" role="menu">
+                        <li id="manual"><a href="{{action('LocalidadController@index')}}" class="dropdown-item">Gestión de localidades</a></li>
                         <li id="show"><a href="{{action('UsuarioController@show')}}" class="dropdown-item">Perfil de
                                 usuario</a></li>
                         <li id="acerca"><a onclick="acercaDe();" class="dropdown-item">Acerca de</a></li>
@@ -140,7 +141,7 @@
                     <a class="nav-link" href="{{url('logout')}}" title="Cerrar Sesión">
                         <i class="fa fa-power-off">
                         </i>
-                        Cerrar Sesión
+                        Cerrar sesión
                     </a>
                 </li>
             </ul>
