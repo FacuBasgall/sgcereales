@@ -141,6 +141,7 @@ class AvisoController extends Controller
         $corredor = $request->corredor;
         $destinatario = $request->destinatario;
         $producto = $request->producto;
+        $entregador = $request->entregador;
 
         $avisos = NULL;
 
@@ -157,21 +158,24 @@ class AvisoController extends Controller
                     ->join('provincia', 'aviso.provinciaProcedencia', '=', 'provincia.id')
                     ->where('aviso_entregador.idEntregador', '=', $entregadorAutenticado)
                     ->whereBetween('aviso_entregador.fecha', [$fechadesde, $fechahasta])
-                    ->when($titular, function($avisos, $titular){
+                    ->when($titular, function ($avisos, $titular) {
                         return $avisos->where('aviso.idTitularCartaPorte', $titular);
-                    })  
-                    ->when($remitente, function($avisos, $remitente){
+                    })
+                    ->when($remitente, function ($avisos, $remitente) {
                         return $avisos->where('aviso.idRemitenteComercial', $remitente);
-                    }) 
-                    ->when($corredor, function($avisos, $corredor){
+                    })
+                    ->when($corredor, function ($avisos, $corredor) {
                         return $avisos->where('aviso.idCorredor', $corredor);
                     })
-                    ->when($destinatario, function($avisos, $destinatario){
+                    ->when($destinatario, function ($avisos, $destinatario) {
                         return $avisos->where('aviso.idDestinatario', $destinatario);
-                    }) 
-                    ->when($producto, function($avisos, $producto){
+                    })
+                    ->when($producto, function ($avisos, $producto) {
                         return $avisos->where('aviso.idProducto', $producto);
-                    })                    
+                    })
+                    ->when($entregador, function ($avisos, $entregador) {
+                        return $avisos->where('aviso.entregador', $entregador);
+                    })
                     ->select(
                         'aviso.idAviso',
                         'aviso.nroAviso',
@@ -195,6 +199,14 @@ class AvisoController extends Controller
             }
         }
 
+        $entregadorDB = DB::table('aviso')
+            ->distinct()
+            ->select('aviso.entregador')
+            ->get();
+        $entregadores = array();
+        foreach ($entregadorDB as $e) {
+            $entregadores[] = $e;
+        }
         $destinatarios = Destino::where('borrado', false)->orderBy('nombre')->get();
         $titulares = Titular::where('borrado', false)->orderBy('nombre')->get();
         $remitentes = Remitente_Comercial::where('borrado', false)->orderBy('nombre')->get();
@@ -202,8 +214,8 @@ class AvisoController extends Controller
         $productos = Producto::where('borrado', false)->orderBy('nombre')->get();
 
         return view('aviso.history', compact([
-            'avisos', 'nombreEntregador', 'destinatarios', 'titulares', 'remitentes', 'corredores', 'productos',
-            'fechadesde', 'fechahasta', 'titular', 'remitente', 'corredor', 'destinatario', 'producto', 
+            'avisos', 'nombreEntregador', 'destinatarios', 'titulares', 'remitentes', 'corredores', 'productos', 'entregador',
+            'fechadesde', 'fechahasta', 'titular', 'remitente', 'corredor', 'destinatario', 'producto', 'entregadores',
         ]));
     }
 

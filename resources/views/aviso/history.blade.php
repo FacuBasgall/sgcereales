@@ -109,7 +109,7 @@
                         <select class="common-input" name="producto" id="labelproducto">
                             <option value=""></option>
                             @foreach ($productos as $p)
-                            <option value="{{ $p->idProducto }}" {{$producto == $p->idProducto ? 'selected':''}}> 
+                            <option value="{{ $p->idProducto }}" {{$producto == $p->idProducto ? 'selected':''}}>
                                 {{$p->nombre}}
                             </option>
                             @endforeach
@@ -122,6 +122,17 @@
                                 allowClear: true
                             });
                         </script>
+                    </label>
+                    <label for="entregador">
+                        <span>Entregador:</span>
+                        <input type="text" value="{{old('entregador')}}" name="entregador" class="common-input" list="entregador" maxlength="50">
+                        <datalist id="entregador">
+                            <option value=""></option>
+                            @foreach ((array)$entregadores as $e)
+                            <option value="{{$e->entregador}}" {{$entregador == $e->entregador ? 'selected':''}}></option>
+                                {{$e->entregador}}
+                            @endforeach
+                        </datalist>
                     </label>
                     <div><label class="info-text-margin"><i class="fa fa-exclamation-circle"></i>
                             Los campos con * son obligatorios</label></div>

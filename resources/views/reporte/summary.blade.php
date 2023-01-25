@@ -123,6 +123,17 @@
                             });
                         </script>
                     </label>
+                    <label for="entregador">
+                        <span>Entregador:</span>
+                        <input type="text" value="{{old('entregador')}}" name="entregador" class="common-input" list="entregador" maxlength="50">
+                        <datalist id="entregador">
+                            <option value=""></option>
+                            @foreach ((array)$entregadores as $e)
+                            <option value="{{$e->entregador}}" {{$entregador == $e->entregador ? 'selected':''}}></option>
+                            {{$e->entregador}}
+                            @endforeach
+                        </datalist>
+                    </label>
                     <div><label class="info-text-margin"><i class="fa fa-exclamation-circle"></i>
                             Los campos con * son obligatorios</label></div>
                     <div class="center-of-page"><button type="submit" class="find-button"><i class="fa fa-search" aria-hidden="true"></i>

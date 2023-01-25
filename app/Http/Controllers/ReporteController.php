@@ -49,6 +49,7 @@ class ReporteController extends Controller
         $corredor = $request->corredor;
         $destinatario = $request->destinatario;
         $producto = $request->producto;
+        $entregador = $request->entregador;
 
         $avisos = NULL;
 
@@ -82,6 +83,9 @@ class ReporteController extends Controller
                     })
                     ->when($producto, function ($avisos, $producto) {
                         return $avisos->where('aviso.idProducto', $producto);
+                    })
+                    ->when($entregador, function ($avisos, $entregador) {
+                        return $avisos->where('aviso.entregador', $entregador);
                     })
                     ->select(
                         'aviso.idAviso',
@@ -118,6 +122,14 @@ class ReporteController extends Controller
             }
         }
 
+        $entregadorDB = DB::table('aviso')
+            ->distinct()
+            ->select('aviso.entregador')
+            ->get();
+        $entregadores = array();
+        foreach ($entregadorDB as $e) {
+            $entregadores[] = $e;
+        }
         $destinatarios = Destino::where('borrado', false)->orderBy('nombre')->get();
         $titulares = Titular::where('borrado', false)->orderBy('nombre')->get();
         $remitentes = Remitente_Comercial::where('borrado', false)->orderBy('nombre')->get();
@@ -126,7 +138,7 @@ class ReporteController extends Controller
 
         return view('reporte.summary', compact([
             'avisos', 'nombreEntregador', 'destinatarios', 'titulares', 'remitentes', 'corredores', 'productos',
-            'fechadesde', 'fechahasta', 'titular', 'remitente', 'corredor', 'destinatario', 'producto',
+            'fechadesde', 'fechahasta', 'titular', 'remitente', 'corredor', 'destinatario', 'producto', 'entregador', 'entregadores',
         ]));
     }
 
