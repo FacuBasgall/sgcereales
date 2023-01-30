@@ -57,8 +57,8 @@
             <thead>
                 <tr>
                     <th rowspan="3" colspan="5" valign="middle"><b>
-                            {{$entregador->nombre}}<br>
-                            {{$entregador->descripcion}}<br>
+                            {{$usuario->nombre}}<br>
+                            {{$usuario->descripcion}}<br>
                             @foreach ($domicilio as $d)
                             {{$d->calle}}, {{$d->nombreLocalidad}} ({{$d->provinciaAbrev}} -
                             {{$d->cp}})<br>
@@ -85,15 +85,13 @@
                     <th><strong>Corredor</strong></th>
                     <th><strong>Destinatario</strong></th>
                     <th><strong>Producto</strong></th>
-                    <th><strong>Tipo</strong></th>
-                    <th><strong>Procedencia</strong></th>
                     <th><strong>Destino</strong></th>
                     <th><strong>Neto (Kg)</strong></th>
                     <th><strong>Neto merma (Kg)</strong></th>
                 </tr>
             </thead>
             <tbody>
-                @php $total = 0; $totalMerma = 0; @endphp
+                @php $total = 0; $totalMerma = 0; $descargado = 0; $merma = 0; @endphp
                 @foreach ($avisos as $aviso)
                 <tr>
                     <td>{{ $aviso->nroAviso }}</td>
@@ -121,12 +119,6 @@
                     </td>
                     <td>
                         <div>{{$aviso->productoNombre}}</div>
-                    </td>
-                    <td>
-                        <div>{{$aviso->tipoProducto}}</div>
-                    </td>
-                    <td>
-                        <div>{{$aviso->localidadNombre}} ({{$aviso->provinciaAbreviatura}})</div>
                     </td>
                     <td>
                         <div>{{$aviso->lugarDescarga}}</div>

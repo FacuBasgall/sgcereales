@@ -115,6 +115,7 @@ class ReporteController extends Controller
                 $nuevoFiltro->idCorredor = $corredor;
                 $nuevoFiltro->idDestinatario = $destinatario;
                 $nuevoFiltro->idProducto = $producto;
+                $nuevoFiltro->entregador = $entregador;
                 $nuevoFiltro->save();
             } else {
                 alert()->warning("La fecha desde debe ser menor a la fecha hasta", 'Ha ocurrido un error')->persistent('Cerrar');
@@ -166,20 +167,20 @@ class ReporteController extends Controller
         $corredor = $filtro->idCorredor;
         $destinatario = $filtro->idDestinatario;
         $producto = $filtro->idProducto;
+        $entregador = $filtro->entregador;
 
-        $avisos = DB::table('aviso')
-            ->join('aviso_entregador', 'aviso.idAviso', '=', 'aviso_entregador.idAviso')
-            ->join('aviso_producto', 'aviso.idAviso', '=', 'aviso_producto.idAviso')
+        $avisos = DB::table('aviso_entregador')
+            ->join('aviso', 'aviso_entregador.idAviso', '=', 'aviso.idAviso')
             ->join('destinatario', 'aviso.idDestinatario', '=', 'destinatario.cuit')
             ->join('titular', 'aviso.idTitularCartaPorte', '=', 'titular.cuit')
             ->join('corredor', 'aviso.idCorredor', '=', 'corredor.cuit')
             ->join('remitente', 'aviso.idRemitenteComercial', '=', 'remitente.cuit')
-            ->join('intermediario', 'aviso.idIntermediario', '=', 'intermediario.cuit')
             ->join('producto', 'aviso.idProducto', '=', 'producto.idProducto')
             ->join('localidad', 'aviso.localidadProcedencia', '=', 'localidad.id')
             ->join('provincia', 'aviso.provinciaProcedencia', '=', 'provincia.id')
             ->join('carga', 'aviso.idAviso', 'carga.idAviso')
             ->join('descarga', 'carga.idCarga', 'descarga.idCarga')
+            ->join('intermediario', 'aviso.idIntermediario', '=', 'intermediario.cuit')
             ->where('aviso_entregador.idEntregador', '=', $entregadorAutenticado)
             ->whereBetween('aviso_entregador.fecha', [$fechadesde, $fechahasta])
             ->where('aviso.estado', '=', true)
@@ -198,19 +199,19 @@ class ReporteController extends Controller
             ->when($producto, function ($avisos, $producto) {
                 return $avisos->where('aviso.idProducto', $producto);
             })
+            ->when($entregador, function ($avisos, $entregador) {
+                return $avisos->where('aviso.entregador', $entregador);
+            })
             ->select(
                 'aviso.idAviso',
                 'aviso.nroAviso',
                 'aviso_entregador.fecha',
                 'producto.nombre as productoNombre',
-                'aviso_producto.tipo as tipoProducto',
                 'destinatario.nombre as destinatarioNombre',
                 'titular.nombre as titularNombre',
                 'corredor.nombre as corredorNombre',
                 'remitente.nombre as remitenteNombre',
                 'intermediario.nombre as intermediarioNombre',
-                'localidad.nombre as localidadNombre',
-                'provincia.abreviatura as provinciaAbreviatura',
                 'aviso.entregador',
                 'aviso.lugarDescarga',
                 'descarga.bruto',
@@ -220,7 +221,7 @@ class ReporteController extends Controller
             ->orderByDesc('aviso_entregador.fecha', 'aviso.nroAviso')
             ->get();
 
-        $entregador = User::where('idUser', $entregadorAutenticado)->select('nombre', 'descripcion')->first();
+        $usuario = User::where('idUser', $entregadorAutenticado)->select('nombre', 'descripcion')->first();
         $contactos = Entregador_Contacto::where('idUser', $entregadorAutenticado)->select('contacto')->get();
         $domicilio = DB::table('entregador_domicilio')
             ->join('localidad', 'entregador_domicilio.localidad', 'localidad.id')
@@ -238,7 +239,7 @@ class ReporteController extends Controller
 
         $pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
         $pdf = PDF::loadView('exports.reporte-pdf', compact([
-            'avisos', 'domicilio', 'entregador', 'contactos', 'fechadesde', 'fechahasta',
+            'avisos', 'domicilio', 'usuario', 'contactos', 'fechadesde', 'fechahasta',
         ]));
         $pdf->setPaper('oficio', 'landscape');
         return $pdf->download($filename);
