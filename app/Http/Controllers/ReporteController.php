@@ -181,6 +181,7 @@ class ReporteController extends Controller
             ->join('titular', 'aviso.idTitularCartaPorte', '=', 'titular.cuit')
             ->join('corredor', 'aviso.idCorredor', '=', 'corredor.cuit')
             ->join('remitente', 'aviso.idRemitenteComercial', '=', 'remitente.cuit')
+            ->leftjoin('intermediario', 'aviso.idIntermediario', '=', 'intermediario.cuit')
             ->join('producto', 'aviso.idProducto', '=', 'producto.idProducto')
             ->join('carga', 'aviso.idAviso', 'carga.idAviso')
             ->join('descarga', 'carga.idCarga', 'descarga.idCarga')
@@ -214,6 +215,7 @@ class ReporteController extends Controller
                 'titular.nombre as titularNombre',
                 'corredor.nombre as corredorNombre',
                 'remitente.nombre as remitenteNombre',
+                'intermediario.nombre as intermediarioNombre',
                 'aviso.entregador as entregadorNombre',
                 'aviso.lugarDescarga',
                 'descarga.bruto',

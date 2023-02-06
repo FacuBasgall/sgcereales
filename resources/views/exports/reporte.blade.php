@@ -38,8 +38,8 @@
         <tr>
             <th><strong>Número</strong></th>
             <th><strong>Fecha</strong></th>
-            <th><strong>Entregador</strong></th>
             <th><strong>Titular</strong></th>
+            <th><strong>Intermediario</strong></th>
             <th><strong>Remitente</strong></th>
             <th><strong>Corredor</strong></th>
             <th><strong>Destinatario</strong></th>
@@ -55,18 +55,18 @@
         <tr>
             <td>{{ $aviso->nroAviso }}</td>
             <td>{{ $aviso->fecha }}</td>
-            @if ($aviso->entregadorNombre != NULL)
-            <td>
-                <div>{{$aviso->entregadorNombre}}</div>
-            </td>
-            @else
-            <td>
-                <div>{{$usuario->nombre}}</div>
-            </td>
-            @endif
             <td>
                 <div>{{$aviso->titularNombre}}</div>
             </td>
+            @if ($aviso->intermediarioNombre == NULL)
+            <td>
+                <div>-</div>
+            </td>
+            @else
+            <td>
+                <div>{{$aviso->intermediarioNombre}}</div>
+            </td>
+            @endif
             <td>
                 <div>{{$aviso->remitenteNombre}}</div>
             </td>
