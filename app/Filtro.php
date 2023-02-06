@@ -9,7 +9,7 @@ class Filtro extends Model
     protected $table = 'filtro-reporte-temp';
     protected $primaryKey = 'idFiltro';
     public $timestamps = false;
-    protected $fillable = ['fechaDesde', 'fechaHasta', 'idTitular', 'idRemitente', 'idCorredor', 'idDestinatario', 'idProducto'];
+    protected $fillable = ['fechaDesde', 'fechaHasta', 'idTitular', 'idRemitente', 'idCorredor', 'idDestinatario', 'idProducto', 'entregador'];
 
     public function reporte(){
         return $this->hasMany('App\Aviso', 'idFiltro', 'idFiltro');

@@ -12,7 +12,7 @@
                 </th>
                 <th><b style="font-weight:bold">Fecha desde: {{date("d/m/Y", strtotime($fechadesde))}}</b></th>
             </tr>
-             <tr>
+            <tr>
                 <th colspan="3">
                     <b>
                         {{$usuario->descripcion}}
@@ -28,7 +28,7 @@
                         {{$d->cp}})
                         @endforeach
                         @foreach ($contactos as $contacto)
-                        | {{$contacto->contacto}} | 
+                        | {{$contacto->contacto}} |
                         @endforeach
                     </b>
                 <th>
@@ -38,8 +38,8 @@
         <tr>
             <th><strong>Número</strong></th>
             <th><strong>Fecha</strong></th>
+            <th><strong>Entregador</strong></th>
             <th><strong>Titular</strong></th>
-            <th><strong>Intermediario</strong></th>
             <th><strong>Remitente</strong></th>
             <th><strong>Corredor</strong></th>
             <th><strong>Destinatario</strong></th>
@@ -55,18 +55,18 @@
         <tr>
             <td>{{ $aviso->nroAviso }}</td>
             <td>{{ $aviso->fecha }}</td>
+            @if ($aviso->entregadorNombre != NULL)
             <td>
-                <div>{{$aviso->titularNombre}}</div>
-            </td>
-            @if ($aviso->intermediarioNombre == NULL)
-            <td>
-                <div> - </div>
+                <div>{{$aviso->entregadorNombre}}</div>
             </td>
             @else
             <td>
-                <div>{{$aviso->intermediarioNombre}}</div>
+                <div>{{$usuario->nombre}}</div>
             </td>
             @endif
+            <td>
+                <div>{{$aviso->titularNombre}}</div>
+            </td>
             <td>
                 <div>{{$aviso->remitenteNombre}}</div>
             </td>
@@ -97,6 +97,6 @@
             <th colspan="3" style="font-weight:bold">Total descargado (Kg): {{$total}}</th>
             <th colspan="3" style="font-weight:bold">Total descargado con merma (Kg): {{$totalMerma}}</th>
         </tr>
-        <tr></tr>    
+        <tr></tr>
     </tbody>
 </table>

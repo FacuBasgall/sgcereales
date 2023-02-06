@@ -14,7 +14,7 @@
     <div class="card">
         <div class="card-header">
             <label class="title col-md-8 col-form-label">Reportes
-                <i class="fa fa-chevron-right"></i> Resumen de avisos terminados (discriminados por cargas/descargas)</label>
+                <i class="fa fa-chevron-right"></i> Resumen de avisos terminados (discriminados por descargas)</label>
         </div>
         <div class="container">
             <div class="header-card">
@@ -235,12 +235,12 @@
             "searching": false,
             "language": {
                 "sProcessing": "Procesando...",
-                "sLengthMenu": "Mostrar _MENU_ cargas/descargas",
+                "sLengthMenu": "Mostrar _MENU_ descargas",
                 "sZeroRecords": "No se encontraron resultados",
                 "sEmptyTable": "No hay datos disponibles. Realice una nueva búsqueda para obtener resultados",
-                "sInfo": "Mostrando cargas/descargas del _START_ al _END_ de un total de _TOTAL_ cargas/descargas",
-                "sInfoEmpty": "Mostrando cargas/descargas del 0 al 0 de un total de 0 cargas/descargas",
-                "sInfoFiltered": "(filtrado de un total de _MAX_ cargas/descargas)",
+                "sInfo": "Mostrando descargas del _START_ al _END_ de un total de _TOTAL_ descargas",
+                "sInfoEmpty": "Mostrando descargas del 0 al 0 de un total de 0 descargas",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ descargas)",
                 "sInfoPostFix": "",
                 "sSearch": "Buscar:",
                 "sUrl": "",

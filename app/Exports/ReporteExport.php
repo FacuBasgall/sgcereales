@@ -33,7 +33,9 @@ class ReporteExport implements FromView, ShouldAutoSize
     public function view(): View
     {
         $entregadorAutenticado = auth()->user()->idUser;
-        $filtro = Filtro::where('idFiltro', $this->idFiltro)->first();
+
+        $filtro = Filtro::first();
+
         $fechadesde = $filtro->fechaDesde;
         $fechahasta = $filtro->fechaHasta;
         $titular = $filtro->idTitular;
@@ -43,16 +45,15 @@ class ReporteExport implements FromView, ShouldAutoSize
         $producto = $filtro->idProducto;
         $entregador = $filtro->entregador;
 
+        $avisos = array();
+
         $avisos = DB::table('aviso_entregador')
             ->join('aviso', 'aviso_entregador.idAviso', '=', 'aviso.idAviso')
             ->join('destinatario', 'aviso.idDestinatario', '=', 'destinatario.cuit')
             ->join('titular', 'aviso.idTitularCartaPorte', '=', 'titular.cuit')
             ->join('corredor', 'aviso.idCorredor', '=', 'corredor.cuit')
             ->join('remitente', 'aviso.idRemitenteComercial', '=', 'remitente.cuit')
-            ->join('intermediario', 'aviso.idIntermediario', '=', 'intermediario.cuit')
             ->join('producto', 'aviso.idProducto', '=', 'producto.idProducto')
-            ->join('localidad', 'aviso.localidadProcedencia', '=', 'localidad.id')
-            ->join('provincia', 'aviso.provinciaProcedencia', '=', 'provincia.id')
             ->join('carga', 'aviso.idAviso', 'carga.idAviso')
             ->join('descarga', 'carga.idCarga', 'descarga.idCarga')
             ->where('aviso_entregador.idEntregador', '=', $entregadorAutenticado)
@@ -85,12 +86,11 @@ class ReporteExport implements FromView, ShouldAutoSize
                 'titular.nombre as titularNombre',
                 'corredor.nombre as corredorNombre',
                 'remitente.nombre as remitenteNombre',
-                'intermediario.nombre as intermediarioNombre',
-                'aviso.entregador',
+                'aviso.entregador as entregadorNombre',
                 'aviso.lugarDescarga',
                 'descarga.bruto',
                 'descarga.tara',
-                'descarga.merma'
+                'descarga.merma',
             )
             ->orderByDesc('aviso_entregador.fecha', 'aviso.nroAviso')
             ->get();

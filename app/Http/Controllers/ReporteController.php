@@ -20,6 +20,7 @@ use App\Usuario_Preferencias_Correo;
 
 use Datatables;
 use DB;
+use Illuminate\Support\Arr;
 use Mail;
 use SweetAlert;
 
@@ -51,7 +52,7 @@ class ReporteController extends Controller
         $producto = $request->producto;
         $entregador = $request->entregador;
 
-        $avisos = NULL;
+        $avisos = array();
 
         if (isset($fechadesde) && isset($fechahasta)) {
             if ($fechadesde <= $fechahasta) {
@@ -117,6 +118,7 @@ class ReporteController extends Controller
                 $nuevoFiltro->idProducto = $producto;
                 $nuevoFiltro->entregador = $entregador;
                 $nuevoFiltro->save();
+
             } else {
                 alert()->warning("La fecha desde debe ser menor a la fecha hasta", 'Ha ocurrido un error')->persistent('Cerrar');
                 return back()->withInput();
@@ -159,7 +161,9 @@ class ReporteController extends Controller
         $filename = "Reporte General de Descargas " . $hoy . ".pdf";
 
         $entregadorAutenticado = auth()->user()->idUser;
+
         $filtro = Filtro::first();
+
         $fechadesde = $filtro->fechaDesde;
         $fechahasta = $filtro->fechaHasta;
         $titular = $filtro->idTitular;
@@ -169,6 +173,8 @@ class ReporteController extends Controller
         $producto = $filtro->idProducto;
         $entregador = $filtro->entregador;
 
+        $avisos = array();
+
         $avisos = DB::table('aviso_entregador')
             ->join('aviso', 'aviso_entregador.idAviso', '=', 'aviso.idAviso')
             ->join('destinatario', 'aviso.idDestinatario', '=', 'destinatario.cuit')
@@ -176,11 +182,8 @@ class ReporteController extends Controller
             ->join('corredor', 'aviso.idCorredor', '=', 'corredor.cuit')
             ->join('remitente', 'aviso.idRemitenteComercial', '=', 'remitente.cuit')
             ->join('producto', 'aviso.idProducto', '=', 'producto.idProducto')
-            ->join('localidad', 'aviso.localidadProcedencia', '=', 'localidad.id')
-            ->join('provincia', 'aviso.provinciaProcedencia', '=', 'provincia.id')
             ->join('carga', 'aviso.idAviso', 'carga.idAviso')
             ->join('descarga', 'carga.idCarga', 'descarga.idCarga')
-            ->join('intermediario', 'aviso.idIntermediario', '=', 'intermediario.cuit')
             ->where('aviso_entregador.idEntregador', '=', $entregadorAutenticado)
             ->whereBetween('aviso_entregador.fecha', [$fechadesde, $fechahasta])
             ->where('aviso.estado', '=', true)
@@ -211,12 +214,11 @@ class ReporteController extends Controller
                 'titular.nombre as titularNombre',
                 'corredor.nombre as corredorNombre',
                 'remitente.nombre as remitenteNombre',
-                'intermediario.nombre as intermediarioNombre',
-                'aviso.entregador',
+                'aviso.entregador as entregadorNombre',
                 'aviso.lugarDescarga',
                 'descarga.bruto',
                 'descarga.tara',
-                'descarga.merma'
+                'descarga.merma',
             )
             ->orderByDesc('aviso_entregador.fecha', 'aviso.nroAviso')
             ->get();

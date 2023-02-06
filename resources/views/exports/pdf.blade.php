@@ -205,7 +205,7 @@
     <footer class="footer">
         @php $fecha = date("d/m/Y"); @endphp
         <div>
-            <p class="fecha">{{$fecha}}</p>
+            <p class="fecha">{{$fecha}} | Documento impreso desde Sistema Gestor de Cereales</p>
         </div>
     </footer>
     <script type="text/php">
