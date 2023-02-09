@@ -90,10 +90,11 @@ class ReporteExport implements FromView, ShouldAutoSize
                 'intermediario.nombre as intermediarioNombre',
                 'aviso.entregador as entregadorNombre',
                 'aviso.lugarDescarga',
-                'descarga.bruto',
-                'descarga.tara',
-                'descarga.merma',
+                DB::raw('SUM(descarga.bruto) as bruto'),
+                DB::raw('SUM(descarga.tara) as tara'),
+                DB::raw('SUM(descarga.merma) as merma')
             )
+            ->groupBy('aviso.idAviso')
             ->orderByDesc('aviso_entregador.fecha', 'aviso.nroAviso')
             ->get();
 

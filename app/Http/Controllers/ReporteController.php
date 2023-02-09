@@ -101,10 +101,11 @@ class ReporteController extends Controller
                         'provincia.abreviatura as provinciaAbreviatura',
                         'aviso.entregador',
                         'aviso.lugarDescarga',
-                        'descarga.bruto',
-                        'descarga.tara',
-                        'descarga.merma'
+                        DB::raw('SUM(descarga.bruto) as bruto'),
+                        DB::raw('SUM(descarga.tara) as tara'),
+                        DB::raw('SUM(descarga.merma) as merma')
                     )
+                    ->groupBy('aviso.idAviso')
                     ->orderByDesc('aviso_entregador.fecha', 'aviso.nroAviso')
                     ->get();
 
@@ -118,7 +119,6 @@ class ReporteController extends Controller
                 $nuevoFiltro->idProducto = $producto;
                 $nuevoFiltro->entregador = $entregador;
                 $nuevoFiltro->save();
-
             } else {
                 alert()->warning("La fecha desde debe ser menor a la fecha hasta", 'Ha ocurrido un error')->persistent('Cerrar');
                 return back()->withInput();
@@ -218,10 +218,11 @@ class ReporteController extends Controller
                 'intermediario.nombre as intermediarioNombre',
                 'aviso.entregador as entregadorNombre',
                 'aviso.lugarDescarga',
-                'descarga.bruto',
-                'descarga.tara',
-                'descarga.merma',
+                DB::raw('SUM(descarga.bruto) as bruto'),
+                DB::raw('SUM(descarga.tara) as tara'),
+                DB::raw('SUM(descarga.merma) as merma')
             )
+            ->groupBy('aviso.idAviso')
             ->orderByDesc('aviso_entregador.fecha', 'aviso.nroAviso')
             ->get();
 
